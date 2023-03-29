@@ -7,10 +7,6 @@ Helpers
     mult = '*';
     div = '/';
     mod = '%';
-    
-
-    //TODO fix intnum og floatnum
-
 Tokens    
     l_par = '(';
     r_par = ')';
