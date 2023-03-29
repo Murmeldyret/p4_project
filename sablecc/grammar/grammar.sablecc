@@ -1,0 +1,87 @@
+Package postfix; 
+
+Helpers
+    number = ['0' .. '9']+;
+    plus = '+';
+    minus = '-';
+    mult = '*';
+    div = '/';
+    mod = '%';
+    
+
+    //TODO fix intnum og floatnum
+
+Tokens    
+    l_par = '(';
+    r_par = ')';
+    l_brack = '{';
+    r_brack = '}';
+    blank = (' ' | 13 | 10)+;
+    import = 'import';
+    string = ('"' '"');
+    bool = 'true' | 'false';
+    as = 'as';
+    id = (['A' .. 'Z'] ['a' .. 'z'])(['A' .. 'Z'] ['a' .. 'z'] ['0' .. '9'])*;
+    seperated_by = 'seperated_by';
+    char = 39 '.' 39;
+    newline = 10;
+    assign = ':=';
+    type = ('int' | 'bool' | 'float' | 'string' | 'csv' | 'char' | 'array');
+    bin_infix_op = minus | plus | mult | div | mod ;
+    for = 'for';
+    while = 'while';
+    in = 'in';
+    if = 'if';
+    else = 'else';
+    intnum = (number)+;
+    floatnum = (number)+ '.' (number)+;
+
+
+Ignored Tokens
+    blank;
+
+Productions
+    program =
+        {program} stmts;
+        
+    stmts =
+        {statements} stmt newline stmts | ;
+
+    stmt =
+        {import_stmt} import_t |
+        {declaration} type id assign expr | 
+        {assigenment_statement} assigenment |
+        {while_loop} while expr block |
+        {for_loop} for id in val block |
+        {control_statement} if expr block in_control_stmt ;
+
+    block =
+       {block_stmt} l_brack stmts r_brack ;
+
+    in_control_stmt =
+       {elif_statement} else if expr block |
+       {else_statement} else_statement;
+    
+    else_statement =
+       {else_block_statement} else block | ;
+    
+    assigenment =
+        {assign} id assign expr;
+
+    expr =
+       {expr_val_prime} val expr_prime | ;
+    
+    expr_prime = 
+       {expr_prime_operator_val_prime} bin_infix_op val expr_prime | ;
+    
+    val = 
+       {val_id} id |
+        {val_floatnum} floatnum |
+        {val_intnum} intnum |
+        {val_string} string |
+        {val_bool} bool ;
+
+    import_t =
+        {import_without_seperator} import string as id |
+        {import_with_seperator} import string seperated_by char as id;
+        
