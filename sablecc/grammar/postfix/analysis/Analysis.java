@@ -66,6 +66,15 @@ public interface Analysis extends Switch
     void caseTOpMult(TOpMult node);
     void caseTOpDiv(TOpDiv node);
     void caseTOpMod(TOpMod node);
+    void caseTBopLthan(TBopLthan node);
+    void caseTBopLethan(TBopLethan node);
+    void caseTBopGthan(TBopGthan node);
+    void caseTBopGethan(TBopGethan node);
+    void caseTBopEq(TBopEq node);
+    void caseTBopAnd(TBopAnd node);
+    void caseTBopOr(TBopOr node);
+    void caseTBopNot(TBopNot node);
+    void caseTSopDot(TSopDot node);
     void caseTKwAs(TKwAs node);
     void caseTKwImport(TKwImport node);
     void caseTKwSeparatedBy(TKwSeparatedBy node);

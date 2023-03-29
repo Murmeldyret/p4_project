@@ -28,12 +28,11 @@ Tokens
 
     //types
     string = ('"' '"');
-    intnum = (number)+;
-    floatnum = (number)+ '.' (number)+;
+    intnum = -?(number)+;
+    floatnum = -?(number)+ '.' (number)+;
     bool = 'true' | 'false';
     type = ('int' | 'bool' | 'float' | 'string' | 'csv' | 'char' | 'array');
     char = 39 '.' 39;
-
 
     id = (['A' .. 'Z'] ['a' .. 'z'])(['A' .. 'Z'] ['a' .. 'z'] ['0' .. '9'])*;
     blank = (' ' | 13 | 10)+;
@@ -45,6 +44,20 @@ Tokens
     op_mult = '*';
     op_div = '/';
     op_mod = '%';
+
+    //Boolean Operators
+    bop_lthan = '<';
+    bop_lethan = '<=';
+    bop_gthan = '>';
+    bop_gethan = '>=';
+    bop_eq = '==';
+    bop_and = 'and';
+    bop_or = 'or';
+    bop_not = 'not';
+
+    //special Operators
+    sop_dot = '.';
+
 
     //keywords
     kw_as = 'as';

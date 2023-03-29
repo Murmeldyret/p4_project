@@ -393,6 +393,60 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
+    public void caseTBopLthan(TBopLthan node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTBopLethan(TBopLethan node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTBopGthan(TBopGthan node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTBopGethan(TBopGethan node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTBopEq(TBopEq node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTBopAnd(TBopAnd node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTBopOr(TBopOr node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTBopNot(TBopNot node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTSopDot(TSopDot node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
     public void caseTKwAs(TKwAs node)
     {
         defaultCase(node);
