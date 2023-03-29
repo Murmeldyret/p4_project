@@ -36,6 +36,11 @@ public interface Analysis extends Switch
     void caseAValIntnumVal(AValIntnumVal node);
     void caseAValStringVal(AValStringVal node);
     void caseAValBoolVal(AValBoolVal node);
+    void caseAPlusInfixBinInfixOp(APlusInfixBinInfixOp node);
+    void caseAMinusInfixBinInfixOp(AMinusInfixBinInfixOp node);
+    void caseAMultiplicationInfixBinInfixOp(AMultiplicationInfixBinInfixOp node);
+    void caseADivisionInfixBinInfixOp(ADivisionInfixBinInfixOp node);
+    void caseAModuloInfixBinInfixOp(AModuloInfixBinInfixOp node);
     void caseAImportWithoutSeperatorImportT(AImportWithoutSeperatorImportT node);
     void caseAImportWithSeperatorImportT(AImportWithSeperatorImportT node);
 
@@ -54,7 +59,11 @@ public interface Analysis extends Switch
     void caseTNewline(TNewline node);
     void caseTAssign(TAssign node);
     void caseTType(TType node);
-    void caseTBinInfixOp(TBinInfixOp node);
+    void caseTPlus(TPlus node);
+    void caseTMinus(TMinus node);
+    void caseTMult(TMult node);
+    void caseTDiv(TDiv node);
+    void caseTMod(TMod node);
     void caseTFor(TFor node);
     void caseTWhile(TWhile node);
     void caseTIn(TIn node);

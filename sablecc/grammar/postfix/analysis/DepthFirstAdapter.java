@@ -624,6 +624,111 @@ public class DepthFirstAdapter extends AnalysisAdapter
         outAValBoolVal(node);
     }
 
+    public void inAPlusInfixBinInfixOp(APlusInfixBinInfixOp node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAPlusInfixBinInfixOp(APlusInfixBinInfixOp node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAPlusInfixBinInfixOp(APlusInfixBinInfixOp node)
+    {
+        inAPlusInfixBinInfixOp(node);
+        if(node.getPlus() != null)
+        {
+            node.getPlus().apply(this);
+        }
+        outAPlusInfixBinInfixOp(node);
+    }
+
+    public void inAMinusInfixBinInfixOp(AMinusInfixBinInfixOp node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAMinusInfixBinInfixOp(AMinusInfixBinInfixOp node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAMinusInfixBinInfixOp(AMinusInfixBinInfixOp node)
+    {
+        inAMinusInfixBinInfixOp(node);
+        if(node.getMinus() != null)
+        {
+            node.getMinus().apply(this);
+        }
+        outAMinusInfixBinInfixOp(node);
+    }
+
+    public void inAMultiplicationInfixBinInfixOp(AMultiplicationInfixBinInfixOp node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAMultiplicationInfixBinInfixOp(AMultiplicationInfixBinInfixOp node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAMultiplicationInfixBinInfixOp(AMultiplicationInfixBinInfixOp node)
+    {
+        inAMultiplicationInfixBinInfixOp(node);
+        if(node.getMult() != null)
+        {
+            node.getMult().apply(this);
+        }
+        outAMultiplicationInfixBinInfixOp(node);
+    }
+
+    public void inADivisionInfixBinInfixOp(ADivisionInfixBinInfixOp node)
+    {
+        defaultIn(node);
+    }
+
+    public void outADivisionInfixBinInfixOp(ADivisionInfixBinInfixOp node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseADivisionInfixBinInfixOp(ADivisionInfixBinInfixOp node)
+    {
+        inADivisionInfixBinInfixOp(node);
+        if(node.getDiv() != null)
+        {
+            node.getDiv().apply(this);
+        }
+        outADivisionInfixBinInfixOp(node);
+    }
+
+    public void inAModuloInfixBinInfixOp(AModuloInfixBinInfixOp node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAModuloInfixBinInfixOp(AModuloInfixBinInfixOp node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAModuloInfixBinInfixOp(AModuloInfixBinInfixOp node)
+    {
+        inAModuloInfixBinInfixOp(node);
+        if(node.getMod() != null)
+        {
+            node.getMod().apply(this);
+        }
+        outAModuloInfixBinInfixOp(node);
+    }
+
     public void inAImportWithoutSeperatorImportT(AImportWithoutSeperatorImportT node)
     {
         defaultIn(node);

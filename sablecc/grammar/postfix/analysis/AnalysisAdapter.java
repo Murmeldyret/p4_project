@@ -219,6 +219,36 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
+    public void caseAPlusInfixBinInfixOp(APlusInfixBinInfixOp node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAMinusInfixBinInfixOp(AMinusInfixBinInfixOp node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAMultiplicationInfixBinInfixOp(AMultiplicationInfixBinInfixOp node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseADivisionInfixBinInfixOp(ADivisionInfixBinInfixOp node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAModuloInfixBinInfixOp(AModuloInfixBinInfixOp node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
     public void caseAImportWithoutSeperatorImportT(AImportWithoutSeperatorImportT node)
     {
         defaultCase(node);
@@ -321,7 +351,31 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
-    public void caseTBinInfixOp(TBinInfixOp node)
+    public void caseTPlus(TPlus node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTMinus(TMinus node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTMult(TMult node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTDiv(TDiv node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTMod(TMod node)
     {
         defaultCase(node);
     }
