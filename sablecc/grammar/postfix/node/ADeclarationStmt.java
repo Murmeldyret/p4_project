@@ -9,7 +9,7 @@ public final class ADeclarationStmt extends PStmt
 {
     private TType _type_;
     private TId _id_;
-    private TAssign _assign_;
+    private TOpAssign _opAssign_;
     private PExpr _expr_;
 
     public ADeclarationStmt()
@@ -20,7 +20,7 @@ public final class ADeclarationStmt extends PStmt
     public ADeclarationStmt(
         @SuppressWarnings("hiding") TType _type_,
         @SuppressWarnings("hiding") TId _id_,
-        @SuppressWarnings("hiding") TAssign _assign_,
+        @SuppressWarnings("hiding") TOpAssign _opAssign_,
         @SuppressWarnings("hiding") PExpr _expr_)
     {
         // Constructor
@@ -28,7 +28,7 @@ public final class ADeclarationStmt extends PStmt
 
         setId(_id_);
 
-        setAssign(_assign_);
+        setOpAssign(_opAssign_);
 
         setExpr(_expr_);
 
@@ -40,7 +40,7 @@ public final class ADeclarationStmt extends PStmt
         return new ADeclarationStmt(
             cloneNode(this._type_),
             cloneNode(this._id_),
-            cloneNode(this._assign_),
+            cloneNode(this._opAssign_),
             cloneNode(this._expr_));
     }
 
@@ -100,16 +100,16 @@ public final class ADeclarationStmt extends PStmt
         this._id_ = node;
     }
 
-    public TAssign getAssign()
+    public TOpAssign getOpAssign()
     {
-        return this._assign_;
+        return this._opAssign_;
     }
 
-    public void setAssign(TAssign node)
+    public void setOpAssign(TOpAssign node)
     {
-        if(this._assign_ != null)
+        if(this._opAssign_ != null)
         {
-            this._assign_.parent(null);
+            this._opAssign_.parent(null);
         }
 
         if(node != null)
@@ -122,7 +122,7 @@ public final class ADeclarationStmt extends PStmt
             node.parent(this);
         }
 
-        this._assign_ = node;
+        this._opAssign_ = node;
     }
 
     public PExpr getExpr()
@@ -156,7 +156,7 @@ public final class ADeclarationStmt extends PStmt
         return ""
             + toString(this._type_)
             + toString(this._id_)
-            + toString(this._assign_)
+            + toString(this._opAssign_)
             + toString(this._expr_);
     }
 
@@ -176,9 +176,9 @@ public final class ADeclarationStmt extends PStmt
             return;
         }
 
-        if(this._assign_ == child)
+        if(this._opAssign_ == child)
         {
-            this._assign_ = null;
+            this._opAssign_ = null;
             return;
         }
 
@@ -207,9 +207,9 @@ public final class ADeclarationStmt extends PStmt
             return;
         }
 
-        if(this._assign_ == oldChild)
+        if(this._opAssign_ == oldChild)
         {
-            setAssign((TAssign) newChild);
+            setOpAssign((TOpAssign) newChild);
             return;
         }
 

@@ -111,13 +111,13 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
-    public void caseAWhileLoopStmt(AWhileLoopStmt node)
+    public void caseAForLoopStmt(AForLoopStmt node)
     {
         defaultCase(node);
     }
 
     @Override
-    public void caseAForLoopStmt(AForLoopStmt node)
+    public void caseAWhileLoopStmt(AWhileLoopStmt node)
     {
         defaultCase(node);
     }
@@ -261,6 +261,18 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
+    public void caseTNewline(TNewline node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTComment(TComment node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
     public void caseTLPar(TLPar node)
     {
         defaultCase(node);
@@ -268,6 +280,18 @@ public class AnalysisAdapter implements Analysis
 
     @Override
     public void caseTRPar(TRPar node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTLCbrack(TLCbrack node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTRCbrack(TRCbrack node)
     {
         defaultCase(node);
     }
@@ -285,127 +309,7 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
-    public void caseTBlank(TBlank node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseTImport(TImport node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
     public void caseTString(TString node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseTBool(TBool node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseTAs(TAs node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseTId(TId node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseTSeperatedBy(TSeperatedBy node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseTChar(TChar node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseTNewline(TNewline node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseTAssign(TAssign node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseTType(TType node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseTPlus(TPlus node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseTMinus(TMinus node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseTMult(TMult node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseTDiv(TDiv node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseTMod(TMod node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseTFor(TFor node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseTWhile(TWhile node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseTIn(TIn node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseTIf(TIf node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseTElse(TElse node)
     {
         defaultCase(node);
     }
@@ -418,6 +322,120 @@ public class AnalysisAdapter implements Analysis
 
     @Override
     public void caseTFloatnum(TFloatnum node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTBool(TBool node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTType(TType node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTChar(TChar node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTId(TId node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTBlank(TBlank node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTOpAssign(TOpAssign node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTOpPlus(TOpPlus node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTOpMinus(TOpMinus node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTOpMult(TOpMult node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTOpDiv(TOpDiv node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTOpMod(TOpMod node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTKwAs(TKwAs node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTKwImport(TKwImport node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTKwSeparatedBy(TKwSeparatedBy node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTKwFor(TKwFor node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTKwWhile(TKwWhile node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTKwIn(TKwIn node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTKwIf(TKwIf node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTKwElse(TKwElse node)
     {
         defaultCase(node);
     }

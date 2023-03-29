@@ -7,7 +7,7 @@ import postfix.analysis.*;
 @SuppressWarnings("nls")
 public final class ADivisionInfixBinInfixOp extends PBinInfixOp
 {
-    private TDiv _div_;
+    private TOpDiv _opDiv_;
 
     public ADivisionInfixBinInfixOp()
     {
@@ -15,10 +15,10 @@ public final class ADivisionInfixBinInfixOp extends PBinInfixOp
     }
 
     public ADivisionInfixBinInfixOp(
-        @SuppressWarnings("hiding") TDiv _div_)
+        @SuppressWarnings("hiding") TOpDiv _opDiv_)
     {
         // Constructor
-        setDiv(_div_);
+        setOpDiv(_opDiv_);
 
     }
 
@@ -26,7 +26,7 @@ public final class ADivisionInfixBinInfixOp extends PBinInfixOp
     public Object clone()
     {
         return new ADivisionInfixBinInfixOp(
-            cloneNode(this._div_));
+            cloneNode(this._opDiv_));
     }
 
     @Override
@@ -35,16 +35,16 @@ public final class ADivisionInfixBinInfixOp extends PBinInfixOp
         ((Analysis) sw).caseADivisionInfixBinInfixOp(this);
     }
 
-    public TDiv getDiv()
+    public TOpDiv getOpDiv()
     {
-        return this._div_;
+        return this._opDiv_;
     }
 
-    public void setDiv(TDiv node)
+    public void setOpDiv(TOpDiv node)
     {
-        if(this._div_ != null)
+        if(this._opDiv_ != null)
         {
-            this._div_.parent(null);
+            this._opDiv_.parent(null);
         }
 
         if(node != null)
@@ -57,23 +57,23 @@ public final class ADivisionInfixBinInfixOp extends PBinInfixOp
             node.parent(this);
         }
 
-        this._div_ = node;
+        this._opDiv_ = node;
     }
 
     @Override
     public String toString()
     {
         return ""
-            + toString(this._div_);
+            + toString(this._opDiv_);
     }
 
     @Override
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
-        if(this._div_ == child)
+        if(this._opDiv_ == child)
         {
-            this._div_ = null;
+            this._opDiv_ = null;
             return;
         }
 
@@ -84,9 +84,9 @@ public final class ADivisionInfixBinInfixOp extends PBinInfixOp
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
-        if(this._div_ == oldChild)
+        if(this._opDiv_ == oldChild)
         {
-            setDiv((TDiv) newChild);
+            setOpDiv((TOpDiv) newChild);
             return;
         }
 

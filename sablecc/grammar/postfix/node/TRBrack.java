@@ -9,12 +9,12 @@ public final class TRBrack extends Token
 {
     public TRBrack()
     {
-        super.setText("}");
+        super.setText("]");
     }
 
     public TRBrack(int line, int pos)
     {
-        super.setText("}");
+        super.setText("]");
         setLine(line);
         setPos(pos);
     }

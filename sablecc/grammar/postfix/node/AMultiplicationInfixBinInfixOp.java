@@ -7,7 +7,7 @@ import postfix.analysis.*;
 @SuppressWarnings("nls")
 public final class AMultiplicationInfixBinInfixOp extends PBinInfixOp
 {
-    private TMult _mult_;
+    private TOpMult _opMult_;
 
     public AMultiplicationInfixBinInfixOp()
     {
@@ -15,10 +15,10 @@ public final class AMultiplicationInfixBinInfixOp extends PBinInfixOp
     }
 
     public AMultiplicationInfixBinInfixOp(
-        @SuppressWarnings("hiding") TMult _mult_)
+        @SuppressWarnings("hiding") TOpMult _opMult_)
     {
         // Constructor
-        setMult(_mult_);
+        setOpMult(_opMult_);
 
     }
 
@@ -26,7 +26,7 @@ public final class AMultiplicationInfixBinInfixOp extends PBinInfixOp
     public Object clone()
     {
         return new AMultiplicationInfixBinInfixOp(
-            cloneNode(this._mult_));
+            cloneNode(this._opMult_));
     }
 
     @Override
@@ -35,16 +35,16 @@ public final class AMultiplicationInfixBinInfixOp extends PBinInfixOp
         ((Analysis) sw).caseAMultiplicationInfixBinInfixOp(this);
     }
 
-    public TMult getMult()
+    public TOpMult getOpMult()
     {
-        return this._mult_;
+        return this._opMult_;
     }
 
-    public void setMult(TMult node)
+    public void setOpMult(TOpMult node)
     {
-        if(this._mult_ != null)
+        if(this._opMult_ != null)
         {
-            this._mult_.parent(null);
+            this._opMult_.parent(null);
         }
 
         if(node != null)
@@ -57,23 +57,23 @@ public final class AMultiplicationInfixBinInfixOp extends PBinInfixOp
             node.parent(this);
         }
 
-        this._mult_ = node;
+        this._opMult_ = node;
     }
 
     @Override
     public String toString()
     {
         return ""
-            + toString(this._mult_);
+            + toString(this._opMult_);
     }
 
     @Override
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
-        if(this._mult_ == child)
+        if(this._opMult_ == child)
         {
-            this._mult_ = null;
+            this._opMult_ = null;
             return;
         }
 
@@ -84,9 +84,9 @@ public final class AMultiplicationInfixBinInfixOp extends PBinInfixOp
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
-        if(this._mult_ == oldChild)
+        if(this._opMult_ == oldChild)
         {
-            setMult((TMult) newChild);
+            setOpMult((TOpMult) newChild);
             return;
         }
 

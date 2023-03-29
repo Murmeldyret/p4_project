@@ -7,7 +7,7 @@ import postfix.analysis.*;
 @SuppressWarnings("nls")
 public final class AControlStatementStmt extends PStmt
 {
-    private TIf _if_;
+    private TKwIf _kwIf_;
     private PExpr _expr_;
     private PBlock _block_;
     private PInControlStmt _inControlStmt_;
@@ -18,13 +18,13 @@ public final class AControlStatementStmt extends PStmt
     }
 
     public AControlStatementStmt(
-        @SuppressWarnings("hiding") TIf _if_,
+        @SuppressWarnings("hiding") TKwIf _kwIf_,
         @SuppressWarnings("hiding") PExpr _expr_,
         @SuppressWarnings("hiding") PBlock _block_,
         @SuppressWarnings("hiding") PInControlStmt _inControlStmt_)
     {
         // Constructor
-        setIf(_if_);
+        setKwIf(_kwIf_);
 
         setExpr(_expr_);
 
@@ -38,7 +38,7 @@ public final class AControlStatementStmt extends PStmt
     public Object clone()
     {
         return new AControlStatementStmt(
-            cloneNode(this._if_),
+            cloneNode(this._kwIf_),
             cloneNode(this._expr_),
             cloneNode(this._block_),
             cloneNode(this._inControlStmt_));
@@ -50,16 +50,16 @@ public final class AControlStatementStmt extends PStmt
         ((Analysis) sw).caseAControlStatementStmt(this);
     }
 
-    public TIf getIf()
+    public TKwIf getKwIf()
     {
-        return this._if_;
+        return this._kwIf_;
     }
 
-    public void setIf(TIf node)
+    public void setKwIf(TKwIf node)
     {
-        if(this._if_ != null)
+        if(this._kwIf_ != null)
         {
-            this._if_.parent(null);
+            this._kwIf_.parent(null);
         }
 
         if(node != null)
@@ -72,7 +72,7 @@ public final class AControlStatementStmt extends PStmt
             node.parent(this);
         }
 
-        this._if_ = node;
+        this._kwIf_ = node;
     }
 
     public PExpr getExpr()
@@ -154,7 +154,7 @@ public final class AControlStatementStmt extends PStmt
     public String toString()
     {
         return ""
-            + toString(this._if_)
+            + toString(this._kwIf_)
             + toString(this._expr_)
             + toString(this._block_)
             + toString(this._inControlStmt_);
@@ -164,9 +164,9 @@ public final class AControlStatementStmt extends PStmt
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
-        if(this._if_ == child)
+        if(this._kwIf_ == child)
         {
-            this._if_ = null;
+            this._kwIf_ = null;
             return;
         }
 
@@ -195,9 +195,9 @@ public final class AControlStatementStmt extends PStmt
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
-        if(this._if_ == oldChild)
+        if(this._kwIf_ == oldChild)
         {
-            setIf((TIf) newChild);
+            setKwIf((TKwIf) newChild);
             return;
         }
 

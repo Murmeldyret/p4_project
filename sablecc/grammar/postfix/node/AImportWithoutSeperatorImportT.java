@@ -7,9 +7,9 @@ import postfix.analysis.*;
 @SuppressWarnings("nls")
 public final class AImportWithoutSeperatorImportT extends PImportT
 {
-    private TImport _import_;
+    private TKwImport _kwImport_;
     private TString _string_;
-    private TAs _as_;
+    private TKwAs _kwAs_;
     private TId _id_;
 
     public AImportWithoutSeperatorImportT()
@@ -18,17 +18,17 @@ public final class AImportWithoutSeperatorImportT extends PImportT
     }
 
     public AImportWithoutSeperatorImportT(
-        @SuppressWarnings("hiding") TImport _import_,
+        @SuppressWarnings("hiding") TKwImport _kwImport_,
         @SuppressWarnings("hiding") TString _string_,
-        @SuppressWarnings("hiding") TAs _as_,
+        @SuppressWarnings("hiding") TKwAs _kwAs_,
         @SuppressWarnings("hiding") TId _id_)
     {
         // Constructor
-        setImport(_import_);
+        setKwImport(_kwImport_);
 
         setString(_string_);
 
-        setAs(_as_);
+        setKwAs(_kwAs_);
 
         setId(_id_);
 
@@ -38,9 +38,9 @@ public final class AImportWithoutSeperatorImportT extends PImportT
     public Object clone()
     {
         return new AImportWithoutSeperatorImportT(
-            cloneNode(this._import_),
+            cloneNode(this._kwImport_),
             cloneNode(this._string_),
-            cloneNode(this._as_),
+            cloneNode(this._kwAs_),
             cloneNode(this._id_));
     }
 
@@ -50,16 +50,16 @@ public final class AImportWithoutSeperatorImportT extends PImportT
         ((Analysis) sw).caseAImportWithoutSeperatorImportT(this);
     }
 
-    public TImport getImport()
+    public TKwImport getKwImport()
     {
-        return this._import_;
+        return this._kwImport_;
     }
 
-    public void setImport(TImport node)
+    public void setKwImport(TKwImport node)
     {
-        if(this._import_ != null)
+        if(this._kwImport_ != null)
         {
-            this._import_.parent(null);
+            this._kwImport_.parent(null);
         }
 
         if(node != null)
@@ -72,7 +72,7 @@ public final class AImportWithoutSeperatorImportT extends PImportT
             node.parent(this);
         }
 
-        this._import_ = node;
+        this._kwImport_ = node;
     }
 
     public TString getString()
@@ -100,16 +100,16 @@ public final class AImportWithoutSeperatorImportT extends PImportT
         this._string_ = node;
     }
 
-    public TAs getAs()
+    public TKwAs getKwAs()
     {
-        return this._as_;
+        return this._kwAs_;
     }
 
-    public void setAs(TAs node)
+    public void setKwAs(TKwAs node)
     {
-        if(this._as_ != null)
+        if(this._kwAs_ != null)
         {
-            this._as_.parent(null);
+            this._kwAs_.parent(null);
         }
 
         if(node != null)
@@ -122,7 +122,7 @@ public final class AImportWithoutSeperatorImportT extends PImportT
             node.parent(this);
         }
 
-        this._as_ = node;
+        this._kwAs_ = node;
     }
 
     public TId getId()
@@ -154,9 +154,9 @@ public final class AImportWithoutSeperatorImportT extends PImportT
     public String toString()
     {
         return ""
-            + toString(this._import_)
+            + toString(this._kwImport_)
             + toString(this._string_)
-            + toString(this._as_)
+            + toString(this._kwAs_)
             + toString(this._id_);
     }
 
@@ -164,9 +164,9 @@ public final class AImportWithoutSeperatorImportT extends PImportT
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
-        if(this._import_ == child)
+        if(this._kwImport_ == child)
         {
-            this._import_ = null;
+            this._kwImport_ = null;
             return;
         }
 
@@ -176,9 +176,9 @@ public final class AImportWithoutSeperatorImportT extends PImportT
             return;
         }
 
-        if(this._as_ == child)
+        if(this._kwAs_ == child)
         {
-            this._as_ = null;
+            this._kwAs_ = null;
             return;
         }
 
@@ -195,9 +195,9 @@ public final class AImportWithoutSeperatorImportT extends PImportT
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
-        if(this._import_ == oldChild)
+        if(this._kwImport_ == oldChild)
         {
-            setImport((TImport) newChild);
+            setKwImport((TKwImport) newChild);
             return;
         }
 
@@ -207,9 +207,9 @@ public final class AImportWithoutSeperatorImportT extends PImportT
             return;
         }
 
-        if(this._as_ == oldChild)
+        if(this._kwAs_ == oldChild)
         {
-            setAs((TAs) newChild);
+            setKwAs((TKwAs) newChild);
             return;
         }
 

@@ -7,8 +7,8 @@ import postfix.analysis.*;
 @SuppressWarnings("nls")
 public final class AElifStatementInControlStmt extends PInControlStmt
 {
-    private TElse _else_;
-    private TIf _if_;
+    private TKwElse _kwElse_;
+    private TKwIf _kwIf_;
     private PExpr _expr_;
     private PBlock _block_;
 
@@ -18,15 +18,15 @@ public final class AElifStatementInControlStmt extends PInControlStmt
     }
 
     public AElifStatementInControlStmt(
-        @SuppressWarnings("hiding") TElse _else_,
-        @SuppressWarnings("hiding") TIf _if_,
+        @SuppressWarnings("hiding") TKwElse _kwElse_,
+        @SuppressWarnings("hiding") TKwIf _kwIf_,
         @SuppressWarnings("hiding") PExpr _expr_,
         @SuppressWarnings("hiding") PBlock _block_)
     {
         // Constructor
-        setElse(_else_);
+        setKwElse(_kwElse_);
 
-        setIf(_if_);
+        setKwIf(_kwIf_);
 
         setExpr(_expr_);
 
@@ -38,8 +38,8 @@ public final class AElifStatementInControlStmt extends PInControlStmt
     public Object clone()
     {
         return new AElifStatementInControlStmt(
-            cloneNode(this._else_),
-            cloneNode(this._if_),
+            cloneNode(this._kwElse_),
+            cloneNode(this._kwIf_),
             cloneNode(this._expr_),
             cloneNode(this._block_));
     }
@@ -50,16 +50,16 @@ public final class AElifStatementInControlStmt extends PInControlStmt
         ((Analysis) sw).caseAElifStatementInControlStmt(this);
     }
 
-    public TElse getElse()
+    public TKwElse getKwElse()
     {
-        return this._else_;
+        return this._kwElse_;
     }
 
-    public void setElse(TElse node)
+    public void setKwElse(TKwElse node)
     {
-        if(this._else_ != null)
+        if(this._kwElse_ != null)
         {
-            this._else_.parent(null);
+            this._kwElse_.parent(null);
         }
 
         if(node != null)
@@ -72,19 +72,19 @@ public final class AElifStatementInControlStmt extends PInControlStmt
             node.parent(this);
         }
 
-        this._else_ = node;
+        this._kwElse_ = node;
     }
 
-    public TIf getIf()
+    public TKwIf getKwIf()
     {
-        return this._if_;
+        return this._kwIf_;
     }
 
-    public void setIf(TIf node)
+    public void setKwIf(TKwIf node)
     {
-        if(this._if_ != null)
+        if(this._kwIf_ != null)
         {
-            this._if_.parent(null);
+            this._kwIf_.parent(null);
         }
 
         if(node != null)
@@ -97,7 +97,7 @@ public final class AElifStatementInControlStmt extends PInControlStmt
             node.parent(this);
         }
 
-        this._if_ = node;
+        this._kwIf_ = node;
     }
 
     public PExpr getExpr()
@@ -154,8 +154,8 @@ public final class AElifStatementInControlStmt extends PInControlStmt
     public String toString()
     {
         return ""
-            + toString(this._else_)
-            + toString(this._if_)
+            + toString(this._kwElse_)
+            + toString(this._kwIf_)
             + toString(this._expr_)
             + toString(this._block_);
     }
@@ -164,15 +164,15 @@ public final class AElifStatementInControlStmt extends PInControlStmt
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
-        if(this._else_ == child)
+        if(this._kwElse_ == child)
         {
-            this._else_ = null;
+            this._kwElse_ = null;
             return;
         }
 
-        if(this._if_ == child)
+        if(this._kwIf_ == child)
         {
-            this._if_ = null;
+            this._kwIf_ = null;
             return;
         }
 
@@ -195,15 +195,15 @@ public final class AElifStatementInControlStmt extends PInControlStmt
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
-        if(this._else_ == oldChild)
+        if(this._kwElse_ == oldChild)
         {
-            setElse((TElse) newChild);
+            setKwElse((TKwElse) newChild);
             return;
         }
 
-        if(this._if_ == oldChild)
+        if(this._kwIf_ == oldChild)
         {
-            setIf((TIf) newChild);
+            setKwIf((TKwIf) newChild);
             return;
         }
 
