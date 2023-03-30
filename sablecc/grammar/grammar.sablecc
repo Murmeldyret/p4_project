@@ -57,6 +57,12 @@ Tokens
 
     //special Operators
     sop_dot = '.';
+    sop_sum = 'sum';
+    sop_filter = 'filter';
+    sop_groupby = 'groupby';
+    sop_mean = 'mean';
+    sop_sort = 'sort';
+    sop_count = 'count';
 
 
     //keywords
