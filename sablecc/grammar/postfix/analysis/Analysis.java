@@ -28,9 +28,13 @@ public interface Analysis extends Switch
     void caseAElseStatement(AElseStatement node);
     void caseAAssignAssignment(AAssignAssignment node);
     void caseAExprValPrimeExpr(AExprValPrimeExpr node);
-    void caseAExpr(AExpr node);
+    void caseAExprSpecialExpr(AExprSpecialExpr node);
     void caseAExprPrimeOperatorValPrimeExprPrime(AExprPrimeOperatorValPrimeExprPrime node);
     void caseAExprPrime(AExprPrime node);
+    void caseASpeicalExpressionSpecialExpr(ASpeicalExpressionSpecialExpr node);
+    void caseASpecialExpressionSortSpecialExpr(ASpecialExpressionSortSpecialExpr node);
+    void caseASpecialExprPrimeSpecialExprPrime(ASpecialExprPrimeSpecialExprPrime node);
+    void caseASpecialExprPrime(ASpecialExprPrime node);
     void caseAValIdVal(AValIdVal node);
     void caseAValFloatnumVal(AValFloatnumVal node);
     void caseAValIntnumVal(AValIntnumVal node);
@@ -48,11 +52,10 @@ public interface Analysis extends Switch
     void caseAGreaterThanEqualInfixBinInfixOp(AGreaterThanEqualInfixBinInfixOp node);
     void caseALessThanInfixBinInfixOp(ALessThanInfixBinInfixOp node);
     void caseALessThanEqualInfixBinInfixOp(ALessThanEqualInfixBinInfixOp node);
-    void caseANotPrefixUnaryPrefixOp(ANotPrefixUnaryPrefixOp node);
-    void caseAFilterPrefixUnaryPrefixOp(AFilterPrefixUnaryPrefixOp node);
-    void caseAGroupbyPrefixUnaryPrefixOp(AGroupbyPrefixUnaryPrefixOp node);
-    void caseAMeanPrefixUnaryPrefixOp(AMeanPrefixUnaryPrefixOp node);
-    void caseACountPrefixUnaryPrefixOp(ACountPrefixUnaryPrefixOp node);
+    void caseAFilterOpSpecialOp(AFilterOpSpecialOp node);
+    void caseAGroupbyOpSpecialOp(AGroupbyOpSpecialOp node);
+    void caseAMeanOpSpecialOp(AMeanOpSpecialOp node);
+    void caseACountOpSpecialOp(ACountOpSpecialOp node);
     void caseAImportWithoutSeperatorImportT(AImportWithoutSeperatorImportT node);
     void caseAImportWithSeperatorImportT(AImportWithSeperatorImportT node);
 

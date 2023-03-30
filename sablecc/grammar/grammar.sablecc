@@ -113,13 +113,21 @@ Productions
         {assign} id op_assign expr;
 
     expr =
-       {expr_val_prime} val expr_prime | ;
+       {expr_val_prime} bop_not? val expr_prime | 
+       {expr_special} special_expr ;
     
     expr_prime = 
        {expr_prime_operator_val_prime} bin_infix_op val expr_prime | ;
     
+    special_expr =
+        {speical_expression} special_op special_expr_prime |
+        {special_expression_sort} sop_sort special_expr_prime kw_sort_order;
+
+    special_expr_prime =
+        {special_expr_prime} special_op special_expr_prime | ;
+
     val = 
-       {val_id} id |
+        {val_id} id |
         {val_floatnum} floatnum |
         {val_intnum} intnum |
         {val_string} string |
@@ -141,12 +149,11 @@ Productions
         {less_than_equal_infix} bop_lethan ;
     
     // skal der være andre prefix operatorer?
-    unary_prefix_op =
-        {not_prefix} bop_not |
-        {filter_prefix} sop_filter |
-        {groupby_prefix} sop_groupby |
-        {mean_prefix} sop_mean |
-        {count_prefix} sop_count ;
+    special_op =
+        {filter_op} sop_filter  |
+        {groupby_op} sop_groupby |
+        {mean_op} sop_mean |
+        {count_op} sop_count ;
 
     import_t =
         {import_without_seperator} kw_import string kw_as id |

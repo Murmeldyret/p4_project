@@ -171,7 +171,7 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
-    public void caseAExpr(AExpr node)
+    public void caseAExprSpecialExpr(AExprSpecialExpr node)
     {
         defaultCase(node);
     }
@@ -184,6 +184,30 @@ public class AnalysisAdapter implements Analysis
 
     @Override
     public void caseAExprPrime(AExprPrime node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseASpeicalExpressionSpecialExpr(ASpeicalExpressionSpecialExpr node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseASpecialExpressionSortSpecialExpr(ASpecialExpressionSortSpecialExpr node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseASpecialExprPrimeSpecialExprPrime(ASpecialExprPrimeSpecialExprPrime node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseASpecialExprPrime(ASpecialExprPrime node)
     {
         defaultCase(node);
     }
@@ -291,31 +315,25 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
-    public void caseANotPrefixUnaryPrefixOp(ANotPrefixUnaryPrefixOp node)
+    public void caseAFilterOpSpecialOp(AFilterOpSpecialOp node)
     {
         defaultCase(node);
     }
 
     @Override
-    public void caseAFilterPrefixUnaryPrefixOp(AFilterPrefixUnaryPrefixOp node)
+    public void caseAGroupbyOpSpecialOp(AGroupbyOpSpecialOp node)
     {
         defaultCase(node);
     }
 
     @Override
-    public void caseAGroupbyPrefixUnaryPrefixOp(AGroupbyPrefixUnaryPrefixOp node)
+    public void caseAMeanOpSpecialOp(AMeanOpSpecialOp node)
     {
         defaultCase(node);
     }
 
     @Override
-    public void caseAMeanPrefixUnaryPrefixOp(AMeanPrefixUnaryPrefixOp node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseACountPrefixUnaryPrefixOp(ACountPrefixUnaryPrefixOp node)
+    public void caseACountOpSpecialOp(ACountOpSpecialOp node)
     {
         defaultCase(node);
     }

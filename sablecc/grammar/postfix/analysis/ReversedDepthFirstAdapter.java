@@ -453,24 +453,32 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
         {
             node.getVal().apply(this);
         }
+        if(node.getBopNot() != null)
+        {
+            node.getBopNot().apply(this);
+        }
         outAExprValPrimeExpr(node);
     }
 
-    public void inAExpr(AExpr node)
+    public void inAExprSpecialExpr(AExprSpecialExpr node)
     {
         defaultIn(node);
     }
 
-    public void outAExpr(AExpr node)
+    public void outAExprSpecialExpr(AExprSpecialExpr node)
     {
         defaultOut(node);
     }
 
     @Override
-    public void caseAExpr(AExpr node)
+    public void caseAExprSpecialExpr(AExprSpecialExpr node)
     {
-        inAExpr(node);
-        outAExpr(node);
+        inAExprSpecialExpr(node);
+        if(node.getSpecialExpr() != null)
+        {
+            node.getSpecialExpr().apply(this);
+        }
+        outAExprSpecialExpr(node);
     }
 
     public void inAExprPrimeOperatorValPrimeExprPrime(AExprPrimeOperatorValPrimeExprPrime node)
@@ -517,6 +525,102 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
     {
         inAExprPrime(node);
         outAExprPrime(node);
+    }
+
+    public void inASpeicalExpressionSpecialExpr(ASpeicalExpressionSpecialExpr node)
+    {
+        defaultIn(node);
+    }
+
+    public void outASpeicalExpressionSpecialExpr(ASpeicalExpressionSpecialExpr node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseASpeicalExpressionSpecialExpr(ASpeicalExpressionSpecialExpr node)
+    {
+        inASpeicalExpressionSpecialExpr(node);
+        if(node.getSpecialExprPrime() != null)
+        {
+            node.getSpecialExprPrime().apply(this);
+        }
+        if(node.getSpecialOp() != null)
+        {
+            node.getSpecialOp().apply(this);
+        }
+        outASpeicalExpressionSpecialExpr(node);
+    }
+
+    public void inASpecialExpressionSortSpecialExpr(ASpecialExpressionSortSpecialExpr node)
+    {
+        defaultIn(node);
+    }
+
+    public void outASpecialExpressionSortSpecialExpr(ASpecialExpressionSortSpecialExpr node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseASpecialExpressionSortSpecialExpr(ASpecialExpressionSortSpecialExpr node)
+    {
+        inASpecialExpressionSortSpecialExpr(node);
+        if(node.getKwSortOrder() != null)
+        {
+            node.getKwSortOrder().apply(this);
+        }
+        if(node.getSpecialExprPrime() != null)
+        {
+            node.getSpecialExprPrime().apply(this);
+        }
+        if(node.getSopSort() != null)
+        {
+            node.getSopSort().apply(this);
+        }
+        outASpecialExpressionSortSpecialExpr(node);
+    }
+
+    public void inASpecialExprPrimeSpecialExprPrime(ASpecialExprPrimeSpecialExprPrime node)
+    {
+        defaultIn(node);
+    }
+
+    public void outASpecialExprPrimeSpecialExprPrime(ASpecialExprPrimeSpecialExprPrime node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseASpecialExprPrimeSpecialExprPrime(ASpecialExprPrimeSpecialExprPrime node)
+    {
+        inASpecialExprPrimeSpecialExprPrime(node);
+        if(node.getSpecialExprPrime() != null)
+        {
+            node.getSpecialExprPrime().apply(this);
+        }
+        if(node.getSpecialOp() != null)
+        {
+            node.getSpecialOp().apply(this);
+        }
+        outASpecialExprPrimeSpecialExprPrime(node);
+    }
+
+    public void inASpecialExprPrime(ASpecialExprPrime node)
+    {
+        defaultIn(node);
+    }
+
+    public void outASpecialExprPrime(ASpecialExprPrime node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseASpecialExprPrime(ASpecialExprPrime node)
+    {
+        inASpecialExprPrime(node);
+        outASpecialExprPrime(node);
     }
 
     public void inAValIdVal(AValIdVal node)
@@ -876,109 +980,88 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
         outALessThanEqualInfixBinInfixOp(node);
     }
 
-    public void inANotPrefixUnaryPrefixOp(ANotPrefixUnaryPrefixOp node)
+    public void inAFilterOpSpecialOp(AFilterOpSpecialOp node)
     {
         defaultIn(node);
     }
 
-    public void outANotPrefixUnaryPrefixOp(ANotPrefixUnaryPrefixOp node)
+    public void outAFilterOpSpecialOp(AFilterOpSpecialOp node)
     {
         defaultOut(node);
     }
 
     @Override
-    public void caseANotPrefixUnaryPrefixOp(ANotPrefixUnaryPrefixOp node)
+    public void caseAFilterOpSpecialOp(AFilterOpSpecialOp node)
     {
-        inANotPrefixUnaryPrefixOp(node);
-        if(node.getBopNot() != null)
-        {
-            node.getBopNot().apply(this);
-        }
-        outANotPrefixUnaryPrefixOp(node);
-    }
-
-    public void inAFilterPrefixUnaryPrefixOp(AFilterPrefixUnaryPrefixOp node)
-    {
-        defaultIn(node);
-    }
-
-    public void outAFilterPrefixUnaryPrefixOp(AFilterPrefixUnaryPrefixOp node)
-    {
-        defaultOut(node);
-    }
-
-    @Override
-    public void caseAFilterPrefixUnaryPrefixOp(AFilterPrefixUnaryPrefixOp node)
-    {
-        inAFilterPrefixUnaryPrefixOp(node);
+        inAFilterOpSpecialOp(node);
         if(node.getSopFilter() != null)
         {
             node.getSopFilter().apply(this);
         }
-        outAFilterPrefixUnaryPrefixOp(node);
+        outAFilterOpSpecialOp(node);
     }
 
-    public void inAGroupbyPrefixUnaryPrefixOp(AGroupbyPrefixUnaryPrefixOp node)
+    public void inAGroupbyOpSpecialOp(AGroupbyOpSpecialOp node)
     {
         defaultIn(node);
     }
 
-    public void outAGroupbyPrefixUnaryPrefixOp(AGroupbyPrefixUnaryPrefixOp node)
+    public void outAGroupbyOpSpecialOp(AGroupbyOpSpecialOp node)
     {
         defaultOut(node);
     }
 
     @Override
-    public void caseAGroupbyPrefixUnaryPrefixOp(AGroupbyPrefixUnaryPrefixOp node)
+    public void caseAGroupbyOpSpecialOp(AGroupbyOpSpecialOp node)
     {
-        inAGroupbyPrefixUnaryPrefixOp(node);
+        inAGroupbyOpSpecialOp(node);
         if(node.getSopGroupby() != null)
         {
             node.getSopGroupby().apply(this);
         }
-        outAGroupbyPrefixUnaryPrefixOp(node);
+        outAGroupbyOpSpecialOp(node);
     }
 
-    public void inAMeanPrefixUnaryPrefixOp(AMeanPrefixUnaryPrefixOp node)
+    public void inAMeanOpSpecialOp(AMeanOpSpecialOp node)
     {
         defaultIn(node);
     }
 
-    public void outAMeanPrefixUnaryPrefixOp(AMeanPrefixUnaryPrefixOp node)
+    public void outAMeanOpSpecialOp(AMeanOpSpecialOp node)
     {
         defaultOut(node);
     }
 
     @Override
-    public void caseAMeanPrefixUnaryPrefixOp(AMeanPrefixUnaryPrefixOp node)
+    public void caseAMeanOpSpecialOp(AMeanOpSpecialOp node)
     {
-        inAMeanPrefixUnaryPrefixOp(node);
+        inAMeanOpSpecialOp(node);
         if(node.getSopMean() != null)
         {
             node.getSopMean().apply(this);
         }
-        outAMeanPrefixUnaryPrefixOp(node);
+        outAMeanOpSpecialOp(node);
     }
 
-    public void inACountPrefixUnaryPrefixOp(ACountPrefixUnaryPrefixOp node)
+    public void inACountOpSpecialOp(ACountOpSpecialOp node)
     {
         defaultIn(node);
     }
 
-    public void outACountPrefixUnaryPrefixOp(ACountPrefixUnaryPrefixOp node)
+    public void outACountOpSpecialOp(ACountOpSpecialOp node)
     {
         defaultOut(node);
     }
 
     @Override
-    public void caseACountPrefixUnaryPrefixOp(ACountPrefixUnaryPrefixOp node)
+    public void caseACountOpSpecialOp(ACountOpSpecialOp node)
     {
-        inACountPrefixUnaryPrefixOp(node);
+        inACountOpSpecialOp(node);
         if(node.getSopCount() != null)
         {
             node.getSopCount().apply(this);
         }
-        outACountPrefixUnaryPrefixOp(node);
+        outACountOpSpecialOp(node);
     }
 
     public void inAImportWithoutSeperatorImportT(AImportWithoutSeperatorImportT node)
