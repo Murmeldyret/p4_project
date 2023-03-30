@@ -7,7 +7,7 @@ import postfix.analysis.*;
 @SuppressWarnings("nls")
 public final class AElseBlockStatementElseStatement extends PElseStatement
 {
-    private TElse _else_;
+    private TKwElse _kwElse_;
     private PBlock _block_;
 
     public AElseBlockStatementElseStatement()
@@ -16,11 +16,11 @@ public final class AElseBlockStatementElseStatement extends PElseStatement
     }
 
     public AElseBlockStatementElseStatement(
-        @SuppressWarnings("hiding") TElse _else_,
+        @SuppressWarnings("hiding") TKwElse _kwElse_,
         @SuppressWarnings("hiding") PBlock _block_)
     {
         // Constructor
-        setElse(_else_);
+        setKwElse(_kwElse_);
 
         setBlock(_block_);
 
@@ -30,7 +30,7 @@ public final class AElseBlockStatementElseStatement extends PElseStatement
     public Object clone()
     {
         return new AElseBlockStatementElseStatement(
-            cloneNode(this._else_),
+            cloneNode(this._kwElse_),
             cloneNode(this._block_));
     }
 
@@ -40,16 +40,16 @@ public final class AElseBlockStatementElseStatement extends PElseStatement
         ((Analysis) sw).caseAElseBlockStatementElseStatement(this);
     }
 
-    public TElse getElse()
+    public TKwElse getKwElse()
     {
-        return this._else_;
+        return this._kwElse_;
     }
 
-    public void setElse(TElse node)
+    public void setKwElse(TKwElse node)
     {
-        if(this._else_ != null)
+        if(this._kwElse_ != null)
         {
-            this._else_.parent(null);
+            this._kwElse_.parent(null);
         }
 
         if(node != null)
@@ -62,7 +62,7 @@ public final class AElseBlockStatementElseStatement extends PElseStatement
             node.parent(this);
         }
 
-        this._else_ = node;
+        this._kwElse_ = node;
     }
 
     public PBlock getBlock()
@@ -94,7 +94,7 @@ public final class AElseBlockStatementElseStatement extends PElseStatement
     public String toString()
     {
         return ""
-            + toString(this._else_)
+            + toString(this._kwElse_)
             + toString(this._block_);
     }
 
@@ -102,9 +102,9 @@ public final class AElseBlockStatementElseStatement extends PElseStatement
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
-        if(this._else_ == child)
+        if(this._kwElse_ == child)
         {
-            this._else_ = null;
+            this._kwElse_ = null;
             return;
         }
 
@@ -121,9 +121,9 @@ public final class AElseBlockStatementElseStatement extends PElseStatement
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
-        if(this._else_ == oldChild)
+        if(this._kwElse_ == oldChild)
         {
-            setElse((TElse) newChild);
+            setKwElse((TKwElse) newChild);
             return;
         }
 

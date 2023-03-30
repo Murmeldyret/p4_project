@@ -7,7 +7,7 @@ import postfix.analysis.*;
 @SuppressWarnings("nls")
 public final class AWhileLoopStmt extends PStmt
 {
-    private TWhile _while_;
+    private TKwWhile _kwWhile_;
     private PExpr _expr_;
     private PBlock _block_;
 
@@ -17,12 +17,12 @@ public final class AWhileLoopStmt extends PStmt
     }
 
     public AWhileLoopStmt(
-        @SuppressWarnings("hiding") TWhile _while_,
+        @SuppressWarnings("hiding") TKwWhile _kwWhile_,
         @SuppressWarnings("hiding") PExpr _expr_,
         @SuppressWarnings("hiding") PBlock _block_)
     {
         // Constructor
-        setWhile(_while_);
+        setKwWhile(_kwWhile_);
 
         setExpr(_expr_);
 
@@ -34,7 +34,7 @@ public final class AWhileLoopStmt extends PStmt
     public Object clone()
     {
         return new AWhileLoopStmt(
-            cloneNode(this._while_),
+            cloneNode(this._kwWhile_),
             cloneNode(this._expr_),
             cloneNode(this._block_));
     }
@@ -45,16 +45,16 @@ public final class AWhileLoopStmt extends PStmt
         ((Analysis) sw).caseAWhileLoopStmt(this);
     }
 
-    public TWhile getWhile()
+    public TKwWhile getKwWhile()
     {
-        return this._while_;
+        return this._kwWhile_;
     }
 
-    public void setWhile(TWhile node)
+    public void setKwWhile(TKwWhile node)
     {
-        if(this._while_ != null)
+        if(this._kwWhile_ != null)
         {
-            this._while_.parent(null);
+            this._kwWhile_.parent(null);
         }
 
         if(node != null)
@@ -67,7 +67,7 @@ public final class AWhileLoopStmt extends PStmt
             node.parent(this);
         }
 
-        this._while_ = node;
+        this._kwWhile_ = node;
     }
 
     public PExpr getExpr()
@@ -124,7 +124,7 @@ public final class AWhileLoopStmt extends PStmt
     public String toString()
     {
         return ""
-            + toString(this._while_)
+            + toString(this._kwWhile_)
             + toString(this._expr_)
             + toString(this._block_);
     }
@@ -133,9 +133,9 @@ public final class AWhileLoopStmt extends PStmt
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
-        if(this._while_ == child)
+        if(this._kwWhile_ == child)
         {
-            this._while_ = null;
+            this._kwWhile_ = null;
             return;
         }
 
@@ -158,9 +158,9 @@ public final class AWhileLoopStmt extends PStmt
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
-        if(this._while_ == oldChild)
+        if(this._kwWhile_ == oldChild)
         {
-            setWhile((TWhile) newChild);
+            setKwWhile((TKwWhile) newChild);
             return;
         }
 

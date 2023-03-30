@@ -7,7 +7,7 @@ import postfix.analysis.*;
 @SuppressWarnings("nls")
 public final class AModuloInfixBinInfixOp extends PBinInfixOp
 {
-    private TMod _mod_;
+    private TOpMod _opMod_;
 
     public AModuloInfixBinInfixOp()
     {
@@ -15,10 +15,10 @@ public final class AModuloInfixBinInfixOp extends PBinInfixOp
     }
 
     public AModuloInfixBinInfixOp(
-        @SuppressWarnings("hiding") TMod _mod_)
+        @SuppressWarnings("hiding") TOpMod _opMod_)
     {
         // Constructor
-        setMod(_mod_);
+        setOpMod(_opMod_);
 
     }
 
@@ -26,7 +26,7 @@ public final class AModuloInfixBinInfixOp extends PBinInfixOp
     public Object clone()
     {
         return new AModuloInfixBinInfixOp(
-            cloneNode(this._mod_));
+            cloneNode(this._opMod_));
     }
 
     @Override
@@ -35,16 +35,16 @@ public final class AModuloInfixBinInfixOp extends PBinInfixOp
         ((Analysis) sw).caseAModuloInfixBinInfixOp(this);
     }
 
-    public TMod getMod()
+    public TOpMod getOpMod()
     {
-        return this._mod_;
+        return this._opMod_;
     }
 
-    public void setMod(TMod node)
+    public void setOpMod(TOpMod node)
     {
-        if(this._mod_ != null)
+        if(this._opMod_ != null)
         {
-            this._mod_.parent(null);
+            this._opMod_.parent(null);
         }
 
         if(node != null)
@@ -57,23 +57,23 @@ public final class AModuloInfixBinInfixOp extends PBinInfixOp
             node.parent(this);
         }
 
-        this._mod_ = node;
+        this._opMod_ = node;
     }
 
     @Override
     public String toString()
     {
         return ""
-            + toString(this._mod_);
+            + toString(this._opMod_);
     }
 
     @Override
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
-        if(this._mod_ == child)
+        if(this._opMod_ == child)
         {
-            this._mod_ = null;
+            this._opMod_ = null;
             return;
         }
 
@@ -84,9 +84,9 @@ public final class AModuloInfixBinInfixOp extends PBinInfixOp
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
-        if(this._mod_ == oldChild)
+        if(this._opMod_ == oldChild)
         {
-            setMod((TMod) newChild);
+            setOpMod((TOpMod) newChild);
             return;
         }
 

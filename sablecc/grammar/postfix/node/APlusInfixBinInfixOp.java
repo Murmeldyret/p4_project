@@ -7,7 +7,7 @@ import postfix.analysis.*;
 @SuppressWarnings("nls")
 public final class APlusInfixBinInfixOp extends PBinInfixOp
 {
-    private TPlus _plus_;
+    private TOpPlus _opPlus_;
 
     public APlusInfixBinInfixOp()
     {
@@ -15,10 +15,10 @@ public final class APlusInfixBinInfixOp extends PBinInfixOp
     }
 
     public APlusInfixBinInfixOp(
-        @SuppressWarnings("hiding") TPlus _plus_)
+        @SuppressWarnings("hiding") TOpPlus _opPlus_)
     {
         // Constructor
-        setPlus(_plus_);
+        setOpPlus(_opPlus_);
 
     }
 
@@ -26,7 +26,7 @@ public final class APlusInfixBinInfixOp extends PBinInfixOp
     public Object clone()
     {
         return new APlusInfixBinInfixOp(
-            cloneNode(this._plus_));
+            cloneNode(this._opPlus_));
     }
 
     @Override
@@ -35,16 +35,16 @@ public final class APlusInfixBinInfixOp extends PBinInfixOp
         ((Analysis) sw).caseAPlusInfixBinInfixOp(this);
     }
 
-    public TPlus getPlus()
+    public TOpPlus getOpPlus()
     {
-        return this._plus_;
+        return this._opPlus_;
     }
 
-    public void setPlus(TPlus node)
+    public void setOpPlus(TOpPlus node)
     {
-        if(this._plus_ != null)
+        if(this._opPlus_ != null)
         {
-            this._plus_.parent(null);
+            this._opPlus_.parent(null);
         }
 
         if(node != null)
@@ -57,23 +57,23 @@ public final class APlusInfixBinInfixOp extends PBinInfixOp
             node.parent(this);
         }
 
-        this._plus_ = node;
+        this._opPlus_ = node;
     }
 
     @Override
     public String toString()
     {
         return ""
-            + toString(this._plus_);
+            + toString(this._opPlus_);
     }
 
     @Override
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
-        if(this._plus_ == child)
+        if(this._opPlus_ == child)
         {
-            this._plus_ = null;
+            this._opPlus_ = null;
             return;
         }
 
@@ -84,9 +84,9 @@ public final class APlusInfixBinInfixOp extends PBinInfixOp
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
-        if(this._plus_ == oldChild)
+        if(this._opPlus_ == oldChild)
         {
-            setPlus((TPlus) newChild);
+            setOpPlus((TOpPlus) newChild);
             return;
         }
 

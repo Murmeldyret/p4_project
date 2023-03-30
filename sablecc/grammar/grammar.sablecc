@@ -1,42 +1,78 @@
 Package postfix; 
 
 Helpers
+    //Do not put Tokens/terminals in here
     number = ['0' .. '9']+;
+    all = [00 .. 127];
+    
+    // different ways of producing end of line on different OS'
+    cr = 13;
+    lf = 10;
+    tab = 9;
+    eol = cr | lf | cr lf ;
+    not_eol = [all -[cr + lf]];
 
-Tokens    
+Tokens
+    //for tokens in the program
+    newline = eol;
+
+    //comment
+    comment = ('#' not_eol* eol); 
+    //braces and parens
     l_par = '(';
     r_par = ')';
-    l_brack = '{';
-    r_brack = '}';
-    blank = (' ' | 13 | 10)+;
-    import = 'import';
+    l_cbrack = '{';
+    r_cbrack = '}';
+    l_brack = '[';
+    r_brack = ']';
+
+    //types
     string = ('"' '"');
+    intnum = -?(number)+;
+    floatnum = -?(number)+ '.' (number)+;
     bool = 'true' | 'false';
-    as = 'as';
-    id = (['A' .. 'Z'] ['a' .. 'z'])(['A' .. 'Z'] ['a' .. 'z'] ['0' .. '9'])*;
-    seperated_by = 'seperated_by';
-    char = 39 '.' 39;
-    newline = 10;
-    assign = ':=';
     type = ('int' | 'bool' | 'float' | 'string' | 'csv' | 'char' | 'array');
+    char = 39 '.' 39;
+
+    id = (['A' .. 'Z'] ['a' .. 'z'])(['A' .. 'Z'] ['a' .. 'z'] ['0' .. '9'])*;
+    blank = (' ' | 13 | 10)+;
+
     //Operators
-    plus = '+';
-    minus = '-';
-    mult = '*';
-    div = '/';
-    mod = '%';
+    op_assign = ':=';
+    op_plus = '+';
+    op_minus = '-';
+    op_mult = '*';
+    op_div = '/';
+    op_mod = '%';
+
+    //Boolean Operators
+    bop_lthan = '<';
+    bop_lethan = '<=';
+    bop_gthan = '>';
+    bop_gethan = '>=';
+    bop_eq = '==';
+    bop_and = 'and';
+    bop_or = 'or';
+    bop_not = 'not';
+
+    //special Operators
+    sop_dot = '.';
+
+
     //keywords
-    for = 'for';
-    while = 'while';
-    in = 'in';
-    if = 'if';
-    else = 'else';
-    intnum = (number)+;
-    floatnum = (number)+ '.' (number)+;
+    kw_as = 'as';
+    kw_import = 'import';
+    kw_separated_by = 'seperated_by';
+    kw_for = 'for';
+    kw_while = 'while';
+    kw_in = 'in';
+    kw_if = 'if';
+    kw_else = 'else';
 
 
 Ignored Tokens
-    blank;
+    blank,
+    comment;
 
 Productions
     program =
@@ -47,24 +83,24 @@ Productions
 
     stmt =
         {import_stmt} import_t |
-        {declaration} type id assign expr | 
+        {declaration} type id op_assign expr | 
         {assigenment_statement} assigenment |
-        {while_loop} while expr block |
-        {for_loop} for id in val block |
-        {control_statement} if expr block in_control_stmt ;
+        {for_loop} kw_for id kw_in val block |
+        {while_loop} kw_while expr block |
+        {control_statement} kw_if expr block in_control_stmt ;
 
     block =
-       {block_stmt} l_brack stmts r_brack ;
+       {block_stmt} l_cbrack stmts r_cbrack ;
 
     in_control_stmt =
-       {elif_statement} else if expr block |
+       {elif_statement} kw_else kw_if expr block |
        {else_statement} else_statement;
     
     else_statement =
-       {else_block_statement} else block | ;
+       {else_block_statement} kw_else block | ;
     
     assigenment =
-        {assign} id assign expr;
+        {assign} id op_assign expr;
 
     expr =
        {expr_val_prime} val expr_prime | ;
@@ -80,12 +116,12 @@ Productions
         {val_bool} bool ;
 
     bin_infix_op = 
-        {plus_infix} plus |
-        {minus_infix} minus |
-        {multiplication_infix} mult |
-        {division_infix} div |
-        {modulo_infix} mod ;
+        {plus_infix} op_plus |
+        {minus_infix} op_minus |
+        {multiplication_infix} op_mult |
+        {division_infix} op_div |
+        {modulo_infix} op_mod ;
 
     import_t =
-        {import_without_seperator} import string as id |
-        {import_with_seperator} import string seperated_by char as id;
+        {import_without_seperator} kw_import string kw_as id |
+        {import_with_seperator} kw_import string kw_separated_by char kw_as id;

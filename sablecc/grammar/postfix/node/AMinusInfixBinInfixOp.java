@@ -7,7 +7,7 @@ import postfix.analysis.*;
 @SuppressWarnings("nls")
 public final class AMinusInfixBinInfixOp extends PBinInfixOp
 {
-    private TMinus _minus_;
+    private TOpMinus _opMinus_;
 
     public AMinusInfixBinInfixOp()
     {
@@ -15,10 +15,10 @@ public final class AMinusInfixBinInfixOp extends PBinInfixOp
     }
 
     public AMinusInfixBinInfixOp(
-        @SuppressWarnings("hiding") TMinus _minus_)
+        @SuppressWarnings("hiding") TOpMinus _opMinus_)
     {
         // Constructor
-        setMinus(_minus_);
+        setOpMinus(_opMinus_);
 
     }
 
@@ -26,7 +26,7 @@ public final class AMinusInfixBinInfixOp extends PBinInfixOp
     public Object clone()
     {
         return new AMinusInfixBinInfixOp(
-            cloneNode(this._minus_));
+            cloneNode(this._opMinus_));
     }
 
     @Override
@@ -35,16 +35,16 @@ public final class AMinusInfixBinInfixOp extends PBinInfixOp
         ((Analysis) sw).caseAMinusInfixBinInfixOp(this);
     }
 
-    public TMinus getMinus()
+    public TOpMinus getOpMinus()
     {
-        return this._minus_;
+        return this._opMinus_;
     }
 
-    public void setMinus(TMinus node)
+    public void setOpMinus(TOpMinus node)
     {
-        if(this._minus_ != null)
+        if(this._opMinus_ != null)
         {
-            this._minus_.parent(null);
+            this._opMinus_.parent(null);
         }
 
         if(node != null)
@@ -57,23 +57,23 @@ public final class AMinusInfixBinInfixOp extends PBinInfixOp
             node.parent(this);
         }
 
-        this._minus_ = node;
+        this._opMinus_ = node;
     }
 
     @Override
     public String toString()
     {
         return ""
-            + toString(this._minus_);
+            + toString(this._opMinus_);
     }
 
     @Override
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
-        if(this._minus_ == child)
+        if(this._opMinus_ == child)
         {
-            this._minus_ = null;
+            this._opMinus_ = null;
             return;
         }
 
@@ -84,9 +84,9 @@ public final class AMinusInfixBinInfixOp extends PBinInfixOp
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
-        if(this._minus_ == oldChild)
+        if(this._opMinus_ == oldChild)
         {
-            setMinus((TMinus) newChild);
+            setOpMinus((TOpMinus) newChild);
             return;
         }
 

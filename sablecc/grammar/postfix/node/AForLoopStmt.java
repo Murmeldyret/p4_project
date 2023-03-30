@@ -7,9 +7,9 @@ import postfix.analysis.*;
 @SuppressWarnings("nls")
 public final class AForLoopStmt extends PStmt
 {
-    private TFor _for_;
+    private TKwFor _kwFor_;
     private TId _id_;
-    private TIn _in_;
+    private TKwIn _kwIn_;
     private PVal _val_;
     private PBlock _block_;
 
@@ -19,18 +19,18 @@ public final class AForLoopStmt extends PStmt
     }
 
     public AForLoopStmt(
-        @SuppressWarnings("hiding") TFor _for_,
+        @SuppressWarnings("hiding") TKwFor _kwFor_,
         @SuppressWarnings("hiding") TId _id_,
-        @SuppressWarnings("hiding") TIn _in_,
+        @SuppressWarnings("hiding") TKwIn _kwIn_,
         @SuppressWarnings("hiding") PVal _val_,
         @SuppressWarnings("hiding") PBlock _block_)
     {
         // Constructor
-        setFor(_for_);
+        setKwFor(_kwFor_);
 
         setId(_id_);
 
-        setIn(_in_);
+        setKwIn(_kwIn_);
 
         setVal(_val_);
 
@@ -42,9 +42,9 @@ public final class AForLoopStmt extends PStmt
     public Object clone()
     {
         return new AForLoopStmt(
-            cloneNode(this._for_),
+            cloneNode(this._kwFor_),
             cloneNode(this._id_),
-            cloneNode(this._in_),
+            cloneNode(this._kwIn_),
             cloneNode(this._val_),
             cloneNode(this._block_));
     }
@@ -55,16 +55,16 @@ public final class AForLoopStmt extends PStmt
         ((Analysis) sw).caseAForLoopStmt(this);
     }
 
-    public TFor getFor()
+    public TKwFor getKwFor()
     {
-        return this._for_;
+        return this._kwFor_;
     }
 
-    public void setFor(TFor node)
+    public void setKwFor(TKwFor node)
     {
-        if(this._for_ != null)
+        if(this._kwFor_ != null)
         {
-            this._for_.parent(null);
+            this._kwFor_.parent(null);
         }
 
         if(node != null)
@@ -77,7 +77,7 @@ public final class AForLoopStmt extends PStmt
             node.parent(this);
         }
 
-        this._for_ = node;
+        this._kwFor_ = node;
     }
 
     public TId getId()
@@ -105,16 +105,16 @@ public final class AForLoopStmt extends PStmt
         this._id_ = node;
     }
 
-    public TIn getIn()
+    public TKwIn getKwIn()
     {
-        return this._in_;
+        return this._kwIn_;
     }
 
-    public void setIn(TIn node)
+    public void setKwIn(TKwIn node)
     {
-        if(this._in_ != null)
+        if(this._kwIn_ != null)
         {
-            this._in_.parent(null);
+            this._kwIn_.parent(null);
         }
 
         if(node != null)
@@ -127,7 +127,7 @@ public final class AForLoopStmt extends PStmt
             node.parent(this);
         }
 
-        this._in_ = node;
+        this._kwIn_ = node;
     }
 
     public PVal getVal()
@@ -184,9 +184,9 @@ public final class AForLoopStmt extends PStmt
     public String toString()
     {
         return ""
-            + toString(this._for_)
+            + toString(this._kwFor_)
             + toString(this._id_)
-            + toString(this._in_)
+            + toString(this._kwIn_)
             + toString(this._val_)
             + toString(this._block_);
     }
@@ -195,9 +195,9 @@ public final class AForLoopStmt extends PStmt
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
-        if(this._for_ == child)
+        if(this._kwFor_ == child)
         {
-            this._for_ = null;
+            this._kwFor_ = null;
             return;
         }
 
@@ -207,9 +207,9 @@ public final class AForLoopStmt extends PStmt
             return;
         }
 
-        if(this._in_ == child)
+        if(this._kwIn_ == child)
         {
-            this._in_ = null;
+            this._kwIn_ = null;
             return;
         }
 
@@ -232,9 +232,9 @@ public final class AForLoopStmt extends PStmt
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
-        if(this._for_ == oldChild)
+        if(this._kwFor_ == oldChild)
         {
-            setFor((TFor) newChild);
+            setKwFor((TKwFor) newChild);
             return;
         }
 
@@ -244,9 +244,9 @@ public final class AForLoopStmt extends PStmt
             return;
         }
 
-        if(this._in_ == oldChild)
+        if(this._kwIn_ == oldChild)
         {
-            setIn((TIn) newChild);
+            setKwIn((TKwIn) newChild);
             return;
         }
 

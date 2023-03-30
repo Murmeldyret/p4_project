@@ -5,16 +5,16 @@ package postfix.node;
 import postfix.analysis.*;
 
 @SuppressWarnings("nls")
-public final class TLBrack extends Token
+public final class TKwElse extends Token
 {
-    public TLBrack()
+    public TKwElse()
     {
-        super.setText("[");
+        super.setText("else");
     }
 
-    public TLBrack(int line, int pos)
+    public TKwElse(int line, int pos)
     {
-        super.setText("[");
+        super.setText("else");
         setLine(line);
         setPos(pos);
     }
@@ -22,18 +22,18 @@ public final class TLBrack extends Token
     @Override
     public Object clone()
     {
-      return new TLBrack(getLine(), getPos());
+      return new TKwElse(getLine(), getPos());
     }
 
     @Override
     public void apply(Switch sw)
     {
-        ((Analysis) sw).caseTLBrack(this);
+        ((Analysis) sw).caseTKwElse(this);
     }
 
     @Override
     public void setText(@SuppressWarnings("unused") String text)
     {
-        throw new RuntimeException("Cannot change TLBrack text.");
+        throw new RuntimeException("Cannot change TKwElse text.");
     }
 }

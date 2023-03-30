@@ -7,9 +7,9 @@ import postfix.analysis.*;
 @SuppressWarnings("nls")
 public final class ABlockStmtBlock extends PBlock
 {
-    private TLBrack _lBrack_;
+    private TLCbrack _lCbrack_;
     private PStmts _stmts_;
-    private TRBrack _rBrack_;
+    private TRCbrack _rCbrack_;
 
     public ABlockStmtBlock()
     {
@@ -17,16 +17,16 @@ public final class ABlockStmtBlock extends PBlock
     }
 
     public ABlockStmtBlock(
-        @SuppressWarnings("hiding") TLBrack _lBrack_,
+        @SuppressWarnings("hiding") TLCbrack _lCbrack_,
         @SuppressWarnings("hiding") PStmts _stmts_,
-        @SuppressWarnings("hiding") TRBrack _rBrack_)
+        @SuppressWarnings("hiding") TRCbrack _rCbrack_)
     {
         // Constructor
-        setLBrack(_lBrack_);
+        setLCbrack(_lCbrack_);
 
         setStmts(_stmts_);
 
-        setRBrack(_rBrack_);
+        setRCbrack(_rCbrack_);
 
     }
 
@@ -34,9 +34,9 @@ public final class ABlockStmtBlock extends PBlock
     public Object clone()
     {
         return new ABlockStmtBlock(
-            cloneNode(this._lBrack_),
+            cloneNode(this._lCbrack_),
             cloneNode(this._stmts_),
-            cloneNode(this._rBrack_));
+            cloneNode(this._rCbrack_));
     }
 
     @Override
@@ -45,16 +45,16 @@ public final class ABlockStmtBlock extends PBlock
         ((Analysis) sw).caseABlockStmtBlock(this);
     }
 
-    public TLBrack getLBrack()
+    public TLCbrack getLCbrack()
     {
-        return this._lBrack_;
+        return this._lCbrack_;
     }
 
-    public void setLBrack(TLBrack node)
+    public void setLCbrack(TLCbrack node)
     {
-        if(this._lBrack_ != null)
+        if(this._lCbrack_ != null)
         {
-            this._lBrack_.parent(null);
+            this._lCbrack_.parent(null);
         }
 
         if(node != null)
@@ -67,7 +67,7 @@ public final class ABlockStmtBlock extends PBlock
             node.parent(this);
         }
 
-        this._lBrack_ = node;
+        this._lCbrack_ = node;
     }
 
     public PStmts getStmts()
@@ -95,16 +95,16 @@ public final class ABlockStmtBlock extends PBlock
         this._stmts_ = node;
     }
 
-    public TRBrack getRBrack()
+    public TRCbrack getRCbrack()
     {
-        return this._rBrack_;
+        return this._rCbrack_;
     }
 
-    public void setRBrack(TRBrack node)
+    public void setRCbrack(TRCbrack node)
     {
-        if(this._rBrack_ != null)
+        if(this._rCbrack_ != null)
         {
-            this._rBrack_.parent(null);
+            this._rCbrack_.parent(null);
         }
 
         if(node != null)
@@ -117,25 +117,25 @@ public final class ABlockStmtBlock extends PBlock
             node.parent(this);
         }
 
-        this._rBrack_ = node;
+        this._rCbrack_ = node;
     }
 
     @Override
     public String toString()
     {
         return ""
-            + toString(this._lBrack_)
+            + toString(this._lCbrack_)
             + toString(this._stmts_)
-            + toString(this._rBrack_);
+            + toString(this._rCbrack_);
     }
 
     @Override
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
-        if(this._lBrack_ == child)
+        if(this._lCbrack_ == child)
         {
-            this._lBrack_ = null;
+            this._lCbrack_ = null;
             return;
         }
 
@@ -145,9 +145,9 @@ public final class ABlockStmtBlock extends PBlock
             return;
         }
 
-        if(this._rBrack_ == child)
+        if(this._rCbrack_ == child)
         {
-            this._rBrack_ = null;
+            this._rCbrack_ = null;
             return;
         }
 
@@ -158,9 +158,9 @@ public final class ABlockStmtBlock extends PBlock
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
-        if(this._lBrack_ == oldChild)
+        if(this._lCbrack_ == oldChild)
         {
-            setLBrack((TLBrack) newChild);
+            setLCbrack((TLCbrack) newChild);
             return;
         }
 
@@ -170,9 +170,9 @@ public final class ABlockStmtBlock extends PBlock
             return;
         }
 
-        if(this._rBrack_ == oldChild)
+        if(this._rCbrack_ == oldChild)
         {
-            setRBrack((TRBrack) newChild);
+            setRCbrack((TRCbrack) newChild);
             return;
         }
 

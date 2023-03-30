@@ -234,13 +234,13 @@ public class Parser
                 push(goTo(2), list, false);
             }
             break;
-            case 6: /* reduce AWhileLoopStmt */
+            case 6: /* reduce AForLoopStmt */
             {
                 ArrayList<Object> list = new6();
                 push(goTo(2), list, false);
             }
             break;
-            case 7: /* reduce AForLoopStmt */
+            case 7: /* reduce AWhileLoopStmt */
             {
                 ArrayList<Object> list = new7();
                 push(goTo(2), list, false);
@@ -486,14 +486,14 @@ public class Parser
             // Block
         TType ttypeNode2;
         TId tidNode3;
-        TAssign tassignNode4;
+        TOpAssign topassignNode4;
         PExpr pexprNode5;
         ttypeNode2 = (TType)nodeArrayList1.get(0);
         tidNode3 = (TId)nodeArrayList2.get(0);
-        tassignNode4 = (TAssign)nodeArrayList3.get(0);
+        topassignNode4 = (TOpAssign)nodeArrayList3.get(0);
         pexprNode5 = (PExpr)nodeArrayList4.get(0);
 
-        pstmtNode1 = new ADeclarationStmt(ttypeNode2, tidNode3, tassignNode4, pexprNode5);
+        pstmtNode1 = new ADeclarationStmt(ttypeNode2, tidNode3, topassignNode4, pexprNode5);
         }
 	nodeList.add(pstmtNode1);
         return nodeList;
@@ -522,33 +522,7 @@ public class Parser
 
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    ArrayList<Object> new6() /* reduce AWhileLoopStmt */
-    {
-        @SuppressWarnings("hiding") ArrayList<Object> nodeList = new ArrayList<Object>();
-
-        @SuppressWarnings("unused") ArrayList<Object> nodeArrayList3 = pop();
-        @SuppressWarnings("unused") ArrayList<Object> nodeArrayList2 = pop();
-        @SuppressWarnings("unused") ArrayList<Object> nodeArrayList1 = pop();
-        PStmt pstmtNode1;
-        {
-            // Block
-        TWhile twhileNode2;
-        PExpr pexprNode3;
-        PBlock pblockNode4;
-        twhileNode2 = (TWhile)nodeArrayList1.get(0);
-        pexprNode3 = (PExpr)nodeArrayList2.get(0);
-        pblockNode4 = (PBlock)nodeArrayList3.get(0);
-
-        pstmtNode1 = new AWhileLoopStmt(twhileNode2, pexprNode3, pblockNode4);
-        }
-	nodeList.add(pstmtNode1);
-        return nodeList;
-    }
-
-
-
-    @SuppressWarnings({ "unchecked", "rawtypes" })
-    ArrayList<Object> new7() /* reduce AForLoopStmt */
+    ArrayList<Object> new6() /* reduce AForLoopStmt */
     {
         @SuppressWarnings("hiding") ArrayList<Object> nodeList = new ArrayList<Object>();
 
@@ -560,18 +534,44 @@ public class Parser
         PStmt pstmtNode1;
         {
             // Block
-        TFor tforNode2;
+        TKwFor tkwforNode2;
         TId tidNode3;
-        TIn tinNode4;
+        TKwIn tkwinNode4;
         PVal pvalNode5;
         PBlock pblockNode6;
-        tforNode2 = (TFor)nodeArrayList1.get(0);
+        tkwforNode2 = (TKwFor)nodeArrayList1.get(0);
         tidNode3 = (TId)nodeArrayList2.get(0);
-        tinNode4 = (TIn)nodeArrayList3.get(0);
+        tkwinNode4 = (TKwIn)nodeArrayList3.get(0);
         pvalNode5 = (PVal)nodeArrayList4.get(0);
         pblockNode6 = (PBlock)nodeArrayList5.get(0);
 
-        pstmtNode1 = new AForLoopStmt(tforNode2, tidNode3, tinNode4, pvalNode5, pblockNode6);
+        pstmtNode1 = new AForLoopStmt(tkwforNode2, tidNode3, tkwinNode4, pvalNode5, pblockNode6);
+        }
+	nodeList.add(pstmtNode1);
+        return nodeList;
+    }
+
+
+
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    ArrayList<Object> new7() /* reduce AWhileLoopStmt */
+    {
+        @SuppressWarnings("hiding") ArrayList<Object> nodeList = new ArrayList<Object>();
+
+        @SuppressWarnings("unused") ArrayList<Object> nodeArrayList3 = pop();
+        @SuppressWarnings("unused") ArrayList<Object> nodeArrayList2 = pop();
+        @SuppressWarnings("unused") ArrayList<Object> nodeArrayList1 = pop();
+        PStmt pstmtNode1;
+        {
+            // Block
+        TKwWhile tkwwhileNode2;
+        PExpr pexprNode3;
+        PBlock pblockNode4;
+        tkwwhileNode2 = (TKwWhile)nodeArrayList1.get(0);
+        pexprNode3 = (PExpr)nodeArrayList2.get(0);
+        pblockNode4 = (PBlock)nodeArrayList3.get(0);
+
+        pstmtNode1 = new AWhileLoopStmt(tkwwhileNode2, pexprNode3, pblockNode4);
         }
 	nodeList.add(pstmtNode1);
         return nodeList;
@@ -591,16 +591,16 @@ public class Parser
         PStmt pstmtNode1;
         {
             // Block
-        TIf tifNode2;
+        TKwIf tkwifNode2;
         PExpr pexprNode3;
         PBlock pblockNode4;
         PInControlStmt pincontrolstmtNode5;
-        tifNode2 = (TIf)nodeArrayList1.get(0);
+        tkwifNode2 = (TKwIf)nodeArrayList1.get(0);
         pexprNode3 = (PExpr)nodeArrayList2.get(0);
         pblockNode4 = (PBlock)nodeArrayList3.get(0);
         pincontrolstmtNode5 = (PInControlStmt)nodeArrayList4.get(0);
 
-        pstmtNode1 = new AControlStatementStmt(tifNode2, pexprNode3, pblockNode4, pincontrolstmtNode5);
+        pstmtNode1 = new AControlStatementStmt(tkwifNode2, pexprNode3, pblockNode4, pincontrolstmtNode5);
         }
 	nodeList.add(pstmtNode1);
         return nodeList;
@@ -619,14 +619,14 @@ public class Parser
         PBlock pblockNode1;
         {
             // Block
-        TLBrack tlbrackNode2;
+        TLCbrack tlcbrackNode2;
         PStmts pstmtsNode3;
-        TRBrack trbrackNode4;
-        tlbrackNode2 = (TLBrack)nodeArrayList1.get(0);
+        TRCbrack trcbrackNode4;
+        tlcbrackNode2 = (TLCbrack)nodeArrayList1.get(0);
         pstmtsNode3 = (PStmts)nodeArrayList2.get(0);
-        trbrackNode4 = (TRBrack)nodeArrayList3.get(0);
+        trcbrackNode4 = (TRCbrack)nodeArrayList3.get(0);
 
-        pblockNode1 = new ABlockStmtBlock(tlbrackNode2, pstmtsNode3, trbrackNode4);
+        pblockNode1 = new ABlockStmtBlock(tlcbrackNode2, pstmtsNode3, trcbrackNode4);
         }
 	nodeList.add(pblockNode1);
         return nodeList;
@@ -646,16 +646,16 @@ public class Parser
         PInControlStmt pincontrolstmtNode1;
         {
             // Block
-        TElse telseNode2;
-        TIf tifNode3;
+        TKwElse tkwelseNode2;
+        TKwIf tkwifNode3;
         PExpr pexprNode4;
         PBlock pblockNode5;
-        telseNode2 = (TElse)nodeArrayList1.get(0);
-        tifNode3 = (TIf)nodeArrayList2.get(0);
+        tkwelseNode2 = (TKwElse)nodeArrayList1.get(0);
+        tkwifNode3 = (TKwIf)nodeArrayList2.get(0);
         pexprNode4 = (PExpr)nodeArrayList3.get(0);
         pblockNode5 = (PBlock)nodeArrayList4.get(0);
 
-        pincontrolstmtNode1 = new AElifStatementInControlStmt(telseNode2, tifNode3, pexprNode4, pblockNode5);
+        pincontrolstmtNode1 = new AElifStatementInControlStmt(tkwelseNode2, tkwifNode3, pexprNode4, pblockNode5);
         }
 	nodeList.add(pincontrolstmtNode1);
         return nodeList;
@@ -693,12 +693,12 @@ public class Parser
         PElseStatement pelsestatementNode1;
         {
             // Block
-        TElse telseNode2;
+        TKwElse tkwelseNode2;
         PBlock pblockNode3;
-        telseNode2 = (TElse)nodeArrayList1.get(0);
+        tkwelseNode2 = (TKwElse)nodeArrayList1.get(0);
         pblockNode3 = (PBlock)nodeArrayList2.get(0);
 
-        pelsestatementNode1 = new AElseBlockStatementElseStatement(telseNode2, pblockNode3);
+        pelsestatementNode1 = new AElseBlockStatementElseStatement(tkwelseNode2, pblockNode3);
         }
 	nodeList.add(pelsestatementNode1);
         return nodeList;
@@ -735,13 +735,13 @@ public class Parser
         {
             // Block
         TId tidNode2;
-        TAssign tassignNode3;
+        TOpAssign topassignNode3;
         PExpr pexprNode4;
         tidNode2 = (TId)nodeArrayList1.get(0);
-        tassignNode3 = (TAssign)nodeArrayList2.get(0);
+        topassignNode3 = (TOpAssign)nodeArrayList2.get(0);
         pexprNode4 = (PExpr)nodeArrayList3.get(0);
 
-        passigenmentNode1 = new AAssignAssigenment(tidNode2, tassignNode3, pexprNode4);
+        passigenmentNode1 = new AAssignAssigenment(tidNode2, topassignNode3, pexprNode4);
         }
 	nodeList.add(passigenmentNode1);
         return nodeList;
@@ -941,10 +941,10 @@ public class Parser
         PBinInfixOp pbininfixopNode1;
         {
             // Block
-        TPlus tplusNode2;
-        tplusNode2 = (TPlus)nodeArrayList1.get(0);
+        TOpPlus topplusNode2;
+        topplusNode2 = (TOpPlus)nodeArrayList1.get(0);
 
-        pbininfixopNode1 = new APlusInfixBinInfixOp(tplusNode2);
+        pbininfixopNode1 = new APlusInfixBinInfixOp(topplusNode2);
         }
 	nodeList.add(pbininfixopNode1);
         return nodeList;
@@ -961,10 +961,10 @@ public class Parser
         PBinInfixOp pbininfixopNode1;
         {
             // Block
-        TMinus tminusNode2;
-        tminusNode2 = (TMinus)nodeArrayList1.get(0);
+        TOpMinus topminusNode2;
+        topminusNode2 = (TOpMinus)nodeArrayList1.get(0);
 
-        pbininfixopNode1 = new AMinusInfixBinInfixOp(tminusNode2);
+        pbininfixopNode1 = new AMinusInfixBinInfixOp(topminusNode2);
         }
 	nodeList.add(pbininfixopNode1);
         return nodeList;
@@ -981,10 +981,10 @@ public class Parser
         PBinInfixOp pbininfixopNode1;
         {
             // Block
-        TMult tmultNode2;
-        tmultNode2 = (TMult)nodeArrayList1.get(0);
+        TOpMult topmultNode2;
+        topmultNode2 = (TOpMult)nodeArrayList1.get(0);
 
-        pbininfixopNode1 = new AMultiplicationInfixBinInfixOp(tmultNode2);
+        pbininfixopNode1 = new AMultiplicationInfixBinInfixOp(topmultNode2);
         }
 	nodeList.add(pbininfixopNode1);
         return nodeList;
@@ -1001,10 +1001,10 @@ public class Parser
         PBinInfixOp pbininfixopNode1;
         {
             // Block
-        TDiv tdivNode2;
-        tdivNode2 = (TDiv)nodeArrayList1.get(0);
+        TOpDiv topdivNode2;
+        topdivNode2 = (TOpDiv)nodeArrayList1.get(0);
 
-        pbininfixopNode1 = new ADivisionInfixBinInfixOp(tdivNode2);
+        pbininfixopNode1 = new ADivisionInfixBinInfixOp(topdivNode2);
         }
 	nodeList.add(pbininfixopNode1);
         return nodeList;
@@ -1021,10 +1021,10 @@ public class Parser
         PBinInfixOp pbininfixopNode1;
         {
             // Block
-        TMod tmodNode2;
-        tmodNode2 = (TMod)nodeArrayList1.get(0);
+        TOpMod topmodNode2;
+        topmodNode2 = (TOpMod)nodeArrayList1.get(0);
 
-        pbininfixopNode1 = new AModuloInfixBinInfixOp(tmodNode2);
+        pbininfixopNode1 = new AModuloInfixBinInfixOp(topmodNode2);
         }
 	nodeList.add(pbininfixopNode1);
         return nodeList;
@@ -1044,16 +1044,16 @@ public class Parser
         PImportT pimporttNode1;
         {
             // Block
-        TImport timportNode2;
+        TKwImport tkwimportNode2;
         TString tstringNode3;
-        TAs tasNode4;
+        TKwAs tkwasNode4;
         TId tidNode5;
-        timportNode2 = (TImport)nodeArrayList1.get(0);
+        tkwimportNode2 = (TKwImport)nodeArrayList1.get(0);
         tstringNode3 = (TString)nodeArrayList2.get(0);
-        tasNode4 = (TAs)nodeArrayList3.get(0);
+        tkwasNode4 = (TKwAs)nodeArrayList3.get(0);
         tidNode5 = (TId)nodeArrayList4.get(0);
 
-        pimporttNode1 = new AImportWithoutSeperatorImportT(timportNode2, tstringNode3, tasNode4, tidNode5);
+        pimporttNode1 = new AImportWithoutSeperatorImportT(tkwimportNode2, tstringNode3, tkwasNode4, tidNode5);
         }
 	nodeList.add(pimporttNode1);
         return nodeList;
@@ -1075,20 +1075,20 @@ public class Parser
         PImportT pimporttNode1;
         {
             // Block
-        TImport timportNode2;
+        TKwImport tkwimportNode2;
         TString tstringNode3;
-        TSeperatedBy tseperatedbyNode4;
+        TKwSeparatedBy tkwseparatedbyNode4;
         TChar tcharNode5;
-        TAs tasNode6;
+        TKwAs tkwasNode6;
         TId tidNode7;
-        timportNode2 = (TImport)nodeArrayList1.get(0);
+        tkwimportNode2 = (TKwImport)nodeArrayList1.get(0);
         tstringNode3 = (TString)nodeArrayList2.get(0);
-        tseperatedbyNode4 = (TSeperatedBy)nodeArrayList3.get(0);
+        tkwseparatedbyNode4 = (TKwSeparatedBy)nodeArrayList3.get(0);
         tcharNode5 = (TChar)nodeArrayList4.get(0);
-        tasNode6 = (TAs)nodeArrayList5.get(0);
+        tkwasNode6 = (TKwAs)nodeArrayList5.get(0);
         tidNode7 = (TId)nodeArrayList6.get(0);
 
-        pimporttNode1 = new AImportWithSeperatorImportT(timportNode2, tstringNode3, tseperatedbyNode4, tcharNode5, tasNode6, tidNode7);
+        pimporttNode1 = new AImportWithSeperatorImportT(tkwimportNode2, tstringNode3, tkwseparatedbyNode4, tcharNode5, tkwasNode6, tidNode7);
         }
 	nodeList.add(pimporttNode1);
         return nodeList;
@@ -1098,64 +1098,64 @@ public class Parser
 
     private static int[][][] actionTable;
 /*      {
-			{{-1, REDUCE, 2}, {4, SHIFT, 1}, {8, SHIFT, 2}, {13, SHIFT, 3}, {19, SHIFT, 4}, {20, SHIFT, 5}, {22, SHIFT, 6}, },
-			{{-1, ERROR, 1}, {5, SHIFT, 12}, },
-			{{-1, ERROR, 2}, {12, SHIFT, 13}, },
-			{{-1, ERROR, 3}, {8, SHIFT, 14}, },
-			{{-1, ERROR, 4}, {8, SHIFT, 15}, },
-			{{-1, REDUCE, 16}, {5, SHIFT, 16}, {6, SHIFT, 17}, {8, SHIFT, 18}, {24, SHIFT, 19}, {25, SHIFT, 20}, },
-			{{-1, REDUCE, 16}, {5, SHIFT, 16}, {6, SHIFT, 17}, {8, SHIFT, 18}, {24, SHIFT, 19}, {25, SHIFT, 20}, },
-			{{-1, ERROR, 7}, {26, ACCEPT, -1}, },
+			{{-1, REDUCE, 2}, {11, SHIFT, 1}, {13, SHIFT, 2}, {30, SHIFT, 3}, {32, SHIFT, 4}, {33, SHIFT, 5}, {35, SHIFT, 6}, },
+			{{-1, ERROR, 1}, {13, SHIFT, 12}, },
+			{{-1, ERROR, 2}, {14, SHIFT, 13}, },
+			{{-1, ERROR, 3}, {7, SHIFT, 14}, },
+			{{-1, ERROR, 4}, {13, SHIFT, 15}, },
+			{{-1, REDUCE, 16}, {7, SHIFT, 16}, {8, SHIFT, 17}, {9, SHIFT, 18}, {10, SHIFT, 19}, {13, SHIFT, 20}, },
+			{{-1, REDUCE, 16}, {7, SHIFT, 16}, {8, SHIFT, 17}, {9, SHIFT, 18}, {10, SHIFT, 19}, {13, SHIFT, 20}, },
+			{{-1, ERROR, 7}, {37, ACCEPT, -1}, },
 			{{-1, REDUCE, 0}, },
-			{{-1, ERROR, 9}, {11, SHIFT, 24}, },
+			{{-1, ERROR, 9}, {0, SHIFT, 24}, },
 			{{-1, REDUCE, 5}, },
 			{{-1, REDUCE, 3}, },
-			{{-1, ERROR, 12}, {7, SHIFT, 25}, {9, SHIFT, 26}, },
-			{{-1, REDUCE, 16}, {5, SHIFT, 16}, {6, SHIFT, 17}, {8, SHIFT, 18}, {24, SHIFT, 19}, {25, SHIFT, 20}, },
-			{{-1, ERROR, 14}, {12, SHIFT, 28}, },
-			{{-1, ERROR, 15}, {21, SHIFT, 29}, },
+			{{-1, ERROR, 12}, {14, SHIFT, 25}, },
+			{{-1, REDUCE, 16}, {7, SHIFT, 16}, {8, SHIFT, 17}, {9, SHIFT, 18}, {10, SHIFT, 19}, {13, SHIFT, 20}, },
+			{{-1, ERROR, 14}, {29, SHIFT, 27}, {31, SHIFT, 28}, },
+			{{-1, ERROR, 15}, {34, SHIFT, 29}, },
 			{{-1, REDUCE, 22}, },
-			{{-1, REDUCE, 23}, },
-			{{-1, REDUCE, 19}, },
 			{{-1, REDUCE, 21}, },
 			{{-1, REDUCE, 20}, },
-			{{-1, ERROR, 21}, {2, SHIFT, 30}, },
-			{{-1, REDUCE, 18}, {14, SHIFT, 32}, {15, SHIFT, 33}, {16, SHIFT, 34}, {17, SHIFT, 35}, {18, SHIFT, 36}, },
-			{{-1, ERROR, 23}, {2, SHIFT, 30}, },
-			{{-1, REDUCE, 2}, {4, SHIFT, 1}, {8, SHIFT, 2}, {13, SHIFT, 3}, {19, SHIFT, 4}, {20, SHIFT, 5}, {22, SHIFT, 6}, },
-			{{-1, ERROR, 25}, {8, SHIFT, 41}, },
-			{{-1, ERROR, 26}, {10, SHIFT, 42}, },
+			{{-1, REDUCE, 23}, },
+			{{-1, REDUCE, 19}, },
+			{{-1, ERROR, 21}, {3, SHIFT, 30}, },
+			{{-1, REDUCE, 18}, {15, SHIFT, 32}, {16, SHIFT, 33}, {17, SHIFT, 34}, {18, SHIFT, 35}, {19, SHIFT, 36}, },
+			{{-1, ERROR, 23}, {3, SHIFT, 30}, },
+			{{-1, REDUCE, 2}, {11, SHIFT, 1}, {13, SHIFT, 2}, {30, SHIFT, 3}, {32, SHIFT, 4}, {33, SHIFT, 5}, {35, SHIFT, 6}, },
+			{{-1, REDUCE, 16}, {7, SHIFT, 16}, {8, SHIFT, 17}, {9, SHIFT, 18}, {10, SHIFT, 19}, {13, SHIFT, 20}, },
 			{{-1, REDUCE, 14}, },
-			{{-1, REDUCE, 16}, {5, SHIFT, 16}, {6, SHIFT, 17}, {8, SHIFT, 18}, {24, SHIFT, 19}, {25, SHIFT, 20}, },
-			{{-1, ERROR, 29}, {5, SHIFT, 16}, {6, SHIFT, 17}, {8, SHIFT, 18}, {24, SHIFT, 19}, {25, SHIFT, 20}, },
-			{{-1, REDUCE, 2}, {4, SHIFT, 1}, {8, SHIFT, 2}, {13, SHIFT, 3}, {19, SHIFT, 4}, {20, SHIFT, 5}, {22, SHIFT, 6}, },
-			{{-1, REDUCE, 6}, },
+			{{-1, ERROR, 27}, {13, SHIFT, 42}, },
+			{{-1, ERROR, 28}, {12, SHIFT, 43}, },
+			{{-1, ERROR, 29}, {7, SHIFT, 16}, {8, SHIFT, 17}, {9, SHIFT, 18}, {10, SHIFT, 19}, {13, SHIFT, 20}, },
+			{{-1, REDUCE, 2}, {11, SHIFT, 1}, {13, SHIFT, 2}, {30, SHIFT, 3}, {32, SHIFT, 4}, {33, SHIFT, 5}, {35, SHIFT, 6}, },
+			{{-1, REDUCE, 7}, },
 			{{-1, REDUCE, 24}, },
 			{{-1, REDUCE, 25}, },
 			{{-1, REDUCE, 26}, },
 			{{-1, REDUCE, 27}, },
 			{{-1, REDUCE, 28}, },
 			{{-1, REDUCE, 15}, },
-			{{-1, ERROR, 38}, {5, SHIFT, 16}, {6, SHIFT, 17}, {8, SHIFT, 18}, {24, SHIFT, 19}, {25, SHIFT, 20}, },
-			{{-1, REDUCE, 13}, {23, SHIFT, 47}, },
+			{{-1, ERROR, 38}, {7, SHIFT, 16}, {8, SHIFT, 17}, {9, SHIFT, 18}, {10, SHIFT, 19}, {13, SHIFT, 20}, },
+			{{-1, REDUCE, 13}, {36, SHIFT, 47}, },
 			{{-1, REDUCE, 1}, },
-			{{-1, REDUCE, 29}, },
-			{{-1, ERROR, 42}, {7, SHIFT, 50}, },
 			{{-1, REDUCE, 4}, },
-			{{-1, ERROR, 44}, {2, SHIFT, 30}, },
-			{{-1, ERROR, 45}, {3, SHIFT, 52}, },
-			{{-1, REDUCE, 18}, {14, SHIFT, 32}, {15, SHIFT, 33}, {16, SHIFT, 34}, {17, SHIFT, 35}, {18, SHIFT, 36}, },
-			{{-1, ERROR, 47}, {2, SHIFT, 30}, {22, SHIFT, 54}, },
+			{{-1, REDUCE, 29}, },
+			{{-1, ERROR, 43}, {29, SHIFT, 50}, },
+			{{-1, ERROR, 44}, {3, SHIFT, 30}, },
+			{{-1, ERROR, 45}, {4, SHIFT, 52}, },
+			{{-1, REDUCE, 18}, {15, SHIFT, 32}, {16, SHIFT, 33}, {17, SHIFT, 34}, {18, SHIFT, 35}, {19, SHIFT, 36}, },
+			{{-1, ERROR, 47}, {3, SHIFT, 30}, {35, SHIFT, 54}, },
 			{{-1, REDUCE, 8}, },
 			{{-1, REDUCE, 11}, },
-			{{-1, ERROR, 50}, {8, SHIFT, 56}, },
-			{{-1, REDUCE, 7}, },
+			{{-1, ERROR, 50}, {13, SHIFT, 56}, },
+			{{-1, REDUCE, 6}, },
 			{{-1, REDUCE, 9}, },
 			{{-1, REDUCE, 17}, },
-			{{-1, REDUCE, 16}, {5, SHIFT, 16}, {6, SHIFT, 17}, {8, SHIFT, 18}, {24, SHIFT, 19}, {25, SHIFT, 20}, },
+			{{-1, REDUCE, 16}, {7, SHIFT, 16}, {8, SHIFT, 17}, {9, SHIFT, 18}, {10, SHIFT, 19}, {13, SHIFT, 20}, },
 			{{-1, REDUCE, 12}, },
 			{{-1, REDUCE, 30}, },
-			{{-1, ERROR, 57}, {2, SHIFT, 30}, },
+			{{-1, ERROR, 57}, {3, SHIFT, 30}, },
 			{{-1, REDUCE, 10}, },
         };*/
     private static int[][][] gotoTable;
@@ -1167,7 +1167,7 @@ public class Parser
 			{{-1, 48}, },
 			{{-1, 49}, },
 			{{-1, 10}, },
-			{{-1, 21}, {6, 23}, {13, 27}, {28, 43}, {54, 57}, },
+			{{-1, 21}, {6, 23}, {13, 26}, {25, 41}, {54, 57}, },
 			{{-1, 37}, {46, 53}, },
 			{{-1, 22}, {29, 44}, {38, 46}, },
 			{{-1, 38}, },
@@ -1175,23 +1175,23 @@ public class Parser
         };*/
     private static String[] errorMessages;
 /*      {
-			"expecting: 'import', id, type, 'for', 'while', 'if', EOF",
-			"expecting: string",
-			"expecting: ':='",
+			"expecting: type, id, 'import', 'for', 'while', 'if', EOF",
 			"expecting: id",
-			"expecting: '{', string, bool, id, intnum, floatnum",
+			"expecting: ':='",
+			"expecting: string",
+			"expecting: '{', string, intnum, floatnum, bool, id",
 			"expecting: EOF",
 			"expecting: newline",
+			"expecting: newline, string, intnum, floatnum, bool, id",
 			"expecting: 'as', 'seperated_by'",
-			"expecting: string, bool, id, newline, intnum, floatnum",
 			"expecting: 'in'",
-			"expecting: '{', newline, '+', '-', '*', '/', '%'",
+			"expecting: newline, '{', '+', '-', '*', '/', '%'",
 			"expecting: '{'",
-			"expecting: '}', 'import', id, type, 'for', 'while', 'if', EOF",
+			"expecting: '}', type, id, 'import', 'for', 'while', 'if', EOF",
 			"expecting: char",
-			"expecting: string, bool, id, intnum, floatnum",
-			"expecting: '}', 'import', id, type, 'for', 'while', 'if'",
-			"expecting: '{', newline",
+			"expecting: string, intnum, floatnum, bool, id",
+			"expecting: '}', type, id, 'import', 'for', 'while', 'if'",
+			"expecting: newline, '{'",
 			"expecting: newline, 'else'",
 			"expecting: '}', EOF",
 			"expecting: 'as'",
@@ -1200,7 +1200,7 @@ public class Parser
         };*/
     private static int[] errors;
 /*      {
-			0, 1, 2, 3, 3, 4, 4, 5, 5, 6, 6, 6, 7, 8, 2, 9, 10, 10, 10, 10, 10, 11, 10, 11, 12, 3, 13, 6, 8, 14, 15, 6, 14, 14, 14, 14, 14, 16, 14, 17, 18, 6, 19, 6, 11, 20, 10, 21, 6, 6, 3, 6, 17, 16, 4, 6, 6, 11, 6, 
+			0, 1, 2, 3, 1, 4, 4, 5, 5, 6, 6, 6, 2, 7, 8, 9, 10, 10, 10, 10, 10, 11, 10, 11, 12, 7, 6, 1, 13, 14, 15, 6, 14, 14, 14, 14, 14, 16, 14, 17, 18, 6, 6, 19, 11, 20, 10, 21, 6, 6, 1, 6, 17, 16, 4, 6, 6, 11, 6, 
         };*/
 
     static 
