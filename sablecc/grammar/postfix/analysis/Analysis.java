@@ -17,7 +17,7 @@ public interface Analysis extends Switch
     void caseAStmts(AStmts node);
     void caseAImportStmtStmt(AImportStmtStmt node);
     void caseADeclarationStmt(ADeclarationStmt node);
-    void caseAAssigenmentStatementStmt(AAssigenmentStatementStmt node);
+    void caseAAssignmentStatementStmt(AAssignmentStatementStmt node);
     void caseAForLoopStmt(AForLoopStmt node);
     void caseAWhileLoopStmt(AWhileLoopStmt node);
     void caseAControlStatementStmt(AControlStatementStmt node);
@@ -26,7 +26,7 @@ public interface Analysis extends Switch
     void caseAElseStatementInControlStmt(AElseStatementInControlStmt node);
     void caseAElseBlockStatementElseStatement(AElseBlockStatementElseStatement node);
     void caseAElseStatement(AElseStatement node);
-    void caseAAssignAssigenment(AAssignAssigenment node);
+    void caseAAssignAssignment(AAssignAssignment node);
     void caseAExprValPrimeExpr(AExprValPrimeExpr node);
     void caseAExpr(AExpr node);
     void caseAExprPrimeOperatorValPrimeExprPrime(AExprPrimeOperatorValPrimeExprPrime node);
@@ -41,6 +41,15 @@ public interface Analysis extends Switch
     void caseAMultiplicationInfixBinInfixOp(AMultiplicationInfixBinInfixOp node);
     void caseADivisionInfixBinInfixOp(ADivisionInfixBinInfixOp node);
     void caseAModuloInfixBinInfixOp(AModuloInfixBinInfixOp node);
+    void caseAAndInfixBinInfixOp(AAndInfixBinInfixOp node);
+    void caseAOrInfixBinInfixOp(AOrInfixBinInfixOp node);
+    void caseAEqualityInfixBinInfixOp(AEqualityInfixBinInfixOp node);
+    void caseAGreaterThanInfixBinInfixOp(AGreaterThanInfixBinInfixOp node);
+    void caseAGreaterThanEqualInfixBinInfixOp(AGreaterThanEqualInfixBinInfixOp node);
+    void caseALessThanInfixBinInfixOp(ALessThanInfixBinInfixOp node);
+    void caseALessThanEqualInfixBinInfixOp(ALessThanEqualInfixBinInfixOp node);
+    void caseANotPrefixUnaryPrefixOp(ANotPrefixUnaryPrefixOp node);
+    void caseAMinusPrefixUnaryPrefixOp(AMinusPrefixUnaryPrefixOp node);
     void caseAImportWithoutSeperatorImportT(AImportWithoutSeperatorImportT node);
     void caseAImportWithSeperatorImportT(AImportWithSeperatorImportT node);
 
@@ -75,6 +84,12 @@ public interface Analysis extends Switch
     void caseTBopOr(TBopOr node);
     void caseTBopNot(TBopNot node);
     void caseTSopDot(TSopDot node);
+    void caseTSopSum(TSopSum node);
+    void caseTSopFilter(TSopFilter node);
+    void caseTSopGroupby(TSopGroupby node);
+    void caseTSopMean(TSopMean node);
+    void caseTSopSort(TSopSort node);
+    void caseTSopCount(TSopCount node);
     void caseTKwAs(TKwAs node);
     void caseTKwImport(TKwImport node);
     void caseTKwSeparatedBy(TKwSeparatedBy node);

@@ -105,7 +105,7 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
-    public void caseAAssigenmentStatementStmt(AAssigenmentStatementStmt node)
+    public void caseAAssignmentStatementStmt(AAssignmentStatementStmt node)
     {
         defaultCase(node);
     }
@@ -159,7 +159,7 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
-    public void caseAAssignAssigenment(AAssignAssigenment node)
+    public void caseAAssignAssignment(AAssignAssignment node)
     {
         defaultCase(node);
     }
@@ -244,6 +244,60 @@ public class AnalysisAdapter implements Analysis
 
     @Override
     public void caseAModuloInfixBinInfixOp(AModuloInfixBinInfixOp node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAAndInfixBinInfixOp(AAndInfixBinInfixOp node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAOrInfixBinInfixOp(AOrInfixBinInfixOp node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAEqualityInfixBinInfixOp(AEqualityInfixBinInfixOp node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAGreaterThanInfixBinInfixOp(AGreaterThanInfixBinInfixOp node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAGreaterThanEqualInfixBinInfixOp(AGreaterThanEqualInfixBinInfixOp node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseALessThanInfixBinInfixOp(ALessThanInfixBinInfixOp node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseALessThanEqualInfixBinInfixOp(ALessThanEqualInfixBinInfixOp node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseANotPrefixUnaryPrefixOp(ANotPrefixUnaryPrefixOp node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAMinusPrefixUnaryPrefixOp(AMinusPrefixUnaryPrefixOp node)
     {
         defaultCase(node);
     }
@@ -442,6 +496,42 @@ public class AnalysisAdapter implements Analysis
 
     @Override
     public void caseTSopDot(TSopDot node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTSopSum(TSopSum node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTSopFilter(TSopFilter node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTSopGroupby(TSopGroupby node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTSopMean(TSopMean node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTSopSort(TSopSort node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTSopCount(TSopCount node)
     {
         defaultCase(node);
     }

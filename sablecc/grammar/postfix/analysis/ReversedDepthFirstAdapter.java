@@ -157,25 +157,25 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
         outADeclarationStmt(node);
     }
 
-    public void inAAssigenmentStatementStmt(AAssigenmentStatementStmt node)
+    public void inAAssignmentStatementStmt(AAssignmentStatementStmt node)
     {
         defaultIn(node);
     }
 
-    public void outAAssigenmentStatementStmt(AAssigenmentStatementStmt node)
+    public void outAAssignmentStatementStmt(AAssignmentStatementStmt node)
     {
         defaultOut(node);
     }
 
     @Override
-    public void caseAAssigenmentStatementStmt(AAssigenmentStatementStmt node)
+    public void caseAAssignmentStatementStmt(AAssignmentStatementStmt node)
     {
-        inAAssigenmentStatementStmt(node);
-        if(node.getAssigenment() != null)
+        inAAssignmentStatementStmt(node);
+        if(node.getAssignment() != null)
         {
-            node.getAssigenment().apply(this);
+            node.getAssignment().apply(this);
         }
-        outAAssigenmentStatementStmt(node);
+        outAAssignmentStatementStmt(node);
     }
 
     public void inAForLoopStmt(AForLoopStmt node)
@@ -402,20 +402,20 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
         outAElseStatement(node);
     }
 
-    public void inAAssignAssigenment(AAssignAssigenment node)
+    public void inAAssignAssignment(AAssignAssignment node)
     {
         defaultIn(node);
     }
 
-    public void outAAssignAssigenment(AAssignAssigenment node)
+    public void outAAssignAssignment(AAssignAssignment node)
     {
         defaultOut(node);
     }
 
     @Override
-    public void caseAAssignAssigenment(AAssignAssigenment node)
+    public void caseAAssignAssignment(AAssignAssignment node)
     {
-        inAAssignAssigenment(node);
+        inAAssignAssignment(node);
         if(node.getExpr() != null)
         {
             node.getExpr().apply(this);
@@ -428,7 +428,7 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
         {
             node.getId().apply(this);
         }
-        outAAssignAssigenment(node);
+        outAAssignAssignment(node);
     }
 
     public void inAExprValPrimeExpr(AExprValPrimeExpr node)
@@ -727,6 +727,195 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
             node.getOpMod().apply(this);
         }
         outAModuloInfixBinInfixOp(node);
+    }
+
+    public void inAAndInfixBinInfixOp(AAndInfixBinInfixOp node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAAndInfixBinInfixOp(AAndInfixBinInfixOp node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAAndInfixBinInfixOp(AAndInfixBinInfixOp node)
+    {
+        inAAndInfixBinInfixOp(node);
+        if(node.getBopAnd() != null)
+        {
+            node.getBopAnd().apply(this);
+        }
+        outAAndInfixBinInfixOp(node);
+    }
+
+    public void inAOrInfixBinInfixOp(AOrInfixBinInfixOp node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAOrInfixBinInfixOp(AOrInfixBinInfixOp node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAOrInfixBinInfixOp(AOrInfixBinInfixOp node)
+    {
+        inAOrInfixBinInfixOp(node);
+        if(node.getBopOr() != null)
+        {
+            node.getBopOr().apply(this);
+        }
+        outAOrInfixBinInfixOp(node);
+    }
+
+    public void inAEqualityInfixBinInfixOp(AEqualityInfixBinInfixOp node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAEqualityInfixBinInfixOp(AEqualityInfixBinInfixOp node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAEqualityInfixBinInfixOp(AEqualityInfixBinInfixOp node)
+    {
+        inAEqualityInfixBinInfixOp(node);
+        if(node.getBopEq() != null)
+        {
+            node.getBopEq().apply(this);
+        }
+        outAEqualityInfixBinInfixOp(node);
+    }
+
+    public void inAGreaterThanInfixBinInfixOp(AGreaterThanInfixBinInfixOp node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAGreaterThanInfixBinInfixOp(AGreaterThanInfixBinInfixOp node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAGreaterThanInfixBinInfixOp(AGreaterThanInfixBinInfixOp node)
+    {
+        inAGreaterThanInfixBinInfixOp(node);
+        if(node.getBopGthan() != null)
+        {
+            node.getBopGthan().apply(this);
+        }
+        outAGreaterThanInfixBinInfixOp(node);
+    }
+
+    public void inAGreaterThanEqualInfixBinInfixOp(AGreaterThanEqualInfixBinInfixOp node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAGreaterThanEqualInfixBinInfixOp(AGreaterThanEqualInfixBinInfixOp node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAGreaterThanEqualInfixBinInfixOp(AGreaterThanEqualInfixBinInfixOp node)
+    {
+        inAGreaterThanEqualInfixBinInfixOp(node);
+        if(node.getBopGethan() != null)
+        {
+            node.getBopGethan().apply(this);
+        }
+        outAGreaterThanEqualInfixBinInfixOp(node);
+    }
+
+    public void inALessThanInfixBinInfixOp(ALessThanInfixBinInfixOp node)
+    {
+        defaultIn(node);
+    }
+
+    public void outALessThanInfixBinInfixOp(ALessThanInfixBinInfixOp node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseALessThanInfixBinInfixOp(ALessThanInfixBinInfixOp node)
+    {
+        inALessThanInfixBinInfixOp(node);
+        if(node.getBopLthan() != null)
+        {
+            node.getBopLthan().apply(this);
+        }
+        outALessThanInfixBinInfixOp(node);
+    }
+
+    public void inALessThanEqualInfixBinInfixOp(ALessThanEqualInfixBinInfixOp node)
+    {
+        defaultIn(node);
+    }
+
+    public void outALessThanEqualInfixBinInfixOp(ALessThanEqualInfixBinInfixOp node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseALessThanEqualInfixBinInfixOp(ALessThanEqualInfixBinInfixOp node)
+    {
+        inALessThanEqualInfixBinInfixOp(node);
+        if(node.getBopLethan() != null)
+        {
+            node.getBopLethan().apply(this);
+        }
+        outALessThanEqualInfixBinInfixOp(node);
+    }
+
+    public void inANotPrefixUnaryPrefixOp(ANotPrefixUnaryPrefixOp node)
+    {
+        defaultIn(node);
+    }
+
+    public void outANotPrefixUnaryPrefixOp(ANotPrefixUnaryPrefixOp node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseANotPrefixUnaryPrefixOp(ANotPrefixUnaryPrefixOp node)
+    {
+        inANotPrefixUnaryPrefixOp(node);
+        if(node.getBopNot() != null)
+        {
+            node.getBopNot().apply(this);
+        }
+        outANotPrefixUnaryPrefixOp(node);
+    }
+
+    public void inAMinusPrefixUnaryPrefixOp(AMinusPrefixUnaryPrefixOp node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAMinusPrefixUnaryPrefixOp(AMinusPrefixUnaryPrefixOp node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAMinusPrefixUnaryPrefixOp(AMinusPrefixUnaryPrefixOp node)
+    {
+        inAMinusPrefixUnaryPrefixOp(node);
+        if(node.getOpMinus() != null)
+        {
+            node.getOpMinus().apply(this);
+        }
+        outAMinusPrefixUnaryPrefixOp(node);
     }
 
     public void inAImportWithoutSeperatorImportT(AImportWithoutSeperatorImportT node)

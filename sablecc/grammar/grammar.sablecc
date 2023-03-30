@@ -11,6 +11,9 @@ Helpers
     tab = 9;
     eol = cr | lf | cr lf ;
     not_eol = [all -[cr + lf]];
+    sign = '+' | '-';
+    sort_order_asc = 'asc'
+    sort-sort_order_dsc = 'desc';
 
 Tokens
     //for tokens in the program
@@ -28,8 +31,8 @@ Tokens
 
     //types
     string = ('"' '"');
-    intnum = -?(number)+;
-    floatnum = -?(number)+ '.' (number)+;
+    intnum = sign? (number)+ ;
+    floatnum = sign? (number)+ '.' (number)+;
     bool = 'true' | 'false';
     type = ('int' | 'bool' | 'float' | 'string' | 'csv' | 'char' | 'array');
     char = 39 '.' 39;
@@ -74,6 +77,7 @@ Tokens
     kw_in = 'in';
     kw_if = 'if';
     kw_else = 'else';
+    kw_sort_order = sort_order_asc | sort_order_dsc;
 
 
 Ignored Tokens
@@ -90,7 +94,7 @@ Productions
     stmt =
         {import_stmt} import_t |
         {declaration} type id op_assign expr | 
-        {assigenment_statement} assigenment |
+        {assignment_statement} assignment |
         {for_loop} kw_for id kw_in val block |
         {while_loop} kw_while expr block |
         {control_statement} kw_if expr block in_control_stmt ;
@@ -105,7 +109,7 @@ Productions
     else_statement =
        {else_block_statement} kw_else block | ;
     
-    assigenment =
+    assignment =
         {assign} id op_assign expr;
 
     expr =
@@ -121,12 +125,29 @@ Productions
         {val_string} string |
         {val_bool} bool ;
 
+    // kan måske flyttes til tokens hvis operatorer flyttes til helpers, dermed vil Productions blive simplere
     bin_infix_op = 
         {plus_infix} op_plus |
         {minus_infix} op_minus |
         {multiplication_infix} op_mult |
         {division_infix} op_div |
-        {modulo_infix} op_mod ;
+        {modulo_infix} op_mod |
+        {and_infix} bop_and |
+        {or_infix} bop_or |
+        {equality_infix} bop_eq |
+        {greater_than_infix} bop_gthan |
+        {greater_than_equal_infix} bop_gethan |
+        {less_than_infix} bop_lthan |
+        {less_than_equal_infix} bop_lethan ;
+    
+    // skal der være andre prefix operatorer?
+    unary_prefix_op =
+        {not_prefix} bop_not |
+        {filter_prefix} sop_filter |
+        {groupby_prefix} sop_groupby |
+        {mean_prefix} sop_mean |
+        {count_prefix} sop_count ;
+
 
     import_t =
         {import_without_seperator} kw_import string kw_as id |
