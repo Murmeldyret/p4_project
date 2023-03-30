@@ -49,7 +49,10 @@ public interface Analysis extends Switch
     void caseALessThanInfixBinInfixOp(ALessThanInfixBinInfixOp node);
     void caseALessThanEqualInfixBinInfixOp(ALessThanEqualInfixBinInfixOp node);
     void caseANotPrefixUnaryPrefixOp(ANotPrefixUnaryPrefixOp node);
-    void caseAMinusPrefixUnaryPrefixOp(AMinusPrefixUnaryPrefixOp node);
+    void caseAFilterPrefixUnaryPrefixOp(AFilterPrefixUnaryPrefixOp node);
+    void caseAGroupbyPrefixUnaryPrefixOp(AGroupbyPrefixUnaryPrefixOp node);
+    void caseAMeanPrefixUnaryPrefixOp(AMeanPrefixUnaryPrefixOp node);
+    void caseACountPrefixUnaryPrefixOp(ACountPrefixUnaryPrefixOp node);
     void caseAImportWithoutSeperatorImportT(AImportWithoutSeperatorImportT node);
     void caseAImportWithSeperatorImportT(AImportWithSeperatorImportT node);
 
@@ -98,6 +101,7 @@ public interface Analysis extends Switch
     void caseTKwIn(TKwIn node);
     void caseTKwIf(TKwIf node);
     void caseTKwElse(TKwElse node);
+    void caseTKwSortOrder(TKwSortOrder node);
     void caseEOF(EOF node);
     void caseInvalidToken(InvalidToken node);
 }

@@ -897,25 +897,88 @@ public class DepthFirstAdapter extends AnalysisAdapter
         outANotPrefixUnaryPrefixOp(node);
     }
 
-    public void inAMinusPrefixUnaryPrefixOp(AMinusPrefixUnaryPrefixOp node)
+    public void inAFilterPrefixUnaryPrefixOp(AFilterPrefixUnaryPrefixOp node)
     {
         defaultIn(node);
     }
 
-    public void outAMinusPrefixUnaryPrefixOp(AMinusPrefixUnaryPrefixOp node)
+    public void outAFilterPrefixUnaryPrefixOp(AFilterPrefixUnaryPrefixOp node)
     {
         defaultOut(node);
     }
 
     @Override
-    public void caseAMinusPrefixUnaryPrefixOp(AMinusPrefixUnaryPrefixOp node)
+    public void caseAFilterPrefixUnaryPrefixOp(AFilterPrefixUnaryPrefixOp node)
     {
-        inAMinusPrefixUnaryPrefixOp(node);
-        if(node.getOpMinus() != null)
+        inAFilterPrefixUnaryPrefixOp(node);
+        if(node.getSopFilter() != null)
         {
-            node.getOpMinus().apply(this);
+            node.getSopFilter().apply(this);
         }
-        outAMinusPrefixUnaryPrefixOp(node);
+        outAFilterPrefixUnaryPrefixOp(node);
+    }
+
+    public void inAGroupbyPrefixUnaryPrefixOp(AGroupbyPrefixUnaryPrefixOp node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAGroupbyPrefixUnaryPrefixOp(AGroupbyPrefixUnaryPrefixOp node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAGroupbyPrefixUnaryPrefixOp(AGroupbyPrefixUnaryPrefixOp node)
+    {
+        inAGroupbyPrefixUnaryPrefixOp(node);
+        if(node.getSopGroupby() != null)
+        {
+            node.getSopGroupby().apply(this);
+        }
+        outAGroupbyPrefixUnaryPrefixOp(node);
+    }
+
+    public void inAMeanPrefixUnaryPrefixOp(AMeanPrefixUnaryPrefixOp node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAMeanPrefixUnaryPrefixOp(AMeanPrefixUnaryPrefixOp node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAMeanPrefixUnaryPrefixOp(AMeanPrefixUnaryPrefixOp node)
+    {
+        inAMeanPrefixUnaryPrefixOp(node);
+        if(node.getSopMean() != null)
+        {
+            node.getSopMean().apply(this);
+        }
+        outAMeanPrefixUnaryPrefixOp(node);
+    }
+
+    public void inACountPrefixUnaryPrefixOp(ACountPrefixUnaryPrefixOp node)
+    {
+        defaultIn(node);
+    }
+
+    public void outACountPrefixUnaryPrefixOp(ACountPrefixUnaryPrefixOp node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseACountPrefixUnaryPrefixOp(ACountPrefixUnaryPrefixOp node)
+    {
+        inACountPrefixUnaryPrefixOp(node);
+        if(node.getSopCount() != null)
+        {
+            node.getSopCount().apply(this);
+        }
+        outACountPrefixUnaryPrefixOp(node);
     }
 
     public void inAImportWithoutSeperatorImportT(AImportWithoutSeperatorImportT node)

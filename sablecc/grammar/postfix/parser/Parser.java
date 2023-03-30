@@ -420,21 +420,39 @@ public class Parser
                 push(goTo(11), list, false);
             }
             break;
-            case 37: /* reduce AMinusPrefixUnaryPrefixOp */
+            case 37: /* reduce AFilterPrefixUnaryPrefixOp */
             {
                 ArrayList<Object> list = new37();
                 push(goTo(11), list, false);
             }
             break;
-            case 38: /* reduce AImportWithoutSeperatorImportT */
+            case 38: /* reduce AGroupbyPrefixUnaryPrefixOp */
             {
                 ArrayList<Object> list = new38();
+                push(goTo(11), list, false);
+            }
+            break;
+            case 39: /* reduce AMeanPrefixUnaryPrefixOp */
+            {
+                ArrayList<Object> list = new39();
+                push(goTo(11), list, false);
+            }
+            break;
+            case 40: /* reduce ACountPrefixUnaryPrefixOp */
+            {
+                ArrayList<Object> list = new40();
+                push(goTo(11), list, false);
+            }
+            break;
+            case 41: /* reduce AImportWithoutSeperatorImportT */
+            {
+                ArrayList<Object> list = new41();
                 push(goTo(12), list, false);
             }
             break;
-            case 39: /* reduce AImportWithSeperatorImportT */
+            case 42: /* reduce AImportWithSeperatorImportT */
             {
-                ArrayList<Object> list = new39();
+                ArrayList<Object> list = new42();
                 push(goTo(12), list, false);
             }
             break;
@@ -1247,7 +1265,7 @@ public class Parser
 
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    ArrayList<Object> new37() /* reduce AMinusPrefixUnaryPrefixOp */
+    ArrayList<Object> new37() /* reduce AFilterPrefixUnaryPrefixOp */
     {
         @SuppressWarnings("hiding") ArrayList<Object> nodeList = new ArrayList<Object>();
 
@@ -1255,10 +1273,10 @@ public class Parser
         PUnaryPrefixOp punaryprefixopNode1;
         {
             // Block
-        TOpMinus topminusNode2;
-        topminusNode2 = (TOpMinus)nodeArrayList1.get(0);
+        TSopFilter tsopfilterNode2;
+        tsopfilterNode2 = (TSopFilter)nodeArrayList1.get(0);
 
-        punaryprefixopNode1 = new AMinusPrefixUnaryPrefixOp(topminusNode2);
+        punaryprefixopNode1 = new AFilterPrefixUnaryPrefixOp(tsopfilterNode2);
         }
 	nodeList.add(punaryprefixopNode1);
         return nodeList;
@@ -1267,7 +1285,67 @@ public class Parser
 
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    ArrayList<Object> new38() /* reduce AImportWithoutSeperatorImportT */
+    ArrayList<Object> new38() /* reduce AGroupbyPrefixUnaryPrefixOp */
+    {
+        @SuppressWarnings("hiding") ArrayList<Object> nodeList = new ArrayList<Object>();
+
+        @SuppressWarnings("unused") ArrayList<Object> nodeArrayList1 = pop();
+        PUnaryPrefixOp punaryprefixopNode1;
+        {
+            // Block
+        TSopGroupby tsopgroupbyNode2;
+        tsopgroupbyNode2 = (TSopGroupby)nodeArrayList1.get(0);
+
+        punaryprefixopNode1 = new AGroupbyPrefixUnaryPrefixOp(tsopgroupbyNode2);
+        }
+	nodeList.add(punaryprefixopNode1);
+        return nodeList;
+    }
+
+
+
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    ArrayList<Object> new39() /* reduce AMeanPrefixUnaryPrefixOp */
+    {
+        @SuppressWarnings("hiding") ArrayList<Object> nodeList = new ArrayList<Object>();
+
+        @SuppressWarnings("unused") ArrayList<Object> nodeArrayList1 = pop();
+        PUnaryPrefixOp punaryprefixopNode1;
+        {
+            // Block
+        TSopMean tsopmeanNode2;
+        tsopmeanNode2 = (TSopMean)nodeArrayList1.get(0);
+
+        punaryprefixopNode1 = new AMeanPrefixUnaryPrefixOp(tsopmeanNode2);
+        }
+	nodeList.add(punaryprefixopNode1);
+        return nodeList;
+    }
+
+
+
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    ArrayList<Object> new40() /* reduce ACountPrefixUnaryPrefixOp */
+    {
+        @SuppressWarnings("hiding") ArrayList<Object> nodeList = new ArrayList<Object>();
+
+        @SuppressWarnings("unused") ArrayList<Object> nodeArrayList1 = pop();
+        PUnaryPrefixOp punaryprefixopNode1;
+        {
+            // Block
+        TSopCount tsopcountNode2;
+        tsopcountNode2 = (TSopCount)nodeArrayList1.get(0);
+
+        punaryprefixopNode1 = new ACountPrefixUnaryPrefixOp(tsopcountNode2);
+        }
+	nodeList.add(punaryprefixopNode1);
+        return nodeList;
+    }
+
+
+
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    ArrayList<Object> new41() /* reduce AImportWithoutSeperatorImportT */
     {
         @SuppressWarnings("hiding") ArrayList<Object> nodeList = new ArrayList<Object>();
 
@@ -1296,7 +1374,7 @@ public class Parser
 
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    ArrayList<Object> new39() /* reduce AImportWithSeperatorImportT */
+    ArrayList<Object> new42() /* reduce AImportWithSeperatorImportT */
     {
         @SuppressWarnings("hiding") ArrayList<Object> nodeList = new ArrayList<Object>();
 
@@ -1339,7 +1417,7 @@ public class Parser
 			{{-1, ERROR, 4}, {13, SHIFT, 15}, },
 			{{-1, REDUCE, 16}, {7, SHIFT, 16}, {8, SHIFT, 17}, {9, SHIFT, 18}, {10, SHIFT, 19}, {13, SHIFT, 20}, },
 			{{-1, REDUCE, 16}, {7, SHIFT, 16}, {8, SHIFT, 17}, {9, SHIFT, 18}, {10, SHIFT, 19}, {13, SHIFT, 20}, },
-			{{-1, ERROR, 7}, {43, ACCEPT, -1}, },
+			{{-1, ERROR, 7}, {44, ACCEPT, -1}, },
 			{{-1, REDUCE, 0}, },
 			{{-1, ERROR, 9}, {0, SHIFT, 24}, },
 			{{-1, REDUCE, 5}, },
@@ -1381,7 +1459,7 @@ public class Parser
 			{{-1, REDUCE, 13}, {42, SHIFT, 54}, },
 			{{-1, REDUCE, 1}, },
 			{{-1, REDUCE, 4}, },
-			{{-1, REDUCE, 38}, },
+			{{-1, REDUCE, 41}, },
 			{{-1, ERROR, 50}, {35, SHIFT, 57}, },
 			{{-1, ERROR, 51}, {3, SHIFT, 30}, },
 			{{-1, ERROR, 52}, {4, SHIFT, 59}, },
@@ -1395,7 +1473,7 @@ public class Parser
 			{{-1, REDUCE, 17}, },
 			{{-1, REDUCE, 16}, {7, SHIFT, 16}, {8, SHIFT, 17}, {9, SHIFT, 18}, {10, SHIFT, 19}, {13, SHIFT, 20}, },
 			{{-1, REDUCE, 12}, },
-			{{-1, REDUCE, 39}, },
+			{{-1, REDUCE, 42}, },
 			{{-1, ERROR, 64}, {3, SHIFT, 30}, },
 			{{-1, REDUCE, 10}, },
         };*/

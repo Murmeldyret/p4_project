@@ -12,8 +12,8 @@ Helpers
     eol = cr | lf | cr lf ;
     not_eol = [all -[cr + lf]];
     sign = '+' | '-';
-    sort_order_asc = 'asc'
-    sort-sort_order_dsc = 'desc';
+    sort_order_asc = 'asc';
+    sort_order_dsc = 'desc';
 
 Tokens
     //for tokens in the program
@@ -147,7 +147,6 @@ Productions
         {groupby_prefix} sop_groupby |
         {mean_prefix} sop_mean |
         {count_prefix} sop_count ;
-
 
     import_t =
         {import_without_seperator} kw_import string kw_as id |

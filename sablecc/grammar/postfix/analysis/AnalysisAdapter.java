@@ -297,7 +297,25 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
-    public void caseAMinusPrefixUnaryPrefixOp(AMinusPrefixUnaryPrefixOp node)
+    public void caseAFilterPrefixUnaryPrefixOp(AFilterPrefixUnaryPrefixOp node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAGroupbyPrefixUnaryPrefixOp(AGroupbyPrefixUnaryPrefixOp node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAMeanPrefixUnaryPrefixOp(AMeanPrefixUnaryPrefixOp node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseACountPrefixUnaryPrefixOp(ACountPrefixUnaryPrefixOp node)
     {
         defaultCase(node);
     }
@@ -580,6 +598,12 @@ public class AnalysisAdapter implements Analysis
 
     @Override
     public void caseTKwElse(TKwElse node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTKwSortOrder(TKwSortOrder node)
     {
         defaultCase(node);
     }
