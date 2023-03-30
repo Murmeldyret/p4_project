@@ -7,7 +7,7 @@ import postfix.analysis.*;
 @SuppressWarnings("nls")
 public final class AExprPrimeOperatorValPrimeExprPrime extends PExprPrime
 {
-    private PBinInfixOp _binInfixOp_;
+    private TBinInfixOp _binInfixOp_;
     private PVal _val_;
     private PExprPrime _exprPrime_;
 
@@ -17,7 +17,7 @@ public final class AExprPrimeOperatorValPrimeExprPrime extends PExprPrime
     }
 
     public AExprPrimeOperatorValPrimeExprPrime(
-        @SuppressWarnings("hiding") PBinInfixOp _binInfixOp_,
+        @SuppressWarnings("hiding") TBinInfixOp _binInfixOp_,
         @SuppressWarnings("hiding") PVal _val_,
         @SuppressWarnings("hiding") PExprPrime _exprPrime_)
     {
@@ -45,12 +45,12 @@ public final class AExprPrimeOperatorValPrimeExprPrime extends PExprPrime
         ((Analysis) sw).caseAExprPrimeOperatorValPrimeExprPrime(this);
     }
 
-    public PBinInfixOp getBinInfixOp()
+    public TBinInfixOp getBinInfixOp()
     {
         return this._binInfixOp_;
     }
 
-    public void setBinInfixOp(PBinInfixOp node)
+    public void setBinInfixOp(TBinInfixOp node)
     {
         if(this._binInfixOp_ != null)
         {
@@ -160,7 +160,7 @@ public final class AExprPrimeOperatorValPrimeExprPrime extends PExprPrime
         // Replace child
         if(this._binInfixOp_ == oldChild)
         {
-            setBinInfixOp((PBinInfixOp) newChild);
+            setBinInfixOp((TBinInfixOp) newChild);
             return;
         }
 

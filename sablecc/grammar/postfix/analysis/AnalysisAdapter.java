@@ -219,108 +219,6 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
-    public void caseAPlusInfixBinInfixOp(APlusInfixBinInfixOp node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseAMinusInfixBinInfixOp(AMinusInfixBinInfixOp node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseAMultiplicationInfixBinInfixOp(AMultiplicationInfixBinInfixOp node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseADivisionInfixBinInfixOp(ADivisionInfixBinInfixOp node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseAModuloInfixBinInfixOp(AModuloInfixBinInfixOp node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseAAndInfixBinInfixOp(AAndInfixBinInfixOp node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseAOrInfixBinInfixOp(AOrInfixBinInfixOp node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseAEqualityInfixBinInfixOp(AEqualityInfixBinInfixOp node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseAGreaterThanInfixBinInfixOp(AGreaterThanInfixBinInfixOp node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseAGreaterThanEqualInfixBinInfixOp(AGreaterThanEqualInfixBinInfixOp node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseALessThanInfixBinInfixOp(ALessThanInfixBinInfixOp node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseALessThanEqualInfixBinInfixOp(ALessThanEqualInfixBinInfixOp node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseANotPrefixUnaryPrefixOp(ANotPrefixUnaryPrefixOp node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseAFilterPrefixUnaryPrefixOp(AFilterPrefixUnaryPrefixOp node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseAGroupbyPrefixUnaryPrefixOp(AGroupbyPrefixUnaryPrefixOp node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseAMeanPrefixUnaryPrefixOp(AMeanPrefixUnaryPrefixOp node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseACountPrefixUnaryPrefixOp(ACountPrefixUnaryPrefixOp node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
     public void caseAImportWithoutSeperatorImportT(AImportWithoutSeperatorImportT node)
     {
         defaultCase(node);
@@ -429,127 +327,25 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
+    public void caseTBinInfixOp(TBinInfixOp node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTUnaryPrefixOp(TUnaryPrefixOp node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
     public void caseTOpAssign(TOpAssign node)
     {
         defaultCase(node);
     }
 
     @Override
-    public void caseTOpPlus(TOpPlus node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseTOpMinus(TOpMinus node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseTOpMult(TOpMult node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseTOpDiv(TOpDiv node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseTOpMod(TOpMod node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseTBopLthan(TBopLthan node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseTBopLethan(TBopLethan node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseTBopGthan(TBopGthan node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseTBopGethan(TBopGethan node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseTBopEq(TBopEq node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseTBopAnd(TBopAnd node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseTBopOr(TBopOr node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseTBopNot(TBopNot node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
     public void caseTSopDot(TSopDot node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseTSopSum(TSopSum node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseTSopFilter(TSopFilter node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseTSopGroupby(TSopGroupby node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseTSopMean(TSopMean node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseTSopSort(TSopSort node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseTSopCount(TSopCount node)
     {
         defaultCase(node);
     }

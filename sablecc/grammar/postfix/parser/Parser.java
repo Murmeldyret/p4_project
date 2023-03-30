@@ -342,118 +342,16 @@ public class Parser
                 push(goTo(9), list, false);
             }
             break;
-            case 24: /* reduce APlusInfixBinInfixOp */
+            case 24: /* reduce AImportWithoutSeperatorImportT */
             {
                 ArrayList<Object> list = new24();
                 push(goTo(10), list, false);
             }
             break;
-            case 25: /* reduce AMinusInfixBinInfixOp */
+            case 25: /* reduce AImportWithSeperatorImportT */
             {
                 ArrayList<Object> list = new25();
                 push(goTo(10), list, false);
-            }
-            break;
-            case 26: /* reduce AMultiplicationInfixBinInfixOp */
-            {
-                ArrayList<Object> list = new26();
-                push(goTo(10), list, false);
-            }
-            break;
-            case 27: /* reduce ADivisionInfixBinInfixOp */
-            {
-                ArrayList<Object> list = new27();
-                push(goTo(10), list, false);
-            }
-            break;
-            case 28: /* reduce AModuloInfixBinInfixOp */
-            {
-                ArrayList<Object> list = new28();
-                push(goTo(10), list, false);
-            }
-            break;
-            case 29: /* reduce AAndInfixBinInfixOp */
-            {
-                ArrayList<Object> list = new29();
-                push(goTo(10), list, false);
-            }
-            break;
-            case 30: /* reduce AOrInfixBinInfixOp */
-            {
-                ArrayList<Object> list = new30();
-                push(goTo(10), list, false);
-            }
-            break;
-            case 31: /* reduce AEqualityInfixBinInfixOp */
-            {
-                ArrayList<Object> list = new31();
-                push(goTo(10), list, false);
-            }
-            break;
-            case 32: /* reduce AGreaterThanInfixBinInfixOp */
-            {
-                ArrayList<Object> list = new32();
-                push(goTo(10), list, false);
-            }
-            break;
-            case 33: /* reduce AGreaterThanEqualInfixBinInfixOp */
-            {
-                ArrayList<Object> list = new33();
-                push(goTo(10), list, false);
-            }
-            break;
-            case 34: /* reduce ALessThanInfixBinInfixOp */
-            {
-                ArrayList<Object> list = new34();
-                push(goTo(10), list, false);
-            }
-            break;
-            case 35: /* reduce ALessThanEqualInfixBinInfixOp */
-            {
-                ArrayList<Object> list = new35();
-                push(goTo(10), list, false);
-            }
-            break;
-            case 36: /* reduce ANotPrefixUnaryPrefixOp */
-            {
-                ArrayList<Object> list = new36();
-                push(goTo(11), list, false);
-            }
-            break;
-            case 37: /* reduce AFilterPrefixUnaryPrefixOp */
-            {
-                ArrayList<Object> list = new37();
-                push(goTo(11), list, false);
-            }
-            break;
-            case 38: /* reduce AGroupbyPrefixUnaryPrefixOp */
-            {
-                ArrayList<Object> list = new38();
-                push(goTo(11), list, false);
-            }
-            break;
-            case 39: /* reduce AMeanPrefixUnaryPrefixOp */
-            {
-                ArrayList<Object> list = new39();
-                push(goTo(11), list, false);
-            }
-            break;
-            case 40: /* reduce ACountPrefixUnaryPrefixOp */
-            {
-                ArrayList<Object> list = new40();
-                push(goTo(11), list, false);
-            }
-            break;
-            case 41: /* reduce AImportWithoutSeperatorImportT */
-            {
-                ArrayList<Object> list = new41();
-                push(goTo(12), list, false);
-            }
-            break;
-            case 42: /* reduce AImportWithSeperatorImportT */
-            {
-                ArrayList<Object> list = new42();
-                push(goTo(12), list, false);
             }
             break;
         }
@@ -872,14 +770,14 @@ public class Parser
         PExprPrime pexprprimeNode1;
         {
             // Block
-        PBinInfixOp pbininfixopNode2;
+        TBinInfixOp tbininfixopNode2;
         PVal pvalNode3;
         PExprPrime pexprprimeNode4;
-        pbininfixopNode2 = (PBinInfixOp)nodeArrayList1.get(0);
+        tbininfixopNode2 = (TBinInfixOp)nodeArrayList1.get(0);
         pvalNode3 = (PVal)nodeArrayList2.get(0);
         pexprprimeNode4 = (PExprPrime)nodeArrayList3.get(0);
 
-        pexprprimeNode1 = new AExprPrimeOperatorValPrimeExprPrime(pbininfixopNode2, pvalNode3, pexprprimeNode4);
+        pexprprimeNode1 = new AExprPrimeOperatorValPrimeExprPrime(tbininfixopNode2, pvalNode3, pexprprimeNode4);
         }
 	nodeList.add(pexprprimeNode1);
         return nodeList;
@@ -1005,347 +903,7 @@ public class Parser
 
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    ArrayList<Object> new24() /* reduce APlusInfixBinInfixOp */
-    {
-        @SuppressWarnings("hiding") ArrayList<Object> nodeList = new ArrayList<Object>();
-
-        @SuppressWarnings("unused") ArrayList<Object> nodeArrayList1 = pop();
-        PBinInfixOp pbininfixopNode1;
-        {
-            // Block
-        TOpPlus topplusNode2;
-        topplusNode2 = (TOpPlus)nodeArrayList1.get(0);
-
-        pbininfixopNode1 = new APlusInfixBinInfixOp(topplusNode2);
-        }
-	nodeList.add(pbininfixopNode1);
-        return nodeList;
-    }
-
-
-
-    @SuppressWarnings({ "unchecked", "rawtypes" })
-    ArrayList<Object> new25() /* reduce AMinusInfixBinInfixOp */
-    {
-        @SuppressWarnings("hiding") ArrayList<Object> nodeList = new ArrayList<Object>();
-
-        @SuppressWarnings("unused") ArrayList<Object> nodeArrayList1 = pop();
-        PBinInfixOp pbininfixopNode1;
-        {
-            // Block
-        TOpMinus topminusNode2;
-        topminusNode2 = (TOpMinus)nodeArrayList1.get(0);
-
-        pbininfixopNode1 = new AMinusInfixBinInfixOp(topminusNode2);
-        }
-	nodeList.add(pbininfixopNode1);
-        return nodeList;
-    }
-
-
-
-    @SuppressWarnings({ "unchecked", "rawtypes" })
-    ArrayList<Object> new26() /* reduce AMultiplicationInfixBinInfixOp */
-    {
-        @SuppressWarnings("hiding") ArrayList<Object> nodeList = new ArrayList<Object>();
-
-        @SuppressWarnings("unused") ArrayList<Object> nodeArrayList1 = pop();
-        PBinInfixOp pbininfixopNode1;
-        {
-            // Block
-        TOpMult topmultNode2;
-        topmultNode2 = (TOpMult)nodeArrayList1.get(0);
-
-        pbininfixopNode1 = new AMultiplicationInfixBinInfixOp(topmultNode2);
-        }
-	nodeList.add(pbininfixopNode1);
-        return nodeList;
-    }
-
-
-
-    @SuppressWarnings({ "unchecked", "rawtypes" })
-    ArrayList<Object> new27() /* reduce ADivisionInfixBinInfixOp */
-    {
-        @SuppressWarnings("hiding") ArrayList<Object> nodeList = new ArrayList<Object>();
-
-        @SuppressWarnings("unused") ArrayList<Object> nodeArrayList1 = pop();
-        PBinInfixOp pbininfixopNode1;
-        {
-            // Block
-        TOpDiv topdivNode2;
-        topdivNode2 = (TOpDiv)nodeArrayList1.get(0);
-
-        pbininfixopNode1 = new ADivisionInfixBinInfixOp(topdivNode2);
-        }
-	nodeList.add(pbininfixopNode1);
-        return nodeList;
-    }
-
-
-
-    @SuppressWarnings({ "unchecked", "rawtypes" })
-    ArrayList<Object> new28() /* reduce AModuloInfixBinInfixOp */
-    {
-        @SuppressWarnings("hiding") ArrayList<Object> nodeList = new ArrayList<Object>();
-
-        @SuppressWarnings("unused") ArrayList<Object> nodeArrayList1 = pop();
-        PBinInfixOp pbininfixopNode1;
-        {
-            // Block
-        TOpMod topmodNode2;
-        topmodNode2 = (TOpMod)nodeArrayList1.get(0);
-
-        pbininfixopNode1 = new AModuloInfixBinInfixOp(topmodNode2);
-        }
-	nodeList.add(pbininfixopNode1);
-        return nodeList;
-    }
-
-
-
-    @SuppressWarnings({ "unchecked", "rawtypes" })
-    ArrayList<Object> new29() /* reduce AAndInfixBinInfixOp */
-    {
-        @SuppressWarnings("hiding") ArrayList<Object> nodeList = new ArrayList<Object>();
-
-        @SuppressWarnings("unused") ArrayList<Object> nodeArrayList1 = pop();
-        PBinInfixOp pbininfixopNode1;
-        {
-            // Block
-        TBopAnd tbopandNode2;
-        tbopandNode2 = (TBopAnd)nodeArrayList1.get(0);
-
-        pbininfixopNode1 = new AAndInfixBinInfixOp(tbopandNode2);
-        }
-	nodeList.add(pbininfixopNode1);
-        return nodeList;
-    }
-
-
-
-    @SuppressWarnings({ "unchecked", "rawtypes" })
-    ArrayList<Object> new30() /* reduce AOrInfixBinInfixOp */
-    {
-        @SuppressWarnings("hiding") ArrayList<Object> nodeList = new ArrayList<Object>();
-
-        @SuppressWarnings("unused") ArrayList<Object> nodeArrayList1 = pop();
-        PBinInfixOp pbininfixopNode1;
-        {
-            // Block
-        TBopOr tboporNode2;
-        tboporNode2 = (TBopOr)nodeArrayList1.get(0);
-
-        pbininfixopNode1 = new AOrInfixBinInfixOp(tboporNode2);
-        }
-	nodeList.add(pbininfixopNode1);
-        return nodeList;
-    }
-
-
-
-    @SuppressWarnings({ "unchecked", "rawtypes" })
-    ArrayList<Object> new31() /* reduce AEqualityInfixBinInfixOp */
-    {
-        @SuppressWarnings("hiding") ArrayList<Object> nodeList = new ArrayList<Object>();
-
-        @SuppressWarnings("unused") ArrayList<Object> nodeArrayList1 = pop();
-        PBinInfixOp pbininfixopNode1;
-        {
-            // Block
-        TBopEq tbopeqNode2;
-        tbopeqNode2 = (TBopEq)nodeArrayList1.get(0);
-
-        pbininfixopNode1 = new AEqualityInfixBinInfixOp(tbopeqNode2);
-        }
-	nodeList.add(pbininfixopNode1);
-        return nodeList;
-    }
-
-
-
-    @SuppressWarnings({ "unchecked", "rawtypes" })
-    ArrayList<Object> new32() /* reduce AGreaterThanInfixBinInfixOp */
-    {
-        @SuppressWarnings("hiding") ArrayList<Object> nodeList = new ArrayList<Object>();
-
-        @SuppressWarnings("unused") ArrayList<Object> nodeArrayList1 = pop();
-        PBinInfixOp pbininfixopNode1;
-        {
-            // Block
-        TBopGthan tbopgthanNode2;
-        tbopgthanNode2 = (TBopGthan)nodeArrayList1.get(0);
-
-        pbininfixopNode1 = new AGreaterThanInfixBinInfixOp(tbopgthanNode2);
-        }
-	nodeList.add(pbininfixopNode1);
-        return nodeList;
-    }
-
-
-
-    @SuppressWarnings({ "unchecked", "rawtypes" })
-    ArrayList<Object> new33() /* reduce AGreaterThanEqualInfixBinInfixOp */
-    {
-        @SuppressWarnings("hiding") ArrayList<Object> nodeList = new ArrayList<Object>();
-
-        @SuppressWarnings("unused") ArrayList<Object> nodeArrayList1 = pop();
-        PBinInfixOp pbininfixopNode1;
-        {
-            // Block
-        TBopGethan tbopgethanNode2;
-        tbopgethanNode2 = (TBopGethan)nodeArrayList1.get(0);
-
-        pbininfixopNode1 = new AGreaterThanEqualInfixBinInfixOp(tbopgethanNode2);
-        }
-	nodeList.add(pbininfixopNode1);
-        return nodeList;
-    }
-
-
-
-    @SuppressWarnings({ "unchecked", "rawtypes" })
-    ArrayList<Object> new34() /* reduce ALessThanInfixBinInfixOp */
-    {
-        @SuppressWarnings("hiding") ArrayList<Object> nodeList = new ArrayList<Object>();
-
-        @SuppressWarnings("unused") ArrayList<Object> nodeArrayList1 = pop();
-        PBinInfixOp pbininfixopNode1;
-        {
-            // Block
-        TBopLthan tboplthanNode2;
-        tboplthanNode2 = (TBopLthan)nodeArrayList1.get(0);
-
-        pbininfixopNode1 = new ALessThanInfixBinInfixOp(tboplthanNode2);
-        }
-	nodeList.add(pbininfixopNode1);
-        return nodeList;
-    }
-
-
-
-    @SuppressWarnings({ "unchecked", "rawtypes" })
-    ArrayList<Object> new35() /* reduce ALessThanEqualInfixBinInfixOp */
-    {
-        @SuppressWarnings("hiding") ArrayList<Object> nodeList = new ArrayList<Object>();
-
-        @SuppressWarnings("unused") ArrayList<Object> nodeArrayList1 = pop();
-        PBinInfixOp pbininfixopNode1;
-        {
-            // Block
-        TBopLethan tboplethanNode2;
-        tboplethanNode2 = (TBopLethan)nodeArrayList1.get(0);
-
-        pbininfixopNode1 = new ALessThanEqualInfixBinInfixOp(tboplethanNode2);
-        }
-	nodeList.add(pbininfixopNode1);
-        return nodeList;
-    }
-
-
-
-    @SuppressWarnings({ "unchecked", "rawtypes" })
-    ArrayList<Object> new36() /* reduce ANotPrefixUnaryPrefixOp */
-    {
-        @SuppressWarnings("hiding") ArrayList<Object> nodeList = new ArrayList<Object>();
-
-        @SuppressWarnings("unused") ArrayList<Object> nodeArrayList1 = pop();
-        PUnaryPrefixOp punaryprefixopNode1;
-        {
-            // Block
-        TBopNot tbopnotNode2;
-        tbopnotNode2 = (TBopNot)nodeArrayList1.get(0);
-
-        punaryprefixopNode1 = new ANotPrefixUnaryPrefixOp(tbopnotNode2);
-        }
-	nodeList.add(punaryprefixopNode1);
-        return nodeList;
-    }
-
-
-
-    @SuppressWarnings({ "unchecked", "rawtypes" })
-    ArrayList<Object> new37() /* reduce AFilterPrefixUnaryPrefixOp */
-    {
-        @SuppressWarnings("hiding") ArrayList<Object> nodeList = new ArrayList<Object>();
-
-        @SuppressWarnings("unused") ArrayList<Object> nodeArrayList1 = pop();
-        PUnaryPrefixOp punaryprefixopNode1;
-        {
-            // Block
-        TSopFilter tsopfilterNode2;
-        tsopfilterNode2 = (TSopFilter)nodeArrayList1.get(0);
-
-        punaryprefixopNode1 = new AFilterPrefixUnaryPrefixOp(tsopfilterNode2);
-        }
-	nodeList.add(punaryprefixopNode1);
-        return nodeList;
-    }
-
-
-
-    @SuppressWarnings({ "unchecked", "rawtypes" })
-    ArrayList<Object> new38() /* reduce AGroupbyPrefixUnaryPrefixOp */
-    {
-        @SuppressWarnings("hiding") ArrayList<Object> nodeList = new ArrayList<Object>();
-
-        @SuppressWarnings("unused") ArrayList<Object> nodeArrayList1 = pop();
-        PUnaryPrefixOp punaryprefixopNode1;
-        {
-            // Block
-        TSopGroupby tsopgroupbyNode2;
-        tsopgroupbyNode2 = (TSopGroupby)nodeArrayList1.get(0);
-
-        punaryprefixopNode1 = new AGroupbyPrefixUnaryPrefixOp(tsopgroupbyNode2);
-        }
-	nodeList.add(punaryprefixopNode1);
-        return nodeList;
-    }
-
-
-
-    @SuppressWarnings({ "unchecked", "rawtypes" })
-    ArrayList<Object> new39() /* reduce AMeanPrefixUnaryPrefixOp */
-    {
-        @SuppressWarnings("hiding") ArrayList<Object> nodeList = new ArrayList<Object>();
-
-        @SuppressWarnings("unused") ArrayList<Object> nodeArrayList1 = pop();
-        PUnaryPrefixOp punaryprefixopNode1;
-        {
-            // Block
-        TSopMean tsopmeanNode2;
-        tsopmeanNode2 = (TSopMean)nodeArrayList1.get(0);
-
-        punaryprefixopNode1 = new AMeanPrefixUnaryPrefixOp(tsopmeanNode2);
-        }
-	nodeList.add(punaryprefixopNode1);
-        return nodeList;
-    }
-
-
-
-    @SuppressWarnings({ "unchecked", "rawtypes" })
-    ArrayList<Object> new40() /* reduce ACountPrefixUnaryPrefixOp */
-    {
-        @SuppressWarnings("hiding") ArrayList<Object> nodeList = new ArrayList<Object>();
-
-        @SuppressWarnings("unused") ArrayList<Object> nodeArrayList1 = pop();
-        PUnaryPrefixOp punaryprefixopNode1;
-        {
-            // Block
-        TSopCount tsopcountNode2;
-        tsopcountNode2 = (TSopCount)nodeArrayList1.get(0);
-
-        punaryprefixopNode1 = new ACountPrefixUnaryPrefixOp(tsopcountNode2);
-        }
-	nodeList.add(punaryprefixopNode1);
-        return nodeList;
-    }
-
-
-
-    @SuppressWarnings({ "unchecked", "rawtypes" })
-    ArrayList<Object> new41() /* reduce AImportWithoutSeperatorImportT */
+    ArrayList<Object> new24() /* reduce AImportWithoutSeperatorImportT */
     {
         @SuppressWarnings("hiding") ArrayList<Object> nodeList = new ArrayList<Object>();
 
@@ -1374,7 +932,7 @@ public class Parser
 
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    ArrayList<Object> new42() /* reduce AImportWithSeperatorImportT */
+    ArrayList<Object> new25() /* reduce AImportWithSeperatorImportT */
     {
         @SuppressWarnings("hiding") ArrayList<Object> nodeList = new ArrayList<Object>();
 
@@ -1410,94 +968,80 @@ public class Parser
 
     private static int[][][] actionTable;
 /*      {
-			{{-1, REDUCE, 2}, {11, SHIFT, 1}, {13, SHIFT, 2}, {36, SHIFT, 3}, {38, SHIFT, 4}, {39, SHIFT, 5}, {41, SHIFT, 6}, },
+			{{-1, REDUCE, 2}, {11, SHIFT, 1}, {13, SHIFT, 2}, {19, SHIFT, 3}, {21, SHIFT, 4}, {22, SHIFT, 5}, {24, SHIFT, 6}, },
 			{{-1, ERROR, 1}, {13, SHIFT, 12}, },
-			{{-1, ERROR, 2}, {14, SHIFT, 13}, },
+			{{-1, ERROR, 2}, {16, SHIFT, 13}, },
 			{{-1, ERROR, 3}, {7, SHIFT, 14}, },
 			{{-1, ERROR, 4}, {13, SHIFT, 15}, },
 			{{-1, REDUCE, 16}, {7, SHIFT, 16}, {8, SHIFT, 17}, {9, SHIFT, 18}, {10, SHIFT, 19}, {13, SHIFT, 20}, },
 			{{-1, REDUCE, 16}, {7, SHIFT, 16}, {8, SHIFT, 17}, {9, SHIFT, 18}, {10, SHIFT, 19}, {13, SHIFT, 20}, },
-			{{-1, ERROR, 7}, {44, ACCEPT, -1}, },
+			{{-1, ERROR, 7}, {27, ACCEPT, -1}, },
 			{{-1, REDUCE, 0}, },
 			{{-1, ERROR, 9}, {0, SHIFT, 24}, },
 			{{-1, REDUCE, 5}, },
 			{{-1, REDUCE, 3}, },
-			{{-1, ERROR, 12}, {14, SHIFT, 25}, },
+			{{-1, ERROR, 12}, {16, SHIFT, 25}, },
 			{{-1, REDUCE, 16}, {7, SHIFT, 16}, {8, SHIFT, 17}, {9, SHIFT, 18}, {10, SHIFT, 19}, {13, SHIFT, 20}, },
-			{{-1, ERROR, 14}, {35, SHIFT, 27}, {37, SHIFT, 28}, },
-			{{-1, ERROR, 15}, {40, SHIFT, 29}, },
+			{{-1, ERROR, 14}, {18, SHIFT, 27}, {20, SHIFT, 28}, },
+			{{-1, ERROR, 15}, {23, SHIFT, 29}, },
 			{{-1, REDUCE, 22}, },
 			{{-1, REDUCE, 21}, },
 			{{-1, REDUCE, 20}, },
 			{{-1, REDUCE, 23}, },
 			{{-1, REDUCE, 19}, },
 			{{-1, ERROR, 21}, {3, SHIFT, 30}, },
-			{{-1, REDUCE, 18}, {15, SHIFT, 32}, {16, SHIFT, 33}, {17, SHIFT, 34}, {18, SHIFT, 35}, {19, SHIFT, 36}, {20, SHIFT, 37}, {21, SHIFT, 38}, {22, SHIFT, 39}, {23, SHIFT, 40}, {24, SHIFT, 41}, {25, SHIFT, 42}, {26, SHIFT, 43}, },
+			{{-1, REDUCE, 18}, {14, SHIFT, 32}, },
 			{{-1, ERROR, 23}, {3, SHIFT, 30}, },
-			{{-1, REDUCE, 2}, {11, SHIFT, 1}, {13, SHIFT, 2}, {36, SHIFT, 3}, {38, SHIFT, 4}, {39, SHIFT, 5}, {41, SHIFT, 6}, },
+			{{-1, REDUCE, 2}, {11, SHIFT, 1}, {13, SHIFT, 2}, {19, SHIFT, 3}, {21, SHIFT, 4}, {22, SHIFT, 5}, {24, SHIFT, 6}, },
 			{{-1, REDUCE, 16}, {7, SHIFT, 16}, {8, SHIFT, 17}, {9, SHIFT, 18}, {10, SHIFT, 19}, {13, SHIFT, 20}, },
 			{{-1, REDUCE, 14}, },
-			{{-1, ERROR, 27}, {13, SHIFT, 49}, },
-			{{-1, ERROR, 28}, {12, SHIFT, 50}, },
+			{{-1, ERROR, 27}, {13, SHIFT, 37}, },
+			{{-1, ERROR, 28}, {12, SHIFT, 38}, },
 			{{-1, ERROR, 29}, {7, SHIFT, 16}, {8, SHIFT, 17}, {9, SHIFT, 18}, {10, SHIFT, 19}, {13, SHIFT, 20}, },
-			{{-1, REDUCE, 2}, {11, SHIFT, 1}, {13, SHIFT, 2}, {36, SHIFT, 3}, {38, SHIFT, 4}, {39, SHIFT, 5}, {41, SHIFT, 6}, },
+			{{-1, REDUCE, 2}, {11, SHIFT, 1}, {13, SHIFT, 2}, {19, SHIFT, 3}, {21, SHIFT, 4}, {22, SHIFT, 5}, {24, SHIFT, 6}, },
 			{{-1, REDUCE, 7}, },
-			{{-1, REDUCE, 24}, },
-			{{-1, REDUCE, 25}, },
-			{{-1, REDUCE, 26}, },
-			{{-1, REDUCE, 27}, },
-			{{-1, REDUCE, 28}, },
-			{{-1, REDUCE, 34}, },
-			{{-1, REDUCE, 35}, },
-			{{-1, REDUCE, 32}, },
-			{{-1, REDUCE, 33}, },
-			{{-1, REDUCE, 31}, },
-			{{-1, REDUCE, 29}, },
-			{{-1, REDUCE, 30}, },
+			{{-1, ERROR, 32}, {7, SHIFT, 16}, {8, SHIFT, 17}, {9, SHIFT, 18}, {10, SHIFT, 19}, {13, SHIFT, 20}, },
 			{{-1, REDUCE, 15}, },
-			{{-1, ERROR, 45}, {7, SHIFT, 16}, {8, SHIFT, 17}, {9, SHIFT, 18}, {10, SHIFT, 19}, {13, SHIFT, 20}, },
-			{{-1, REDUCE, 13}, {42, SHIFT, 54}, },
+			{{-1, REDUCE, 13}, {25, SHIFT, 42}, },
 			{{-1, REDUCE, 1}, },
 			{{-1, REDUCE, 4}, },
-			{{-1, REDUCE, 41}, },
-			{{-1, ERROR, 50}, {35, SHIFT, 57}, },
-			{{-1, ERROR, 51}, {3, SHIFT, 30}, },
-			{{-1, ERROR, 52}, {4, SHIFT, 59}, },
-			{{-1, REDUCE, 18}, {15, SHIFT, 32}, {16, SHIFT, 33}, {17, SHIFT, 34}, {18, SHIFT, 35}, {19, SHIFT, 36}, {20, SHIFT, 37}, {21, SHIFT, 38}, {22, SHIFT, 39}, {23, SHIFT, 40}, {24, SHIFT, 41}, {25, SHIFT, 42}, {26, SHIFT, 43}, },
-			{{-1, ERROR, 54}, {3, SHIFT, 30}, {41, SHIFT, 61}, },
+			{{-1, REDUCE, 24}, },
+			{{-1, ERROR, 38}, {18, SHIFT, 45}, },
+			{{-1, ERROR, 39}, {3, SHIFT, 30}, },
+			{{-1, ERROR, 40}, {4, SHIFT, 47}, },
+			{{-1, REDUCE, 18}, {14, SHIFT, 32}, },
+			{{-1, ERROR, 42}, {3, SHIFT, 30}, {24, SHIFT, 49}, },
 			{{-1, REDUCE, 8}, },
 			{{-1, REDUCE, 11}, },
-			{{-1, ERROR, 57}, {13, SHIFT, 63}, },
+			{{-1, ERROR, 45}, {13, SHIFT, 51}, },
 			{{-1, REDUCE, 6}, },
 			{{-1, REDUCE, 9}, },
 			{{-1, REDUCE, 17}, },
 			{{-1, REDUCE, 16}, {7, SHIFT, 16}, {8, SHIFT, 17}, {9, SHIFT, 18}, {10, SHIFT, 19}, {13, SHIFT, 20}, },
 			{{-1, REDUCE, 12}, },
-			{{-1, REDUCE, 42}, },
-			{{-1, ERROR, 64}, {3, SHIFT, 30}, },
+			{{-1, REDUCE, 25}, },
+			{{-1, ERROR, 52}, {3, SHIFT, 30}, },
 			{{-1, REDUCE, 10}, },
         };*/
     private static int[][][] gotoTable;
 /*      {
 			{{-1, 7}, },
-			{{-1, 8}, {24, 47}, {30, 52}, },
+			{{-1, 8}, {24, 35}, {30, 40}, },
 			{{-1, 9}, },
-			{{-1, 31}, {23, 46}, {51, 58}, {54, 62}, {64, 65}, },
-			{{-1, 55}, },
-			{{-1, 56}, },
+			{{-1, 31}, {23, 34}, {39, 46}, {42, 50}, {52, 53}, },
+			{{-1, 43}, },
+			{{-1, 44}, },
 			{{-1, 10}, },
-			{{-1, 21}, {6, 23}, {13, 26}, {25, 48}, {61, 64}, },
-			{{-1, 44}, {53, 60}, },
-			{{-1, 22}, {29, 51}, {45, 53}, },
-			{{-1, 45}, },
-			{{-1, -1}, },
+			{{-1, 21}, {6, 23}, {13, 26}, {25, 36}, {49, 52}, },
+			{{-1, 33}, {41, 48}, },
+			{{-1, 22}, {29, 39}, {32, 41}, },
 			{{-1, 11}, },
         };*/
     private static String[] errorMessages;
 /*      {
 			"expecting: type, id, 'import', 'for', 'while', 'if', EOF",
 			"expecting: id",
-			"expecting: ':='",
+			"expecting: '='",
 			"expecting: string",
 			"expecting: '{', string, intnum, floatnum, bool, id",
 			"expecting: EOF",
@@ -1505,7 +1049,7 @@ public class Parser
 			"expecting: newline, string, intnum, floatnum, bool, id",
 			"expecting: 'as', 'seperated_by'",
 			"expecting: 'in'",
-			"expecting: newline, '{', '+', '-', '*', '/', '%', '<', '<=', '>', '>=', '==', 'and', 'or'",
+			"expecting: newline, '{', bin infix op",
 			"expecting: '{'",
 			"expecting: '}', type, id, 'import', 'for', 'while', 'if', EOF",
 			"expecting: char",
@@ -1520,7 +1064,7 @@ public class Parser
         };*/
     private static int[] errors;
 /*      {
-			0, 1, 2, 3, 1, 4, 4, 5, 5, 6, 6, 6, 2, 7, 8, 9, 10, 10, 10, 10, 10, 11, 10, 11, 12, 7, 6, 1, 13, 14, 15, 6, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 16, 14, 17, 18, 6, 6, 19, 11, 20, 10, 21, 6, 6, 1, 6, 17, 16, 4, 6, 6, 11, 6, 
+			0, 1, 2, 3, 1, 4, 4, 5, 5, 6, 6, 6, 2, 7, 8, 9, 10, 10, 10, 10, 10, 11, 10, 11, 12, 7, 6, 1, 13, 14, 15, 6, 14, 16, 17, 18, 6, 6, 19, 11, 20, 10, 21, 6, 6, 1, 6, 17, 16, 4, 6, 6, 11, 6, 
         };*/
 
     static 

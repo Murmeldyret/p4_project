@@ -9,12 +9,12 @@ public final class TOpAssign extends Token
 {
     public TOpAssign()
     {
-        super.setText(":=");
+        super.setText("=");
     }
 
     public TOpAssign(int line, int pos)
     {
-        super.setText(":=");
+        super.setText("=");
         setLine(line);
         setPos(pos);
     }

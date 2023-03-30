@@ -15,6 +15,34 @@ Helpers
     sort_order_asc = 'asc';
     sort_order_dsc = 'desc';
 
+    //Operators
+    op_plus = '+';
+    op_minus = '-';
+    op_mult = '*';
+    op_div = '/';
+    op_mod = '%';
+
+    arit_bin_infix_op = op_plus | op_minus | op_mult | op_div | op_mod ;
+    //Boolean Operators
+    bop_lthan = '<';
+    bop_lethan = '<=';
+    bop_gthan = '>';
+    bop_gethan = '>=';
+    bop_eq = '==';
+    bop_and = 'and';
+    bop_or = 'or';
+
+    bool_bin_infix_op = bop_lthan | bop_lethan | bop_gthan | bop_gethan | bop_eq | bop_and | bop_or ;
+    bop_not = 'not';
+    
+    //special operators
+    sop_sum = 'sum';
+    sop_filter = 'filter';
+    sop_groupby = 'groupby';
+    sop_mean = 'mean';
+    sop_sort = 'sort';
+    sop_count = 'count';
+
 Tokens
     //for tokens in the program
     newline = eol;
@@ -40,32 +68,21 @@ Tokens
     id = (['A' .. 'Z'] ['a' .. 'z'])(['A' .. 'Z'] ['a' .. 'z'] ['0' .. '9'])*;
     blank = (' ' | 13 | 10)+;
 
-    //Operators
-    op_assign = ':=';
-    op_plus = '+';
-    op_minus = '-';
-    op_mult = '*';
-    op_div = '/';
-    op_mod = '%';
-
-    //Boolean Operators
-    bop_lthan = '<';
-    bop_lethan = '<=';
-    bop_gthan = '>';
-    bop_gethan = '>=';
-    bop_eq = '==';
-    bop_and = 'and';
-    bop_or = 'or';
-    bop_not = 'not';
+    // kan måske flyttes til tokens hvis operatorer flyttes til helpers, dermed vil Productions blive simplere
+    bin_infix_op = arit_bin_infix_op | bool_bin_infix_op ;
+    
+    // skal der være andre prefix operatorer?
+    unary_prefix_op =
+        bop_not |
+        sop_filter |
+        sop_groupby |
+        sop_mean |
+        sop_count ;
 
     //special Operators
+    op_assign = '=';
     sop_dot = '.';
-    sop_sum = 'sum';
-    sop_filter = 'filter';
-    sop_groupby = 'groupby';
-    sop_mean = 'mean';
-    sop_sort = 'sort';
-    sop_count = 'count';
+
 
 
     //keywords
@@ -125,28 +142,6 @@ Productions
         {val_string} string |
         {val_bool} bool ;
 
-    // kan måske flyttes til tokens hvis operatorer flyttes til helpers, dermed vil Productions blive simplere
-    bin_infix_op = 
-        {plus_infix} op_plus |
-        {minus_infix} op_minus |
-        {multiplication_infix} op_mult |
-        {division_infix} op_div |
-        {modulo_infix} op_mod |
-        {and_infix} bop_and |
-        {or_infix} bop_or |
-        {equality_infix} bop_eq |
-        {greater_than_infix} bop_gthan |
-        {greater_than_equal_infix} bop_gethan |
-        {less_than_infix} bop_lthan |
-        {less_than_equal_infix} bop_lethan ;
-    
-    // skal der være andre prefix operatorer?
-    unary_prefix_op =
-        {not_prefix} bop_not |
-        {filter_prefix} sop_filter |
-        {groupby_prefix} sop_groupby |
-        {mean_prefix} sop_mean |
-        {count_prefix} sop_count ;
 
     import_t =
         {import_without_seperator} kw_import string kw_as id |
