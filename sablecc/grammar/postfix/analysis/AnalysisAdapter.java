@@ -189,30 +189,6 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
-    public void caseASpeicalExpressionSpecialExpr(ASpeicalExpressionSpecialExpr node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseASpecialExpressionSortSpecialExpr(ASpecialExpressionSortSpecialExpr node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseASpecialExprPrimeSpecialExprPrime(ASpecialExprPrimeSpecialExprPrime node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseASpecialExprPrime(ASpecialExprPrime node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
     public void caseAValIdVal(AValIdVal node)
     {
         defaultCase(node);
@@ -315,25 +291,103 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
-    public void caseAFilterOpSpecialOp(AFilterOpSpecialOp node)
+    public void caseASpeicalExpressionSpecialExpr(ASpeicalExpressionSpecialExpr node)
     {
         defaultCase(node);
     }
 
     @Override
-    public void caseAGroupbyOpSpecialOp(AGroupbyOpSpecialOp node)
+    public void caseASpecialExprPrimeSpecialExprPrime(ASpecialExprPrimeSpecialExprPrime node)
     {
         defaultCase(node);
     }
 
     @Override
-    public void caseAMeanOpSpecialOp(AMeanOpSpecialOp node)
+    public void caseASpecialExprPrime(ASpecialExprPrime node)
     {
         defaultCase(node);
     }
 
     @Override
-    public void caseACountOpSpecialOp(ACountOpSpecialOp node)
+    public void caseASumOpSpecialSyntax(ASumOpSpecialSyntax node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAFilterOpSpecialSyntax(AFilterOpSpecialSyntax node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAGroupbyOpSpecialSyntax(AGroupbyOpSpecialSyntax node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAMeanOpSpecialSyntax(AMeanOpSpecialSyntax node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseACountOpSpecialSyntax(ACountOpSpecialSyntax node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseASortOpSpecialSyntax(ASortOpSpecialSyntax node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseASumSum(ASumSum node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAFilterFilter(AFilterFilter node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAGroupbyGroupby(AGroupbyGroupby node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAMeanMean(AMeanMean node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseACountCount(ACountCount node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseASortAscSort(ASortAscSort node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseASortDescSort(ASortDescSort node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseASortSort(ASortSort node)
     {
         defaultCase(node);
     }
@@ -621,7 +675,13 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
-    public void caseTKwSortOrder(TKwSortOrder node)
+    public void caseTKwSortOrderAsc(TKwSortOrderAsc node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTKwSortOrderDsc(TKwSortOrderDsc node)
     {
         defaultCase(node);
     }

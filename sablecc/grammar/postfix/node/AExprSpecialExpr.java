@@ -8,6 +8,7 @@ import postfix.analysis.*;
 public final class AExprSpecialExpr extends PExpr
 {
     private PSpecialExpr _specialExpr_;
+    private TId _id_;
 
     public AExprSpecialExpr()
     {
@@ -15,10 +16,13 @@ public final class AExprSpecialExpr extends PExpr
     }
 
     public AExprSpecialExpr(
-        @SuppressWarnings("hiding") PSpecialExpr _specialExpr_)
+        @SuppressWarnings("hiding") PSpecialExpr _specialExpr_,
+        @SuppressWarnings("hiding") TId _id_)
     {
         // Constructor
         setSpecialExpr(_specialExpr_);
+
+        setId(_id_);
 
     }
 
@@ -26,7 +30,8 @@ public final class AExprSpecialExpr extends PExpr
     public Object clone()
     {
         return new AExprSpecialExpr(
-            cloneNode(this._specialExpr_));
+            cloneNode(this._specialExpr_),
+            cloneNode(this._id_));
     }
 
     @Override
@@ -60,11 +65,37 @@ public final class AExprSpecialExpr extends PExpr
         this._specialExpr_ = node;
     }
 
+    public TId getId()
+    {
+        return this._id_;
+    }
+
+    public void setId(TId node)
+    {
+        if(this._id_ != null)
+        {
+            this._id_.parent(null);
+        }
+
+        if(node != null)
+        {
+            if(node.parent() != null)
+            {
+                node.parent().removeChild(node);
+            }
+
+            node.parent(this);
+        }
+
+        this._id_ = node;
+    }
+
     @Override
     public String toString()
     {
         return ""
-            + toString(this._specialExpr_);
+            + toString(this._specialExpr_)
+            + toString(this._id_);
     }
 
     @Override
@@ -74,6 +105,12 @@ public final class AExprSpecialExpr extends PExpr
         if(this._specialExpr_ == child)
         {
             this._specialExpr_ = null;
+            return;
+        }
+
+        if(this._id_ == child)
+        {
+            this._id_ = null;
             return;
         }
 
@@ -87,6 +124,12 @@ public final class AExprSpecialExpr extends PExpr
         if(this._specialExpr_ == oldChild)
         {
             setSpecialExpr((PSpecialExpr) newChild);
+            return;
+        }
+
+        if(this._id_ == oldChild)
+        {
+            setId((TId) newChild);
             return;
         }
 

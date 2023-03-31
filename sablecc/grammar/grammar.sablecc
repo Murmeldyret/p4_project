@@ -12,8 +12,6 @@ Helpers
     eol = cr | lf | cr lf ;
     not_eol = [all -[cr + lf]];
     sign = '+' | '-';
-    sort_order_asc = 'asc';
-    sort_order_dsc = 'desc';
 
 Tokens
     //for tokens in the program
@@ -77,7 +75,8 @@ Tokens
     kw_in = 'in';
     kw_if = 'if';
     kw_else = 'else';
-    kw_sort_order = sort_order_asc | sort_order_dsc;
+    kw_sort_order_asc = 'asc';
+    kw_sort_order_dsc = 'desc';
 
 
 Ignored Tokens
@@ -114,17 +113,11 @@ Productions
 
     expr =
        {expr_val_prime} bop_not? val expr_prime | 
-       {expr_special} special_expr ;
+       {expr_special} special_expr id;
     
     expr_prime = 
        {expr_prime_operator_val_prime} bin_infix_op val expr_prime | ;
     
-    special_expr =
-        {speical_expression} special_op special_expr_prime |
-        {special_expression_sort} sop_sort special_expr_prime kw_sort_order;
-
-    special_expr_prime =
-        {special_expr_prime} special_op special_expr_prime | ;
 
     val = 
         {val_id} id |
@@ -148,12 +141,40 @@ Productions
         {less_than_infix} bop_lthan |
         {less_than_equal_infix} bop_lethan ;
     
+    special_expr =
+        {speical_expression} special_syntax special_expr_prime;
+
+    special_expr_prime =
+        {special_expr_prime} special_syntax special_expr_prime | ;
+    
     // skal der være andre prefix operatorer?
-    special_op =
+    special_syntax =
+        {sum_op} sop_sum |
         {filter_op} sop_filter  |
         {groupby_op} sop_groupby |
         {mean_op} sop_mean |
-        {count_op} sop_count ;
+        {count_op} sop_count |
+        {sort_op} sop_sort ;
+
+    sum =
+        {sum} sop_sum ;
+    
+    filter =
+        {filter} sop_filter l_par expr r_par ;
+    
+    groupby = 
+        {groupby} sop_groupby l_par expr r_par ;
+    
+    mean =
+        {mean} sop_mean l_par expr r_par ;
+
+    count =
+        {count} sop_count l_par expr r_par ;
+
+    sort =
+        {sort_asc} sop_sort kw_sort_order_asc |
+        {sort_desc} sop_sort kw_sort_order_dsc |
+        {sort} sop_sort ;
 
     import_t =
         {import_without_seperator} kw_import string kw_as id |

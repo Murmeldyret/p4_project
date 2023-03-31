@@ -7,7 +7,7 @@ import postfix.analysis.*;
 @SuppressWarnings("nls")
 public final class ASpeicalExpressionSpecialExpr extends PSpecialExpr
 {
-    private PSpecialOp _specialOp_;
+    private PSpecialSyntax _specialSyntax_;
     private PSpecialExprPrime _specialExprPrime_;
 
     public ASpeicalExpressionSpecialExpr()
@@ -16,11 +16,11 @@ public final class ASpeicalExpressionSpecialExpr extends PSpecialExpr
     }
 
     public ASpeicalExpressionSpecialExpr(
-        @SuppressWarnings("hiding") PSpecialOp _specialOp_,
+        @SuppressWarnings("hiding") PSpecialSyntax _specialSyntax_,
         @SuppressWarnings("hiding") PSpecialExprPrime _specialExprPrime_)
     {
         // Constructor
-        setSpecialOp(_specialOp_);
+        setSpecialSyntax(_specialSyntax_);
 
         setSpecialExprPrime(_specialExprPrime_);
 
@@ -30,7 +30,7 @@ public final class ASpeicalExpressionSpecialExpr extends PSpecialExpr
     public Object clone()
     {
         return new ASpeicalExpressionSpecialExpr(
-            cloneNode(this._specialOp_),
+            cloneNode(this._specialSyntax_),
             cloneNode(this._specialExprPrime_));
     }
 
@@ -40,16 +40,16 @@ public final class ASpeicalExpressionSpecialExpr extends PSpecialExpr
         ((Analysis) sw).caseASpeicalExpressionSpecialExpr(this);
     }
 
-    public PSpecialOp getSpecialOp()
+    public PSpecialSyntax getSpecialSyntax()
     {
-        return this._specialOp_;
+        return this._specialSyntax_;
     }
 
-    public void setSpecialOp(PSpecialOp node)
+    public void setSpecialSyntax(PSpecialSyntax node)
     {
-        if(this._specialOp_ != null)
+        if(this._specialSyntax_ != null)
         {
-            this._specialOp_.parent(null);
+            this._specialSyntax_.parent(null);
         }
 
         if(node != null)
@@ -62,7 +62,7 @@ public final class ASpeicalExpressionSpecialExpr extends PSpecialExpr
             node.parent(this);
         }
 
-        this._specialOp_ = node;
+        this._specialSyntax_ = node;
     }
 
     public PSpecialExprPrime getSpecialExprPrime()
@@ -94,7 +94,7 @@ public final class ASpeicalExpressionSpecialExpr extends PSpecialExpr
     public String toString()
     {
         return ""
-            + toString(this._specialOp_)
+            + toString(this._specialSyntax_)
             + toString(this._specialExprPrime_);
     }
 
@@ -102,9 +102,9 @@ public final class ASpeicalExpressionSpecialExpr extends PSpecialExpr
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
-        if(this._specialOp_ == child)
+        if(this._specialSyntax_ == child)
         {
-            this._specialOp_ = null;
+            this._specialSyntax_ = null;
             return;
         }
 
@@ -121,9 +121,9 @@ public final class ASpeicalExpressionSpecialExpr extends PSpecialExpr
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
-        if(this._specialOp_ == oldChild)
+        if(this._specialSyntax_ == oldChild)
         {
-            setSpecialOp((PSpecialOp) newChild);
+            setSpecialSyntax((PSpecialSyntax) newChild);
             return;
         }
 

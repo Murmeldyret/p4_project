@@ -31,10 +31,6 @@ public interface Analysis extends Switch
     void caseAExprSpecialExpr(AExprSpecialExpr node);
     void caseAExprPrimeOperatorValPrimeExprPrime(AExprPrimeOperatorValPrimeExprPrime node);
     void caseAExprPrime(AExprPrime node);
-    void caseASpeicalExpressionSpecialExpr(ASpeicalExpressionSpecialExpr node);
-    void caseASpecialExpressionSortSpecialExpr(ASpecialExpressionSortSpecialExpr node);
-    void caseASpecialExprPrimeSpecialExprPrime(ASpecialExprPrimeSpecialExprPrime node);
-    void caseASpecialExprPrime(ASpecialExprPrime node);
     void caseAValIdVal(AValIdVal node);
     void caseAValFloatnumVal(AValFloatnumVal node);
     void caseAValIntnumVal(AValIntnumVal node);
@@ -52,10 +48,23 @@ public interface Analysis extends Switch
     void caseAGreaterThanEqualInfixBinInfixOp(AGreaterThanEqualInfixBinInfixOp node);
     void caseALessThanInfixBinInfixOp(ALessThanInfixBinInfixOp node);
     void caseALessThanEqualInfixBinInfixOp(ALessThanEqualInfixBinInfixOp node);
-    void caseAFilterOpSpecialOp(AFilterOpSpecialOp node);
-    void caseAGroupbyOpSpecialOp(AGroupbyOpSpecialOp node);
-    void caseAMeanOpSpecialOp(AMeanOpSpecialOp node);
-    void caseACountOpSpecialOp(ACountOpSpecialOp node);
+    void caseASpeicalExpressionSpecialExpr(ASpeicalExpressionSpecialExpr node);
+    void caseASpecialExprPrimeSpecialExprPrime(ASpecialExprPrimeSpecialExprPrime node);
+    void caseASpecialExprPrime(ASpecialExprPrime node);
+    void caseASumOpSpecialSyntax(ASumOpSpecialSyntax node);
+    void caseAFilterOpSpecialSyntax(AFilterOpSpecialSyntax node);
+    void caseAGroupbyOpSpecialSyntax(AGroupbyOpSpecialSyntax node);
+    void caseAMeanOpSpecialSyntax(AMeanOpSpecialSyntax node);
+    void caseACountOpSpecialSyntax(ACountOpSpecialSyntax node);
+    void caseASortOpSpecialSyntax(ASortOpSpecialSyntax node);
+    void caseASumSum(ASumSum node);
+    void caseAFilterFilter(AFilterFilter node);
+    void caseAGroupbyGroupby(AGroupbyGroupby node);
+    void caseAMeanMean(AMeanMean node);
+    void caseACountCount(ACountCount node);
+    void caseASortAscSort(ASortAscSort node);
+    void caseASortDescSort(ASortDescSort node);
+    void caseASortSort(ASortSort node);
     void caseAImportWithoutSeperatorImportT(AImportWithoutSeperatorImportT node);
     void caseAImportWithSeperatorImportT(AImportWithSeperatorImportT node);
 
@@ -104,7 +113,8 @@ public interface Analysis extends Switch
     void caseTKwIn(TKwIn node);
     void caseTKwIf(TKwIf node);
     void caseTKwElse(TKwElse node);
-    void caseTKwSortOrder(TKwSortOrder node);
+    void caseTKwSortOrderAsc(TKwSortOrderAsc node);
+    void caseTKwSortOrderDsc(TKwSortOrderDsc node);
     void caseEOF(EOF node);
     void caseInvalidToken(InvalidToken node);
 }

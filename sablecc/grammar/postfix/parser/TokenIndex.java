@@ -268,14 +268,20 @@ class TokenIndex extends AnalysisAdapter
     }
 
     @Override
-    public void caseTKwSortOrder(@SuppressWarnings("unused") TKwSortOrder node)
+    public void caseTKwSortOrderAsc(@SuppressWarnings("unused") TKwSortOrderAsc node)
     {
         this.index = 43;
     }
 
     @Override
-    public void caseEOF(@SuppressWarnings("unused") EOF node)
+    public void caseTKwSortOrderDsc(@SuppressWarnings("unused") TKwSortOrderDsc node)
     {
         this.index = 44;
+    }
+
+    @Override
+    public void caseEOF(@SuppressWarnings("unused") EOF node)
+    {
+        this.index = 45;
     }
 }
