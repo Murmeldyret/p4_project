@@ -11,6 +11,7 @@ Helpers
     tab = 9;
     eol = cr | lf | cr lf ;
     not_eol = [all -[cr + lf]];
+    sign = '+' | '-';
 
 Tokens
     //for tokens in the program
@@ -28,8 +29,8 @@ Tokens
 
     //types
     string = ('"' '"');
-    intnum = -?(number)+;
-    floatnum = -?(number)+ '.' (number)+;
+    intnum = sign? (number)+ ;
+    floatnum = sign? (number)+ '.' (number)+;
     bool = 'true' | 'false';
     type = ('int' | 'bool' | 'float' | 'string' | 'csv' | 'char' | 'array');
     char = 39 '.' 39;
@@ -57,6 +58,12 @@ Tokens
 
     //special Operators
     sop_dot = '.';
+    sop_sum = 'sum';
+    sop_filter = 'filter';
+    sop_groupby = 'groupby';
+    sop_mean = 'mean';
+    sop_sort = 'sort';
+    sop_count = 'count';
 
 
     //keywords
@@ -68,6 +75,8 @@ Tokens
     kw_in = 'in';
     kw_if = 'if';
     kw_else = 'else';
+    kw_sort_order_asc = 'asc';
+    kw_sort_order_dsc = 'desc';
 
 
 Ignored Tokens
@@ -84,7 +93,7 @@ Productions
     stmt =
         {import_stmt} import_t |
         {declaration} type id op_assign expr | 
-        {assigenment_statement} assigenment |
+        {assignment_statement} assignment |
         {for_loop} kw_for id kw_in val block |
         {while_loop} kw_while expr block |
         {control_statement} kw_if expr block in_control_stmt ;
@@ -99,28 +108,73 @@ Productions
     else_statement =
        {else_block_statement} kw_else block | ;
     
-    assigenment =
+    assignment =
         {assign} id op_assign expr;
 
     expr =
-       {expr_val_prime} val expr_prime | ;
+       {expr_val_prime} bop_not? val expr_prime | 
+       {expr_special} special_expr id;
     
     expr_prime = 
        {expr_prime_operator_val_prime} bin_infix_op val expr_prime | ;
     
+
     val = 
-       {val_id} id |
+        {val_id} id |
         {val_floatnum} floatnum |
         {val_intnum} intnum |
         {val_string} string |
         {val_bool} bool ;
 
+    // kan måske flyttes til tokens hvis operatorer flyttes til helpers, dermed vil Productions blive simplere
     bin_infix_op = 
         {plus_infix} op_plus |
         {minus_infix} op_minus |
         {multiplication_infix} op_mult |
         {division_infix} op_div |
-        {modulo_infix} op_mod ;
+        {modulo_infix} op_mod |
+        {and_infix} bop_and |
+        {or_infix} bop_or |
+        {equality_infix} bop_eq |
+        {greater_than_infix} bop_gthan |
+        {greater_than_equal_infix} bop_gethan |
+        {less_than_infix} bop_lthan |
+        {less_than_equal_infix} bop_lethan ;
+    
+    special_expr =
+        {speical_expression} special_syntax special_expr_prime;
+
+    special_expr_prime =
+        {special_expr_prime} special_syntax special_expr_prime | ;
+    
+    // skal der være andre prefix operatorer?
+    special_syntax =
+        {sum_op} sop_sum |
+        {filter_op} sop_filter  |
+        {groupby_op} sop_groupby |
+        {mean_op} sop_mean |
+        {count_op} sop_count |
+        {sort_op} sop_sort ;
+
+    sum =
+        {sum} sop_sum ;
+    
+    filter =
+        {filter} sop_filter l_par expr r_par ;
+    
+    groupby = 
+        {groupby} sop_groupby l_par expr r_par ;
+    
+    mean =
+        {mean} sop_mean l_par expr r_par ;
+
+    count =
+        {count} sop_count l_par expr r_par ;
+
+    sort =
+        {sort_asc} sop_sort kw_sort_order_asc |
+        {sort_desc} sop_sort kw_sort_order_dsc |
+        {sort} sop_sort ;
 
     import_t =
         {import_without_seperator} kw_import string kw_as id |

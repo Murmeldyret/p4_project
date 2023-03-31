@@ -157,25 +157,25 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
         outADeclarationStmt(node);
     }
 
-    public void inAAssigenmentStatementStmt(AAssigenmentStatementStmt node)
+    public void inAAssignmentStatementStmt(AAssignmentStatementStmt node)
     {
         defaultIn(node);
     }
 
-    public void outAAssigenmentStatementStmt(AAssigenmentStatementStmt node)
+    public void outAAssignmentStatementStmt(AAssignmentStatementStmt node)
     {
         defaultOut(node);
     }
 
     @Override
-    public void caseAAssigenmentStatementStmt(AAssigenmentStatementStmt node)
+    public void caseAAssignmentStatementStmt(AAssignmentStatementStmt node)
     {
-        inAAssigenmentStatementStmt(node);
-        if(node.getAssigenment() != null)
+        inAAssignmentStatementStmt(node);
+        if(node.getAssignment() != null)
         {
-            node.getAssigenment().apply(this);
+            node.getAssignment().apply(this);
         }
-        outAAssigenmentStatementStmt(node);
+        outAAssignmentStatementStmt(node);
     }
 
     public void inAForLoopStmt(AForLoopStmt node)
@@ -402,20 +402,20 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
         outAElseStatement(node);
     }
 
-    public void inAAssignAssigenment(AAssignAssigenment node)
+    public void inAAssignAssignment(AAssignAssignment node)
     {
         defaultIn(node);
     }
 
-    public void outAAssignAssigenment(AAssignAssigenment node)
+    public void outAAssignAssignment(AAssignAssignment node)
     {
         defaultOut(node);
     }
 
     @Override
-    public void caseAAssignAssigenment(AAssignAssigenment node)
+    public void caseAAssignAssignment(AAssignAssignment node)
     {
-        inAAssignAssigenment(node);
+        inAAssignAssignment(node);
         if(node.getExpr() != null)
         {
             node.getExpr().apply(this);
@@ -428,7 +428,7 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
         {
             node.getId().apply(this);
         }
-        outAAssignAssigenment(node);
+        outAAssignAssignment(node);
     }
 
     public void inAExprValPrimeExpr(AExprValPrimeExpr node)
@@ -453,24 +453,36 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
         {
             node.getVal().apply(this);
         }
+        if(node.getBopNot() != null)
+        {
+            node.getBopNot().apply(this);
+        }
         outAExprValPrimeExpr(node);
     }
 
-    public void inAExpr(AExpr node)
+    public void inAExprSpecialExpr(AExprSpecialExpr node)
     {
         defaultIn(node);
     }
 
-    public void outAExpr(AExpr node)
+    public void outAExprSpecialExpr(AExprSpecialExpr node)
     {
         defaultOut(node);
     }
 
     @Override
-    public void caseAExpr(AExpr node)
+    public void caseAExprSpecialExpr(AExprSpecialExpr node)
     {
-        inAExpr(node);
-        outAExpr(node);
+        inAExprSpecialExpr(node);
+        if(node.getId() != null)
+        {
+            node.getId().apply(this);
+        }
+        if(node.getSpecialExpr() != null)
+        {
+            node.getSpecialExpr().apply(this);
+        }
+        outAExprSpecialExpr(node);
     }
 
     public void inAExprPrimeOperatorValPrimeExprPrime(AExprPrimeOperatorValPrimeExprPrime node)
@@ -727,6 +739,570 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
             node.getOpMod().apply(this);
         }
         outAModuloInfixBinInfixOp(node);
+    }
+
+    public void inAAndInfixBinInfixOp(AAndInfixBinInfixOp node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAAndInfixBinInfixOp(AAndInfixBinInfixOp node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAAndInfixBinInfixOp(AAndInfixBinInfixOp node)
+    {
+        inAAndInfixBinInfixOp(node);
+        if(node.getBopAnd() != null)
+        {
+            node.getBopAnd().apply(this);
+        }
+        outAAndInfixBinInfixOp(node);
+    }
+
+    public void inAOrInfixBinInfixOp(AOrInfixBinInfixOp node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAOrInfixBinInfixOp(AOrInfixBinInfixOp node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAOrInfixBinInfixOp(AOrInfixBinInfixOp node)
+    {
+        inAOrInfixBinInfixOp(node);
+        if(node.getBopOr() != null)
+        {
+            node.getBopOr().apply(this);
+        }
+        outAOrInfixBinInfixOp(node);
+    }
+
+    public void inAEqualityInfixBinInfixOp(AEqualityInfixBinInfixOp node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAEqualityInfixBinInfixOp(AEqualityInfixBinInfixOp node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAEqualityInfixBinInfixOp(AEqualityInfixBinInfixOp node)
+    {
+        inAEqualityInfixBinInfixOp(node);
+        if(node.getBopEq() != null)
+        {
+            node.getBopEq().apply(this);
+        }
+        outAEqualityInfixBinInfixOp(node);
+    }
+
+    public void inAGreaterThanInfixBinInfixOp(AGreaterThanInfixBinInfixOp node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAGreaterThanInfixBinInfixOp(AGreaterThanInfixBinInfixOp node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAGreaterThanInfixBinInfixOp(AGreaterThanInfixBinInfixOp node)
+    {
+        inAGreaterThanInfixBinInfixOp(node);
+        if(node.getBopGthan() != null)
+        {
+            node.getBopGthan().apply(this);
+        }
+        outAGreaterThanInfixBinInfixOp(node);
+    }
+
+    public void inAGreaterThanEqualInfixBinInfixOp(AGreaterThanEqualInfixBinInfixOp node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAGreaterThanEqualInfixBinInfixOp(AGreaterThanEqualInfixBinInfixOp node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAGreaterThanEqualInfixBinInfixOp(AGreaterThanEqualInfixBinInfixOp node)
+    {
+        inAGreaterThanEqualInfixBinInfixOp(node);
+        if(node.getBopGethan() != null)
+        {
+            node.getBopGethan().apply(this);
+        }
+        outAGreaterThanEqualInfixBinInfixOp(node);
+    }
+
+    public void inALessThanInfixBinInfixOp(ALessThanInfixBinInfixOp node)
+    {
+        defaultIn(node);
+    }
+
+    public void outALessThanInfixBinInfixOp(ALessThanInfixBinInfixOp node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseALessThanInfixBinInfixOp(ALessThanInfixBinInfixOp node)
+    {
+        inALessThanInfixBinInfixOp(node);
+        if(node.getBopLthan() != null)
+        {
+            node.getBopLthan().apply(this);
+        }
+        outALessThanInfixBinInfixOp(node);
+    }
+
+    public void inALessThanEqualInfixBinInfixOp(ALessThanEqualInfixBinInfixOp node)
+    {
+        defaultIn(node);
+    }
+
+    public void outALessThanEqualInfixBinInfixOp(ALessThanEqualInfixBinInfixOp node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseALessThanEqualInfixBinInfixOp(ALessThanEqualInfixBinInfixOp node)
+    {
+        inALessThanEqualInfixBinInfixOp(node);
+        if(node.getBopLethan() != null)
+        {
+            node.getBopLethan().apply(this);
+        }
+        outALessThanEqualInfixBinInfixOp(node);
+    }
+
+    public void inASpeicalExpressionSpecialExpr(ASpeicalExpressionSpecialExpr node)
+    {
+        defaultIn(node);
+    }
+
+    public void outASpeicalExpressionSpecialExpr(ASpeicalExpressionSpecialExpr node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseASpeicalExpressionSpecialExpr(ASpeicalExpressionSpecialExpr node)
+    {
+        inASpeicalExpressionSpecialExpr(node);
+        if(node.getSpecialExprPrime() != null)
+        {
+            node.getSpecialExprPrime().apply(this);
+        }
+        if(node.getSpecialSyntax() != null)
+        {
+            node.getSpecialSyntax().apply(this);
+        }
+        outASpeicalExpressionSpecialExpr(node);
+    }
+
+    public void inASpecialExprPrimeSpecialExprPrime(ASpecialExprPrimeSpecialExprPrime node)
+    {
+        defaultIn(node);
+    }
+
+    public void outASpecialExprPrimeSpecialExprPrime(ASpecialExprPrimeSpecialExprPrime node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseASpecialExprPrimeSpecialExprPrime(ASpecialExprPrimeSpecialExprPrime node)
+    {
+        inASpecialExprPrimeSpecialExprPrime(node);
+        if(node.getSpecialExprPrime() != null)
+        {
+            node.getSpecialExprPrime().apply(this);
+        }
+        if(node.getSpecialSyntax() != null)
+        {
+            node.getSpecialSyntax().apply(this);
+        }
+        outASpecialExprPrimeSpecialExprPrime(node);
+    }
+
+    public void inASpecialExprPrime(ASpecialExprPrime node)
+    {
+        defaultIn(node);
+    }
+
+    public void outASpecialExprPrime(ASpecialExprPrime node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseASpecialExprPrime(ASpecialExprPrime node)
+    {
+        inASpecialExprPrime(node);
+        outASpecialExprPrime(node);
+    }
+
+    public void inASumOpSpecialSyntax(ASumOpSpecialSyntax node)
+    {
+        defaultIn(node);
+    }
+
+    public void outASumOpSpecialSyntax(ASumOpSpecialSyntax node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseASumOpSpecialSyntax(ASumOpSpecialSyntax node)
+    {
+        inASumOpSpecialSyntax(node);
+        if(node.getSopSum() != null)
+        {
+            node.getSopSum().apply(this);
+        }
+        outASumOpSpecialSyntax(node);
+    }
+
+    public void inAFilterOpSpecialSyntax(AFilterOpSpecialSyntax node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAFilterOpSpecialSyntax(AFilterOpSpecialSyntax node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAFilterOpSpecialSyntax(AFilterOpSpecialSyntax node)
+    {
+        inAFilterOpSpecialSyntax(node);
+        if(node.getSopFilter() != null)
+        {
+            node.getSopFilter().apply(this);
+        }
+        outAFilterOpSpecialSyntax(node);
+    }
+
+    public void inAGroupbyOpSpecialSyntax(AGroupbyOpSpecialSyntax node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAGroupbyOpSpecialSyntax(AGroupbyOpSpecialSyntax node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAGroupbyOpSpecialSyntax(AGroupbyOpSpecialSyntax node)
+    {
+        inAGroupbyOpSpecialSyntax(node);
+        if(node.getSopGroupby() != null)
+        {
+            node.getSopGroupby().apply(this);
+        }
+        outAGroupbyOpSpecialSyntax(node);
+    }
+
+    public void inAMeanOpSpecialSyntax(AMeanOpSpecialSyntax node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAMeanOpSpecialSyntax(AMeanOpSpecialSyntax node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAMeanOpSpecialSyntax(AMeanOpSpecialSyntax node)
+    {
+        inAMeanOpSpecialSyntax(node);
+        if(node.getSopMean() != null)
+        {
+            node.getSopMean().apply(this);
+        }
+        outAMeanOpSpecialSyntax(node);
+    }
+
+    public void inACountOpSpecialSyntax(ACountOpSpecialSyntax node)
+    {
+        defaultIn(node);
+    }
+
+    public void outACountOpSpecialSyntax(ACountOpSpecialSyntax node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseACountOpSpecialSyntax(ACountOpSpecialSyntax node)
+    {
+        inACountOpSpecialSyntax(node);
+        if(node.getSopCount() != null)
+        {
+            node.getSopCount().apply(this);
+        }
+        outACountOpSpecialSyntax(node);
+    }
+
+    public void inASortOpSpecialSyntax(ASortOpSpecialSyntax node)
+    {
+        defaultIn(node);
+    }
+
+    public void outASortOpSpecialSyntax(ASortOpSpecialSyntax node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseASortOpSpecialSyntax(ASortOpSpecialSyntax node)
+    {
+        inASortOpSpecialSyntax(node);
+        if(node.getSopSort() != null)
+        {
+            node.getSopSort().apply(this);
+        }
+        outASortOpSpecialSyntax(node);
+    }
+
+    public void inASumSum(ASumSum node)
+    {
+        defaultIn(node);
+    }
+
+    public void outASumSum(ASumSum node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseASumSum(ASumSum node)
+    {
+        inASumSum(node);
+        if(node.getSopSum() != null)
+        {
+            node.getSopSum().apply(this);
+        }
+        outASumSum(node);
+    }
+
+    public void inAFilterFilter(AFilterFilter node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAFilterFilter(AFilterFilter node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAFilterFilter(AFilterFilter node)
+    {
+        inAFilterFilter(node);
+        if(node.getRPar() != null)
+        {
+            node.getRPar().apply(this);
+        }
+        if(node.getExpr() != null)
+        {
+            node.getExpr().apply(this);
+        }
+        if(node.getLPar() != null)
+        {
+            node.getLPar().apply(this);
+        }
+        if(node.getSopFilter() != null)
+        {
+            node.getSopFilter().apply(this);
+        }
+        outAFilterFilter(node);
+    }
+
+    public void inAGroupbyGroupby(AGroupbyGroupby node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAGroupbyGroupby(AGroupbyGroupby node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAGroupbyGroupby(AGroupbyGroupby node)
+    {
+        inAGroupbyGroupby(node);
+        if(node.getRPar() != null)
+        {
+            node.getRPar().apply(this);
+        }
+        if(node.getExpr() != null)
+        {
+            node.getExpr().apply(this);
+        }
+        if(node.getLPar() != null)
+        {
+            node.getLPar().apply(this);
+        }
+        if(node.getSopGroupby() != null)
+        {
+            node.getSopGroupby().apply(this);
+        }
+        outAGroupbyGroupby(node);
+    }
+
+    public void inAMeanMean(AMeanMean node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAMeanMean(AMeanMean node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAMeanMean(AMeanMean node)
+    {
+        inAMeanMean(node);
+        if(node.getRPar() != null)
+        {
+            node.getRPar().apply(this);
+        }
+        if(node.getExpr() != null)
+        {
+            node.getExpr().apply(this);
+        }
+        if(node.getLPar() != null)
+        {
+            node.getLPar().apply(this);
+        }
+        if(node.getSopMean() != null)
+        {
+            node.getSopMean().apply(this);
+        }
+        outAMeanMean(node);
+    }
+
+    public void inACountCount(ACountCount node)
+    {
+        defaultIn(node);
+    }
+
+    public void outACountCount(ACountCount node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseACountCount(ACountCount node)
+    {
+        inACountCount(node);
+        if(node.getRPar() != null)
+        {
+            node.getRPar().apply(this);
+        }
+        if(node.getExpr() != null)
+        {
+            node.getExpr().apply(this);
+        }
+        if(node.getLPar() != null)
+        {
+            node.getLPar().apply(this);
+        }
+        if(node.getSopCount() != null)
+        {
+            node.getSopCount().apply(this);
+        }
+        outACountCount(node);
+    }
+
+    public void inASortAscSort(ASortAscSort node)
+    {
+        defaultIn(node);
+    }
+
+    public void outASortAscSort(ASortAscSort node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseASortAscSort(ASortAscSort node)
+    {
+        inASortAscSort(node);
+        if(node.getKwSortOrderAsc() != null)
+        {
+            node.getKwSortOrderAsc().apply(this);
+        }
+        if(node.getSopSort() != null)
+        {
+            node.getSopSort().apply(this);
+        }
+        outASortAscSort(node);
+    }
+
+    public void inASortDescSort(ASortDescSort node)
+    {
+        defaultIn(node);
+    }
+
+    public void outASortDescSort(ASortDescSort node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseASortDescSort(ASortDescSort node)
+    {
+        inASortDescSort(node);
+        if(node.getKwSortOrderDsc() != null)
+        {
+            node.getKwSortOrderDsc().apply(this);
+        }
+        if(node.getSopSort() != null)
+        {
+            node.getSopSort().apply(this);
+        }
+        outASortDescSort(node);
+    }
+
+    public void inASortSort(ASortSort node)
+    {
+        defaultIn(node);
+    }
+
+    public void outASortSort(ASortSort node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseASortSort(ASortSort node)
+    {
+        inASortSort(node);
+        if(node.getSopSort() != null)
+        {
+            node.getSopSort().apply(this);
+        }
+        outASortSort(node);
     }
 
     public void inAImportWithoutSeperatorImportT(AImportWithoutSeperatorImportT node)

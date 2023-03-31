@@ -17,7 +17,7 @@ public interface Analysis extends Switch
     void caseAStmts(AStmts node);
     void caseAImportStmtStmt(AImportStmtStmt node);
     void caseADeclarationStmt(ADeclarationStmt node);
-    void caseAAssigenmentStatementStmt(AAssigenmentStatementStmt node);
+    void caseAAssignmentStatementStmt(AAssignmentStatementStmt node);
     void caseAForLoopStmt(AForLoopStmt node);
     void caseAWhileLoopStmt(AWhileLoopStmt node);
     void caseAControlStatementStmt(AControlStatementStmt node);
@@ -26,9 +26,9 @@ public interface Analysis extends Switch
     void caseAElseStatementInControlStmt(AElseStatementInControlStmt node);
     void caseAElseBlockStatementElseStatement(AElseBlockStatementElseStatement node);
     void caseAElseStatement(AElseStatement node);
-    void caseAAssignAssigenment(AAssignAssigenment node);
+    void caseAAssignAssignment(AAssignAssignment node);
     void caseAExprValPrimeExpr(AExprValPrimeExpr node);
-    void caseAExpr(AExpr node);
+    void caseAExprSpecialExpr(AExprSpecialExpr node);
     void caseAExprPrimeOperatorValPrimeExprPrime(AExprPrimeOperatorValPrimeExprPrime node);
     void caseAExprPrime(AExprPrime node);
     void caseAValIdVal(AValIdVal node);
@@ -41,6 +41,30 @@ public interface Analysis extends Switch
     void caseAMultiplicationInfixBinInfixOp(AMultiplicationInfixBinInfixOp node);
     void caseADivisionInfixBinInfixOp(ADivisionInfixBinInfixOp node);
     void caseAModuloInfixBinInfixOp(AModuloInfixBinInfixOp node);
+    void caseAAndInfixBinInfixOp(AAndInfixBinInfixOp node);
+    void caseAOrInfixBinInfixOp(AOrInfixBinInfixOp node);
+    void caseAEqualityInfixBinInfixOp(AEqualityInfixBinInfixOp node);
+    void caseAGreaterThanInfixBinInfixOp(AGreaterThanInfixBinInfixOp node);
+    void caseAGreaterThanEqualInfixBinInfixOp(AGreaterThanEqualInfixBinInfixOp node);
+    void caseALessThanInfixBinInfixOp(ALessThanInfixBinInfixOp node);
+    void caseALessThanEqualInfixBinInfixOp(ALessThanEqualInfixBinInfixOp node);
+    void caseASpeicalExpressionSpecialExpr(ASpeicalExpressionSpecialExpr node);
+    void caseASpecialExprPrimeSpecialExprPrime(ASpecialExprPrimeSpecialExprPrime node);
+    void caseASpecialExprPrime(ASpecialExprPrime node);
+    void caseASumOpSpecialSyntax(ASumOpSpecialSyntax node);
+    void caseAFilterOpSpecialSyntax(AFilterOpSpecialSyntax node);
+    void caseAGroupbyOpSpecialSyntax(AGroupbyOpSpecialSyntax node);
+    void caseAMeanOpSpecialSyntax(AMeanOpSpecialSyntax node);
+    void caseACountOpSpecialSyntax(ACountOpSpecialSyntax node);
+    void caseASortOpSpecialSyntax(ASortOpSpecialSyntax node);
+    void caseASumSum(ASumSum node);
+    void caseAFilterFilter(AFilterFilter node);
+    void caseAGroupbyGroupby(AGroupbyGroupby node);
+    void caseAMeanMean(AMeanMean node);
+    void caseACountCount(ACountCount node);
+    void caseASortAscSort(ASortAscSort node);
+    void caseASortDescSort(ASortDescSort node);
+    void caseASortSort(ASortSort node);
     void caseAImportWithoutSeperatorImportT(AImportWithoutSeperatorImportT node);
     void caseAImportWithSeperatorImportT(AImportWithSeperatorImportT node);
 
@@ -75,6 +99,12 @@ public interface Analysis extends Switch
     void caseTBopOr(TBopOr node);
     void caseTBopNot(TBopNot node);
     void caseTSopDot(TSopDot node);
+    void caseTSopSum(TSopSum node);
+    void caseTSopFilter(TSopFilter node);
+    void caseTSopGroupby(TSopGroupby node);
+    void caseTSopMean(TSopMean node);
+    void caseTSopSort(TSopSort node);
+    void caseTSopCount(TSopCount node);
     void caseTKwAs(TKwAs node);
     void caseTKwImport(TKwImport node);
     void caseTKwSeparatedBy(TKwSeparatedBy node);
@@ -83,6 +113,8 @@ public interface Analysis extends Switch
     void caseTKwIn(TKwIn node);
     void caseTKwIf(TKwIf node);
     void caseTKwElse(TKwElse node);
+    void caseTKwSortOrderAsc(TKwSortOrderAsc node);
+    void caseTKwSortOrderDsc(TKwSortOrderDsc node);
     void caseEOF(EOF node);
     void caseInvalidToken(InvalidToken node);
 }
