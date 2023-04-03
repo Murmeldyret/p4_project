@@ -323,6 +323,27 @@ public class DepthFirstAdapter extends AnalysisAdapter
         outAPrintStatementStmt(node);
     }
 
+    public void inACsvOperationStmt(ACsvOperationStmt node)
+    {
+        defaultIn(node);
+    }
+
+    public void outACsvOperationStmt(ACsvOperationStmt node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseACsvOperationStmt(ACsvOperationStmt node)
+    {
+        inACsvOperationStmt(node);
+        if(node.getCsvOp() != null)
+        {
+            node.getCsvOp().apply(this);
+        }
+        outACsvOperationStmt(node);
+    }
+
     public void inAExportStatementStmt(AExportStatementStmt node)
     {
         defaultIn(node);
@@ -608,6 +629,280 @@ public class DepthFirstAdapter extends AnalysisAdapter
     {
         inAExprPrime(node);
         outAExprPrime(node);
+    }
+
+    public void inACsvOperationAddCsvOp(ACsvOperationAddCsvOp node)
+    {
+        defaultIn(node);
+    }
+
+    public void outACsvOperationAddCsvOp(ACsvOperationAddCsvOp node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseACsvOperationAddCsvOp(ACsvOperationAddCsvOp node)
+    {
+        inACsvOperationAddCsvOp(node);
+        if(node.getCsvAdd() != null)
+        {
+            node.getCsvAdd().apply(this);
+        }
+        outACsvOperationAddCsvOp(node);
+    }
+
+    public void inACsvOperationRemoveCsvOp(ACsvOperationRemoveCsvOp node)
+    {
+        defaultIn(node);
+    }
+
+    public void outACsvOperationRemoveCsvOp(ACsvOperationRemoveCsvOp node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseACsvOperationRemoveCsvOp(ACsvOperationRemoveCsvOp node)
+    {
+        inACsvOperationRemoveCsvOp(node);
+        if(node.getCsvRemove() != null)
+        {
+            node.getCsvRemove().apply(this);
+        }
+        outACsvOperationRemoveCsvOp(node);
+    }
+
+    public void inACsvOperationRemoveAtCsvOp(ACsvOperationRemoveAtCsvOp node)
+    {
+        defaultIn(node);
+    }
+
+    public void outACsvOperationRemoveAtCsvOp(ACsvOperationRemoveAtCsvOp node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseACsvOperationRemoveAtCsvOp(ACsvOperationRemoveAtCsvOp node)
+    {
+        inACsvOperationRemoveAtCsvOp(node);
+        if(node.getCsvRemoveAt() != null)
+        {
+            node.getCsvRemoveAt().apply(this);
+        }
+        outACsvOperationRemoveAtCsvOp(node);
+    }
+
+    public void inACsvOperationInsertCsvOp(ACsvOperationInsertCsvOp node)
+    {
+        defaultIn(node);
+    }
+
+    public void outACsvOperationInsertCsvOp(ACsvOperationInsertCsvOp node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseACsvOperationInsertCsvOp(ACsvOperationInsertCsvOp node)
+    {
+        inACsvOperationInsertCsvOp(node);
+        if(node.getCsvInsert() != null)
+        {
+            node.getCsvInsert().apply(this);
+        }
+        outACsvOperationInsertCsvOp(node);
+    }
+
+    public void inAAddToCsvCsvAdd(AAddToCsvCsvAdd node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAAddToCsvCsvAdd(AAddToCsvCsvAdd node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAAddToCsvCsvAdd(AAddToCsvCsvAdd node)
+    {
+        inAAddToCsvCsvAdd(node);
+        if(node.getKwAdd() != null)
+        {
+            node.getKwAdd().apply(this);
+        }
+        if(node.getOrientation() != null)
+        {
+            node.getOrientation().apply(this);
+        }
+        if(node.getArrayExpr() != null)
+        {
+            node.getArrayExpr().apply(this);
+        }
+        if(node.getKwIn() != null)
+        {
+            node.getKwIn().apply(this);
+        }
+        if(node.getId() != null)
+        {
+            node.getId().apply(this);
+        }
+        outAAddToCsvCsvAdd(node);
+    }
+
+    public void inARemoveFromCsvCsvRemove(ARemoveFromCsvCsvRemove node)
+    {
+        defaultIn(node);
+    }
+
+    public void outARemoveFromCsvCsvRemove(ARemoveFromCsvCsvRemove node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseARemoveFromCsvCsvRemove(ARemoveFromCsvCsvRemove node)
+    {
+        inARemoveFromCsvCsvRemove(node);
+        if(node.getKwRemove() != null)
+        {
+            node.getKwRemove().apply(this);
+        }
+        if(node.getOrientation() != null)
+        {
+            node.getOrientation().apply(this);
+        }
+        if(node.getKwIn() != null)
+        {
+            node.getKwIn().apply(this);
+        }
+        if(node.getId() != null)
+        {
+            node.getId().apply(this);
+        }
+        outARemoveFromCsvCsvRemove(node);
+    }
+
+    public void inARemoveAtFromCsvCsvRemoveAt(ARemoveAtFromCsvCsvRemoveAt node)
+    {
+        defaultIn(node);
+    }
+
+    public void outARemoveAtFromCsvCsvRemoveAt(ARemoveAtFromCsvCsvRemoveAt node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseARemoveAtFromCsvCsvRemoveAt(ARemoveAtFromCsvCsvRemoveAt node)
+    {
+        inARemoveAtFromCsvCsvRemoveAt(node);
+        if(node.getKwRemoveAt() != null)
+        {
+            node.getKwRemoveAt().apply(this);
+        }
+        if(node.getOrientation() != null)
+        {
+            node.getOrientation().apply(this);
+        }
+        if(node.getVal() != null)
+        {
+            node.getVal().apply(this);
+        }
+        if(node.getKwIn() != null)
+        {
+            node.getKwIn().apply(this);
+        }
+        if(node.getId() != null)
+        {
+            node.getId().apply(this);
+        }
+        outARemoveAtFromCsvCsvRemoveAt(node);
+    }
+
+    public void inAInsertFromCsvCsvInsert(AInsertFromCsvCsvInsert node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAInsertFromCsvCsvInsert(AInsertFromCsvCsvInsert node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAInsertFromCsvCsvInsert(AInsertFromCsvCsvInsert node)
+    {
+        inAInsertFromCsvCsvInsert(node);
+        if(node.getKwInsert() != null)
+        {
+            node.getKwInsert().apply(this);
+        }
+        if(node.getOrientation() != null)
+        {
+            node.getOrientation().apply(this);
+        }
+        if(node.getVal() != null)
+        {
+            node.getVal().apply(this);
+        }
+        if(node.getArrayExpr() != null)
+        {
+            node.getArrayExpr().apply(this);
+        }
+        if(node.getKwIn() != null)
+        {
+            node.getKwIn().apply(this);
+        }
+        if(node.getId() != null)
+        {
+            node.getId().apply(this);
+        }
+        outAInsertFromCsvCsvInsert(node);
+    }
+
+    public void inACsvOrientationRowOrientation(ACsvOrientationRowOrientation node)
+    {
+        defaultIn(node);
+    }
+
+    public void outACsvOrientationRowOrientation(ACsvOrientationRowOrientation node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseACsvOrientationRowOrientation(ACsvOrientationRowOrientation node)
+    {
+        inACsvOrientationRowOrientation(node);
+        if(node.getKwRow() != null)
+        {
+            node.getKwRow().apply(this);
+        }
+        outACsvOrientationRowOrientation(node);
+    }
+
+    public void inACsvOrientationColumnOrientation(ACsvOrientationColumnOrientation node)
+    {
+        defaultIn(node);
+    }
+
+    public void outACsvOrientationColumnOrientation(ACsvOrientationColumnOrientation node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseACsvOrientationColumnOrientation(ACsvOrientationColumnOrientation node)
+    {
+        inACsvOrientationColumnOrientation(node);
+        if(node.getKwColumn() != null)
+        {
+            node.getKwColumn().apply(this);
+        }
+        outACsvOrientationColumnOrientation(node);
     }
 
     public void inAIndexingIndexing(AIndexingIndexing node)

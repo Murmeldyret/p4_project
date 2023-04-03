@@ -23,6 +23,7 @@ public interface Analysis extends Switch
     void caseAWhileLoopStmt(AWhileLoopStmt node);
     void caseAControlStatementStmt(AControlStatementStmt node);
     void caseAPrintStatementStmt(APrintStatementStmt node);
+    void caseACsvOperationStmt(ACsvOperationStmt node);
     void caseAExportStatementStmt(AExportStatementStmt node);
     void caseABlockStmtBlock(ABlockStmtBlock node);
     void caseAElifStatementInControlStmt(AElifStatementInControlStmt node);
@@ -34,6 +35,16 @@ public interface Analysis extends Switch
     void caseAExprSpecialExpr(AExprSpecialExpr node);
     void caseAExprPrimeOperatorValPrimeExprPrime(AExprPrimeOperatorValPrimeExprPrime node);
     void caseAExprPrime(AExprPrime node);
+    void caseACsvOperationAddCsvOp(ACsvOperationAddCsvOp node);
+    void caseACsvOperationRemoveCsvOp(ACsvOperationRemoveCsvOp node);
+    void caseACsvOperationRemoveAtCsvOp(ACsvOperationRemoveAtCsvOp node);
+    void caseACsvOperationInsertCsvOp(ACsvOperationInsertCsvOp node);
+    void caseAAddToCsvCsvAdd(AAddToCsvCsvAdd node);
+    void caseARemoveFromCsvCsvRemove(ARemoveFromCsvCsvRemove node);
+    void caseARemoveAtFromCsvCsvRemoveAt(ARemoveAtFromCsvCsvRemoveAt node);
+    void caseAInsertFromCsvCsvInsert(AInsertFromCsvCsvInsert node);
+    void caseACsvOrientationRowOrientation(ACsvOrientationRowOrientation node);
+    void caseACsvOrientationColumnOrientation(ACsvOrientationColumnOrientation node);
     void caseAIndexingIndexing(AIndexingIndexing node);
     void caseAIndexing(AIndexing node);
     void caseAArrayExprValPrimeArrayExpr(AArrayExprValPrimeArrayExpr node);
@@ -139,6 +150,8 @@ public interface Analysis extends Switch
     void caseTKwRemove(TKwRemove node);
     void caseTKwRemoveAt(TKwRemoveAt node);
     void caseTKwInsert(TKwInsert node);
+    void caseTKwColumn(TKwColumn node);
+    void caseTKwRow(TKwRow node);
     void caseEOF(EOF node);
     void caseInvalidToken(InvalidToken node);
 }

@@ -328,8 +328,20 @@ class TokenIndex extends AnalysisAdapter
     }
 
     @Override
-    public void caseEOF(@SuppressWarnings("unused") EOF node)
+    public void caseTKwColumn(@SuppressWarnings("unused") TKwColumn node)
     {
         this.index = 53;
+    }
+
+    @Override
+    public void caseTKwRow(@SuppressWarnings("unused") TKwRow node)
+    {
+        this.index = 54;
+    }
+
+    @Override
+    public void caseEOF(@SuppressWarnings("unused") EOF node)
+    {
+        this.index = 55;
     }
 }

@@ -141,6 +141,12 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
+    public void caseACsvOperationStmt(ACsvOperationStmt node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
     public void caseAExportStatementStmt(AExportStatementStmt node)
     {
         defaultCase(node);
@@ -202,6 +208,66 @@ public class AnalysisAdapter implements Analysis
 
     @Override
     public void caseAExprPrime(AExprPrime node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseACsvOperationAddCsvOp(ACsvOperationAddCsvOp node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseACsvOperationRemoveCsvOp(ACsvOperationRemoveCsvOp node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseACsvOperationRemoveAtCsvOp(ACsvOperationRemoveAtCsvOp node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseACsvOperationInsertCsvOp(ACsvOperationInsertCsvOp node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAAddToCsvCsvAdd(AAddToCsvCsvAdd node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseARemoveFromCsvCsvRemove(ARemoveFromCsvCsvRemove node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseARemoveAtFromCsvCsvRemoveAt(ARemoveAtFromCsvCsvRemoveAt node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAInsertFromCsvCsvInsert(AInsertFromCsvCsvInsert node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseACsvOrientationRowOrientation(ACsvOrientationRowOrientation node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseACsvOrientationColumnOrientation(ACsvOrientationColumnOrientation node)
     {
         defaultCase(node);
     }
@@ -826,6 +892,18 @@ public class AnalysisAdapter implements Analysis
 
     @Override
     public void caseTKwInsert(TKwInsert node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTKwColumn(TKwColumn node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTKwRow(TKwRow node)
     {
         defaultCase(node);
     }
