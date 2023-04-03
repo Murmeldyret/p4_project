@@ -8,6 +8,7 @@ import postfix.analysis.*;
 public final class AAssignAssignment extends PAssignment
 {
     private TId _id_;
+    private PIndexing _indexing_;
     private TOpAssign _opAssign_;
     private PExpr _expr_;
 
@@ -18,11 +19,14 @@ public final class AAssignAssignment extends PAssignment
 
     public AAssignAssignment(
         @SuppressWarnings("hiding") TId _id_,
+        @SuppressWarnings("hiding") PIndexing _indexing_,
         @SuppressWarnings("hiding") TOpAssign _opAssign_,
         @SuppressWarnings("hiding") PExpr _expr_)
     {
         // Constructor
         setId(_id_);
+
+        setIndexing(_indexing_);
 
         setOpAssign(_opAssign_);
 
@@ -35,6 +39,7 @@ public final class AAssignAssignment extends PAssignment
     {
         return new AAssignAssignment(
             cloneNode(this._id_),
+            cloneNode(this._indexing_),
             cloneNode(this._opAssign_),
             cloneNode(this._expr_));
     }
@@ -68,6 +73,31 @@ public final class AAssignAssignment extends PAssignment
         }
 
         this._id_ = node;
+    }
+
+    public PIndexing getIndexing()
+    {
+        return this._indexing_;
+    }
+
+    public void setIndexing(PIndexing node)
+    {
+        if(this._indexing_ != null)
+        {
+            this._indexing_.parent(null);
+        }
+
+        if(node != null)
+        {
+            if(node.parent() != null)
+            {
+                node.parent().removeChild(node);
+            }
+
+            node.parent(this);
+        }
+
+        this._indexing_ = node;
     }
 
     public TOpAssign getOpAssign()
@@ -125,6 +155,7 @@ public final class AAssignAssignment extends PAssignment
     {
         return ""
             + toString(this._id_)
+            + toString(this._indexing_)
             + toString(this._opAssign_)
             + toString(this._expr_);
     }
@@ -136,6 +167,12 @@ public final class AAssignAssignment extends PAssignment
         if(this._id_ == child)
         {
             this._id_ = null;
+            return;
+        }
+
+        if(this._indexing_ == child)
+        {
+            this._indexing_ = null;
             return;
         }
 
@@ -161,6 +198,12 @@ public final class AAssignAssignment extends PAssignment
         if(this._id_ == oldChild)
         {
             setId((TId) newChild);
+            return;
+        }
+
+        if(this._indexing_ == oldChild)
+        {
+            setIndexing((PIndexing) newChild);
             return;
         }
 

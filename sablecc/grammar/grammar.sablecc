@@ -160,7 +160,7 @@ Productions
        {else_block_statement} kw_else block | ;
     
     assignment =
-        {assign} id op_assign expr;
+        {assign} id indexing op_assign expr;
 
     expr =
        {expr_val_prime} bop_not? val expr_prime | 

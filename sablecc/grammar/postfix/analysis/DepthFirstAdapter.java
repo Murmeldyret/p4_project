@@ -953,6 +953,10 @@ public class DepthFirstAdapter extends AnalysisAdapter
         {
             node.getId().apply(this);
         }
+        if(node.getIndexing() != null)
+        {
+            node.getIndexing().apply(this);
+        }
         if(node.getOpAssign() != null)
         {
             node.getOpAssign().apply(this);
