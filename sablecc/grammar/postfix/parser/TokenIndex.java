@@ -310,44 +310,62 @@ class TokenIndex extends AnalysisAdapter
     }
 
     @Override
-    public void caseTKwAdd(@SuppressWarnings("unused") TKwAdd node)
+    public void caseTKwFunction(@SuppressWarnings("unused") TKwFunction node)
     {
         this.index = 50;
     }
 
     @Override
-    public void caseTKwRemove(@SuppressWarnings("unused") TKwRemove node)
+    public void caseTKwReturn(@SuppressWarnings("unused") TKwReturn node)
     {
         this.index = 51;
     }
 
     @Override
-    public void caseTKwRemoveAt(@SuppressWarnings("unused") TKwRemoveAt node)
+    public void caseTKwBreak(@SuppressWarnings("unused") TKwBreak node)
     {
         this.index = 52;
     }
 
     @Override
-    public void caseTKwInsert(@SuppressWarnings("unused") TKwInsert node)
+    public void caseTKwAdd(@SuppressWarnings("unused") TKwAdd node)
     {
         this.index = 53;
     }
 
     @Override
-    public void caseTKwColumn(@SuppressWarnings("unused") TKwColumn node)
+    public void caseTKwRemove(@SuppressWarnings("unused") TKwRemove node)
     {
         this.index = 54;
     }
 
     @Override
-    public void caseTKwRow(@SuppressWarnings("unused") TKwRow node)
+    public void caseTKwRemoveAt(@SuppressWarnings("unused") TKwRemoveAt node)
     {
         this.index = 55;
     }
 
     @Override
-    public void caseEOF(@SuppressWarnings("unused") EOF node)
+    public void caseTKwInsert(@SuppressWarnings("unused") TKwInsert node)
     {
         this.index = 56;
+    }
+
+    @Override
+    public void caseTKwColumn(@SuppressWarnings("unused") TKwColumn node)
+    {
+        this.index = 57;
+    }
+
+    @Override
+    public void caseTKwRow(@SuppressWarnings("unused") TKwRow node)
+    {
+        this.index = 58;
+    }
+
+    @Override
+    public void caseEOF(@SuppressWarnings("unused") EOF node)
+    {
+        this.index = 59;
     }
 }

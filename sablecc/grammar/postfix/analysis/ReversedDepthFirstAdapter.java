@@ -365,6 +365,48 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
         outAExportStatementStmt(node);
     }
 
+    public void inAReturnStatementStmt(AReturnStatementStmt node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAReturnStatementStmt(AReturnStatementStmt node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAReturnStatementStmt(AReturnStatementStmt node)
+    {
+        inAReturnStatementStmt(node);
+        if(node.getReturn() != null)
+        {
+            node.getReturn().apply(this);
+        }
+        outAReturnStatementStmt(node);
+    }
+
+    public void inABreakStatementStmt(ABreakStatementStmt node)
+    {
+        defaultIn(node);
+    }
+
+    public void outABreakStatementStmt(ABreakStatementStmt node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseABreakStatementStmt(ABreakStatementStmt node)
+    {
+        inABreakStatementStmt(node);
+        if(node.getKwBreak() != null)
+        {
+            node.getKwBreak().apply(this);
+        }
+        outABreakStatementStmt(node);
+    }
+
     public void inAVariableDeclarationInitializationDcl(AVariableDeclarationInitializationDcl node)
     {
         defaultIn(node);
@@ -458,6 +500,314 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
             node.getKwConst().apply(this);
         }
         outAConstDeclarationInitializationDcl(node);
+    }
+
+    public void inAFunctionDeclarationDcl(AFunctionDeclarationDcl node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAFunctionDeclarationDcl(AFunctionDeclarationDcl node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAFunctionDeclarationDcl(AFunctionDeclarationDcl node)
+    {
+        inAFunctionDeclarationDcl(node);
+        if(node.getFunctionBody() != null)
+        {
+            node.getFunctionBody().apply(this);
+        }
+        if(node.getRPar() != null)
+        {
+            node.getRPar().apply(this);
+        }
+        if(node.getFunctionParam() != null)
+        {
+            node.getFunctionParam().apply(this);
+        }
+        if(node.getLPar() != null)
+        {
+            node.getLPar().apply(this);
+        }
+        if(node.getId() != null)
+        {
+            node.getId().apply(this);
+        }
+        if(node.getKwFunction() != null)
+        {
+            node.getKwFunction().apply(this);
+        }
+        if(node.getType() != null)
+        {
+            node.getType().apply(this);
+        }
+        outAFunctionDeclarationDcl(node);
+    }
+
+    public void inAFunctionParamFunctionParam(AFunctionParamFunctionParam node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAFunctionParamFunctionParam(AFunctionParamFunctionParam node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAFunctionParamFunctionParam(AFunctionParamFunctionParam node)
+    {
+        inAFunctionParamFunctionParam(node);
+        if(node.getFunctionParamPrime() != null)
+        {
+            node.getFunctionParamPrime().apply(this);
+        }
+        if(node.getDcl() != null)
+        {
+            node.getDcl().apply(this);
+        }
+        outAFunctionParamFunctionParam(node);
+    }
+
+    public void inAFunctionParam(AFunctionParam node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAFunctionParam(AFunctionParam node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAFunctionParam(AFunctionParam node)
+    {
+        inAFunctionParam(node);
+        outAFunctionParam(node);
+    }
+
+    public void inAFunctionParamPrimeFunctionParamPrime(AFunctionParamPrimeFunctionParamPrime node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAFunctionParamPrimeFunctionParamPrime(AFunctionParamPrimeFunctionParamPrime node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAFunctionParamPrimeFunctionParamPrime(AFunctionParamPrimeFunctionParamPrime node)
+    {
+        inAFunctionParamPrimeFunctionParamPrime(node);
+        if(node.getFunctionParamPrime() != null)
+        {
+            node.getFunctionParamPrime().apply(this);
+        }
+        if(node.getDcl() != null)
+        {
+            node.getDcl().apply(this);
+        }
+        if(node.getSopComma() != null)
+        {
+            node.getSopComma().apply(this);
+        }
+        outAFunctionParamPrimeFunctionParamPrime(node);
+    }
+
+    public void inAFunctionParamPrime(AFunctionParamPrime node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAFunctionParamPrime(AFunctionParamPrime node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAFunctionParamPrime(AFunctionParamPrime node)
+    {
+        inAFunctionParamPrime(node);
+        outAFunctionParamPrime(node);
+    }
+
+    public void inAFunctionBodyFunctionBody(AFunctionBodyFunctionBody node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAFunctionBodyFunctionBody(AFunctionBodyFunctionBody node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAFunctionBodyFunctionBody(AFunctionBodyFunctionBody node)
+    {
+        inAFunctionBodyFunctionBody(node);
+        if(node.getRCbrack() != null)
+        {
+            node.getRCbrack().apply(this);
+        }
+        if(node.getStmts() != null)
+        {
+            node.getStmts().apply(this);
+        }
+        if(node.getLCbrack() != null)
+        {
+            node.getLCbrack().apply(this);
+        }
+        outAFunctionBodyFunctionBody(node);
+    }
+
+    public void inAReturnReturn(AReturnReturn node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAReturnReturn(AReturnReturn node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAReturnReturn(AReturnReturn node)
+    {
+        inAReturnReturn(node);
+        if(node.getExpr() != null)
+        {
+            node.getExpr().apply(this);
+        }
+        if(node.getKwReturn() != null)
+        {
+            node.getKwReturn().apply(this);
+        }
+        outAReturnReturn(node);
+    }
+
+    public void inAFunctionCallParamFunctionCallParam(AFunctionCallParamFunctionCallParam node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAFunctionCallParamFunctionCallParam(AFunctionCallParamFunctionCallParam node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAFunctionCallParamFunctionCallParam(AFunctionCallParamFunctionCallParam node)
+    {
+        inAFunctionCallParamFunctionCallParam(node);
+        if(node.getFunctionCallParamPrime() != null)
+        {
+            node.getFunctionCallParamPrime().apply(this);
+        }
+        if(node.getExpr() != null)
+        {
+            node.getExpr().apply(this);
+        }
+        outAFunctionCallParamFunctionCallParam(node);
+    }
+
+    public void inAFunctionCallParam(AFunctionCallParam node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAFunctionCallParam(AFunctionCallParam node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAFunctionCallParam(AFunctionCallParam node)
+    {
+        inAFunctionCallParam(node);
+        outAFunctionCallParam(node);
+    }
+
+    public void inAFunctionCallParamPrimeFunctionCallParamPrime(AFunctionCallParamPrimeFunctionCallParamPrime node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAFunctionCallParamPrimeFunctionCallParamPrime(AFunctionCallParamPrimeFunctionCallParamPrime node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAFunctionCallParamPrimeFunctionCallParamPrime(AFunctionCallParamPrimeFunctionCallParamPrime node)
+    {
+        inAFunctionCallParamPrimeFunctionCallParamPrime(node);
+        if(node.getFunctionCallParamPrime() != null)
+        {
+            node.getFunctionCallParamPrime().apply(this);
+        }
+        if(node.getExpr() != null)
+        {
+            node.getExpr().apply(this);
+        }
+        if(node.getSopComma() != null)
+        {
+            node.getSopComma().apply(this);
+        }
+        outAFunctionCallParamPrimeFunctionCallParamPrime(node);
+    }
+
+    public void inAFunctionCallParamPrime(AFunctionCallParamPrime node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAFunctionCallParamPrime(AFunctionCallParamPrime node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAFunctionCallParamPrime(AFunctionCallParamPrime node)
+    {
+        inAFunctionCallParamPrime(node);
+        outAFunctionCallParamPrime(node);
+    }
+
+    public void inAFunctionCallFunctionCall(AFunctionCallFunctionCall node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAFunctionCallFunctionCall(AFunctionCallFunctionCall node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAFunctionCallFunctionCall(AFunctionCallFunctionCall node)
+    {
+        inAFunctionCallFunctionCall(node);
+        if(node.getRPar() != null)
+        {
+            node.getRPar().apply(this);
+        }
+        if(node.getFunctionCallParam() != null)
+        {
+            node.getFunctionCallParam().apply(this);
+        }
+        if(node.getLPar() != null)
+        {
+            node.getLPar().apply(this);
+        }
+        if(node.getId() != null)
+        {
+            node.getId().apply(this);
+        }
+        outAFunctionCallFunctionCall(node);
     }
 
     public void inABlockStmtBlock(ABlockStmtBlock node)
@@ -1352,6 +1702,27 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
             node.getId().apply(this);
         }
         outAValIdVal(node);
+    }
+
+    public void inAFunctionCallValueVal(AFunctionCallValueVal node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAFunctionCallValueVal(AFunctionCallValueVal node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAFunctionCallValueVal(AFunctionCallValueVal node)
+    {
+        inAFunctionCallValueVal(node);
+        if(node.getFunctionCall() != null)
+        {
+            node.getFunctionCall().apply(this);
+        }
+        outAFunctionCallValueVal(node);
     }
 
     public void inAValFloatnumVal(AValFloatnumVal node)

@@ -153,6 +153,18 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
+    public void caseAReturnStatementStmt(AReturnStatementStmt node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseABreakStatementStmt(ABreakStatementStmt node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
     public void caseAVariableDeclarationInitializationDcl(AVariableDeclarationInitializationDcl node)
     {
         defaultCase(node);
@@ -166,6 +178,78 @@ public class AnalysisAdapter implements Analysis
 
     @Override
     public void caseAConstDeclarationInitializationDcl(AConstDeclarationInitializationDcl node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAFunctionDeclarationDcl(AFunctionDeclarationDcl node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAFunctionParamFunctionParam(AFunctionParamFunctionParam node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAFunctionParam(AFunctionParam node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAFunctionParamPrimeFunctionParamPrime(AFunctionParamPrimeFunctionParamPrime node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAFunctionParamPrime(AFunctionParamPrime node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAFunctionBodyFunctionBody(AFunctionBodyFunctionBody node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAReturnReturn(AReturnReturn node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAFunctionCallParamFunctionCallParam(AFunctionCallParamFunctionCallParam node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAFunctionCallParam(AFunctionCallParam node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAFunctionCallParamPrimeFunctionCallParamPrime(AFunctionCallParamPrimeFunctionCallParamPrime node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAFunctionCallParamPrime(AFunctionCallParamPrime node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAFunctionCallFunctionCall(AFunctionCallFunctionCall node)
     {
         defaultCase(node);
     }
@@ -370,6 +454,12 @@ public class AnalysisAdapter implements Analysis
 
     @Override
     public void caseAValIdVal(AValIdVal node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAFunctionCallValueVal(AFunctionCallValueVal node)
     {
         defaultCase(node);
     }
@@ -892,6 +982,24 @@ public class AnalysisAdapter implements Analysis
 
     @Override
     public void caseTKwConst(TKwConst node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTKwFunction(TKwFunction node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTKwReturn(TKwReturn node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTKwBreak(TKwBreak node)
     {
         defaultCase(node);
     }
