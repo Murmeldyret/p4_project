@@ -303,6 +303,12 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
+    public void caseAExprArrayExpr(AExprArrayExpr node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
     public void caseAExprPrimeOperatorValPrimeExprPrime(AExprPrimeOperatorValPrimeExprPrime node)
     {
         defaultCase(node);

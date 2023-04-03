@@ -50,6 +50,7 @@ public interface Analysis extends Switch
     void caseAAssignAssignment(AAssignAssignment node);
     void caseAExprValPrimeExpr(AExprValPrimeExpr node);
     void caseAExprSpecialExpr(AExprSpecialExpr node);
+    void caseAExprArrayExpr(AExprArrayExpr node);
     void caseAExprPrimeOperatorValPrimeExprPrime(AExprPrimeOperatorValPrimeExprPrime node);
     void caseAExprPrime(AExprPrime node);
     void caseACsvOperationAddCsvOp(ACsvOperationAddCsvOp node);

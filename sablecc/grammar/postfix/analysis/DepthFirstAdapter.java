@@ -1018,6 +1018,27 @@ public class DepthFirstAdapter extends AnalysisAdapter
         outAExprSpecialExpr(node);
     }
 
+    public void inAExprArrayExpr(AExprArrayExpr node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAExprArrayExpr(AExprArrayExpr node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAExprArrayExpr(AExprArrayExpr node)
+    {
+        inAExprArrayExpr(node);
+        if(node.getArrayExpr() != null)
+        {
+            node.getArrayExpr().apply(this);
+        }
+        outAExprArrayExpr(node);
+    }
+
     public void inAExprPrimeOperatorValPrimeExprPrime(AExprPrimeOperatorValPrimeExprPrime node)
     {
         defaultIn(node);

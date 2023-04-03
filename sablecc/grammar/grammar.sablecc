@@ -164,7 +164,8 @@ Productions
 
     expr =
        {expr_val_prime} bop_not? val expr_prime | 
-       {expr_special} special_expr id;
+       {expr_special} special_expr id |
+       {expr_array} array_expr;
     
     expr_prime = 
        {expr_prime_operator_val_prime} bin_infix_op val expr_prime | ;
