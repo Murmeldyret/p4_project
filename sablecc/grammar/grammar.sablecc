@@ -139,7 +139,189 @@ Productions
 
     return =
         {return} kw_return expr;
+        
+    function_call_param = 
+        {function_call_param} expr function_call_param_prime | ;
 
+    function_call_param_prime =
+        {function_call_param_prime} sop_comma expr function_call_param_prime | ;
+
+    function_call =
+        {function_call} id l_par function_call_param r_par ;
+
+    block =
+       {block_stmt} l_cbrack stmts r_cbrack ;
+
+    in_control_stmt =
+       {elif_statement} kw_else kw_if expr block |
+       {else_statement} else_statement;
+    
+    else_statement =
+       {else_block_statement} kw_else block | ;
+    
+    assignment =
+        {assign} id indexing op_assign expr;
+
+    expr =
+       {expr_val_prime} bop_not? val expr_prime | 
+       {expr_special} special_expr id |
+       {expr_array} array_expr;
+    
+    expr_prime = 
+       {expr_prime_operator_val_prime} bin_infix_op val expr_prime | ;
+    
+    csv_op = 
+        {csv_operation_add} csv_add |
+        {csv_operation_remove} csv_remove |
+        {csv_operation_remove_at} csv_remove_at |
+        {csv_operation_insert} csv_insert ;
+
+    csv_add = 
+        {add_to_csv} kw_add orientation array_expr kw_in id ;
+
+    csv_remove = 
+        {remove_from_csv} kw_remove orientation kw_in id ;
+
+    csv_remove_at = 
+        {remove_at_from_csv} kw_remove_at orientation val kw_in id ;
+
+    csv_insert = 
+        {insert_from_csv} kw_insert orientation val array_expr kw_in id ;
+
+    orientation = 
+        {csv_orientation_row} kw_row |
+        {csv_orientation_column} kw_column ;
+
+    //index indmad ændret fra val til expr
+    indexing =
+        {indexing} l_cbrack expr r_cbrack indexing | ;
+
+    array_expr = 
+        {array_expr_val_prime} l_brack val array_expr_prime r_brack ;
+
+    array_expr_prime = 
+        {array_expr_prime_extra} sop_comma val array_expr_prime | ;
+
+    array_op =
+        {array_operation_add} array_add |
+        {array_operation_remove} array_remove |
+        {array_operation_remove_at} array_remove_at |
+        {array_operation_insert} array_insert ;
+
+    array_add = 
+        {add_to_array} kw_add l_par array_expr r_par ;
+
+    array_remove = 
+        {remove_from_array} kw_remove kw_in id;
+
+    array_remove_at = 
+        {remove_at_from_array} kw_remove_at indexing kw_in id;
+        
+    array_insert = 
+        {insert_to_array} kw_insert val array_expr kw_in id;
+
+    //måske skal function call ikke være value men expression i stedet, time will tell
+    val = 
+        {val_id} id |
+        {function_call_value} function_call |
+        {val_floatnum} floatnum |
+        {val_intnum} intnum |
+        {val_string} string |
+        {val_bool} bool ;
+
+    bin_infix_op = 
+        {plus_infix} op_plus |
+        {minus_infix} op_minus |
+        {multiplication_infix} op_mult |
+        {division_infix} op_div |
+        {modulo_infix} op_mod |
+        {and_infix} bop_and |
+        {or_infix} bop_or |
+        {equality_infix} bop_eq |
+        {greater_than_infix} bop_gthan |
+        {greater_than_equal_infix} bop_gethan |
+        {less_than_infix} bop_lthan |
+        {less_than_equal_infix} bop_lethan | 
+        {not_equal_infix} bop_neq ;
+    
+    special_expr =
+        {speical_expression} special_syntax special_expr_prime;
+
+    special_expr_prime =
+        {special_expr_prime} special_syntax special_expr_prime | ;
+    
+    special_syntax =
+        {sum_op} sop_sum |
+        {filter_op} sop_filter  |
+        {groupby_op} sop_groupby |
+        {mean_op} sop_mean |
+        {count_op} sop_count |
+        {sort_op} sop_sort ;
+
+    sum =
+        {sum} sop_sum ;
+    
+    filter =
+        {filter} sop_filter l_par expr r_par ;
+    
+    groupby = 
+        {groupby} sop_groupby l_par expr r_par ;
+    
+    mean =
+        {mean} sop_mean l_par expr r_par ;
+
+    count =
+        {count} sop_count l_par expr r_par ;
+
+    sort =
+        {sort_asc} sop_sort kw_sort_order_asc |
+        {sort_desc} sop_sort kw_sort_order_dsc |
+        {sort} sop_sort ;
+
+    import =
+        {import_without_seperator} kw_import string kw_as id |
+        {import_with_seperator} kw_import string kw_separated_by char kw_as id;
+
+Abstract Syntax Tree
+
+ program =
+        {program} stmts;
+        
+    stmts =
+        {statements} stmt newline stmts | ;
+
+    stmt =
+        {import_stmt} import |
+        {declaration} dcl | 
+        {assignment_statement} assignment |
+        {array_operations} array_op |
+        {for_loop} kw_for id kw_in val block |
+        {while_loop} kw_while expr block |
+        {control_statement} kw_if expr block in_control_stmt | 
+        {print_statement} kw_print expr | 
+        {csv_operation} csv_op |
+        {export_statement} kw_export id kw_to expr |
+        {return_statement} return |
+        {break_statement} kw_break ;
+
+    dcl =
+        {variable_declaration_initialization} type id op_assign expr |
+        {variable_declaration} type id |
+        {const_declaration_initialization} kw_const type id op_assign expr |
+        {function_declaration} type kw_function id l_par function_param r_par function_body ;
+
+    function_param = 
+        {function_param} dcl function_param_prime | ;
+
+    function_param_prime =
+        {function_param_prime} sop_comma dcl function_param_prime | ;
+
+    function_body =
+        {function_body} l_cbrack stmts r_cbrack ;
+
+    return =
+        {return} kw_return expr;
+        
     function_call_param = 
         {function_call_param} expr function_call_param_prime | ;
 

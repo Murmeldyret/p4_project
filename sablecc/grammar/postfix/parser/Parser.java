@@ -36,19 +36,10 @@ public class Parser
         this.lexer = lexer;
     }
 
-    protected void filter() throws ParserException, LexerException, IOException
-    {
-        // Empty body
-    }
-
-    private void push(int numstate, ArrayList<Object> listNode, boolean hidden) throws ParserException, LexerException, IOException
+    @SuppressWarnings({"unchecked","unused"})
+    private void push(int numstate, ArrayList<Object> listNode) throws ParserException, LexerException, IOException
     {
         this.nodeList = listNode;
-
-        if(!hidden)
-        {
-            filter();
-        }
 
         if(!this.stack.hasNext())
         {
@@ -113,7 +104,7 @@ public class Parser
     @SuppressWarnings("unchecked")
     public Start parse() throws ParserException, LexerException, IOException
     {
-        push(0, null, true);
+        push(0, null);
         List<Node> ign = null;
         while(true)
         {
@@ -170,7 +161,7 @@ public class Parser
 		    {
 		        ArrayList<Object> list = new ArrayList<Object>();
 		        list.add(this.lexer.next());
-                        push(this.action[1], list, false);
+                        push(this.action[1], list);
                     }
 		    break;
                 case REDUCE:
@@ -201,619 +192,619 @@ public class Parser
             case 0: /* reduce AProgramProgram */
             {
                 ArrayList<Object> list = new0();
-                push(goTo(0), list, false);
+                push(goTo(0), list);
             }
             break;
             case 1: /* reduce AStatementsStmts */
             {
                 ArrayList<Object> list = new1();
-                push(goTo(1), list, false);
+                push(goTo(1), list);
             }
             break;
             case 2: /* reduce AStmts */
             {
                 ArrayList<Object> list = new2();
-                push(goTo(1), list, false);
+                push(goTo(1), list);
             }
             break;
             case 3: /* reduce AImportStmtStmt */
             {
                 ArrayList<Object> list = new3();
-                push(goTo(2), list, false);
+                push(goTo(2), list);
             }
             break;
             case 4: /* reduce ADeclarationStmt */
             {
                 ArrayList<Object> list = new4();
-                push(goTo(2), list, false);
+                push(goTo(2), list);
             }
             break;
             case 5: /* reduce AAssignmentStatementStmt */
             {
                 ArrayList<Object> list = new5();
-                push(goTo(2), list, false);
+                push(goTo(2), list);
             }
             break;
             case 6: /* reduce AArrayOperationsStmt */
             {
                 ArrayList<Object> list = new6();
-                push(goTo(2), list, false);
+                push(goTo(2), list);
             }
             break;
             case 7: /* reduce AForLoopStmt */
             {
                 ArrayList<Object> list = new7();
-                push(goTo(2), list, false);
+                push(goTo(2), list);
             }
             break;
             case 8: /* reduce AWhileLoopStmt */
             {
                 ArrayList<Object> list = new8();
-                push(goTo(2), list, false);
+                push(goTo(2), list);
             }
             break;
             case 9: /* reduce AControlStatementStmt */
             {
                 ArrayList<Object> list = new9();
-                push(goTo(2), list, false);
+                push(goTo(2), list);
             }
             break;
             case 10: /* reduce APrintStatementStmt */
             {
                 ArrayList<Object> list = new10();
-                push(goTo(2), list, false);
+                push(goTo(2), list);
             }
             break;
             case 11: /* reduce ACsvOperationStmt */
             {
                 ArrayList<Object> list = new11();
-                push(goTo(2), list, false);
+                push(goTo(2), list);
             }
             break;
             case 12: /* reduce AExportStatementStmt */
             {
                 ArrayList<Object> list = new12();
-                push(goTo(2), list, false);
+                push(goTo(2), list);
             }
             break;
             case 13: /* reduce AReturnStatementStmt */
             {
                 ArrayList<Object> list = new13();
-                push(goTo(2), list, false);
+                push(goTo(2), list);
             }
             break;
             case 14: /* reduce ABreakStatementStmt */
             {
                 ArrayList<Object> list = new14();
-                push(goTo(2), list, false);
+                push(goTo(2), list);
             }
             break;
             case 15: /* reduce AVariableDeclarationInitializationDcl */
             {
                 ArrayList<Object> list = new15();
-                push(goTo(3), list, false);
+                push(goTo(3), list);
             }
             break;
             case 16: /* reduce AVariableDeclarationDcl */
             {
                 ArrayList<Object> list = new16();
-                push(goTo(3), list, false);
+                push(goTo(3), list);
             }
             break;
             case 17: /* reduce AConstDeclarationInitializationDcl */
             {
                 ArrayList<Object> list = new17();
-                push(goTo(3), list, false);
+                push(goTo(3), list);
             }
             break;
             case 18: /* reduce AFunctionDeclarationDcl */
             {
                 ArrayList<Object> list = new18();
-                push(goTo(3), list, false);
+                push(goTo(3), list);
             }
             break;
             case 19: /* reduce AFunctionParamFunctionParam */
             {
                 ArrayList<Object> list = new19();
-                push(goTo(4), list, false);
+                push(goTo(4), list);
             }
             break;
             case 20: /* reduce AFunctionParam */
             {
                 ArrayList<Object> list = new20();
-                push(goTo(4), list, false);
+                push(goTo(4), list);
             }
             break;
             case 21: /* reduce AFunctionParamPrimeFunctionParamPrime */
             {
                 ArrayList<Object> list = new21();
-                push(goTo(5), list, false);
+                push(goTo(5), list);
             }
             break;
             case 22: /* reduce AFunctionParamPrime */
             {
                 ArrayList<Object> list = new22();
-                push(goTo(5), list, false);
+                push(goTo(5), list);
             }
             break;
             case 23: /* reduce AFunctionBodyFunctionBody */
             {
                 ArrayList<Object> list = new23();
-                push(goTo(6), list, false);
+                push(goTo(6), list);
             }
             break;
             case 24: /* reduce AReturnReturn */
             {
                 ArrayList<Object> list = new24();
-                push(goTo(7), list, false);
+                push(goTo(7), list);
             }
             break;
             case 25: /* reduce AFunctionCallParamFunctionCallParam */
             {
                 ArrayList<Object> list = new25();
-                push(goTo(8), list, false);
+                push(goTo(8), list);
             }
             break;
             case 26: /* reduce AFunctionCallParam */
             {
                 ArrayList<Object> list = new26();
-                push(goTo(8), list, false);
+                push(goTo(8), list);
             }
             break;
             case 27: /* reduce AFunctionCallParamPrimeFunctionCallParamPrime */
             {
                 ArrayList<Object> list = new27();
-                push(goTo(9), list, false);
+                push(goTo(9), list);
             }
             break;
             case 28: /* reduce AFunctionCallParamPrime */
             {
                 ArrayList<Object> list = new28();
-                push(goTo(9), list, false);
+                push(goTo(9), list);
             }
             break;
             case 29: /* reduce AFunctionCallFunctionCall */
             {
                 ArrayList<Object> list = new29();
-                push(goTo(10), list, false);
+                push(goTo(10), list);
             }
             break;
             case 30: /* reduce ABlockStmtBlock */
             {
                 ArrayList<Object> list = new30();
-                push(goTo(11), list, false);
+                push(goTo(11), list);
             }
             break;
             case 31: /* reduce AElifStatementInControlStmt */
             {
                 ArrayList<Object> list = new31();
-                push(goTo(12), list, false);
+                push(goTo(12), list);
             }
             break;
             case 32: /* reduce AElseStatementInControlStmt */
             {
                 ArrayList<Object> list = new32();
-                push(goTo(12), list, false);
+                push(goTo(12), list);
             }
             break;
             case 33: /* reduce AElseBlockStatementElseStatement */
             {
                 ArrayList<Object> list = new33();
-                push(goTo(13), list, false);
+                push(goTo(13), list);
             }
             break;
             case 34: /* reduce AElseStatement */
             {
                 ArrayList<Object> list = new34();
-                push(goTo(13), list, false);
+                push(goTo(13), list);
             }
             break;
             case 35: /* reduce AAssignAssignment */
             {
                 ArrayList<Object> list = new35();
-                push(goTo(14), list, false);
+                push(goTo(14), list);
             }
             break;
             case 36: /* reduce AAexprvalprimeexpr1Expr */
             {
                 ArrayList<Object> list = new36();
-                push(goTo(15), list, false);
+                push(goTo(15), list);
             }
             break;
             case 37: /* reduce AAexprvalprimeexpr2Expr */
             {
                 ArrayList<Object> list = new37();
-                push(goTo(15), list, false);
+                push(goTo(15), list);
             }
             break;
             case 38: /* reduce AExprSpecialExpr */
             {
                 ArrayList<Object> list = new38();
-                push(goTo(15), list, false);
+                push(goTo(15), list);
             }
             break;
             case 39: /* reduce AExprArrayExpr */
             {
                 ArrayList<Object> list = new39();
-                push(goTo(15), list, false);
+                push(goTo(15), list);
             }
             break;
             case 40: /* reduce AExprPrimeOperatorValPrimeExprPrime */
             {
                 ArrayList<Object> list = new40();
-                push(goTo(16), list, false);
+                push(goTo(16), list);
             }
             break;
             case 41: /* reduce AExprPrime */
             {
                 ArrayList<Object> list = new41();
-                push(goTo(16), list, false);
+                push(goTo(16), list);
             }
             break;
             case 42: /* reduce ACsvOperationAddCsvOp */
             {
                 ArrayList<Object> list = new42();
-                push(goTo(17), list, false);
+                push(goTo(17), list);
             }
             break;
             case 43: /* reduce ACsvOperationRemoveCsvOp */
             {
                 ArrayList<Object> list = new43();
-                push(goTo(17), list, false);
+                push(goTo(17), list);
             }
             break;
             case 44: /* reduce ACsvOperationRemoveAtCsvOp */
             {
                 ArrayList<Object> list = new44();
-                push(goTo(17), list, false);
+                push(goTo(17), list);
             }
             break;
             case 45: /* reduce ACsvOperationInsertCsvOp */
             {
                 ArrayList<Object> list = new45();
-                push(goTo(17), list, false);
+                push(goTo(17), list);
             }
             break;
             case 46: /* reduce AAddToCsvCsvAdd */
             {
                 ArrayList<Object> list = new46();
-                push(goTo(18), list, false);
+                push(goTo(18), list);
             }
             break;
             case 47: /* reduce ARemoveFromCsvCsvRemove */
             {
                 ArrayList<Object> list = new47();
-                push(goTo(19), list, false);
+                push(goTo(19), list);
             }
             break;
             case 48: /* reduce ARemoveAtFromCsvCsvRemoveAt */
             {
                 ArrayList<Object> list = new48();
-                push(goTo(20), list, false);
+                push(goTo(20), list);
             }
             break;
             case 49: /* reduce AInsertFromCsvCsvInsert */
             {
                 ArrayList<Object> list = new49();
-                push(goTo(21), list, false);
+                push(goTo(21), list);
             }
             break;
             case 50: /* reduce ACsvOrientationRowOrientation */
             {
                 ArrayList<Object> list = new50();
-                push(goTo(22), list, false);
+                push(goTo(22), list);
             }
             break;
             case 51: /* reduce ACsvOrientationColumnOrientation */
             {
                 ArrayList<Object> list = new51();
-                push(goTo(22), list, false);
+                push(goTo(22), list);
             }
             break;
             case 52: /* reduce AIndexingIndexing */
             {
                 ArrayList<Object> list = new52();
-                push(goTo(23), list, false);
+                push(goTo(23), list);
             }
             break;
             case 53: /* reduce AIndexing */
             {
                 ArrayList<Object> list = new53();
-                push(goTo(23), list, false);
+                push(goTo(23), list);
             }
             break;
             case 54: /* reduce AArrayExprValPrimeArrayExpr */
             {
                 ArrayList<Object> list = new54();
-                push(goTo(24), list, false);
+                push(goTo(24), list);
             }
             break;
             case 55: /* reduce AArrayExprPrimeExtraArrayExprPrime */
             {
                 ArrayList<Object> list = new55();
-                push(goTo(25), list, false);
+                push(goTo(25), list);
             }
             break;
             case 56: /* reduce AArrayExprPrime */
             {
                 ArrayList<Object> list = new56();
-                push(goTo(25), list, false);
+                push(goTo(25), list);
             }
             break;
             case 57: /* reduce AArrayOperationAddArrayOp */
             {
                 ArrayList<Object> list = new57();
-                push(goTo(26), list, false);
+                push(goTo(26), list);
             }
             break;
             case 58: /* reduce AArrayOperationRemoveArrayOp */
             {
                 ArrayList<Object> list = new58();
-                push(goTo(26), list, false);
+                push(goTo(26), list);
             }
             break;
             case 59: /* reduce AArrayOperationRemoveAtArrayOp */
             {
                 ArrayList<Object> list = new59();
-                push(goTo(26), list, false);
+                push(goTo(26), list);
             }
             break;
             case 60: /* reduce AArrayOperationInsertArrayOp */
             {
                 ArrayList<Object> list = new60();
-                push(goTo(26), list, false);
+                push(goTo(26), list);
             }
             break;
             case 61: /* reduce AAddToArrayArrayAdd */
             {
                 ArrayList<Object> list = new61();
-                push(goTo(27), list, false);
+                push(goTo(27), list);
             }
             break;
             case 62: /* reduce ARemoveFromArrayArrayRemove */
             {
                 ArrayList<Object> list = new62();
-                push(goTo(28), list, false);
+                push(goTo(28), list);
             }
             break;
             case 63: /* reduce ARemoveAtFromArrayArrayRemoveAt */
             {
                 ArrayList<Object> list = new63();
-                push(goTo(29), list, false);
+                push(goTo(29), list);
             }
             break;
             case 64: /* reduce AInsertToArrayArrayInsert */
             {
                 ArrayList<Object> list = new64();
-                push(goTo(30), list, false);
+                push(goTo(30), list);
             }
             break;
             case 65: /* reduce AValIdVal */
             {
                 ArrayList<Object> list = new65();
-                push(goTo(31), list, false);
+                push(goTo(31), list);
             }
             break;
             case 66: /* reduce AFunctionCallValueVal */
             {
                 ArrayList<Object> list = new66();
-                push(goTo(31), list, false);
+                push(goTo(31), list);
             }
             break;
             case 67: /* reduce AValFloatnumVal */
             {
                 ArrayList<Object> list = new67();
-                push(goTo(31), list, false);
+                push(goTo(31), list);
             }
             break;
             case 68: /* reduce AValIntnumVal */
             {
                 ArrayList<Object> list = new68();
-                push(goTo(31), list, false);
+                push(goTo(31), list);
             }
             break;
             case 69: /* reduce AValStringVal */
             {
                 ArrayList<Object> list = new69();
-                push(goTo(31), list, false);
+                push(goTo(31), list);
             }
             break;
             case 70: /* reduce AValBoolVal */
             {
                 ArrayList<Object> list = new70();
-                push(goTo(31), list, false);
+                push(goTo(31), list);
             }
             break;
             case 71: /* reduce APlusInfixBinInfixOp */
             {
                 ArrayList<Object> list = new71();
-                push(goTo(32), list, false);
+                push(goTo(32), list);
             }
             break;
             case 72: /* reduce AMinusInfixBinInfixOp */
             {
                 ArrayList<Object> list = new72();
-                push(goTo(32), list, false);
+                push(goTo(32), list);
             }
             break;
             case 73: /* reduce AMultiplicationInfixBinInfixOp */
             {
                 ArrayList<Object> list = new73();
-                push(goTo(32), list, false);
+                push(goTo(32), list);
             }
             break;
             case 74: /* reduce ADivisionInfixBinInfixOp */
             {
                 ArrayList<Object> list = new74();
-                push(goTo(32), list, false);
+                push(goTo(32), list);
             }
             break;
             case 75: /* reduce AModuloInfixBinInfixOp */
             {
                 ArrayList<Object> list = new75();
-                push(goTo(32), list, false);
+                push(goTo(32), list);
             }
             break;
             case 76: /* reduce AAndInfixBinInfixOp */
             {
                 ArrayList<Object> list = new76();
-                push(goTo(32), list, false);
+                push(goTo(32), list);
             }
             break;
             case 77: /* reduce AOrInfixBinInfixOp */
             {
                 ArrayList<Object> list = new77();
-                push(goTo(32), list, false);
+                push(goTo(32), list);
             }
             break;
             case 78: /* reduce AEqualityInfixBinInfixOp */
             {
                 ArrayList<Object> list = new78();
-                push(goTo(32), list, false);
+                push(goTo(32), list);
             }
             break;
             case 79: /* reduce AGreaterThanInfixBinInfixOp */
             {
                 ArrayList<Object> list = new79();
-                push(goTo(32), list, false);
+                push(goTo(32), list);
             }
             break;
             case 80: /* reduce AGreaterThanEqualInfixBinInfixOp */
             {
                 ArrayList<Object> list = new80();
-                push(goTo(32), list, false);
+                push(goTo(32), list);
             }
             break;
             case 81: /* reduce ALessThanInfixBinInfixOp */
             {
                 ArrayList<Object> list = new81();
-                push(goTo(32), list, false);
+                push(goTo(32), list);
             }
             break;
             case 82: /* reduce ALessThanEqualInfixBinInfixOp */
             {
                 ArrayList<Object> list = new82();
-                push(goTo(32), list, false);
+                push(goTo(32), list);
             }
             break;
             case 83: /* reduce ANotEqualInfixBinInfixOp */
             {
                 ArrayList<Object> list = new83();
-                push(goTo(32), list, false);
+                push(goTo(32), list);
             }
             break;
             case 84: /* reduce ASpeicalExpressionSpecialExpr */
             {
                 ArrayList<Object> list = new84();
-                push(goTo(33), list, false);
+                push(goTo(33), list);
             }
             break;
             case 85: /* reduce ASpecialExprPrimeSpecialExprPrime */
             {
                 ArrayList<Object> list = new85();
-                push(goTo(34), list, false);
+                push(goTo(34), list);
             }
             break;
             case 86: /* reduce ASpecialExprPrime */
             {
                 ArrayList<Object> list = new86();
-                push(goTo(34), list, false);
+                push(goTo(34), list);
             }
             break;
             case 87: /* reduce ASumOpSpecialSyntax */
             {
                 ArrayList<Object> list = new87();
-                push(goTo(35), list, false);
+                push(goTo(35), list);
             }
             break;
             case 88: /* reduce AFilterOpSpecialSyntax */
             {
                 ArrayList<Object> list = new88();
-                push(goTo(35), list, false);
+                push(goTo(35), list);
             }
             break;
             case 89: /* reduce AGroupbyOpSpecialSyntax */
             {
                 ArrayList<Object> list = new89();
-                push(goTo(35), list, false);
+                push(goTo(35), list);
             }
             break;
             case 90: /* reduce AMeanOpSpecialSyntax */
             {
                 ArrayList<Object> list = new90();
-                push(goTo(35), list, false);
+                push(goTo(35), list);
             }
             break;
             case 91: /* reduce ACountOpSpecialSyntax */
             {
                 ArrayList<Object> list = new91();
-                push(goTo(35), list, false);
+                push(goTo(35), list);
             }
             break;
             case 92: /* reduce ASortOpSpecialSyntax */
             {
                 ArrayList<Object> list = new92();
-                push(goTo(35), list, false);
+                push(goTo(35), list);
             }
             break;
             case 93: /* reduce ASumSum */
             {
                 ArrayList<Object> list = new93();
-                push(goTo(36), list, false);
+                push(goTo(36), list);
             }
             break;
             case 94: /* reduce AFilterFilter */
             {
                 ArrayList<Object> list = new94();
-                push(goTo(37), list, false);
+                push(goTo(37), list);
             }
             break;
             case 95: /* reduce AGroupbyGroupby */
             {
                 ArrayList<Object> list = new95();
-                push(goTo(38), list, false);
+                push(goTo(38), list);
             }
             break;
             case 96: /* reduce AMeanMean */
             {
                 ArrayList<Object> list = new96();
-                push(goTo(39), list, false);
+                push(goTo(39), list);
             }
             break;
             case 97: /* reduce ACountCount */
             {
                 ArrayList<Object> list = new97();
-                push(goTo(40), list, false);
+                push(goTo(40), list);
             }
             break;
             case 98: /* reduce ASortAscSort */
             {
                 ArrayList<Object> list = new98();
-                push(goTo(41), list, false);
+                push(goTo(41), list);
             }
             break;
             case 99: /* reduce ASortDescSort */
             {
                 ArrayList<Object> list = new99();
-                push(goTo(41), list, false);
+                push(goTo(41), list);
             }
             break;
             case 100: /* reduce ASortSort */
             {
                 ArrayList<Object> list = new100();
-                push(goTo(41), list, false);
+                push(goTo(41), list);
             }
             break;
             case 101: /* reduce AImportWithoutSeperatorImport */
             {
                 ArrayList<Object> list = new101();
-                push(goTo(42), list, false);
+                push(goTo(42), list);
             }
             break;
             case 102: /* reduce AImportWithSeperatorImport */
             {
                 ArrayList<Object> list = new102();
-                push(goTo(42), list, false);
+                push(goTo(42), list);
             }
             break;
         }
