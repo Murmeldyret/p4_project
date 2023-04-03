@@ -5,46 +5,46 @@ package postfix.node;
 import postfix.analysis.*;
 
 @SuppressWarnings("nls")
-public final class AImportStmtStmt extends PStmt
+public final class AArrayOperationRemoveAtArrayOp extends PArrayOp
 {
-    private PImport _import_;
+    private PArrayRemoveAt _arrayRemoveAt_;
 
-    public AImportStmtStmt()
+    public AArrayOperationRemoveAtArrayOp()
     {
         // Constructor
     }
 
-    public AImportStmtStmt(
-        @SuppressWarnings("hiding") PImport _import_)
+    public AArrayOperationRemoveAtArrayOp(
+        @SuppressWarnings("hiding") PArrayRemoveAt _arrayRemoveAt_)
     {
         // Constructor
-        setImport(_import_);
+        setArrayRemoveAt(_arrayRemoveAt_);
 
     }
 
     @Override
     public Object clone()
     {
-        return new AImportStmtStmt(
-            cloneNode(this._import_));
+        return new AArrayOperationRemoveAtArrayOp(
+            cloneNode(this._arrayRemoveAt_));
     }
 
     @Override
     public void apply(Switch sw)
     {
-        ((Analysis) sw).caseAImportStmtStmt(this);
+        ((Analysis) sw).caseAArrayOperationRemoveAtArrayOp(this);
     }
 
-    public PImport getImport()
+    public PArrayRemoveAt getArrayRemoveAt()
     {
-        return this._import_;
+        return this._arrayRemoveAt_;
     }
 
-    public void setImport(PImport node)
+    public void setArrayRemoveAt(PArrayRemoveAt node)
     {
-        if(this._import_ != null)
+        if(this._arrayRemoveAt_ != null)
         {
-            this._import_.parent(null);
+            this._arrayRemoveAt_.parent(null);
         }
 
         if(node != null)
@@ -57,23 +57,23 @@ public final class AImportStmtStmt extends PStmt
             node.parent(this);
         }
 
-        this._import_ = node;
+        this._arrayRemoveAt_ = node;
     }
 
     @Override
     public String toString()
     {
         return ""
-            + toString(this._import_);
+            + toString(this._arrayRemoveAt_);
     }
 
     @Override
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
-        if(this._import_ == child)
+        if(this._arrayRemoveAt_ == child)
         {
-            this._import_ = null;
+            this._arrayRemoveAt_ = null;
             return;
         }
 
@@ -84,9 +84,9 @@ public final class AImportStmtStmt extends PStmt
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
-        if(this._import_ == oldChild)
+        if(this._arrayRemoveAt_ == oldChild)
         {
-            setImport((PImport) newChild);
+            setArrayRemoveAt((PArrayRemoveAt) newChild);
             return;
         }
 

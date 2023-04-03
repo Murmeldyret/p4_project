@@ -111,6 +111,12 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
+    public void caseAArrayOperationsStmt(AArrayOperationsStmt node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
     public void caseAForLoopStmt(AForLoopStmt node)
     {
         defaultCase(node);
@@ -124,6 +130,18 @@ public class AnalysisAdapter implements Analysis
 
     @Override
     public void caseAControlStatementStmt(AControlStatementStmt node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAPrintStatementStmt(APrintStatementStmt node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAExportStatementStmt(AExportStatementStmt node)
     {
         defaultCase(node);
     }
@@ -184,6 +202,84 @@ public class AnalysisAdapter implements Analysis
 
     @Override
     public void caseAExprPrime(AExprPrime node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAIndexingIndexing(AIndexingIndexing node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAIndexing(AIndexing node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAArrayExprValPrimeArrayExpr(AArrayExprValPrimeArrayExpr node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAArrayExprPrimeExtraArrayExprPrime(AArrayExprPrimeExtraArrayExprPrime node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAArrayExprPrime(AArrayExprPrime node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAArrayOperationAddArrayOp(AArrayOperationAddArrayOp node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAArrayOperationRemoveArrayOp(AArrayOperationRemoveArrayOp node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAArrayOperationRemoveAtArrayOp(AArrayOperationRemoveAtArrayOp node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAArrayOperationInsertArrayOp(AArrayOperationInsertArrayOp node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAAddToArrayArrayAdd(AAddToArrayArrayAdd node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseARemoveFromArrayArrayRemove(ARemoveFromArrayArrayRemove node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseARemoveAtFromArrayArrayRemoveAt(ARemoveAtFromArrayArrayRemoveAt node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAInsertToArrayArrayInsert(AInsertToArrayArrayInsert node)
     {
         defaultCase(node);
     }
@@ -393,13 +489,13 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
-    public void caseAImportWithoutSeperatorImportT(AImportWithoutSeperatorImportT node)
+    public void caseAImportWithoutSeperatorImport(AImportWithoutSeperatorImport node)
     {
         defaultCase(node);
     }
 
     @Override
-    public void caseAImportWithSeperatorImportT(AImportWithSeperatorImportT node)
+    public void caseAImportWithSeperatorImport(AImportWithSeperatorImport node)
     {
         defaultCase(node);
     }
@@ -591,6 +687,12 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
+    public void caseTSopComma(TSopComma node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
     public void caseTSopSum(TSopSum node)
     {
         defaultCase(node);
@@ -639,6 +741,18 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
+    public void caseTKwExport(TKwExport node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTKwPrint(TKwPrint node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
     public void caseTKwSeparatedBy(TKwSeparatedBy node)
     {
         defaultCase(node);
@@ -682,6 +796,36 @@ public class AnalysisAdapter implements Analysis
 
     @Override
     public void caseTKwSortOrderDsc(TKwSortOrderDsc node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTKwTo(TKwTo node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTKwAdd(TKwAdd node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTKwRemove(TKwRemove node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTKwRemoveAt(TKwRemoveAt node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTKwInsert(TKwInsert node)
     {
         defaultCase(node);
     }

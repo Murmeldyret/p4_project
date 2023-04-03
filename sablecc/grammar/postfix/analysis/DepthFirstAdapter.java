@@ -117,9 +117,9 @@ public class DepthFirstAdapter extends AnalysisAdapter
     public void caseAImportStmtStmt(AImportStmtStmt node)
     {
         inAImportStmtStmt(node);
-        if(node.getImportT() != null)
+        if(node.getImport() != null)
         {
-            node.getImportT().apply(this);
+            node.getImport().apply(this);
         }
         outAImportStmtStmt(node);
     }
@@ -176,6 +176,27 @@ public class DepthFirstAdapter extends AnalysisAdapter
             node.getAssignment().apply(this);
         }
         outAAssignmentStatementStmt(node);
+    }
+
+    public void inAArrayOperationsStmt(AArrayOperationsStmt node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAArrayOperationsStmt(AArrayOperationsStmt node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAArrayOperationsStmt(AArrayOperationsStmt node)
+    {
+        inAArrayOperationsStmt(node);
+        if(node.getArrayOp() != null)
+        {
+            node.getArrayOp().apply(this);
+        }
+        outAArrayOperationsStmt(node);
     }
 
     public void inAForLoopStmt(AForLoopStmt node)
@@ -275,6 +296,64 @@ public class DepthFirstAdapter extends AnalysisAdapter
             node.getInControlStmt().apply(this);
         }
         outAControlStatementStmt(node);
+    }
+
+    public void inAPrintStatementStmt(APrintStatementStmt node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAPrintStatementStmt(APrintStatementStmt node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAPrintStatementStmt(APrintStatementStmt node)
+    {
+        inAPrintStatementStmt(node);
+        if(node.getKwPrint() != null)
+        {
+            node.getKwPrint().apply(this);
+        }
+        if(node.getExpr() != null)
+        {
+            node.getExpr().apply(this);
+        }
+        outAPrintStatementStmt(node);
+    }
+
+    public void inAExportStatementStmt(AExportStatementStmt node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAExportStatementStmt(AExportStatementStmt node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAExportStatementStmt(AExportStatementStmt node)
+    {
+        inAExportStatementStmt(node);
+        if(node.getKwExport() != null)
+        {
+            node.getKwExport().apply(this);
+        }
+        if(node.getId() != null)
+        {
+            node.getId().apply(this);
+        }
+        if(node.getKwTo() != null)
+        {
+            node.getKwTo().apply(this);
+        }
+        if(node.getExpr() != null)
+        {
+            node.getExpr().apply(this);
+        }
+        outAExportStatementStmt(node);
     }
 
     public void inABlockStmtBlock(ABlockStmtBlock node)
@@ -529,6 +608,351 @@ public class DepthFirstAdapter extends AnalysisAdapter
     {
         inAExprPrime(node);
         outAExprPrime(node);
+    }
+
+    public void inAIndexingIndexing(AIndexingIndexing node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAIndexingIndexing(AIndexingIndexing node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAIndexingIndexing(AIndexingIndexing node)
+    {
+        inAIndexingIndexing(node);
+        if(node.getLCbrack() != null)
+        {
+            node.getLCbrack().apply(this);
+        }
+        if(node.getExpr() != null)
+        {
+            node.getExpr().apply(this);
+        }
+        if(node.getRCbrack() != null)
+        {
+            node.getRCbrack().apply(this);
+        }
+        if(node.getIndexing() != null)
+        {
+            node.getIndexing().apply(this);
+        }
+        outAIndexingIndexing(node);
+    }
+
+    public void inAIndexing(AIndexing node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAIndexing(AIndexing node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAIndexing(AIndexing node)
+    {
+        inAIndexing(node);
+        outAIndexing(node);
+    }
+
+    public void inAArrayExprValPrimeArrayExpr(AArrayExprValPrimeArrayExpr node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAArrayExprValPrimeArrayExpr(AArrayExprValPrimeArrayExpr node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAArrayExprValPrimeArrayExpr(AArrayExprValPrimeArrayExpr node)
+    {
+        inAArrayExprValPrimeArrayExpr(node);
+        if(node.getLBrack() != null)
+        {
+            node.getLBrack().apply(this);
+        }
+        if(node.getVal() != null)
+        {
+            node.getVal().apply(this);
+        }
+        if(node.getArrayExprPrime() != null)
+        {
+            node.getArrayExprPrime().apply(this);
+        }
+        if(node.getRBrack() != null)
+        {
+            node.getRBrack().apply(this);
+        }
+        outAArrayExprValPrimeArrayExpr(node);
+    }
+
+    public void inAArrayExprPrimeExtraArrayExprPrime(AArrayExprPrimeExtraArrayExprPrime node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAArrayExprPrimeExtraArrayExprPrime(AArrayExprPrimeExtraArrayExprPrime node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAArrayExprPrimeExtraArrayExprPrime(AArrayExprPrimeExtraArrayExprPrime node)
+    {
+        inAArrayExprPrimeExtraArrayExprPrime(node);
+        if(node.getSopComma() != null)
+        {
+            node.getSopComma().apply(this);
+        }
+        if(node.getVal() != null)
+        {
+            node.getVal().apply(this);
+        }
+        if(node.getArrayExprPrime() != null)
+        {
+            node.getArrayExprPrime().apply(this);
+        }
+        outAArrayExprPrimeExtraArrayExprPrime(node);
+    }
+
+    public void inAArrayExprPrime(AArrayExprPrime node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAArrayExprPrime(AArrayExprPrime node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAArrayExprPrime(AArrayExprPrime node)
+    {
+        inAArrayExprPrime(node);
+        outAArrayExprPrime(node);
+    }
+
+    public void inAArrayOperationAddArrayOp(AArrayOperationAddArrayOp node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAArrayOperationAddArrayOp(AArrayOperationAddArrayOp node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAArrayOperationAddArrayOp(AArrayOperationAddArrayOp node)
+    {
+        inAArrayOperationAddArrayOp(node);
+        if(node.getArrayAdd() != null)
+        {
+            node.getArrayAdd().apply(this);
+        }
+        outAArrayOperationAddArrayOp(node);
+    }
+
+    public void inAArrayOperationRemoveArrayOp(AArrayOperationRemoveArrayOp node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAArrayOperationRemoveArrayOp(AArrayOperationRemoveArrayOp node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAArrayOperationRemoveArrayOp(AArrayOperationRemoveArrayOp node)
+    {
+        inAArrayOperationRemoveArrayOp(node);
+        if(node.getArrayRemove() != null)
+        {
+            node.getArrayRemove().apply(this);
+        }
+        outAArrayOperationRemoveArrayOp(node);
+    }
+
+    public void inAArrayOperationRemoveAtArrayOp(AArrayOperationRemoveAtArrayOp node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAArrayOperationRemoveAtArrayOp(AArrayOperationRemoveAtArrayOp node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAArrayOperationRemoveAtArrayOp(AArrayOperationRemoveAtArrayOp node)
+    {
+        inAArrayOperationRemoveAtArrayOp(node);
+        if(node.getArrayRemoveAt() != null)
+        {
+            node.getArrayRemoveAt().apply(this);
+        }
+        outAArrayOperationRemoveAtArrayOp(node);
+    }
+
+    public void inAArrayOperationInsertArrayOp(AArrayOperationInsertArrayOp node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAArrayOperationInsertArrayOp(AArrayOperationInsertArrayOp node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAArrayOperationInsertArrayOp(AArrayOperationInsertArrayOp node)
+    {
+        inAArrayOperationInsertArrayOp(node);
+        if(node.getArrayInsert() != null)
+        {
+            node.getArrayInsert().apply(this);
+        }
+        outAArrayOperationInsertArrayOp(node);
+    }
+
+    public void inAAddToArrayArrayAdd(AAddToArrayArrayAdd node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAAddToArrayArrayAdd(AAddToArrayArrayAdd node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAAddToArrayArrayAdd(AAddToArrayArrayAdd node)
+    {
+        inAAddToArrayArrayAdd(node);
+        if(node.getKwAdd() != null)
+        {
+            node.getKwAdd().apply(this);
+        }
+        if(node.getLPar() != null)
+        {
+            node.getLPar().apply(this);
+        }
+        if(node.getArrayExpr() != null)
+        {
+            node.getArrayExpr().apply(this);
+        }
+        if(node.getRPar() != null)
+        {
+            node.getRPar().apply(this);
+        }
+        outAAddToArrayArrayAdd(node);
+    }
+
+    public void inARemoveFromArrayArrayRemove(ARemoveFromArrayArrayRemove node)
+    {
+        defaultIn(node);
+    }
+
+    public void outARemoveFromArrayArrayRemove(ARemoveFromArrayArrayRemove node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseARemoveFromArrayArrayRemove(ARemoveFromArrayArrayRemove node)
+    {
+        inARemoveFromArrayArrayRemove(node);
+        if(node.getKwRemove() != null)
+        {
+            node.getKwRemove().apply(this);
+        }
+        if(node.getKwIn() != null)
+        {
+            node.getKwIn().apply(this);
+        }
+        if(node.getId() != null)
+        {
+            node.getId().apply(this);
+        }
+        outARemoveFromArrayArrayRemove(node);
+    }
+
+    public void inARemoveAtFromArrayArrayRemoveAt(ARemoveAtFromArrayArrayRemoveAt node)
+    {
+        defaultIn(node);
+    }
+
+    public void outARemoveAtFromArrayArrayRemoveAt(ARemoveAtFromArrayArrayRemoveAt node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseARemoveAtFromArrayArrayRemoveAt(ARemoveAtFromArrayArrayRemoveAt node)
+    {
+        inARemoveAtFromArrayArrayRemoveAt(node);
+        if(node.getKwRemoveAt() != null)
+        {
+            node.getKwRemoveAt().apply(this);
+        }
+        if(node.getIndexing() != null)
+        {
+            node.getIndexing().apply(this);
+        }
+        if(node.getKwIn() != null)
+        {
+            node.getKwIn().apply(this);
+        }
+        if(node.getId() != null)
+        {
+            node.getId().apply(this);
+        }
+        outARemoveAtFromArrayArrayRemoveAt(node);
+    }
+
+    public void inAInsertToArrayArrayInsert(AInsertToArrayArrayInsert node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAInsertToArrayArrayInsert(AInsertToArrayArrayInsert node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAInsertToArrayArrayInsert(AInsertToArrayArrayInsert node)
+    {
+        inAInsertToArrayArrayInsert(node);
+        if(node.getKwInsert() != null)
+        {
+            node.getKwInsert().apply(this);
+        }
+        if(node.getVal() != null)
+        {
+            node.getVal().apply(this);
+        }
+        if(node.getArrayExpr() != null)
+        {
+            node.getArrayExpr().apply(this);
+        }
+        if(node.getKwIn() != null)
+        {
+            node.getKwIn().apply(this);
+        }
+        if(node.getId() != null)
+        {
+            node.getId().apply(this);
+        }
+        outAInsertToArrayArrayInsert(node);
     }
 
     public void inAValIdVal(AValIdVal node)
@@ -1305,20 +1729,20 @@ public class DepthFirstAdapter extends AnalysisAdapter
         outASortSort(node);
     }
 
-    public void inAImportWithoutSeperatorImportT(AImportWithoutSeperatorImportT node)
+    public void inAImportWithoutSeperatorImport(AImportWithoutSeperatorImport node)
     {
         defaultIn(node);
     }
 
-    public void outAImportWithoutSeperatorImportT(AImportWithoutSeperatorImportT node)
+    public void outAImportWithoutSeperatorImport(AImportWithoutSeperatorImport node)
     {
         defaultOut(node);
     }
 
     @Override
-    public void caseAImportWithoutSeperatorImportT(AImportWithoutSeperatorImportT node)
+    public void caseAImportWithoutSeperatorImport(AImportWithoutSeperatorImport node)
     {
-        inAImportWithoutSeperatorImportT(node);
+        inAImportWithoutSeperatorImport(node);
         if(node.getKwImport() != null)
         {
             node.getKwImport().apply(this);
@@ -1335,23 +1759,23 @@ public class DepthFirstAdapter extends AnalysisAdapter
         {
             node.getId().apply(this);
         }
-        outAImportWithoutSeperatorImportT(node);
+        outAImportWithoutSeperatorImport(node);
     }
 
-    public void inAImportWithSeperatorImportT(AImportWithSeperatorImportT node)
+    public void inAImportWithSeperatorImport(AImportWithSeperatorImport node)
     {
         defaultIn(node);
     }
 
-    public void outAImportWithSeperatorImportT(AImportWithSeperatorImportT node)
+    public void outAImportWithSeperatorImport(AImportWithSeperatorImport node)
     {
         defaultOut(node);
     }
 
     @Override
-    public void caseAImportWithSeperatorImportT(AImportWithSeperatorImportT node)
+    public void caseAImportWithSeperatorImport(AImportWithSeperatorImport node)
     {
-        inAImportWithSeperatorImportT(node);
+        inAImportWithSeperatorImport(node);
         if(node.getKwImport() != null)
         {
             node.getKwImport().apply(this);
@@ -1376,6 +1800,6 @@ public class DepthFirstAdapter extends AnalysisAdapter
         {
             node.getId().apply(this);
         }
-        outAImportWithSeperatorImportT(node);
+        outAImportWithSeperatorImport(node);
     }
 }

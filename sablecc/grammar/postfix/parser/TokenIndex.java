@@ -184,104 +184,152 @@ class TokenIndex extends AnalysisAdapter
     }
 
     @Override
-    public void caseTSopSum(@SuppressWarnings("unused") TSopSum node)
+    public void caseTSopComma(@SuppressWarnings("unused") TSopComma node)
     {
         this.index = 29;
     }
 
     @Override
-    public void caseTSopFilter(@SuppressWarnings("unused") TSopFilter node)
+    public void caseTSopSum(@SuppressWarnings("unused") TSopSum node)
     {
         this.index = 30;
     }
 
     @Override
-    public void caseTSopGroupby(@SuppressWarnings("unused") TSopGroupby node)
+    public void caseTSopFilter(@SuppressWarnings("unused") TSopFilter node)
     {
         this.index = 31;
     }
 
     @Override
-    public void caseTSopMean(@SuppressWarnings("unused") TSopMean node)
+    public void caseTSopGroupby(@SuppressWarnings("unused") TSopGroupby node)
     {
         this.index = 32;
     }
 
     @Override
-    public void caseTSopSort(@SuppressWarnings("unused") TSopSort node)
+    public void caseTSopMean(@SuppressWarnings("unused") TSopMean node)
     {
         this.index = 33;
     }
 
     @Override
-    public void caseTSopCount(@SuppressWarnings("unused") TSopCount node)
+    public void caseTSopSort(@SuppressWarnings("unused") TSopSort node)
     {
         this.index = 34;
     }
 
     @Override
-    public void caseTKwAs(@SuppressWarnings("unused") TKwAs node)
+    public void caseTSopCount(@SuppressWarnings("unused") TSopCount node)
     {
         this.index = 35;
     }
 
     @Override
-    public void caseTKwImport(@SuppressWarnings("unused") TKwImport node)
+    public void caseTKwAs(@SuppressWarnings("unused") TKwAs node)
     {
         this.index = 36;
     }
 
     @Override
-    public void caseTKwSeparatedBy(@SuppressWarnings("unused") TKwSeparatedBy node)
+    public void caseTKwImport(@SuppressWarnings("unused") TKwImport node)
     {
         this.index = 37;
     }
 
     @Override
-    public void caseTKwFor(@SuppressWarnings("unused") TKwFor node)
+    public void caseTKwExport(@SuppressWarnings("unused") TKwExport node)
     {
         this.index = 38;
     }
 
     @Override
-    public void caseTKwWhile(@SuppressWarnings("unused") TKwWhile node)
+    public void caseTKwPrint(@SuppressWarnings("unused") TKwPrint node)
     {
         this.index = 39;
     }
 
     @Override
-    public void caseTKwIn(@SuppressWarnings("unused") TKwIn node)
+    public void caseTKwSeparatedBy(@SuppressWarnings("unused") TKwSeparatedBy node)
     {
         this.index = 40;
     }
 
     @Override
-    public void caseTKwIf(@SuppressWarnings("unused") TKwIf node)
+    public void caseTKwFor(@SuppressWarnings("unused") TKwFor node)
     {
         this.index = 41;
     }
 
     @Override
-    public void caseTKwElse(@SuppressWarnings("unused") TKwElse node)
+    public void caseTKwWhile(@SuppressWarnings("unused") TKwWhile node)
     {
         this.index = 42;
     }
 
     @Override
-    public void caseTKwSortOrderAsc(@SuppressWarnings("unused") TKwSortOrderAsc node)
+    public void caseTKwIn(@SuppressWarnings("unused") TKwIn node)
     {
         this.index = 43;
     }
 
     @Override
-    public void caseTKwSortOrderDsc(@SuppressWarnings("unused") TKwSortOrderDsc node)
+    public void caseTKwIf(@SuppressWarnings("unused") TKwIf node)
     {
         this.index = 44;
     }
 
     @Override
-    public void caseEOF(@SuppressWarnings("unused") EOF node)
+    public void caseTKwElse(@SuppressWarnings("unused") TKwElse node)
     {
         this.index = 45;
+    }
+
+    @Override
+    public void caseTKwSortOrderAsc(@SuppressWarnings("unused") TKwSortOrderAsc node)
+    {
+        this.index = 46;
+    }
+
+    @Override
+    public void caseTKwSortOrderDsc(@SuppressWarnings("unused") TKwSortOrderDsc node)
+    {
+        this.index = 47;
+    }
+
+    @Override
+    public void caseTKwTo(@SuppressWarnings("unused") TKwTo node)
+    {
+        this.index = 48;
+    }
+
+    @Override
+    public void caseTKwAdd(@SuppressWarnings("unused") TKwAdd node)
+    {
+        this.index = 49;
+    }
+
+    @Override
+    public void caseTKwRemove(@SuppressWarnings("unused") TKwRemove node)
+    {
+        this.index = 50;
+    }
+
+    @Override
+    public void caseTKwRemoveAt(@SuppressWarnings("unused") TKwRemoveAt node)
+    {
+        this.index = 51;
+    }
+
+    @Override
+    public void caseTKwInsert(@SuppressWarnings("unused") TKwInsert node)
+    {
+        this.index = 52;
+    }
+
+    @Override
+    public void caseEOF(@SuppressWarnings("unused") EOF node)
+    {
+        this.index = 53;
     }
 }

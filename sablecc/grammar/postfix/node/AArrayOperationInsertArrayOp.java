@@ -5,46 +5,46 @@ package postfix.node;
 import postfix.analysis.*;
 
 @SuppressWarnings("nls")
-public final class AImportStmtStmt extends PStmt
+public final class AArrayOperationInsertArrayOp extends PArrayOp
 {
-    private PImport _import_;
+    private PArrayInsert _arrayInsert_;
 
-    public AImportStmtStmt()
+    public AArrayOperationInsertArrayOp()
     {
         // Constructor
     }
 
-    public AImportStmtStmt(
-        @SuppressWarnings("hiding") PImport _import_)
+    public AArrayOperationInsertArrayOp(
+        @SuppressWarnings("hiding") PArrayInsert _arrayInsert_)
     {
         // Constructor
-        setImport(_import_);
+        setArrayInsert(_arrayInsert_);
 
     }
 
     @Override
     public Object clone()
     {
-        return new AImportStmtStmt(
-            cloneNode(this._import_));
+        return new AArrayOperationInsertArrayOp(
+            cloneNode(this._arrayInsert_));
     }
 
     @Override
     public void apply(Switch sw)
     {
-        ((Analysis) sw).caseAImportStmtStmt(this);
+        ((Analysis) sw).caseAArrayOperationInsertArrayOp(this);
     }
 
-    public PImport getImport()
+    public PArrayInsert getArrayInsert()
     {
-        return this._import_;
+        return this._arrayInsert_;
     }
 
-    public void setImport(PImport node)
+    public void setArrayInsert(PArrayInsert node)
     {
-        if(this._import_ != null)
+        if(this._arrayInsert_ != null)
         {
-            this._import_.parent(null);
+            this._arrayInsert_.parent(null);
         }
 
         if(node != null)
@@ -57,23 +57,23 @@ public final class AImportStmtStmt extends PStmt
             node.parent(this);
         }
 
-        this._import_ = node;
+        this._arrayInsert_ = node;
     }
 
     @Override
     public String toString()
     {
         return ""
-            + toString(this._import_);
+            + toString(this._arrayInsert_);
     }
 
     @Override
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
-        if(this._import_ == child)
+        if(this._arrayInsert_ == child)
         {
-            this._import_ = null;
+            this._arrayInsert_ = null;
             return;
         }
 
@@ -84,9 +84,9 @@ public final class AImportStmtStmt extends PStmt
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
-        if(this._import_ == oldChild)
+        if(this._arrayInsert_ == oldChild)
         {
-            setImport((PImport) newChild);
+            setArrayInsert((PArrayInsert) newChild);
             return;
         }
 

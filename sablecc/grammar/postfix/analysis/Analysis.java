@@ -18,9 +18,12 @@ public interface Analysis extends Switch
     void caseAImportStmtStmt(AImportStmtStmt node);
     void caseADeclarationStmt(ADeclarationStmt node);
     void caseAAssignmentStatementStmt(AAssignmentStatementStmt node);
+    void caseAArrayOperationsStmt(AArrayOperationsStmt node);
     void caseAForLoopStmt(AForLoopStmt node);
     void caseAWhileLoopStmt(AWhileLoopStmt node);
     void caseAControlStatementStmt(AControlStatementStmt node);
+    void caseAPrintStatementStmt(APrintStatementStmt node);
+    void caseAExportStatementStmt(AExportStatementStmt node);
     void caseABlockStmtBlock(ABlockStmtBlock node);
     void caseAElifStatementInControlStmt(AElifStatementInControlStmt node);
     void caseAElseStatementInControlStmt(AElseStatementInControlStmt node);
@@ -31,6 +34,19 @@ public interface Analysis extends Switch
     void caseAExprSpecialExpr(AExprSpecialExpr node);
     void caseAExprPrimeOperatorValPrimeExprPrime(AExprPrimeOperatorValPrimeExprPrime node);
     void caseAExprPrime(AExprPrime node);
+    void caseAIndexingIndexing(AIndexingIndexing node);
+    void caseAIndexing(AIndexing node);
+    void caseAArrayExprValPrimeArrayExpr(AArrayExprValPrimeArrayExpr node);
+    void caseAArrayExprPrimeExtraArrayExprPrime(AArrayExprPrimeExtraArrayExprPrime node);
+    void caseAArrayExprPrime(AArrayExprPrime node);
+    void caseAArrayOperationAddArrayOp(AArrayOperationAddArrayOp node);
+    void caseAArrayOperationRemoveArrayOp(AArrayOperationRemoveArrayOp node);
+    void caseAArrayOperationRemoveAtArrayOp(AArrayOperationRemoveAtArrayOp node);
+    void caseAArrayOperationInsertArrayOp(AArrayOperationInsertArrayOp node);
+    void caseAAddToArrayArrayAdd(AAddToArrayArrayAdd node);
+    void caseARemoveFromArrayArrayRemove(ARemoveFromArrayArrayRemove node);
+    void caseARemoveAtFromArrayArrayRemoveAt(ARemoveAtFromArrayArrayRemoveAt node);
+    void caseAInsertToArrayArrayInsert(AInsertToArrayArrayInsert node);
     void caseAValIdVal(AValIdVal node);
     void caseAValFloatnumVal(AValFloatnumVal node);
     void caseAValIntnumVal(AValIntnumVal node);
@@ -65,8 +81,8 @@ public interface Analysis extends Switch
     void caseASortAscSort(ASortAscSort node);
     void caseASortDescSort(ASortDescSort node);
     void caseASortSort(ASortSort node);
-    void caseAImportWithoutSeperatorImportT(AImportWithoutSeperatorImportT node);
-    void caseAImportWithSeperatorImportT(AImportWithSeperatorImportT node);
+    void caseAImportWithoutSeperatorImport(AImportWithoutSeperatorImport node);
+    void caseAImportWithSeperatorImport(AImportWithSeperatorImport node);
 
     void caseTNewline(TNewline node);
     void caseTComment(TComment node);
@@ -99,6 +115,7 @@ public interface Analysis extends Switch
     void caseTBopOr(TBopOr node);
     void caseTBopNot(TBopNot node);
     void caseTSopDot(TSopDot node);
+    void caseTSopComma(TSopComma node);
     void caseTSopSum(TSopSum node);
     void caseTSopFilter(TSopFilter node);
     void caseTSopGroupby(TSopGroupby node);
@@ -107,6 +124,8 @@ public interface Analysis extends Switch
     void caseTSopCount(TSopCount node);
     void caseTKwAs(TKwAs node);
     void caseTKwImport(TKwImport node);
+    void caseTKwExport(TKwExport node);
+    void caseTKwPrint(TKwPrint node);
     void caseTKwSeparatedBy(TKwSeparatedBy node);
     void caseTKwFor(TKwFor node);
     void caseTKwWhile(TKwWhile node);
@@ -115,6 +134,11 @@ public interface Analysis extends Switch
     void caseTKwElse(TKwElse node);
     void caseTKwSortOrderAsc(TKwSortOrderAsc node);
     void caseTKwSortOrderDsc(TKwSortOrderDsc node);
+    void caseTKwTo(TKwTo node);
+    void caseTKwAdd(TKwAdd node);
+    void caseTKwRemove(TKwRemove node);
+    void caseTKwRemoveAt(TKwRemoveAt node);
+    void caseTKwInsert(TKwInsert node);
     void caseEOF(EOF node);
     void caseInvalidToken(InvalidToken node);
 }

@@ -58,6 +58,7 @@ Tokens
 
     //Special Operators
     sop_dot = '.';
+    sop_comma = ',';
     sop_sum = 'sum';
     sop_filter = 'filter';
     sop_groupby = 'groupby';
@@ -78,6 +79,13 @@ Tokens
     kw_else = 'else';
     kw_sort_order_asc = 'asc';
     kw_sort_order_dsc = 'desc';
+    kw_to = 'to';
+
+    //array Keywords
+    kw_add = 'add';
+    kw_remove = 'remove';
+    kw_remove_at = 'remove_at';
+    kw_insert = 'insert';
 
 
 Ignored Tokens
@@ -95,11 +103,12 @@ Productions
         {import_stmt} import |
         {declaration} type id op_assign expr | 
         {assignment_statement} assignment |
+        {array_operations} array_op |
         {for_loop} kw_for id kw_in val block |
         {while_loop} kw_while expr block |
         {control_statement} kw_if expr block in_control_stmt | 
         {print_statement} kw_print expr | 
-        {export_statement} kw_export id to expr ;
+        {export_statement} kw_export id kw_to expr ;
 
     block =
        {block_stmt} l_cbrack stmts r_cbrack ;
@@ -121,6 +130,36 @@ Productions
     expr_prime = 
        {expr_prime_operator_val_prime} bin_infix_op val expr_prime | ;
     
+
+    //index indmad ændret fra val til expr
+    indexing =
+        {indexing} l_cbrack expr r_cbrack indexing | ;
+
+    array_expr = 
+        {array_expr_val_prime} l_brack val array_expr_prime r_brack ;
+
+    array_expr_prime = 
+        {array_expr_prime_extra} sop_comma val array_expr_prime | ;
+
+    array_op =
+        {array_operation_add} array_add |
+        {array_operation_remove} array_remove |
+        {array_operation_remove_at} array_remove_at |
+        {array_operation_insert} array_insert ;
+
+    array_add = 
+        {add_to_array} kw_add l_par array_expr r_par ;
+
+    array_remove = 
+        {remove_from_array} kw_remove kw_in id;
+
+    array_remove_at = 
+        {remove_at_from_array} kw_remove_at indexing kw_in id;
+        
+    array_insert = 
+        {insert_to_array} kw_insert val array_expr kw_in id;
+
+
 
     val = 
         {val_id} id |
