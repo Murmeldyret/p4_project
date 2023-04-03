@@ -69,6 +69,7 @@ Tokens
     kw_as = 'as';
     kw_import = 'import';
     kw_export = 'export';
+    kw_print = 'print';
     kw_separated_by = 'seperated_by';
     kw_for = 'for';
     kw_while = 'while';
@@ -96,7 +97,9 @@ Productions
         {assignment_statement} assignment |
         {for_loop} kw_for id kw_in val block |
         {while_loop} kw_while expr block |
-        {control_statement} kw_if expr block in_control_stmt ;
+        {control_statement} kw_if expr block in_control_stmt | 
+        {print_statement} kw_print expr | 
+        {export_statement} kw_export id to expr ;
 
     block =
        {block_stmt} l_cbrack stmts r_cbrack ;
