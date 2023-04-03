@@ -153,6 +153,24 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
+    public void caseAVariableDeclarationInitializationDcl(AVariableDeclarationInitializationDcl node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAVariableDeclarationDcl(AVariableDeclarationDcl node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAConstDeclarationInitializationDcl(AConstDeclarationInitializationDcl node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
     public void caseABlockStmtBlock(ABlockStmtBlock node)
     {
         defaultCase(node);
@@ -868,6 +886,12 @@ public class AnalysisAdapter implements Analysis
 
     @Override
     public void caseTKwTo(TKwTo node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTKwConst(TKwConst node)
     {
         defaultCase(node);
     }

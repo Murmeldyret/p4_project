@@ -138,21 +138,9 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
     public void caseADeclarationStmt(ADeclarationStmt node)
     {
         inADeclarationStmt(node);
-        if(node.getExpr() != null)
+        if(node.getDcl() != null)
         {
-            node.getExpr().apply(this);
-        }
-        if(node.getOpAssign() != null)
-        {
-            node.getOpAssign().apply(this);
-        }
-        if(node.getId() != null)
-        {
-            node.getId().apply(this);
-        }
-        if(node.getType() != null)
-        {
-            node.getType().apply(this);
+            node.getDcl().apply(this);
         }
         outADeclarationStmt(node);
     }
@@ -375,6 +363,101 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
             node.getKwExport().apply(this);
         }
         outAExportStatementStmt(node);
+    }
+
+    public void inAVariableDeclarationInitializationDcl(AVariableDeclarationInitializationDcl node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAVariableDeclarationInitializationDcl(AVariableDeclarationInitializationDcl node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAVariableDeclarationInitializationDcl(AVariableDeclarationInitializationDcl node)
+    {
+        inAVariableDeclarationInitializationDcl(node);
+        if(node.getExpr() != null)
+        {
+            node.getExpr().apply(this);
+        }
+        if(node.getOpAssign() != null)
+        {
+            node.getOpAssign().apply(this);
+        }
+        if(node.getId() != null)
+        {
+            node.getId().apply(this);
+        }
+        if(node.getType() != null)
+        {
+            node.getType().apply(this);
+        }
+        outAVariableDeclarationInitializationDcl(node);
+    }
+
+    public void inAVariableDeclarationDcl(AVariableDeclarationDcl node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAVariableDeclarationDcl(AVariableDeclarationDcl node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAVariableDeclarationDcl(AVariableDeclarationDcl node)
+    {
+        inAVariableDeclarationDcl(node);
+        if(node.getId() != null)
+        {
+            node.getId().apply(this);
+        }
+        if(node.getType() != null)
+        {
+            node.getType().apply(this);
+        }
+        outAVariableDeclarationDcl(node);
+    }
+
+    public void inAConstDeclarationInitializationDcl(AConstDeclarationInitializationDcl node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAConstDeclarationInitializationDcl(AConstDeclarationInitializationDcl node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAConstDeclarationInitializationDcl(AConstDeclarationInitializationDcl node)
+    {
+        inAConstDeclarationInitializationDcl(node);
+        if(node.getExpr() != null)
+        {
+            node.getExpr().apply(this);
+        }
+        if(node.getOpAssign() != null)
+        {
+            node.getOpAssign().apply(this);
+        }
+        if(node.getId() != null)
+        {
+            node.getId().apply(this);
+        }
+        if(node.getType() != null)
+        {
+            node.getType().apply(this);
+        }
+        if(node.getKwConst() != null)
+        {
+            node.getKwConst().apply(this);
+        }
+        outAConstDeclarationInitializationDcl(node);
     }
 
     public void inABlockStmtBlock(ABlockStmtBlock node)

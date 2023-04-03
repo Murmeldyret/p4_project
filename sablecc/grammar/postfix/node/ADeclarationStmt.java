@@ -7,10 +7,7 @@ import postfix.analysis.*;
 @SuppressWarnings("nls")
 public final class ADeclarationStmt extends PStmt
 {
-    private TType _type_;
-    private TId _id_;
-    private TOpAssign _opAssign_;
-    private PExpr _expr_;
+    private PDcl _dcl_;
 
     public ADeclarationStmt()
     {
@@ -18,19 +15,10 @@ public final class ADeclarationStmt extends PStmt
     }
 
     public ADeclarationStmt(
-        @SuppressWarnings("hiding") TType _type_,
-        @SuppressWarnings("hiding") TId _id_,
-        @SuppressWarnings("hiding") TOpAssign _opAssign_,
-        @SuppressWarnings("hiding") PExpr _expr_)
+        @SuppressWarnings("hiding") PDcl _dcl_)
     {
         // Constructor
-        setType(_type_);
-
-        setId(_id_);
-
-        setOpAssign(_opAssign_);
-
-        setExpr(_expr_);
+        setDcl(_dcl_);
 
     }
 
@@ -38,10 +26,7 @@ public final class ADeclarationStmt extends PStmt
     public Object clone()
     {
         return new ADeclarationStmt(
-            cloneNode(this._type_),
-            cloneNode(this._id_),
-            cloneNode(this._opAssign_),
-            cloneNode(this._expr_));
+            cloneNode(this._dcl_));
     }
 
     @Override
@@ -50,16 +35,16 @@ public final class ADeclarationStmt extends PStmt
         ((Analysis) sw).caseADeclarationStmt(this);
     }
 
-    public TType getType()
+    public PDcl getDcl()
     {
-        return this._type_;
+        return this._dcl_;
     }
 
-    public void setType(TType node)
+    public void setDcl(PDcl node)
     {
-        if(this._type_ != null)
+        if(this._dcl_ != null)
         {
-            this._type_.parent(null);
+            this._dcl_.parent(null);
         }
 
         if(node != null)
@@ -72,119 +57,23 @@ public final class ADeclarationStmt extends PStmt
             node.parent(this);
         }
 
-        this._type_ = node;
-    }
-
-    public TId getId()
-    {
-        return this._id_;
-    }
-
-    public void setId(TId node)
-    {
-        if(this._id_ != null)
-        {
-            this._id_.parent(null);
-        }
-
-        if(node != null)
-        {
-            if(node.parent() != null)
-            {
-                node.parent().removeChild(node);
-            }
-
-            node.parent(this);
-        }
-
-        this._id_ = node;
-    }
-
-    public TOpAssign getOpAssign()
-    {
-        return this._opAssign_;
-    }
-
-    public void setOpAssign(TOpAssign node)
-    {
-        if(this._opAssign_ != null)
-        {
-            this._opAssign_.parent(null);
-        }
-
-        if(node != null)
-        {
-            if(node.parent() != null)
-            {
-                node.parent().removeChild(node);
-            }
-
-            node.parent(this);
-        }
-
-        this._opAssign_ = node;
-    }
-
-    public PExpr getExpr()
-    {
-        return this._expr_;
-    }
-
-    public void setExpr(PExpr node)
-    {
-        if(this._expr_ != null)
-        {
-            this._expr_.parent(null);
-        }
-
-        if(node != null)
-        {
-            if(node.parent() != null)
-            {
-                node.parent().removeChild(node);
-            }
-
-            node.parent(this);
-        }
-
-        this._expr_ = node;
+        this._dcl_ = node;
     }
 
     @Override
     public String toString()
     {
         return ""
-            + toString(this._type_)
-            + toString(this._id_)
-            + toString(this._opAssign_)
-            + toString(this._expr_);
+            + toString(this._dcl_);
     }
 
     @Override
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
-        if(this._type_ == child)
+        if(this._dcl_ == child)
         {
-            this._type_ = null;
-            return;
-        }
-
-        if(this._id_ == child)
-        {
-            this._id_ = null;
-            return;
-        }
-
-        if(this._opAssign_ == child)
-        {
-            this._opAssign_ = null;
-            return;
-        }
-
-        if(this._expr_ == child)
-        {
-            this._expr_ = null;
+            this._dcl_ = null;
             return;
         }
 
@@ -195,27 +84,9 @@ public final class ADeclarationStmt extends PStmt
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
-        if(this._type_ == oldChild)
+        if(this._dcl_ == oldChild)
         {
-            setType((TType) newChild);
-            return;
-        }
-
-        if(this._id_ == oldChild)
-        {
-            setId((TId) newChild);
-            return;
-        }
-
-        if(this._opAssign_ == oldChild)
-        {
-            setOpAssign((TOpAssign) newChild);
-            return;
-        }
-
-        if(this._expr_ == oldChild)
-        {
-            setExpr((PExpr) newChild);
+            setDcl((PDcl) newChild);
             return;
         }
 

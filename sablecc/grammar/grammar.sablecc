@@ -80,6 +80,7 @@ Tokens
     kw_sort_order_asc = 'asc';
     kw_sort_order_dsc = 'desc';
     kw_to = 'to';
+    kw_const = 'const';
 
     //array Keywords
     kw_add = 'add';
@@ -105,7 +106,7 @@ Productions
 
     stmt =
         {import_stmt} import |
-        {declaration} type id op_assign expr | 
+        {declaration} dcl | 
         {assignment_statement} assignment |
         {array_operations} array_op |
         {for_loop} kw_for id kw_in val block |
@@ -114,6 +115,11 @@ Productions
         {print_statement} kw_print expr | 
         {csv_operation} csv_op |
         {export_statement} kw_export id kw_to expr ;
+
+    dcl =
+        {variable_declaration_initialization} type id op_assign expr |
+        {variable_declaration} type id |
+        {const_declaration_initialization} kw_const type id op_assign expr ;
 
     block =
        {block_stmt} l_cbrack stmts r_cbrack ;

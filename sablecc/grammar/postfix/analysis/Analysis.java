@@ -25,6 +25,9 @@ public interface Analysis extends Switch
     void caseAPrintStatementStmt(APrintStatementStmt node);
     void caseACsvOperationStmt(ACsvOperationStmt node);
     void caseAExportStatementStmt(AExportStatementStmt node);
+    void caseAVariableDeclarationInitializationDcl(AVariableDeclarationInitializationDcl node);
+    void caseAVariableDeclarationDcl(AVariableDeclarationDcl node);
+    void caseAConstDeclarationInitializationDcl(AConstDeclarationInitializationDcl node);
     void caseABlockStmtBlock(ABlockStmtBlock node);
     void caseAElifStatementInControlStmt(AElifStatementInControlStmt node);
     void caseAElseStatementInControlStmt(AElseStatementInControlStmt node);
@@ -146,6 +149,7 @@ public interface Analysis extends Switch
     void caseTKwSortOrderAsc(TKwSortOrderAsc node);
     void caseTKwSortOrderDsc(TKwSortOrderDsc node);
     void caseTKwTo(TKwTo node);
+    void caseTKwConst(TKwConst node);
     void caseTKwAdd(TKwAdd node);
     void caseTKwRemove(TKwRemove node);
     void caseTKwRemoveAt(TKwRemoveAt node);
