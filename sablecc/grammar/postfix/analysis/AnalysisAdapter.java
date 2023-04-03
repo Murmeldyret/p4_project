@@ -561,6 +561,12 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
+    public void caseANotEqualInfixBinInfixOp(ANotEqualInfixBinInfixOp node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
     public void caseASpeicalExpressionSpecialExpr(ASpeicalExpressionSpecialExpr node)
     {
         defaultCase(node);
@@ -832,6 +838,12 @@ public class AnalysisAdapter implements Analysis
 
     @Override
     public void caseTBopEq(TBopEq node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTBopNeq(TBopNeq node)
     {
         defaultCase(node);
     }

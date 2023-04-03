@@ -93,6 +93,7 @@ public interface Analysis extends Switch
     void caseAGreaterThanEqualInfixBinInfixOp(AGreaterThanEqualInfixBinInfixOp node);
     void caseALessThanInfixBinInfixOp(ALessThanInfixBinInfixOp node);
     void caseALessThanEqualInfixBinInfixOp(ALessThanEqualInfixBinInfixOp node);
+    void caseANotEqualInfixBinInfixOp(ANotEqualInfixBinInfixOp node);
     void caseASpeicalExpressionSpecialExpr(ASpeicalExpressionSpecialExpr node);
     void caseASpecialExprPrimeSpecialExprPrime(ASpecialExprPrimeSpecialExprPrime node);
     void caseASpecialExprPrime(ASpecialExprPrime node);
@@ -140,6 +141,7 @@ public interface Analysis extends Switch
     void caseTBopGthan(TBopGthan node);
     void caseTBopGethan(TBopGethan node);
     void caseTBopEq(TBopEq node);
+    void caseTBopNeq(TBopNeq node);
     void caseTBopAnd(TBopAnd node);
     void caseTBopOr(TBopOr node);
     void caseTBopNot(TBopNot node);

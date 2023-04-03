@@ -2061,6 +2061,27 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
         outALessThanEqualInfixBinInfixOp(node);
     }
 
+    public void inANotEqualInfixBinInfixOp(ANotEqualInfixBinInfixOp node)
+    {
+        defaultIn(node);
+    }
+
+    public void outANotEqualInfixBinInfixOp(ANotEqualInfixBinInfixOp node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseANotEqualInfixBinInfixOp(ANotEqualInfixBinInfixOp node)
+    {
+        inANotEqualInfixBinInfixOp(node);
+        if(node.getBopNeq() != null)
+        {
+            node.getBopNeq().apply(this);
+        }
+        outANotEqualInfixBinInfixOp(node);
+    }
+
     public void inASpeicalExpressionSpecialExpr(ASpeicalExpressionSpecialExpr node)
     {
         defaultIn(node);

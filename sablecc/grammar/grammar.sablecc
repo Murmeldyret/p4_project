@@ -32,7 +32,7 @@ Tokens
     intnum = sign? (number)+ ;
     floatnum = sign? (number)+ '.' (number)+;
     bool = 'true' | 'false';
-    type = ('int' | 'bool' | 'float' | 'string' | 'csv' | 'char' | 'array');
+    type = ('int' | 'bool' | 'float' | 'string' | 'csv' | 'char' | 'array' | 'void');
     char = 39 '.' 39;
 
     id = (['A' .. 'Z'] ['a' .. 'z'])(['A' .. 'Z'] ['a' .. 'z'] ['0' .. '9'])*;
@@ -52,6 +52,7 @@ Tokens
     bop_gthan = '>';
     bop_gethan = '>=';
     bop_eq = '==';
+    bop_neq = '!=';
     bop_and = 'and';
     bop_or = 'or';
     bop_not = 'not';
@@ -239,7 +240,8 @@ Productions
         {greater_than_infix} bop_gthan |
         {greater_than_equal_infix} bop_gethan |
         {less_than_infix} bop_lthan |
-        {less_than_equal_infix} bop_lethan ;
+        {less_than_equal_infix} bop_lethan | 
+        {not_equal_infix} bop_neq ;
     
     special_expr =
         {speical_expression} special_syntax special_expr_prime;
