@@ -56,7 +56,7 @@ Tokens
     bop_or = 'or';
     bop_not = 'not';
 
-    //special Operators
+    //Special Operators
     sop_dot = '.';
     sop_sum = 'sum';
     sop_filter = 'filter';
@@ -65,10 +65,10 @@ Tokens
     sop_sort = 'sort';
     sop_count = 'count';
 
-
-    //keywords
+    //Keywords
     kw_as = 'as';
     kw_import = 'import';
+    kw_export = 'export';
     kw_separated_by = 'seperated_by';
     kw_for = 'for';
     kw_while = 'while';
@@ -91,7 +91,7 @@ Productions
         {statements} stmt newline stmts | ;
 
     stmt =
-        {import_stmt} import_t |
+        {import_stmt} import |
         {declaration} type id op_assign expr | 
         {assignment_statement} assignment |
         {for_loop} kw_for id kw_in val block |
@@ -126,7 +126,6 @@ Productions
         {val_string} string |
         {val_bool} bool ;
 
-    // kan måske flyttes til tokens hvis operatorer flyttes til helpers, dermed vil Productions blive simplere
     bin_infix_op = 
         {plus_infix} op_plus |
         {minus_infix} op_minus |
@@ -147,7 +146,6 @@ Productions
     special_expr_prime =
         {special_expr_prime} special_syntax special_expr_prime | ;
     
-    // skal der være andre prefix operatorer?
     special_syntax =
         {sum_op} sop_sum |
         {filter_op} sop_filter  |
@@ -176,6 +174,6 @@ Productions
         {sort_desc} sop_sort kw_sort_order_dsc |
         {sort} sop_sort ;
 
-    import_t =
+    import =
         {import_without_seperator} kw_import string kw_as id |
         {import_with_seperator} kw_import string kw_separated_by char kw_as id;
