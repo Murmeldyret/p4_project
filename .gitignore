@@ -433,3 +433,6 @@ Temporary Items
 *.icloud
 
 # End of https://www.toptal.com/developers/gitignore/api/csharp,macos
+sablecc/grammar/postfix/.idea/.name
+sablecc/grammar/postfix/.idea/vcs.xml
+sablecc/grammar/postfix/.idea/workspace.xml
