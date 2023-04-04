@@ -2069,16 +2069,16 @@ public class Parser
         PIndexing pindexingNode1;
         {
             // Block
-        TLCbrack tlcbrackNode2;
+        TLBrack tlbrackNode2;
         PExpr pexprNode3;
-        TRCbrack trcbrackNode4;
+        TRBrack trbrackNode4;
         PIndexing pindexingNode5;
-        tlcbrackNode2 = (TLCbrack)nodeArrayList1.get(0);
+        tlbrackNode2 = (TLBrack)nodeArrayList1.get(0);
         pexprNode3 = (PExpr)nodeArrayList2.get(0);
-        trcbrackNode4 = (TRCbrack)nodeArrayList3.get(0);
+        trbrackNode4 = (TRBrack)nodeArrayList3.get(0);
         pindexingNode5 = (PIndexing)nodeArrayList4.get(0);
 
-        pindexingNode1 = new AIndexingIndexing(tlcbrackNode2, pexprNode3, trcbrackNode4, pindexingNode5);
+        pindexingNode1 = new AIndexingIndexing(tlbrackNode2, pexprNode3, trbrackNode4, pindexingNode5);
         }
 	nodeList.add(pindexingNode1);
         return nodeList;
@@ -3215,9 +3215,9 @@ public class Parser
 			{{-1, REDUCE, 14}, },
 			{{-1, ERROR, 11}, {1, SHIFT, 61}, {57, SHIFT, 62}, {58, SHIFT, 63}, },
 			{{-1, ERROR, 12}, {43, SHIFT, 65}, {57, SHIFT, 62}, {58, SHIFT, 63}, },
-			{{-1, REDUCE, 53}, {3, SHIFT, 67}, {57, SHIFT, 62}, {58, SHIFT, 63}, },
+			{{-1, REDUCE, 53}, {5, SHIFT, 67}, {57, SHIFT, 62}, {58, SHIFT, 63}, },
 			{{-1, ERROR, 14}, {7, SHIFT, 38}, {8, SHIFT, 39}, {9, SHIFT, 40}, {10, SHIFT, 41}, {57, SHIFT, 62}, {58, SHIFT, 63}, {59, SHIFT, 49}, },
-			{{-1, REDUCE, 53}, {3, SHIFT, 67}, },
+			{{-1, REDUCE, 53}, {5, SHIFT, 67}, },
 			{{-1, ERROR, 16}, {60, ACCEPT, -1}, },
 			{{-1, REDUCE, 0}, },
 			{{-1, ERROR, 18}, {0, SHIFT, 73}, },
@@ -3311,7 +3311,7 @@ public class Parser
 			{{-1, ERROR, 106}, {43, SHIFT, 135}, },
 			{{-1, REDUCE, 62}, },
 			{{-1, ERROR, 108}, {59, SHIFT, 136}, },
-			{{-1, ERROR, 109}, {4, SHIFT, 137}, },
+			{{-1, ERROR, 109}, {6, SHIFT, 137}, },
 			{{-1, ERROR, 110}, {43, SHIFT, 138}, },
 			{{-1, ERROR, 111}, {59, SHIFT, 139}, },
 			{{-1, ERROR, 112}, {5, SHIFT, 37}, },
@@ -3339,7 +3339,7 @@ public class Parser
 			{{-1, REDUCE, 61}, },
 			{{-1, ERROR, 135}, {59, SHIFT, 157}, },
 			{{-1, REDUCE, 47}, },
-			{{-1, REDUCE, 53}, {3, SHIFT, 67}, },
+			{{-1, REDUCE, 53}, {5, SHIFT, 67}, },
 			{{-1, ERROR, 138}, {59, SHIFT, 159}, },
 			{{-1, REDUCE, 63}, },
 			{{-1, ERROR, 140}, {43, SHIFT, 160}, },
@@ -3438,19 +3438,19 @@ public class Parser
 			"expecting: ';'",
 			"expecting: '(', 'column', 'row'",
 			"expecting: 'in', 'column', 'row'",
-			"expecting: '{', 'in', 'column', 'row'",
+			"expecting: '[', 'in', 'column', 'row'",
 			"expecting: string, intnum, floatnum, bool, 'column', 'row', id",
-			"expecting: '{', '='",
+			"expecting: '[', '='",
 			"expecting: EOF",
 			"expecting: ';', ')', '=', ','",
 			"expecting: 'as', 'seperated_by'",
 			"expecting: 'to'",
 			"expecting: string, intnum, floatnum, bool, id",
-			"expecting: ';', ')', '{', '}', '[', ']', '+', '-', '*', '/', '%', '<', '<=', '>', '>=', '==', '!=', 'and', 'or', ',', 'in'",
+			"expecting: ';', ')', '{', '[', ']', '+', '-', '*', '/', '%', '<', '<=', '>', '>=', '==', '!=', 'and', 'or', ',', 'in'",
 			"expecting: 'sum', 'filter', 'groupby', 'mean', 'sort', 'count', id",
-			"expecting: ';', '(', ')', '{', '}', '[', ']', '+', '-', '*', '/', '%', '<', '<=', '>', '>=', '==', '!=', 'and', 'or', ',', 'in'",
-			"expecting: ';', ')', '{', '}', ','",
-			"expecting: ';', ')', '{', '}', '+', '-', '*', '/', '%', '<', '<=', '>', '>=', '==', '!=', 'and', 'or', ','",
+			"expecting: ';', '(', ')', '{', '[', ']', '+', '-', '*', '/', '%', '<', '<=', '>', '>=', '==', '!=', 'and', 'or', ',', 'in'",
+			"expecting: ';', ')', '{', ']', ','",
+			"expecting: ';', ')', '{', ']', '+', '-', '*', '/', '%', '<', '<=', '>', '>=', '==', '!=', 'and', 'or', ','",
 			"expecting: 'in'",
 			"expecting: '{'",
 			"expecting: '['",
@@ -3464,22 +3464,22 @@ public class Parser
 			"expecting: '}', type, 'import', 'export', 'print', 'for', 'while', 'if', 'const', 'return', 'break', 'add', 'remove', 'remove_at', 'insert', id",
 			"expecting: ';', 'else'",
 			"expecting: ')'",
-			"expecting: '}'",
+			"expecting: ']'",
 			"expecting: '}', EOF",
 			"expecting: ')', type, 'const'",
 			"expecting: ';', ')', ','",
 			"expecting: 'as'",
-			"expecting: ']'",
 			"expecting: ')', ','",
+			"expecting: '}'",
 			"expecting: '{', 'if'",
-			"expecting: '{', '=', 'in'",
-			"expecting: ';', ')', '{', '}', ',', 'in'",
+			"expecting: '[', '=', 'in'",
+			"expecting: ';', ')', '{', ']', ',', 'in'",
 			"expecting: '=', 'in'",
 			"expecting: type, 'const'",
         };*/
     private static int[] errors;
 /*      {
-			0, 1, 2, 3, 4, 3, 4, 4, 5, 4, 6, 7, 8, 9, 10, 11, 12, 12, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 3, 13, 14, 15, 16, 17, 17, 17, 17, 16, 18, 18, 18, 18, 18, 18, 19, 17, 6, 20, 21, 3, 18, 22, 23, 23, 3, 6, 24, 25, 25, 24, 3, 22, 4, 16, 22, 16, 24, 26, 27, 28, 4, 3, 29, 4, 30, 21, 31, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 20, 16, 20, 3, 18, 16, 32, 6, 33, 26, 34, 22, 6, 3, 35, 22, 3, 24, 22, 4, 36, 37, 38, 6, 39, 6, 16, 40, 20, 34, 41, 21, 3, 23, 35, 42, 6, 6, 4, 6, 3, 6, 43, 3, 6, 22, 3, 6, 41, 34, 3, 30, 44, 17, 4, 34, 20, 6, 33, 4, 6, 38, 6, 45, 6, 3, 6, 46, 34, 23, 6, 40, 41, 23, 6, 41, 32, 38, 34, 6, 34, 35, 38, 
+			0, 1, 2, 3, 4, 3, 4, 4, 5, 4, 6, 7, 8, 9, 10, 11, 12, 12, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 3, 13, 14, 15, 16, 17, 17, 17, 17, 16, 18, 18, 18, 18, 18, 18, 19, 17, 6, 20, 21, 3, 18, 22, 23, 23, 3, 6, 24, 25, 25, 24, 3, 22, 4, 16, 22, 16, 24, 26, 27, 28, 4, 3, 29, 4, 30, 21, 31, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 20, 16, 20, 3, 18, 16, 32, 6, 33, 26, 34, 22, 6, 3, 35, 22, 3, 24, 22, 4, 36, 37, 38, 6, 39, 6, 16, 35, 20, 34, 40, 21, 3, 23, 41, 42, 6, 6, 4, 6, 3, 6, 43, 3, 6, 22, 3, 6, 40, 34, 3, 30, 44, 17, 4, 34, 20, 6, 33, 4, 6, 38, 6, 45, 6, 3, 6, 46, 34, 23, 6, 35, 40, 23, 6, 40, 32, 38, 34, 6, 34, 41, 38, 
         };*/
 
     static 

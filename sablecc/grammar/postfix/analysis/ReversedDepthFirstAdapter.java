@@ -1381,17 +1381,17 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
         {
             node.getIndexing().apply(this);
         }
-        if(node.getRCbrack() != null)
+        if(node.getRBrack() != null)
         {
-            node.getRCbrack().apply(this);
+            node.getRBrack().apply(this);
         }
         if(node.getExpr() != null)
         {
             node.getExpr().apply(this);
         }
-        if(node.getLCbrack() != null)
+        if(node.getLBrack() != null)
         {
-            node.getLCbrack().apply(this);
+            node.getLBrack().apply(this);
         }
         outAIndexingIndexing(node);
     }

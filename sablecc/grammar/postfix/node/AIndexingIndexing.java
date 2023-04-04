@@ -7,9 +7,9 @@ import postfix.analysis.*;
 @SuppressWarnings("nls")
 public final class AIndexingIndexing extends PIndexing
 {
-    private TLCbrack _lCbrack_;
+    private TLBrack _lBrack_;
     private PExpr _expr_;
-    private TRCbrack _rCbrack_;
+    private TRBrack _rBrack_;
     private PIndexing _indexing_;
 
     public AIndexingIndexing()
@@ -18,17 +18,17 @@ public final class AIndexingIndexing extends PIndexing
     }
 
     public AIndexingIndexing(
-        @SuppressWarnings("hiding") TLCbrack _lCbrack_,
+        @SuppressWarnings("hiding") TLBrack _lBrack_,
         @SuppressWarnings("hiding") PExpr _expr_,
-        @SuppressWarnings("hiding") TRCbrack _rCbrack_,
+        @SuppressWarnings("hiding") TRBrack _rBrack_,
         @SuppressWarnings("hiding") PIndexing _indexing_)
     {
         // Constructor
-        setLCbrack(_lCbrack_);
+        setLBrack(_lBrack_);
 
         setExpr(_expr_);
 
-        setRCbrack(_rCbrack_);
+        setRBrack(_rBrack_);
 
         setIndexing(_indexing_);
 
@@ -38,9 +38,9 @@ public final class AIndexingIndexing extends PIndexing
     public Object clone()
     {
         return new AIndexingIndexing(
-            cloneNode(this._lCbrack_),
+            cloneNode(this._lBrack_),
             cloneNode(this._expr_),
-            cloneNode(this._rCbrack_),
+            cloneNode(this._rBrack_),
             cloneNode(this._indexing_));
     }
 
@@ -50,16 +50,16 @@ public final class AIndexingIndexing extends PIndexing
         ((Analysis) sw).caseAIndexingIndexing(this);
     }
 
-    public TLCbrack getLCbrack()
+    public TLBrack getLBrack()
     {
-        return this._lCbrack_;
+        return this._lBrack_;
     }
 
-    public void setLCbrack(TLCbrack node)
+    public void setLBrack(TLBrack node)
     {
-        if(this._lCbrack_ != null)
+        if(this._lBrack_ != null)
         {
-            this._lCbrack_.parent(null);
+            this._lBrack_.parent(null);
         }
 
         if(node != null)
@@ -72,7 +72,7 @@ public final class AIndexingIndexing extends PIndexing
             node.parent(this);
         }
 
-        this._lCbrack_ = node;
+        this._lBrack_ = node;
     }
 
     public PExpr getExpr()
@@ -100,16 +100,16 @@ public final class AIndexingIndexing extends PIndexing
         this._expr_ = node;
     }
 
-    public TRCbrack getRCbrack()
+    public TRBrack getRBrack()
     {
-        return this._rCbrack_;
+        return this._rBrack_;
     }
 
-    public void setRCbrack(TRCbrack node)
+    public void setRBrack(TRBrack node)
     {
-        if(this._rCbrack_ != null)
+        if(this._rBrack_ != null)
         {
-            this._rCbrack_.parent(null);
+            this._rBrack_.parent(null);
         }
 
         if(node != null)
@@ -122,7 +122,7 @@ public final class AIndexingIndexing extends PIndexing
             node.parent(this);
         }
 
-        this._rCbrack_ = node;
+        this._rBrack_ = node;
     }
 
     public PIndexing getIndexing()
@@ -154,9 +154,9 @@ public final class AIndexingIndexing extends PIndexing
     public String toString()
     {
         return ""
-            + toString(this._lCbrack_)
+            + toString(this._lBrack_)
             + toString(this._expr_)
-            + toString(this._rCbrack_)
+            + toString(this._rBrack_)
             + toString(this._indexing_);
     }
 
@@ -164,9 +164,9 @@ public final class AIndexingIndexing extends PIndexing
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
-        if(this._lCbrack_ == child)
+        if(this._lBrack_ == child)
         {
-            this._lCbrack_ = null;
+            this._lBrack_ = null;
             return;
         }
 
@@ -176,9 +176,9 @@ public final class AIndexingIndexing extends PIndexing
             return;
         }
 
-        if(this._rCbrack_ == child)
+        if(this._rBrack_ == child)
         {
-            this._rCbrack_ = null;
+            this._rBrack_ = null;
             return;
         }
 
@@ -195,9 +195,9 @@ public final class AIndexingIndexing extends PIndexing
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
-        if(this._lCbrack_ == oldChild)
+        if(this._lBrack_ == oldChild)
         {
-            setLCbrack((TLCbrack) newChild);
+            setLBrack((TLBrack) newChild);
             return;
         }
 
@@ -207,9 +207,9 @@ public final class AIndexingIndexing extends PIndexing
             return;
         }
 
-        if(this._rCbrack_ == oldChild)
+        if(this._rBrack_ == oldChild)
         {
-            setRCbrack((TRCbrack) newChild);
+            setRBrack((TRBrack) newChild);
             return;
         }
 

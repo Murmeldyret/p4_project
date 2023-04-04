@@ -197,7 +197,7 @@ Productions
 
     //index indmad ændret fra val til expr
     indexing =
-        {indexing} l_cbrack expr r_cbrack indexing | ;
+        {indexing} l_brack expr r_brack indexing | ;
 
     array_expr = 
         {array_expr_val_prime} l_brack val array_expr_prime r_brack ;
