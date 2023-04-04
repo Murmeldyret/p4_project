@@ -12,7 +12,7 @@ Helpers
     tab = 9;
     eol = cr | lf | cr lf ;
     not_eol = [all -[cr + lf]];
-    sign = '+' | '-';
+    sign = '-';
 
 Tokens
     //for tokens in the program
