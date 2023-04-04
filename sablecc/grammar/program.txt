@@ -1,3 +1,17 @@
-while 1<2 {return 2+2 ;};
+#testing dcl
+#assigns 22 to the string a din mor = far
 string a = 22;
+#testing array_op
+add ([2]);
+int a = [2];
+a[2] = 2;
 b[i] = 2; 
+array a = [2];
+#for loop
+for a in b {return a;};
+#while loop
+while 1<2 {return 2+2 ;};
+#if statement
+if 2+2==4 {return 2+2;};
+if 2+2==4 {return 2+2;} else {return 2--2;};
+print 2 +2;
