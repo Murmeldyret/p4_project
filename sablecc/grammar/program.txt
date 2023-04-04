@@ -1,1 +1,2 @@
-a2A := 2 + 2
+while 1<2 {return 2 + 2 ;};
+string a = 22;

@@ -693,6 +693,12 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
+    public void caseTSemi(TSemi node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
     public void caseTComment(TComment node)
     {
         defaultCase(node);
@@ -766,12 +772,6 @@ public class AnalysisAdapter implements Analysis
 
     @Override
     public void caseTChar(TChar node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseTId(TId node)
     {
         defaultCase(node);
     }
@@ -1054,6 +1054,12 @@ public class AnalysisAdapter implements Analysis
 
     @Override
     public void caseTKwRow(TKwRow node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTId(TId node)
     {
         defaultCase(node);
     }
