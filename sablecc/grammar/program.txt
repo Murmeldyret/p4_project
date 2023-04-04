@@ -1,3 +1,4 @@
+## testing stmt
 #testing dcl
 #assigns 22 to the string a din mor = far
 string a = 22;
@@ -25,3 +26,20 @@ export csvArr to PathToFile;
 return a >= b and b != 0;
 #break
 break;
+
+#variable declaration initialization
+bool b = true;
+# variable declaration no initialization
+string str;
+# constant declaration
+const int constant = 42;
+# function declaration
+int function add2 (int x) 
+{
+    return x + 2;
+};
+
+#function call
+int res = add2(15 - 2);
+
+array arr = filter a;
