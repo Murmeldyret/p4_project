@@ -5,51 +5,51 @@ package postfix.node;
 import postfix.analysis.*;
 
 @SuppressWarnings("nls")
-public final class AIndexingIndexing extends PIndexing
+public final class AMeanSpecialSyntax extends PSpecialSyntax
 {
-    private PExpr _expr_;
-    private PIndexing _indexing_;
+    private TSopMean _sopMean_;
+    private TId _id_;
 
-    public AIndexingIndexing()
+    public AMeanSpecialSyntax()
     {
         // Constructor
     }
 
-    public AIndexingIndexing(
-        @SuppressWarnings("hiding") PExpr _expr_,
-        @SuppressWarnings("hiding") PIndexing _indexing_)
+    public AMeanSpecialSyntax(
+        @SuppressWarnings("hiding") TSopMean _sopMean_,
+        @SuppressWarnings("hiding") TId _id_)
     {
         // Constructor
-        setExpr(_expr_);
+        setSopMean(_sopMean_);
 
-        setIndexing(_indexing_);
+        setId(_id_);
 
     }
 
     @Override
     public Object clone()
     {
-        return new AIndexingIndexing(
-            cloneNode(this._expr_),
-            cloneNode(this._indexing_));
+        return new AMeanSpecialSyntax(
+            cloneNode(this._sopMean_),
+            cloneNode(this._id_));
     }
 
     @Override
     public void apply(Switch sw)
     {
-        ((Analysis) sw).caseAIndexingIndexing(this);
+        ((Analysis) sw).caseAMeanSpecialSyntax(this);
     }
 
-    public PExpr getExpr()
+    public TSopMean getSopMean()
     {
-        return this._expr_;
+        return this._sopMean_;
     }
 
-    public void setExpr(PExpr node)
+    public void setSopMean(TSopMean node)
     {
-        if(this._expr_ != null)
+        if(this._sopMean_ != null)
         {
-            this._expr_.parent(null);
+            this._sopMean_.parent(null);
         }
 
         if(node != null)
@@ -62,19 +62,19 @@ public final class AIndexingIndexing extends PIndexing
             node.parent(this);
         }
 
-        this._expr_ = node;
+        this._sopMean_ = node;
     }
 
-    public PIndexing getIndexing()
+    public TId getId()
     {
-        return this._indexing_;
+        return this._id_;
     }
 
-    public void setIndexing(PIndexing node)
+    public void setId(TId node)
     {
-        if(this._indexing_ != null)
+        if(this._id_ != null)
         {
-            this._indexing_.parent(null);
+            this._id_.parent(null);
         }
 
         if(node != null)
@@ -87,30 +87,30 @@ public final class AIndexingIndexing extends PIndexing
             node.parent(this);
         }
 
-        this._indexing_ = node;
+        this._id_ = node;
     }
 
     @Override
     public String toString()
     {
         return ""
-            + toString(this._expr_)
-            + toString(this._indexing_);
+            + toString(this._sopMean_)
+            + toString(this._id_);
     }
 
     @Override
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
-        if(this._expr_ == child)
+        if(this._sopMean_ == child)
         {
-            this._expr_ = null;
+            this._sopMean_ = null;
             return;
         }
 
-        if(this._indexing_ == child)
+        if(this._id_ == child)
         {
-            this._indexing_ = null;
+            this._id_ = null;
             return;
         }
 
@@ -121,15 +121,15 @@ public final class AIndexingIndexing extends PIndexing
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
-        if(this._expr_ == oldChild)
+        if(this._sopMean_ == oldChild)
         {
-            setExpr((PExpr) newChild);
+            setSopMean((TSopMean) newChild);
             return;
         }
 
-        if(this._indexing_ == oldChild)
+        if(this._id_ == oldChild)
         {
-            setIndexing((PIndexing) newChild);
+            setId((TId) newChild);
             return;
         }
 

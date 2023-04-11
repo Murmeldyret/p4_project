@@ -6,17 +6,261 @@ class Translation extends DepthFirstAdapter
 {
 public void outAAddToArrayArrayAdd(AAddToArrayArrayAdd node)
 {// out of alternative {plus} in Expr, we print the plus.
-System.out.print(node.getKwAdd());
-System.out.print(node.getLPar());
-System.out.print(node.getArrayExpr());
-System.out.print(node.getRPar());
+    System.out.print(node.getKwAdd());
+    System.out.print(node.getLPar());
+    System.out.print(node.getArrayExpr());
+    System.out.print(node.getRPar());
+}
+
+public void outAAddToCsvCsvOp(AAddToCsvCsvOp node)
+{
+    System.out.print(node.getKwAdd());
+    System.out.print(node.getOrientation());
+    System.out.print(node.getArrayExpr());
+    System.out.print(node.getKwIn());
+    System.out.print(node.getId());
+}
+
+public void outAAndInfixBinInfixOp(AAndInfixBinInfixOp node)
+{
+    System.out.print(node.getBopAnd());
+}
+
+public void outAArrayExprPrime(AArrayExprPrime node)
+{
+    //has no get method
+}
+
+public void outAArrayExprPrimeExtraArrayExprPrime(AArrayExprPrimeExtraArrayExprPrime node)
+{
+    System.out.print(node.getSopComma());
+    System.out.print(node.getVal());
+    System.out.print(node.getArrayExprPrime());
+}
+
+public void outAArrayExprValPrimeArrayExpr(AArrayExprValPrimeArrayExpr node)
+{
+    System.out.print(node.getVal());
+    System.out.print(node.getArrayExprPrime());
+}
+
+public void outAArrayOperationsStmt(AArrayOperationsStmt node)
+{
+    System.out.print(node.getArrayOp());
+}
+
+public void outAAssignStmt(AAssignStmt node)
+{
+    System.out.print(node.getId());
+    System.out.print(node.getIndexing());
+    System.out.print(node.getOpAssign());
+    System.out.print(node.getExpr());
+}
+
+public void outABlockStmtBlock(ABlockStmtBlock node)
+{
+    System.out.print(node.getStmts());
+}
+
+public void outABreakStatementStmt(ABreakStatementStmt node)
+{
+    System.out.print(node.getKwBreak());
+}
+
+public void outAConstDeclarationInitializationDcl(AConstDeclarationInitializationDcl node)
+{
+    System.out.print(node.getKwConst());
+    System.out.print(node.getType());
+    System.out.print(node.getId());
+    System.out.print(node.getOpAssign());
+    System.out.print(node.getExpr());
+}
+
+public void outAControlStatementStmt(AControlStatementStmt node)
+{
+    System.out.print(node.getKwIf());
+    System.out.print(node.getExpr());
+    System.out.print(node.getBlock());
+    System.out.print(node.getInControlStmt());
+}
+
+public void outACountSpecialSyntax(ACountSpecialSyntax node)
+{
+    System.out.print(node.getSopCount());
+    System.out.print(node.getId());
+}
+
+public void outACsvOperationStmt(ACsvOperationStmt node)
+{
+    System.out.print(node.getCsvOp());
+}
+
+public void outACsvOrientationColumnOrientation(ACsvOrientationColumnOrientation node)
+{
+    System.out.print(node.getKwColumn());
+}
+
+public void outACsvOrientationRowOrientation(ACsvOrientationRowOrientation node)
+{
+    System.out.print(node.getKwRow());
+}
+
+public void outADeclarationStmt(ADeclarationStmt node)
+{
+    System.out.print(node.getDcl());
+}
+
+public void outADivisionInfixBinInfixOp(ADivisionInfixBinInfixOp node)
+{
+    System.out.print(node.getOpDiv());
+}
+
+public void outAElifStatementInControlStmt(AElifStatementInControlStmt node)
+{
+    System.out.print(node.getKwElse());
+    System.out.print(node.getKwIf());
+    System.out.print(node.getExpr());
+    System.out.print(node.getBlock());
+    System.out.print(node.getInControlStmt());
+}
+
+public void outAElseBlockStatementElseStatement(AElseBlockStatementElseStatement node)
+{
+    System.out.print(node.getKwElse());
+    System.out.print(node.getBlock());
+}
+
+public void outAElseStatementInControlStmt(AElseStatementInControlStmt node)
+{
+    System.out.print(node.getElseStatement());
+}
+
+public void outAEqualityInfixBinInfixOp(AEqualityInfixBinInfixOp node)
+{
+    System.out.print(node.getBopEq());
+}
+
+public void outAExportStatementStmt(AExportStatementStmt node)
+{
+    System.out.print(node.getKwExport());
+    System.out.print(node.getId());
+    System.out.print(node.getKwTo());
+    System.out.print(node.getExpr());
+}
+
+public void outAExprArrayExpr(AExprArrayExpr node)
+{
+    System.out.print(node.getArrayExpr());
+}
+
+public void outAExprPrimeOperatorValPrimeExprPrime(AExprPrimeOperatorValPrimeExprPrime node)
+{
+    System.out.print(node.getBinInfixOp());
+    System.out.print(node.getVal());
+    System.out.print(node.getExprPrime());
+}
+
+public void outAExprSpecialExpr(AExprSpecialExpr node)
+{
+    System.out.print(node.getSpecialExpr());
+    System.out.print(node.getId());
 }
 
 public void outAExprValPrimeExpr(AExprValPrimeExpr node)
 {//
-System.out.print(node.getBopNot());
-System.out.print(node.getVal());
-System.out.print(node.getExprPrime());
+    System.out.print(node.getBopNot());
+    System.out.print(node.getVal());
+    System.out.print(node.getExprPrime());
+}
+
+public void outAFilterSpecialSyntax(AFilterSpecialSyntax node)
+{
+    System.out.print(node.getSopFilter());
+    System.out.print(node.getId());
+}
+
+public void outAForLoopStmt(AForLoopStmt node)
+{
+    System.out.print(node.getKwFor());
+    System.out.print(node.getId());
+    System.out.print(node.getKwIn());
+    System.out.print(node.getVal());
+    System.out.print(node.getBlock());
+}
+
+public void outAFunctionCallParamFunctionCallParam(AFunctionCallParamFunctionCallParam node)
+{
+    System.out.print(node.getExpr());
+    System.out.print(node.getFunctionCallParamPrime());
+}
+
+public void outAFunctionCallParamPrimeFunctionCallParamPrime(AFunctionCallParamPrimeFunctionCallParamPrime node)
+{
+    System.out.print(node.getSopComma());
+    System.out.print(node.getExpr());
+    System.out.print(node.getFunctionCallParamPrime());
+}
+
+public void outAFunctionCallVal(AFunctionCallVal node)
+{
+    System.out.print(node.getId());
+    System.out.print(node.getFunctionCallParam());
+}
+
+public void outAFunctionDeclarationDcl(AFunctionDeclarationDcl node)
+{
+    System.out.print(node.getType());
+    System.out.print(node.getKwFunction());
+    System.out.print(node.getId());
+    System.out.print(node.getFunctionParam());
+    System.out.print(node.getStmts());
+}
+
+public void outAFunctionParamFunctionParam(AFunctionParamFunctionParam node)
+{
+    System.out.print(node.getDcl());
+    System.out.print(node.getFunctionParamPrime());
+}
+
+public void outAFunctionParamPrimeFunctionParamPrime(AFunctionParamPrimeFunctionParamPrime node)
+{
+    System.out.print(node.getSopComma());
+    System.out.print(node.getDcl());
+    System.out.print(node.getFunctionParamPrime());
+}
+
+public void outAGreaterThanEqualInfixBinInfixOp(AGreaterThanEqualInfixBinInfixOp node)
+{
+    System.out.print(node.getBopGethan());
+}
+
+public void outAGreaterThanInfixBinInfixOp(AGreaterThanInfixBinInfixOp node)
+{
+    System.out.print(node.getBopGthan());
+}
+
+public void outAGroupbySpecialSyntax(AGroupbySpecialSyntax node)
+{
+    System.out.print(node.getSopGroupby());
+    System.out.print(node.getId());
+}
+
+public void outAImportWithoutSeperatorStmt(AImportWithoutSeperatorStmt node)
+{
+    System.out.print(node.getKwImport());
+    System.out.print(node.getString());
+    System.out.print(node.getKwAs());
+    System.out.print(node.getId());
+}
+
+public void outAImportWithSeperatorStmt(AImportWithSeperatorStmt node)
+{
+    System.out.print(node.getKwImport());
+    System.out.print(node.getString());
+    System.out.print(node.getKwSeparatedBy());
+    System.out.print(node.getChar());
+    System.out.print(node.getKwAs());
+    System.out.print(node.getId());
 }
 
 public void outAAssignmentStatementStmt(AAssignmentStatementStmt node)
@@ -39,11 +283,6 @@ public void outAMultiplicationInfixBinInfixOp(AMultiplicationInfixBinInfixOp nod
 System.out.print(node.getOpMult());
 }
 
-public void outADivisionInfixBinInfixOp(ADivisionInfixBinInfixOp node)
-{//
-System.out.print(node.getOpDiv());
-}
-
 public void outAModuloInfixBinInfixOp(AModuloInfixBinInfixOp node)
 {//
 System.out.print(node.getOpMod());
@@ -59,5 +298,9 @@ public void outTLPar(TLPar node)
 System.out.print(node.getText());
 }
 
+public void outEOF(EOF node)
+{//
+System.out.print(node.getText());
+}
 
 }

@@ -93,7 +93,13 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
-    public void caseAImportStmtStmt(AImportStmtStmt node)
+    public void caseAImportWithoutSeperatorStmt(AImportWithoutSeperatorStmt node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAImportWithSeperatorStmt(AImportWithSeperatorStmt node)
     {
         defaultCase(node);
     }
@@ -105,7 +111,7 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
-    public void caseAAssignmentStatementStmt(AAssignmentStatementStmt node)
+    public void caseAAssignStmt(AAssignStmt node)
     {
         defaultCase(node);
     }
@@ -153,7 +159,7 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
-    public void caseAReturnStatementStmt(AReturnStatementStmt node)
+    public void caseAReturnStmt(AReturnStmt node)
     {
         defaultCase(node);
     }
@@ -213,18 +219,6 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
-    public void caseAFunctionBodyFunctionBody(AFunctionBodyFunctionBody node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseAReturnReturn(AReturnReturn node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
     public void caseAFunctionCallParamFunctionCallParam(AFunctionCallParamFunctionCallParam node)
     {
         defaultCase(node);
@@ -244,12 +238,6 @@ public class AnalysisAdapter implements Analysis
 
     @Override
     public void caseAFunctionCallParamPrime(AFunctionCallParamPrime node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseAFunctionCallFunctionCall(AFunctionCallFunctionCall node)
     {
         defaultCase(node);
     }
@@ -285,12 +273,6 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
-    public void caseAAssignAssignment(AAssignAssignment node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
     public void caseAExprValPrimeExpr(AExprValPrimeExpr node)
     {
         defaultCase(node);
@@ -321,49 +303,25 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
-    public void caseACsvOperationAddCsvOp(ACsvOperationAddCsvOp node)
+    public void caseAAddToCsvCsvOp(AAddToCsvCsvOp node)
     {
         defaultCase(node);
     }
 
     @Override
-    public void caseACsvOperationRemoveCsvOp(ACsvOperationRemoveCsvOp node)
+    public void caseARemoveFromCsvCsvOp(ARemoveFromCsvCsvOp node)
     {
         defaultCase(node);
     }
 
     @Override
-    public void caseACsvOperationRemoveAtCsvOp(ACsvOperationRemoveAtCsvOp node)
+    public void caseARemoveAtFromCsvCsvOp(ARemoveAtFromCsvCsvOp node)
     {
         defaultCase(node);
     }
 
     @Override
-    public void caseACsvOperationInsertCsvOp(ACsvOperationInsertCsvOp node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseAAddToCsvCsvAdd(AAddToCsvCsvAdd node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseARemoveFromCsvCsvRemove(ARemoveFromCsvCsvRemove node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseARemoveAtFromCsvCsvRemoveAt(ARemoveAtFromCsvCsvRemoveAt node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseAInsertFromCsvCsvInsert(AInsertFromCsvCsvInsert node)
+    public void caseAInsertFromCsvCsvOp(AInsertFromCsvCsvOp node)
     {
         defaultCase(node);
     }
@@ -411,49 +369,25 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
-    public void caseAArrayOperationAddArrayOp(AArrayOperationAddArrayOp node)
+    public void caseAAddToArrayArrayOp(AAddToArrayArrayOp node)
     {
         defaultCase(node);
     }
 
     @Override
-    public void caseAArrayOperationRemoveArrayOp(AArrayOperationRemoveArrayOp node)
+    public void caseARemoveFromArrayArrayOp(ARemoveFromArrayArrayOp node)
     {
         defaultCase(node);
     }
 
     @Override
-    public void caseAArrayOperationRemoveAtArrayOp(AArrayOperationRemoveAtArrayOp node)
+    public void caseARemoveAtFromArrayArrayOp(ARemoveAtFromArrayArrayOp node)
     {
         defaultCase(node);
     }
 
     @Override
-    public void caseAArrayOperationInsertArrayOp(AArrayOperationInsertArrayOp node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseAAddToArrayArrayAdd(AAddToArrayArrayAdd node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseARemoveFromArrayArrayRemove(ARemoveFromArrayArrayRemove node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseARemoveAtFromArrayArrayRemoveAt(ARemoveAtFromArrayArrayRemoveAt node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseAInsertToArrayArrayInsert(AInsertToArrayArrayInsert node)
+    public void caseAInsertToArrayArrayOp(AInsertToArrayArrayOp node)
     {
         defaultCase(node);
     }
@@ -465,7 +399,7 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
-    public void caseAFunctionCallValueVal(AFunctionCallValueVal node)
+    public void caseAFunctionCallVal(AFunctionCallVal node)
     {
         defaultCase(node);
     }
@@ -591,97 +525,49 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
-    public void caseASumOpSpecialSyntax(ASumOpSpecialSyntax node)
+    public void caseASumSpecialSyntax(ASumSpecialSyntax node)
     {
         defaultCase(node);
     }
 
     @Override
-    public void caseAFilterOpSpecialSyntax(AFilterOpSpecialSyntax node)
+    public void caseAFilterSpecialSyntax(AFilterSpecialSyntax node)
     {
         defaultCase(node);
     }
 
     @Override
-    public void caseAGroupbyOpSpecialSyntax(AGroupbyOpSpecialSyntax node)
+    public void caseAGroupbySpecialSyntax(AGroupbySpecialSyntax node)
     {
         defaultCase(node);
     }
 
     @Override
-    public void caseAMeanOpSpecialSyntax(AMeanOpSpecialSyntax node)
+    public void caseAMeanSpecialSyntax(AMeanSpecialSyntax node)
     {
         defaultCase(node);
     }
 
     @Override
-    public void caseACountOpSpecialSyntax(ACountOpSpecialSyntax node)
+    public void caseACountSpecialSyntax(ACountSpecialSyntax node)
     {
         defaultCase(node);
     }
 
     @Override
-    public void caseASortOpSpecialSyntax(ASortOpSpecialSyntax node)
+    public void caseASortAscSpecialSyntax(ASortAscSpecialSyntax node)
     {
         defaultCase(node);
     }
 
     @Override
-    public void caseASumSum(ASumSum node)
+    public void caseASortDescSpecialSyntax(ASortDescSpecialSyntax node)
     {
         defaultCase(node);
     }
 
     @Override
-    public void caseAFilterFilter(AFilterFilter node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseAGroupbyGroupby(AGroupbyGroupby node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseAMeanMean(AMeanMean node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseACountCount(ACountCount node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseASortAscSort(ASortAscSort node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseASortDescSort(ASortDescSort node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseASortSort(ASortSort node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseAImportWithoutSeperatorImport(AImportWithoutSeperatorImport node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseAImportWithSeperatorImport(AImportWithSeperatorImport node)
+    public void caseASortSpecialSyntax(ASortSpecialSyntax node)
     {
         defaultCase(node);
     }

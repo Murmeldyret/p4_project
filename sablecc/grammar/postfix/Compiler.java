@@ -19,7 +19,7 @@ public class Compiler
     new Lexer(
     new PushbackReader(
     new InputStreamReader(System.in), 1024)));
-
+    
 
    // Parse the input.
    Start tree = p.parse();
@@ -27,6 +27,9 @@ public class Compiler
 
    // Apply the translation.
    tree.apply(new Translation());
+  }
+  catch(ParserException e){
+    System.out.println(e.getMessage()+"101");
   }
   catch(Exception e)
   {
