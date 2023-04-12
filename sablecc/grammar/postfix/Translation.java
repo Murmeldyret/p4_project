@@ -263,9 +263,70 @@ public void outAImportWithSeperatorStmt(AImportWithSeperatorStmt node)
     System.out.print(node.getId());
 }
 
-public void outAAssignmentStatementStmt(AAssignmentStatementStmt node)
+public void outAIndexingIndexing(AIndexingIndexing node)
+{
+    System.out.print(node.getExpr());
+    System.out.print(node.getIndexing());
+}
+
+public void outAInsertFromCsvCsvOp(AInsertFromCsvCsvOp node)
+{
+    System.out.print(node.getKwInsert());
+    System.out.print(node.getOrientation());
+    System.out.print(node.getVal());
+    System.out.print(node.getArrayExpr());
+    System.out.print(node.getKwIn());
+    System.out.print(node.getId());
+}
+
+public void outAInsertToArrayArrayOp(AInsertToArrayArrayOp node)
+{
+    System.out.print(node.getKwInsert());
+    System.out.print(node.getVal());
+    System.out.print(node.getArrayExpr());
+    System.out.print(node.getKwIn());
+    System.out.print(node.getId());
+}
+
+public void outALessThanEqualInfixBinInfixOp(ALessThanEqualInfixBinInfixOp node)
+{
+    System.out.print(node.getBopLethan());
+}
+
+public void outALessThanInfixBinInfixOp(ALessThanInfixBinInfixOp node)
+{
+    System.out.print(node.getBopLthan());
+}
+
+public void outAMeanSpecialSyntax(AMeanSpecialSyntax node)
+{
+    System.out.print(node.getSopMean());
+    System.out.print(node.getId());
+}
+
+public void outAMinusInfixBinInfixOp(AMinusInfixBinInfixOp node)
 {//
-System.out.print(node.getAssignment());
+    System.out.print(node.getOpMinus());
+}
+
+public void outAMultiplicationInfixBinInfixOp(AMultiplicationInfixBinInfixOp node)
+{//
+    System.out.print(node.getOpMult());
+}
+
+public void outAModuloInfixBinInfixOp(AModuloInfixBinInfixOp node)
+{//
+    System.out.print(node.getOpMod());
+}
+
+public void outANotEqualInfixBinInfixOp(ANotEqualInfixBinInfixOp node)
+{
+    System.out.print(node.getBopNeq());
+}
+
+public void outAOrInfixBinInfixOp(AOrInfixBinInfixOp node)
+{
+    System.out.print(node.getBopOr());
 }
 
 public void outAPlusInfixBinInfixOp(APlusInfixBinInfixOp node)
@@ -273,20 +334,148 @@ public void outAPlusInfixBinInfixOp(APlusInfixBinInfixOp node)
 System.out.print(node.getOpPlus());
 }
 
-public void outAMinusInfixBinInfixOp(AMinusInfixBinInfixOp node)
-{//
-System.out.print(node.getOpMinus());
+public void outAPrintStatementStmt(APrintStatementStmt node)
+{
+    System.out.print(node.getKwPrint());
+    System.out.print(node.getExpr());
 }
 
-public void outAMultiplicationInfixBinInfixOp(AMultiplicationInfixBinInfixOp node)
-{//
-System.out.print(node.getOpMult());
+public void outAProgramProgram(AProgramProgram node)
+{
+    System.out.print(node.getStmts());
 }
 
-public void outAModuloInfixBinInfixOp(AModuloInfixBinInfixOp node)
-{//
-System.out.print(node.getOpMod());
+public void outARemoveAtFromArrayArrayOp(ARemoveAtFromArrayArrayOp node)
+{
+    System.out.print(node.getKwRemoveAt());
+    System.out.print(node.getIndexing());
+    System.out.print(node.getKwIn());
+    System.out.print(node.getId());
 }
+
+public void outARemoveAtFromCsvCsvOp(ARemoveAtFromCsvCsvOp node)
+{
+    System.out.print(node.getKwRemoveAt());
+    System.out.print(node.getOrientation());
+    System.out.print(node.getVal());
+    System.out.print(node.getKwIn());
+    System.out.print(node.getId());
+}
+
+public void outARemoveFromArrayArrayOp(ARemoveFromArrayArrayOp node)
+{
+    System.out.print(node.getKwRemove());
+    System.out.print(node.getKwIn());
+    System.out.print(node.getId());
+}
+
+public void outARemoveFromCsvCsvOp(ARemoveAtFromCsvCsvOp node)
+{
+    System.out.print(node.getKwRemove());
+    System.out.print(node.getOrientation());
+    System.out.print(node.getKwIn());
+    System.out.print(node.getId());
+}
+
+public void outAReturnStmt(AReturnStmt node)
+{
+    System.out.print(node.getKwReturn());
+    System.out.print(node.getExpr());
+}
+
+public void outASortAscSpecialSyntax(ASortAscSpecialSyntax node)
+{
+    System.out.print(node.getSopSort());
+    System.out.print(node.getId());
+    System.out.print(node.getSopComma());
+    System.out.print(node.getKwSortOrderAsc());
+}
+
+public void outASortDescSpecialSyntax(ASortDescSpecialSyntax node)
+{
+    System.out.print(node.getSopSort());
+    System.out.print(node.getId());
+    System.out.print(node.getSopComma());
+    System.out.print(node.getKwSortOrderDsc());
+}
+
+public void outASortSpecialSyntax(ASortSpecialSyntax node)
+{
+    System.out.print(node.getSopSort());
+    System.out.print(node.getId());
+}
+
+public void outASpecialExprPrimeSpecialExprPrime(ASpecialExprPrimeSpecialExprPrime node)
+{
+    System.out.print(node.getSpecialSyntax());
+    System.out.print(node.getSpecialExprPrime());
+}
+
+public void outASpeicalExpressionSpecialExpr(ASpeicalExpressionSpecialExpr node)
+{
+    System.out.print(node.getSpecialSyntax());
+    System.out.print(node.getSpecialExprPrime());
+}
+
+public void outAStatementStmts(AStatementsStmts node)
+{
+    System.out.print(node.getStmt());
+    System.out.print(node.getNewline());
+    System.out.print(node.getStmts());
+}
+
+public void outASumSpecialSyntax(ASumSpecialSyntax node)
+{
+    System.out.print(node.getSopSum());
+    System.out.print(node.getId());
+}
+
+public void outAValBoolVal(AValBoolVal node)
+{
+    System.out.print(node.getBool());
+}
+
+public void outAValFloatnumVal(AValFloatnumVal node)
+{
+    System.out.print(node.getFloatnum());
+}
+
+public void outAValIdVal(AValIdVal node)
+{
+    System.out.print(node.getId());
+}
+
+public void outAValIntnumVal(AValIntnumVal node)
+{
+    System.out.print(node.getIntnum());
+}
+
+public void outAValStringVal(AValStringVal node)
+{
+    System.out.print(node.getString());
+}
+
+public void outAVariableDeclarationDcl(AVariableDeclarationDcl node)
+{
+    System.out.print(getType());
+    System.out.print(getId());
+}
+
+public void outAVariableDeclarationInitializationDcl(AVariableDeclarationInitializationDcl node)
+{
+    System.out.print(node.getType());
+    System.out.print(node.getId());
+    System.out.print(node.getOpAssign());
+    System.out.print(node.getExpr());
+}
+
+public void outAWhileLoopStmt(AWhileLoopStmt node)
+{
+    System.out.print(node.getKwWhile());
+    System.out.print(node.getExpr());
+    System.out.print(node.getBlock());
+}
+
 
 public void outTRPar(TRPar node)
 {//
