@@ -7,10 +7,8 @@ import postfix.analysis.*;
 @SuppressWarnings("nls")
 public final class AArrayExprValPrimeArrayExpr extends PArrayExpr
 {
-    private TLBrack _lBrack_;
     private PVal _val_;
     private PArrayExprPrime _arrayExprPrime_;
-    private TRBrack _rBrack_;
 
     public AArrayExprValPrimeArrayExpr()
     {
@@ -18,19 +16,13 @@ public final class AArrayExprValPrimeArrayExpr extends PArrayExpr
     }
 
     public AArrayExprValPrimeArrayExpr(
-        @SuppressWarnings("hiding") TLBrack _lBrack_,
         @SuppressWarnings("hiding") PVal _val_,
-        @SuppressWarnings("hiding") PArrayExprPrime _arrayExprPrime_,
-        @SuppressWarnings("hiding") TRBrack _rBrack_)
+        @SuppressWarnings("hiding") PArrayExprPrime _arrayExprPrime_)
     {
         // Constructor
-        setLBrack(_lBrack_);
-
         setVal(_val_);
 
         setArrayExprPrime(_arrayExprPrime_);
-
-        setRBrack(_rBrack_);
 
     }
 
@@ -38,41 +30,14 @@ public final class AArrayExprValPrimeArrayExpr extends PArrayExpr
     public Object clone()
     {
         return new AArrayExprValPrimeArrayExpr(
-            cloneNode(this._lBrack_),
             cloneNode(this._val_),
-            cloneNode(this._arrayExprPrime_),
-            cloneNode(this._rBrack_));
+            cloneNode(this._arrayExprPrime_));
     }
 
     @Override
     public void apply(Switch sw)
     {
         ((Analysis) sw).caseAArrayExprValPrimeArrayExpr(this);
-    }
-
-    public TLBrack getLBrack()
-    {
-        return this._lBrack_;
-    }
-
-    public void setLBrack(TLBrack node)
-    {
-        if(this._lBrack_ != null)
-        {
-            this._lBrack_.parent(null);
-        }
-
-        if(node != null)
-        {
-            if(node.parent() != null)
-            {
-                node.parent().removeChild(node);
-            }
-
-            node.parent(this);
-        }
-
-        this._lBrack_ = node;
     }
 
     public PVal getVal()
@@ -125,51 +90,18 @@ public final class AArrayExprValPrimeArrayExpr extends PArrayExpr
         this._arrayExprPrime_ = node;
     }
 
-    public TRBrack getRBrack()
-    {
-        return this._rBrack_;
-    }
-
-    public void setRBrack(TRBrack node)
-    {
-        if(this._rBrack_ != null)
-        {
-            this._rBrack_.parent(null);
-        }
-
-        if(node != null)
-        {
-            if(node.parent() != null)
-            {
-                node.parent().removeChild(node);
-            }
-
-            node.parent(this);
-        }
-
-        this._rBrack_ = node;
-    }
-
     @Override
     public String toString()
     {
         return ""
-            + toString(this._lBrack_)
             + toString(this._val_)
-            + toString(this._arrayExprPrime_)
-            + toString(this._rBrack_);
+            + toString(this._arrayExprPrime_);
     }
 
     @Override
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
-        if(this._lBrack_ == child)
-        {
-            this._lBrack_ = null;
-            return;
-        }
-
         if(this._val_ == child)
         {
             this._val_ = null;
@@ -182,12 +114,6 @@ public final class AArrayExprValPrimeArrayExpr extends PArrayExpr
             return;
         }
 
-        if(this._rBrack_ == child)
-        {
-            this._rBrack_ = null;
-            return;
-        }
-
         throw new RuntimeException("Not a child.");
     }
 
@@ -195,12 +121,6 @@ public final class AArrayExprValPrimeArrayExpr extends PArrayExpr
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
-        if(this._lBrack_ == oldChild)
-        {
-            setLBrack((TLBrack) newChild);
-            return;
-        }
-
         if(this._val_ == oldChild)
         {
             setVal((PVal) newChild);
@@ -210,12 +130,6 @@ public final class AArrayExprValPrimeArrayExpr extends PArrayExpr
         if(this._arrayExprPrime_ == oldChild)
         {
             setArrayExprPrime((PArrayExprPrime) newChild);
-            return;
-        }
-
-        if(this._rBrack_ == oldChild)
-        {
-            setRBrack((TRBrack) newChild);
             return;
         }
 

@@ -7,9 +7,7 @@ import postfix.analysis.*;
 @SuppressWarnings("nls")
 public final class ABlockStmtBlock extends PBlock
 {
-    private TLCbrack _lCbrack_;
     private PStmts _stmts_;
-    private TRCbrack _rCbrack_;
 
     public ABlockStmtBlock()
     {
@@ -17,16 +15,10 @@ public final class ABlockStmtBlock extends PBlock
     }
 
     public ABlockStmtBlock(
-        @SuppressWarnings("hiding") TLCbrack _lCbrack_,
-        @SuppressWarnings("hiding") PStmts _stmts_,
-        @SuppressWarnings("hiding") TRCbrack _rCbrack_)
+        @SuppressWarnings("hiding") PStmts _stmts_)
     {
         // Constructor
-        setLCbrack(_lCbrack_);
-
         setStmts(_stmts_);
-
-        setRCbrack(_rCbrack_);
 
     }
 
@@ -34,40 +26,13 @@ public final class ABlockStmtBlock extends PBlock
     public Object clone()
     {
         return new ABlockStmtBlock(
-            cloneNode(this._lCbrack_),
-            cloneNode(this._stmts_),
-            cloneNode(this._rCbrack_));
+            cloneNode(this._stmts_));
     }
 
     @Override
     public void apply(Switch sw)
     {
         ((Analysis) sw).caseABlockStmtBlock(this);
-    }
-
-    public TLCbrack getLCbrack()
-    {
-        return this._lCbrack_;
-    }
-
-    public void setLCbrack(TLCbrack node)
-    {
-        if(this._lCbrack_ != null)
-        {
-            this._lCbrack_.parent(null);
-        }
-
-        if(node != null)
-        {
-            if(node.parent() != null)
-            {
-                node.parent().removeChild(node);
-            }
-
-            node.parent(this);
-        }
-
-        this._lCbrack_ = node;
     }
 
     public PStmts getStmts()
@@ -95,59 +60,20 @@ public final class ABlockStmtBlock extends PBlock
         this._stmts_ = node;
     }
 
-    public TRCbrack getRCbrack()
-    {
-        return this._rCbrack_;
-    }
-
-    public void setRCbrack(TRCbrack node)
-    {
-        if(this._rCbrack_ != null)
-        {
-            this._rCbrack_.parent(null);
-        }
-
-        if(node != null)
-        {
-            if(node.parent() != null)
-            {
-                node.parent().removeChild(node);
-            }
-
-            node.parent(this);
-        }
-
-        this._rCbrack_ = node;
-    }
-
     @Override
     public String toString()
     {
         return ""
-            + toString(this._lCbrack_)
-            + toString(this._stmts_)
-            + toString(this._rCbrack_);
+            + toString(this._stmts_);
     }
 
     @Override
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
-        if(this._lCbrack_ == child)
-        {
-            this._lCbrack_ = null;
-            return;
-        }
-
         if(this._stmts_ == child)
         {
             this._stmts_ = null;
-            return;
-        }
-
-        if(this._rCbrack_ == child)
-        {
-            this._rCbrack_ = null;
             return;
         }
 
@@ -158,21 +84,9 @@ public final class ABlockStmtBlock extends PBlock
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
-        if(this._lCbrack_ == oldChild)
-        {
-            setLCbrack((TLCbrack) newChild);
-            return;
-        }
-
         if(this._stmts_ == oldChild)
         {
             setStmts((PStmts) newChild);
-            return;
-        }
-
-        if(this._rCbrack_ == oldChild)
-        {
-            setRCbrack((TRCbrack) newChild);
             return;
         }
 

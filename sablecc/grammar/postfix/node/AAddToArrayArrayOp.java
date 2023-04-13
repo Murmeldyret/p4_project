@@ -5,51 +5,51 @@ package postfix.node;
 import postfix.analysis.*;
 
 @SuppressWarnings("nls")
-public final class AIndexingIndexing extends PIndexing
+public final class AAddToArrayArrayOp extends PArrayOp
 {
-    private PExpr _expr_;
-    private PIndexing _indexing_;
+    private TKwAdd _kwAdd_;
+    private PArrayExpr _arrayExpr_;
 
-    public AIndexingIndexing()
+    public AAddToArrayArrayOp()
     {
         // Constructor
     }
 
-    public AIndexingIndexing(
-        @SuppressWarnings("hiding") PExpr _expr_,
-        @SuppressWarnings("hiding") PIndexing _indexing_)
+    public AAddToArrayArrayOp(
+        @SuppressWarnings("hiding") TKwAdd _kwAdd_,
+        @SuppressWarnings("hiding") PArrayExpr _arrayExpr_)
     {
         // Constructor
-        setExpr(_expr_);
+        setKwAdd(_kwAdd_);
 
-        setIndexing(_indexing_);
+        setArrayExpr(_arrayExpr_);
 
     }
 
     @Override
     public Object clone()
     {
-        return new AIndexingIndexing(
-            cloneNode(this._expr_),
-            cloneNode(this._indexing_));
+        return new AAddToArrayArrayOp(
+            cloneNode(this._kwAdd_),
+            cloneNode(this._arrayExpr_));
     }
 
     @Override
     public void apply(Switch sw)
     {
-        ((Analysis) sw).caseAIndexingIndexing(this);
+        ((Analysis) sw).caseAAddToArrayArrayOp(this);
     }
 
-    public PExpr getExpr()
+    public TKwAdd getKwAdd()
     {
-        return this._expr_;
+        return this._kwAdd_;
     }
 
-    public void setExpr(PExpr node)
+    public void setKwAdd(TKwAdd node)
     {
-        if(this._expr_ != null)
+        if(this._kwAdd_ != null)
         {
-            this._expr_.parent(null);
+            this._kwAdd_.parent(null);
         }
 
         if(node != null)
@@ -62,19 +62,19 @@ public final class AIndexingIndexing extends PIndexing
             node.parent(this);
         }
 
-        this._expr_ = node;
+        this._kwAdd_ = node;
     }
 
-    public PIndexing getIndexing()
+    public PArrayExpr getArrayExpr()
     {
-        return this._indexing_;
+        return this._arrayExpr_;
     }
 
-    public void setIndexing(PIndexing node)
+    public void setArrayExpr(PArrayExpr node)
     {
-        if(this._indexing_ != null)
+        if(this._arrayExpr_ != null)
         {
-            this._indexing_.parent(null);
+            this._arrayExpr_.parent(null);
         }
 
         if(node != null)
@@ -87,30 +87,30 @@ public final class AIndexingIndexing extends PIndexing
             node.parent(this);
         }
 
-        this._indexing_ = node;
+        this._arrayExpr_ = node;
     }
 
     @Override
     public String toString()
     {
         return ""
-            + toString(this._expr_)
-            + toString(this._indexing_);
+            + toString(this._kwAdd_)
+            + toString(this._arrayExpr_);
     }
 
     @Override
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
-        if(this._expr_ == child)
+        if(this._kwAdd_ == child)
         {
-            this._expr_ = null;
+            this._kwAdd_ = null;
             return;
         }
 
-        if(this._indexing_ == child)
+        if(this._arrayExpr_ == child)
         {
-            this._indexing_ = null;
+            this._arrayExpr_ = null;
             return;
         }
 
@@ -121,15 +121,15 @@ public final class AIndexingIndexing extends PIndexing
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
-        if(this._expr_ == oldChild)
+        if(this._kwAdd_ == oldChild)
         {
-            setExpr((PExpr) newChild);
+            setKwAdd((TKwAdd) newChild);
             return;
         }
 
-        if(this._indexing_ == oldChild)
+        if(this._arrayExpr_ == oldChild)
         {
-            setIndexing((PIndexing) newChild);
+            setArrayExpr((PArrayExpr) newChild);
             return;
         }
 

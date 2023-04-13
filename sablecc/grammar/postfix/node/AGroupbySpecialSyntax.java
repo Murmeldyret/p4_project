@@ -5,51 +5,51 @@ package postfix.node;
 import postfix.analysis.*;
 
 @SuppressWarnings("nls")
-public final class AIndexingIndexing extends PIndexing
+public final class AGroupbySpecialSyntax extends PSpecialSyntax
 {
-    private PExpr _expr_;
-    private PIndexing _indexing_;
+    private TSopGroupby _sopGroupby_;
+    private TId _id_;
 
-    public AIndexingIndexing()
+    public AGroupbySpecialSyntax()
     {
         // Constructor
     }
 
-    public AIndexingIndexing(
-        @SuppressWarnings("hiding") PExpr _expr_,
-        @SuppressWarnings("hiding") PIndexing _indexing_)
+    public AGroupbySpecialSyntax(
+        @SuppressWarnings("hiding") TSopGroupby _sopGroupby_,
+        @SuppressWarnings("hiding") TId _id_)
     {
         // Constructor
-        setExpr(_expr_);
+        setSopGroupby(_sopGroupby_);
 
-        setIndexing(_indexing_);
+        setId(_id_);
 
     }
 
     @Override
     public Object clone()
     {
-        return new AIndexingIndexing(
-            cloneNode(this._expr_),
-            cloneNode(this._indexing_));
+        return new AGroupbySpecialSyntax(
+            cloneNode(this._sopGroupby_),
+            cloneNode(this._id_));
     }
 
     @Override
     public void apply(Switch sw)
     {
-        ((Analysis) sw).caseAIndexingIndexing(this);
+        ((Analysis) sw).caseAGroupbySpecialSyntax(this);
     }
 
-    public PExpr getExpr()
+    public TSopGroupby getSopGroupby()
     {
-        return this._expr_;
+        return this._sopGroupby_;
     }
 
-    public void setExpr(PExpr node)
+    public void setSopGroupby(TSopGroupby node)
     {
-        if(this._expr_ != null)
+        if(this._sopGroupby_ != null)
         {
-            this._expr_.parent(null);
+            this._sopGroupby_.parent(null);
         }
 
         if(node != null)
@@ -62,19 +62,19 @@ public final class AIndexingIndexing extends PIndexing
             node.parent(this);
         }
 
-        this._expr_ = node;
+        this._sopGroupby_ = node;
     }
 
-    public PIndexing getIndexing()
+    public TId getId()
     {
-        return this._indexing_;
+        return this._id_;
     }
 
-    public void setIndexing(PIndexing node)
+    public void setId(TId node)
     {
-        if(this._indexing_ != null)
+        if(this._id_ != null)
         {
-            this._indexing_.parent(null);
+            this._id_.parent(null);
         }
 
         if(node != null)
@@ -87,30 +87,30 @@ public final class AIndexingIndexing extends PIndexing
             node.parent(this);
         }
 
-        this._indexing_ = node;
+        this._id_ = node;
     }
 
     @Override
     public String toString()
     {
         return ""
-            + toString(this._expr_)
-            + toString(this._indexing_);
+            + toString(this._sopGroupby_)
+            + toString(this._id_);
     }
 
     @Override
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
-        if(this._expr_ == child)
+        if(this._sopGroupby_ == child)
         {
-            this._expr_ = null;
+            this._sopGroupby_ = null;
             return;
         }
 
-        if(this._indexing_ == child)
+        if(this._id_ == child)
         {
-            this._indexing_ = null;
+            this._id_ = null;
             return;
         }
 
@@ -121,15 +121,15 @@ public final class AIndexingIndexing extends PIndexing
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
-        if(this._expr_ == oldChild)
+        if(this._sopGroupby_ == oldChild)
         {
-            setExpr((PExpr) newChild);
+            setSopGroupby((TSopGroupby) newChild);
             return;
         }
 
-        if(this._indexing_ == oldChild)
+        if(this._id_ == oldChild)
         {
-            setIndexing((PIndexing) newChild);
+            setId((TId) newChild);
             return;
         }
 
