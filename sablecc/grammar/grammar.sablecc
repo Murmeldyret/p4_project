@@ -36,6 +36,7 @@ Tokens
     type = ('int' | 'bool' | 'float' | 'string' | 'csv' | 'char' | 'array' | 'void');
     char = 39 '.' 39;
 
+    id = nonnumber (nonnumber | number)*;
     blank = (' ' | 13 | 10)+;
 
     //Operators
@@ -95,8 +96,6 @@ Tokens
     //csv operations
     kw_column = 'column';
     kw_row = 'row';
-
-    id = nonnumber (nonnumber | number)*;
 
 Ignored Tokens
     blank,
