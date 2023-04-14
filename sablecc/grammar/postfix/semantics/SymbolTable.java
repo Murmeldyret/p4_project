@@ -8,6 +8,11 @@ import postfix.node.TId;
 
 public class SymbolTable implements Map<String,TId> {
 
+    private SymbolTable outerScope() 
+    {
+        throw new UnsupportedOperationException("Unimplemented method 'size'");
+    }
+
     @Override
     public int size() {
         // TODO Auto-generated method stub

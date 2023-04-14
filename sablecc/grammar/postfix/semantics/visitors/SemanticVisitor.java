@@ -6,5 +6,13 @@ import postfix.semantics.SymbolTable;
 public class SemanticVisitor extends DepthFirstAdapter {
     protected SymbolTable symbolTable;
 
+    public SemanticVisitor() {
+
+    }
+
+    public SemanticVisitor(SymbolTable symbolTable) {
+        this.symbolTable = symbolTable;
+
+    }
 
 }
