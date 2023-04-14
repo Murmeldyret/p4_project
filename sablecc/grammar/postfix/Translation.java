@@ -354,7 +354,7 @@ class Translation extends DepthFirstAdapter {
 
     public void outAStatementStmts(AStatementsStmts node) {
         System.out.print(node.getStmt());
-        System.out.print(node.getNewline());
+        System.out.print(node.getSemi());
         System.out.print(node.getStmts());
     }
 
