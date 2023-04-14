@@ -18,7 +18,7 @@ public class Compiler
     new Parser(
     new Lexer(
     new PushbackReader(
-    new InputStreamReader(System.in), 1024)));
+    new FileReader(arguments[0]), 1024)));
     
 
    // Parse the input.
