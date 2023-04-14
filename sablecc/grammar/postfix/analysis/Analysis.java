@@ -111,6 +111,7 @@ public interface Analysis extends Switch
     void caseTBool(TBool node);
     void caseTType(TType node);
     void caseTChar(TChar node);
+    void caseTId(TId node);
     void caseTBlank(TBlank node);
     void caseTOpAssign(TOpAssign node);
     void caseTOpPlus(TOpPlus node);
@@ -158,7 +159,6 @@ public interface Analysis extends Switch
     void caseTKwInsert(TKwInsert node);
     void caseTKwColumn(TKwColumn node);
     void caseTKwRow(TKwRow node);
-    void caseTId(TId node);
     void caseEOF(EOF node);
     void caseInvalidToken(InvalidToken node);
 }

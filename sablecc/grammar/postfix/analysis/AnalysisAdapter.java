@@ -663,6 +663,12 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
+    public void caseTId(TId node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
     public void caseTBlank(TBlank node)
     {
         defaultCase(node);
@@ -940,12 +946,6 @@ public class AnalysisAdapter implements Analysis
 
     @Override
     public void caseTKwRow(TKwRow node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseTId(TId node)
     {
         defaultCase(node);
     }
