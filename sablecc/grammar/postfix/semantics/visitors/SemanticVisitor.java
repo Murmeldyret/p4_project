@@ -1,4 +1,4 @@
-package postfix;
+package postfix.semantics.visitors;
 
 import postfix.analysis.DepthFirstAdapter;
 
