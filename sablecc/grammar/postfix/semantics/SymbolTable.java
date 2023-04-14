@@ -6,10 +6,19 @@ import java.util.Set;
 
 import postfix.node.TId;
 
-public class SymbolTable implements Map<String,TId> {
+public class SymbolTable implements Map<String, TId> {
 
-    private SymbolTable outerScope() 
-    {
+    public SymbolTable() {
+
+    }
+
+    public SymbolTable(SymbolTable outerSymbolTable) {
+        this.outerSymbolTable = outerSymbolTable;
+    }
+
+    private SymbolTable outerSymbolTable;
+
+    private SymbolTable outerScope() {
         throw new UnsupportedOperationException("Unimplemented method 'size'");
     }
 
@@ -84,5 +93,5 @@ public class SymbolTable implements Map<String,TId> {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'entrySet'");
     }
-    
+
 }

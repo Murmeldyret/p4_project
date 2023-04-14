@@ -15,7 +15,7 @@ public class TopDclVisitor extends SemanticVisitor {
     }
 
     void caseVariableListDeclaration(VariableListDeclaring vld) throws VariableAlreadyDeclaredException {
-        TypeVisitor typeVisitor = new TypeVisitor();
+        TypeVisitor typeVisitor = new TypeVisitor(this.symbolTable);
 
         vld.getType().apply(typeVisitor);
 

@@ -8,6 +8,11 @@ public class VariableListDeclaring {
     private List<TId> idList;
     private TType type;
 
-    public TType getType() {return type;};
-    public List<TId> getIdList() {return idList;}
+    public TType getType() {
+        return type;
+    };
+
+    public List<TId> getIdList() {
+        return idList;
+    }
 }
