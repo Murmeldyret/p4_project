@@ -29,7 +29,7 @@ Tokens
     r_brack = ']';
 
     //types
-    string = ('"' '"');
+    string = ('"' [not_eol-'"']* '"');
     intnum = sign? (number)+ ;
     floatnum = sign? (number)+ '.' (number)+;
     bool = 'true' | 'false';
