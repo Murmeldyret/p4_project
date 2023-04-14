@@ -8,7 +8,7 @@ import postfix.analysis.*;
 public final class AStatementsStmts extends PStmts
 {
     private PStmt _stmt_;
-    private TNewline _newline_;
+    private TSemi _semi_;
     private PStmts _stmts_;
 
     public AStatementsStmts()
@@ -18,13 +18,13 @@ public final class AStatementsStmts extends PStmts
 
     public AStatementsStmts(
         @SuppressWarnings("hiding") PStmt _stmt_,
-        @SuppressWarnings("hiding") TNewline _newline_,
+        @SuppressWarnings("hiding") TSemi _semi_,
         @SuppressWarnings("hiding") PStmts _stmts_)
     {
         // Constructor
         setStmt(_stmt_);
 
-        setNewline(_newline_);
+        setSemi(_semi_);
 
         setStmts(_stmts_);
 
@@ -35,7 +35,7 @@ public final class AStatementsStmts extends PStmts
     {
         return new AStatementsStmts(
             cloneNode(this._stmt_),
-            cloneNode(this._newline_),
+            cloneNode(this._semi_),
             cloneNode(this._stmts_));
     }
 
@@ -70,16 +70,16 @@ public final class AStatementsStmts extends PStmts
         this._stmt_ = node;
     }
 
-    public TNewline getNewline()
+    public TSemi getSemi()
     {
-        return this._newline_;
+        return this._semi_;
     }
 
-    public void setNewline(TNewline node)
+    public void setSemi(TSemi node)
     {
-        if(this._newline_ != null)
+        if(this._semi_ != null)
         {
-            this._newline_.parent(null);
+            this._semi_.parent(null);
         }
 
         if(node != null)
@@ -92,7 +92,7 @@ public final class AStatementsStmts extends PStmts
             node.parent(this);
         }
 
-        this._newline_ = node;
+        this._semi_ = node;
     }
 
     public PStmts getStmts()
@@ -125,7 +125,7 @@ public final class AStatementsStmts extends PStmts
     {
         return ""
             + toString(this._stmt_)
-            + toString(this._newline_)
+            + toString(this._semi_)
             + toString(this._stmts_);
     }
 
@@ -139,9 +139,9 @@ public final class AStatementsStmts extends PStmts
             return;
         }
 
-        if(this._newline_ == child)
+        if(this._semi_ == child)
         {
-            this._newline_ = null;
+            this._semi_ = null;
             return;
         }
 
@@ -164,9 +164,9 @@ public final class AStatementsStmts extends PStmts
             return;
         }
 
-        if(this._newline_ == oldChild)
+        if(this._semi_ == oldChild)
         {
-            setNewline((TNewline) newChild);
+            setSemi((TSemi) newChild);
             return;
         }
 

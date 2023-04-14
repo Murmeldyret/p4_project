@@ -5,39 +5,64 @@ package postfix.node;
 import postfix.analysis.*;
 
 @SuppressWarnings("nls")
-public final class AIndexingIndexing extends PIndexing
+public final class AReturnStmt extends PStmt
 {
+    private TKwReturn _kwReturn_;
     private PExpr _expr_;
-    private PIndexing _indexing_;
 
-    public AIndexingIndexing()
+    public AReturnStmt()
     {
         // Constructor
     }
 
-    public AIndexingIndexing(
-        @SuppressWarnings("hiding") PExpr _expr_,
-        @SuppressWarnings("hiding") PIndexing _indexing_)
+    public AReturnStmt(
+        @SuppressWarnings("hiding") TKwReturn _kwReturn_,
+        @SuppressWarnings("hiding") PExpr _expr_)
     {
         // Constructor
-        setExpr(_expr_);
+        setKwReturn(_kwReturn_);
 
-        setIndexing(_indexing_);
+        setExpr(_expr_);
 
     }
 
     @Override
     public Object clone()
     {
-        return new AIndexingIndexing(
-            cloneNode(this._expr_),
-            cloneNode(this._indexing_));
+        return new AReturnStmt(
+            cloneNode(this._kwReturn_),
+            cloneNode(this._expr_));
     }
 
     @Override
     public void apply(Switch sw)
     {
-        ((Analysis) sw).caseAIndexingIndexing(this);
+        ((Analysis) sw).caseAReturnStmt(this);
+    }
+
+    public TKwReturn getKwReturn()
+    {
+        return this._kwReturn_;
+    }
+
+    public void setKwReturn(TKwReturn node)
+    {
+        if(this._kwReturn_ != null)
+        {
+            this._kwReturn_.parent(null);
+        }
+
+        if(node != null)
+        {
+            if(node.parent() != null)
+            {
+                node.parent().removeChild(node);
+            }
+
+            node.parent(this);
+        }
+
+        this._kwReturn_ = node;
     }
 
     public PExpr getExpr()
@@ -65,52 +90,27 @@ public final class AIndexingIndexing extends PIndexing
         this._expr_ = node;
     }
 
-    public PIndexing getIndexing()
-    {
-        return this._indexing_;
-    }
-
-    public void setIndexing(PIndexing node)
-    {
-        if(this._indexing_ != null)
-        {
-            this._indexing_.parent(null);
-        }
-
-        if(node != null)
-        {
-            if(node.parent() != null)
-            {
-                node.parent().removeChild(node);
-            }
-
-            node.parent(this);
-        }
-
-        this._indexing_ = node;
-    }
-
     @Override
     public String toString()
     {
         return ""
-            + toString(this._expr_)
-            + toString(this._indexing_);
+            + toString(this._kwReturn_)
+            + toString(this._expr_);
     }
 
     @Override
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
-        if(this._expr_ == child)
+        if(this._kwReturn_ == child)
         {
-            this._expr_ = null;
+            this._kwReturn_ = null;
             return;
         }
 
-        if(this._indexing_ == child)
+        if(this._expr_ == child)
         {
-            this._indexing_ = null;
+            this._expr_ = null;
             return;
         }
 
@@ -121,15 +121,15 @@ public final class AIndexingIndexing extends PIndexing
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
-        if(this._expr_ == oldChild)
+        if(this._kwReturn_ == oldChild)
         {
-            setExpr((PExpr) newChild);
+            setKwReturn((TKwReturn) newChild);
             return;
         }
 
-        if(this._indexing_ == oldChild)
+        if(this._expr_ == oldChild)
         {
-            setIndexing((PIndexing) newChild);
+            setExpr((PExpr) newChild);
             return;
         }
 

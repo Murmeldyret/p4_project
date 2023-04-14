@@ -10,10 +10,8 @@ public final class AFunctionDeclarationDcl extends PDcl
     private TType _type_;
     private TKwFunction _kwFunction_;
     private TId _id_;
-    private TLPar _lPar_;
     private PFunctionParam _functionParam_;
-    private TRPar _rPar_;
-    private PFunctionBody _functionBody_;
+    private PStmts _stmts_;
 
     public AFunctionDeclarationDcl()
     {
@@ -24,10 +22,8 @@ public final class AFunctionDeclarationDcl extends PDcl
         @SuppressWarnings("hiding") TType _type_,
         @SuppressWarnings("hiding") TKwFunction _kwFunction_,
         @SuppressWarnings("hiding") TId _id_,
-        @SuppressWarnings("hiding") TLPar _lPar_,
         @SuppressWarnings("hiding") PFunctionParam _functionParam_,
-        @SuppressWarnings("hiding") TRPar _rPar_,
-        @SuppressWarnings("hiding") PFunctionBody _functionBody_)
+        @SuppressWarnings("hiding") PStmts _stmts_)
     {
         // Constructor
         setType(_type_);
@@ -36,13 +32,9 @@ public final class AFunctionDeclarationDcl extends PDcl
 
         setId(_id_);
 
-        setLPar(_lPar_);
-
         setFunctionParam(_functionParam_);
 
-        setRPar(_rPar_);
-
-        setFunctionBody(_functionBody_);
+        setStmts(_stmts_);
 
     }
 
@@ -53,10 +45,8 @@ public final class AFunctionDeclarationDcl extends PDcl
             cloneNode(this._type_),
             cloneNode(this._kwFunction_),
             cloneNode(this._id_),
-            cloneNode(this._lPar_),
             cloneNode(this._functionParam_),
-            cloneNode(this._rPar_),
-            cloneNode(this._functionBody_));
+            cloneNode(this._stmts_));
     }
 
     @Override
@@ -140,31 +130,6 @@ public final class AFunctionDeclarationDcl extends PDcl
         this._id_ = node;
     }
 
-    public TLPar getLPar()
-    {
-        return this._lPar_;
-    }
-
-    public void setLPar(TLPar node)
-    {
-        if(this._lPar_ != null)
-        {
-            this._lPar_.parent(null);
-        }
-
-        if(node != null)
-        {
-            if(node.parent() != null)
-            {
-                node.parent().removeChild(node);
-            }
-
-            node.parent(this);
-        }
-
-        this._lPar_ = node;
-    }
-
     public PFunctionParam getFunctionParam()
     {
         return this._functionParam_;
@@ -190,16 +155,16 @@ public final class AFunctionDeclarationDcl extends PDcl
         this._functionParam_ = node;
     }
 
-    public TRPar getRPar()
+    public PStmts getStmts()
     {
-        return this._rPar_;
+        return this._stmts_;
     }
 
-    public void setRPar(TRPar node)
+    public void setStmts(PStmts node)
     {
-        if(this._rPar_ != null)
+        if(this._stmts_ != null)
         {
-            this._rPar_.parent(null);
+            this._stmts_.parent(null);
         }
 
         if(node != null)
@@ -212,32 +177,7 @@ public final class AFunctionDeclarationDcl extends PDcl
             node.parent(this);
         }
 
-        this._rPar_ = node;
-    }
-
-    public PFunctionBody getFunctionBody()
-    {
-        return this._functionBody_;
-    }
-
-    public void setFunctionBody(PFunctionBody node)
-    {
-        if(this._functionBody_ != null)
-        {
-            this._functionBody_.parent(null);
-        }
-
-        if(node != null)
-        {
-            if(node.parent() != null)
-            {
-                node.parent().removeChild(node);
-            }
-
-            node.parent(this);
-        }
-
-        this._functionBody_ = node;
+        this._stmts_ = node;
     }
 
     @Override
@@ -247,10 +187,8 @@ public final class AFunctionDeclarationDcl extends PDcl
             + toString(this._type_)
             + toString(this._kwFunction_)
             + toString(this._id_)
-            + toString(this._lPar_)
             + toString(this._functionParam_)
-            + toString(this._rPar_)
-            + toString(this._functionBody_);
+            + toString(this._stmts_);
     }
 
     @Override
@@ -275,27 +213,15 @@ public final class AFunctionDeclarationDcl extends PDcl
             return;
         }
 
-        if(this._lPar_ == child)
-        {
-            this._lPar_ = null;
-            return;
-        }
-
         if(this._functionParam_ == child)
         {
             this._functionParam_ = null;
             return;
         }
 
-        if(this._rPar_ == child)
+        if(this._stmts_ == child)
         {
-            this._rPar_ = null;
-            return;
-        }
-
-        if(this._functionBody_ == child)
-        {
-            this._functionBody_ = null;
+            this._stmts_ = null;
             return;
         }
 
@@ -324,27 +250,15 @@ public final class AFunctionDeclarationDcl extends PDcl
             return;
         }
 
-        if(this._lPar_ == oldChild)
-        {
-            setLPar((TLPar) newChild);
-            return;
-        }
-
         if(this._functionParam_ == oldChild)
         {
             setFunctionParam((PFunctionParam) newChild);
             return;
         }
 
-        if(this._rPar_ == oldChild)
+        if(this._stmts_ == oldChild)
         {
-            setRPar((TRPar) newChild);
-            return;
-        }
-
-        if(this._functionBody_ == oldChild)
-        {
-            setFunctionBody((PFunctionBody) newChild);
+            setStmts((PStmts) newChild);
             return;
         }
 

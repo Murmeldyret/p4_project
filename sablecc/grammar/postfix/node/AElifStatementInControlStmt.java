@@ -11,6 +11,7 @@ public final class AElifStatementInControlStmt extends PInControlStmt
     private TKwIf _kwIf_;
     private PExpr _expr_;
     private PBlock _block_;
+    private PInControlStmt _inControlStmt_;
 
     public AElifStatementInControlStmt()
     {
@@ -21,7 +22,8 @@ public final class AElifStatementInControlStmt extends PInControlStmt
         @SuppressWarnings("hiding") TKwElse _kwElse_,
         @SuppressWarnings("hiding") TKwIf _kwIf_,
         @SuppressWarnings("hiding") PExpr _expr_,
-        @SuppressWarnings("hiding") PBlock _block_)
+        @SuppressWarnings("hiding") PBlock _block_,
+        @SuppressWarnings("hiding") PInControlStmt _inControlStmt_)
     {
         // Constructor
         setKwElse(_kwElse_);
@@ -32,6 +34,8 @@ public final class AElifStatementInControlStmt extends PInControlStmt
 
         setBlock(_block_);
 
+        setInControlStmt(_inControlStmt_);
+
     }
 
     @Override
@@ -41,7 +45,8 @@ public final class AElifStatementInControlStmt extends PInControlStmt
             cloneNode(this._kwElse_),
             cloneNode(this._kwIf_),
             cloneNode(this._expr_),
-            cloneNode(this._block_));
+            cloneNode(this._block_),
+            cloneNode(this._inControlStmt_));
     }
 
     @Override
@@ -150,6 +155,31 @@ public final class AElifStatementInControlStmt extends PInControlStmt
         this._block_ = node;
     }
 
+    public PInControlStmt getInControlStmt()
+    {
+        return this._inControlStmt_;
+    }
+
+    public void setInControlStmt(PInControlStmt node)
+    {
+        if(this._inControlStmt_ != null)
+        {
+            this._inControlStmt_.parent(null);
+        }
+
+        if(node != null)
+        {
+            if(node.parent() != null)
+            {
+                node.parent().removeChild(node);
+            }
+
+            node.parent(this);
+        }
+
+        this._inControlStmt_ = node;
+    }
+
     @Override
     public String toString()
     {
@@ -157,7 +187,8 @@ public final class AElifStatementInControlStmt extends PInControlStmt
             + toString(this._kwElse_)
             + toString(this._kwIf_)
             + toString(this._expr_)
-            + toString(this._block_);
+            + toString(this._block_)
+            + toString(this._inControlStmt_);
     }
 
     @Override
@@ -185,6 +216,12 @@ public final class AElifStatementInControlStmt extends PInControlStmt
         if(this._block_ == child)
         {
             this._block_ = null;
+            return;
+        }
+
+        if(this._inControlStmt_ == child)
+        {
+            this._inControlStmt_ = null;
             return;
         }
 
@@ -216,6 +253,12 @@ public final class AElifStatementInControlStmt extends PInControlStmt
         if(this._block_ == oldChild)
         {
             setBlock((PBlock) newChild);
+            return;
+        }
+
+        if(this._inControlStmt_ == oldChild)
+        {
+            setInControlStmt((PInControlStmt) newChild);
             return;
         }
 
