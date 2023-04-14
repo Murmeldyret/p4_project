@@ -20,6 +20,10 @@
 # Mono auto generated files
 mono_crash.*
 
+### Java ###
+# Compiled class file
+*.class
+
 # Build results
 [Dd]ebug/
 [Dd]ebugPublic/

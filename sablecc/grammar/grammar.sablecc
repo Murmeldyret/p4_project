@@ -3,7 +3,7 @@ Package postfix;
 Helpers
     //Do not put Tokens/terminals in here
     number = ['0' .. '9']+;
-    nonnumber = ['_'+[['a'..'z']+['A'..'Z']]];
+    nonnumber = ['_'+[['a'..'z']+['A'..'Z']]] ;
     all = [00 .. 127];
     
     // different ways of producing end of line on different OS'
@@ -12,7 +12,7 @@ Helpers
     tab = 9;
     eol = cr | lf | cr lf ;
     not_eol = [all -[cr + lf]];
-    sign = '+' | '-';
+    sign = '-';
 
 Tokens
     //for tokens in the program
@@ -29,18 +29,18 @@ Tokens
     r_brack = ']';
 
     //types
-    string = ('"' '"');
+    string = ('"' [not_eol-'"']* '"');
     intnum = sign? (number)+ ;
     floatnum = sign? (number)+ '.' (number)+;
     bool = 'true' | 'false';
     type = ('int' | 'bool' | 'float' | 'string' | 'csv' | 'char' | 'array' | 'void');
     char = 39 '.' 39;
-    
+
     id = nonnumber (nonnumber | number)*;
     blank = (' ' | 13 | 10)+;
 
     //Operators
-    op_assign = ':=';
+    op_assign = '=';
     op_plus = '+';
     op_minus = '-';
     op_mult = '*';
@@ -97,9 +97,9 @@ Tokens
     kw_column = 'column';
     kw_row = 'row';
 
-
 Ignored Tokens
     blank,
+    newline,
     comment;
 
 Productions
@@ -107,7 +107,7 @@ Productions
      {program} stmts {-> New program.program (stmts) };
 
     stmts {-> P.stmts  } =
-     {statements} stmt newline stmts {-> New stmts.statements (stmt , newline , stmts  )  }   
+     {statements} stmt semi stmts {-> New stmts.statements (stmt , semi , stmts  )  }   
     | {-> New stmts ( )  } ;
 
     stmt =
@@ -203,7 +203,7 @@ Productions
     | {csv_orientation_column} kw_column {-> New orientation.csv_orientation_column (kw_column  )  } ;
 
     indexing {-> P.indexing  } =
-     {indexing} l_cbrack expr r_cbrack indexing {-> New indexing.indexing ( expr , indexing  )  }   
+     {indexing} l_brack expr r_brack indexing {-> New indexing.indexing ( expr , indexing  )  }   
     | {-> New indexing ( )  } ;
 
     array_expr {-> P.array_expr  } =
@@ -294,7 +294,7 @@ Abstract Syntax Tree
         {program} stmts;
         
     stmts =
-        {statements} stmt newline stmts | ;
+        {statements} stmt semi stmts | ;
 
     stmt =
         {import_without_seperator} kw_import string kw_as id |
@@ -369,9 +369,9 @@ Abstract Syntax Tree
         {array_expr_prime_extra} sop_comma val array_expr_prime | ;
 
     array_op =
-        {add_to_array} kw_add array_expr|
+        {add_to_array} kw_add array_expr |
         {remove_from_array} kw_remove kw_in id |
-        {remove_at_from_array} kw_remove_at indexing kw_in id|
+        {remove_at_from_array} kw_remove_at indexing kw_in id |
         {insert_to_array} kw_insert val array_expr kw_in id ;
 
     //måske skal function call ikke være value men expression i stedet, time will tell
@@ -412,4 +412,4 @@ Abstract Syntax Tree
         {count} sop_count id |
         {sort_asc} sop_sort id sop_comma kw_sort_order_asc |
         {sort_desc} sop_sort id sop_comma kw_sort_order_dsc |
-        {sort} sop_sort id ;
+        {sort} sop_sort id;

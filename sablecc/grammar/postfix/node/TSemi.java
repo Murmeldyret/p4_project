@@ -5,16 +5,16 @@ package postfix.node;
 import postfix.analysis.*;
 
 @SuppressWarnings("nls")
-public final class TOpAssign extends Token
+public final class TSemi extends Token
 {
-    public TOpAssign()
+    public TSemi()
     {
-        super.setText("=");
+        super.setText(";");
     }
 
-    public TOpAssign(int line, int pos)
+    public TSemi(int line, int pos)
     {
-        super.setText("=");
+        super.setText(";");
         setLine(line);
         setPos(pos);
     }
@@ -22,18 +22,18 @@ public final class TOpAssign extends Token
     @Override
     public Object clone()
     {
-      return new TOpAssign(getLine(), getPos());
+      return new TSemi(getLine(), getPos());
     }
 
     @Override
     public void apply(Switch sw)
     {
-        ((Analysis) sw).caseTOpAssign(this);
+        ((Analysis) sw).caseTSemi(this);
     }
 
     @Override
     public void setText(@SuppressWarnings("unused") String text)
     {
-        throw new RuntimeException("Cannot change TOpAssign text.");
+        throw new RuntimeException("Cannot change TSemi text.");
     }
 }
