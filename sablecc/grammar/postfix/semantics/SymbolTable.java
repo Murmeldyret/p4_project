@@ -4,9 +4,7 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 
-import postfix.node.TId;
-
-public class SymbolTable implements Map<String, TId> {
+public class SymbolTable implements Map<String, IdAttributes> {
 
     public SymbolTable() {
 
@@ -61,25 +59,25 @@ public class SymbolTable implements Map<String, TId> {
     }
 
     @Override
-    public TId get(Object key) {
+    public IdAttributes get(Object key) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'get'");
     }
 
     @Override
-    public TId put(String key, TId value) {
+    public IdAttributes put(String key, IdAttributes value) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'put'");
     }
 
     @Override
-    public TId remove(Object key) {
+    public IdAttributes remove(Object key) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'remove'");
     }
 
     @Override
-    public void putAll(Map<? extends String, ? extends TId> m) {
+    public void putAll(Map<? extends String, ? extends IdAttributes> m) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'putAll'");
     }
@@ -97,13 +95,13 @@ public class SymbolTable implements Map<String, TId> {
     }
 
     @Override
-    public Collection<TId> values() {
+    public Collection<IdAttributes> values() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'values'");
     }
 
     @Override
-    public Set<Entry<String, TId>> entrySet() {
+    public Set<Entry<String, IdAttributes>> entrySet() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'entrySet'");
     }
