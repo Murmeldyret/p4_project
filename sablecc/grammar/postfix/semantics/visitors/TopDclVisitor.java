@@ -21,6 +21,11 @@ public class TopDclVisitor extends SemanticVisitor {
         super(symbolTable);
     }
 
+    /**
+     * prcoesses a variable declaration and adds it to the nearest symbol table
+     * @param vld
+     * @throws VariableAlreadyDeclaredException
+     */
     void caseVariableListDeclaration(VariableListDeclaring vld) throws VariableAlreadyDeclaredException {
         TypeVisitor typeVisitor = new TypeVisitor(this.symbolTable);
 
