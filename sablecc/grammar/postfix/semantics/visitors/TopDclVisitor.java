@@ -7,6 +7,9 @@ import postfix.semantics.SymbolTable;
 import postfix.semantics.VariableListDeclaring;
 import postfix.semantics.Exceptions.VariableAlreadyDeclaredException;
 
+/**
+ * Class for managing declarations, also responsible for calling TypeVisitor for the right hand side (or statements in case of functions)
+ */
 public class TopDclVisitor extends SemanticVisitor {
 
     public TopDclVisitor() {
@@ -47,13 +50,23 @@ public class TopDclVisitor extends SemanticVisitor {
                 // fischer fig 8.13 marker 24
                 // TODO måske skal der være satelitdata til dette, idk
                 symbolTable.put(id.getText(), new IdAttributes(id, cld.getType(), false, true));
-
             }
         }
 
     }
 
-    void caseFunctionDeclaration(AFunctionDeclarationDcl funcDCL) {
+    void caseFunctionDeclaration(AFunctionDeclarationDcl funcDCL) throws VariableAlreadyDeclaredException {
+        TypeVisitor typeVisitor = new TypeVisitor(this.symbolTable);
+
+        funcDCL.getType().apply(typeVisitor);
+
+        if (symbolTable.DeclaredLocally(funcDCL.getId().getText())) {
+            throw new VariableAlreadyDeclaredException("Function" + funcDCL.getId().getText() + "has already been declared");
+        }
+        else {
+            symbolTable.put(funcDCL.getId().getText(), new IdAttributes(funcDCL.getId(), funcDCL.getType(), true, false));
+        }
+
 
     }
 

@@ -10,7 +10,7 @@ public class VariableListDeclaring {
 
     public TType getType() {
         return type;
-    };
+    }
 
     public List<TId> getIdList() {
         return idList;
