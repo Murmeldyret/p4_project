@@ -114,28 +114,28 @@ Productions
     | {-> New stmts ( )  } ;
 
     stmt =
-     {import_stmt} import {-> import.stmt}   
-    | {declaration} dcl {-> New stmt.declaration (dcl  )  }   
-    | {assignment_statement_stmt} assignment {-> assignment.stmt  }   
-    | {array_operations} array_op {-> New stmt.array_operations (array_op  )  }   
-    | {for_loop} kw_for id kw_in val block {-> New stmt.for_loop (kw_for , id , kw_in , val , block  )  }   
-    | {while_loop} kw_while expr block {-> New stmt.while_loop (kw_while , expr , block  )  }   
-    | {control_statement} kw_if expr block in_control_stmt {-> New stmt.control_statement (kw_if , expr , block , in_control_stmt  )  }   
-    | {print_statement} kw_print expr {-> New stmt.print_statement (kw_print , expr  )  }   
-    | {csv_operation} csv_op {-> New stmt.csv_operation (csv_op  )  }   
-    | {export_statement} kw_export id kw_to expr {-> New stmt.export_statement (kw_export , id , kw_to , expr  )  }   
-    | {return_stmt} return {-> return.stmt}   
-    | {break_statement} kw_break {-> New stmt.break_statement (kw_break  )  } ;
+     {import_stmt}                  import                              {-> import.stmt}   
+    | {declaration}                 dcl                                 {-> New stmt.declaration (dcl  )  }   
+    | {assignment_statement_stmt}   assignment                          {-> assignment.stmt  }   
+    | {array_operations}            array_op                            {-> New stmt.array_operations (array_op  )  }   
+    | {for_loop}                    kw_for id kw_in val block           {-> New stmt.for_loop (kw_for , id , kw_in , val , block  )  }   
+    | {while_loop}                  kw_while expr block                 {-> New stmt.while_loop (kw_while , expr , block  )  }   
+    | {control_statement}           kw_if expr block in_control_stmt    {-> New stmt.control_statement (kw_if , expr , block , in_control_stmt  )  }   
+    | {print_statement}             kw_print expr                       {-> New stmt.print_statement (kw_print , expr  )  }   
+    | {csv_operation}               csv_op                              {-> New stmt.csv_operation (csv_op  )  }   
+    | {export_statement}            kw_export id kw_to expr             {-> New stmt.export_statement (kw_export , id , kw_to , expr  )  }   
+    | {return_stmt}                 return                              {-> return.stmt}   
+    | {break_statement}             kw_break                            {-> New stmt.break_statement (kw_break  )  } ;
 
     import {-> stmt  } =
-     {import_without_seperator} kw_import string kw_as id {-> New stmt.import_without_seperator (kw_import , string , kw_as , id )  }   
-    | {import_with_seperator} kw_import string kw_separated_by char kw_as id {-> New stmt.import_with_seperator (kw_import , string , kw_separated_by , char , kw_as , id  )  } ;
+     {import_without_seperator} kw_import string kw_as id                       {-> New stmt.import_without_seperator (kw_import , string , kw_as , id )  }   
+    | {import_with_seperator}   kw_import string kw_separated_by char kw_as id  {-> New stmt.import_with_seperator (kw_import , string , kw_separated_by , char , kw_as , id  )  } ;
 
     dcl =
-     {variable_declaration_initialization} type id op_assign expr {-> New dcl.variable_declaration_initialization (type , id , op_assign , expr  )  }   
-    | {variable_declaration} type id {-> New dcl.variable_declaration (type , id  )  }   
-    | {const_declaration_initialization} kw_const type id op_assign expr {-> New dcl.const_declaration_initialization (kw_const , type , id , op_assign , expr  )  }   
-    | {function_declaration} type kw_function id l_par function_param r_par l_cbrack stmts r_cbrack {-> New dcl.function_declaration (type , kw_function , id , function_param , stmts )  } ;
+     {variable_declaration_initialization}  type id op_assign expr                                                  {-> New dcl.variable_declaration_initialization (type , id , op_assign , expr  )  }   
+    | {variable_declaration}                type id                                                                 {-> New dcl.variable_declaration (type , id  )  }   
+    | {const_declaration_initialization}    kw_const type id op_assign expr                                         {-> New dcl.const_declaration_initialization (kw_const , type , id , op_assign , expr  )  }   
+    | {function_declaration}                type kw_function id l_par function_param r_par l_cbrack stmts r_cbrack  {-> New dcl.function_declaration (type , kw_function , id , function_param , stmts )  } ;
 
     function_param {-> P.function_param  } =
      {function_param} dcl function_param_prime {-> New function_param.function_param (dcl , function_param_prime  )  }   
@@ -163,8 +163,8 @@ Productions
      {block_stmt} l_cbrack stmts r_cbrack {-> New block.block_stmt ( stmts )  };
 
     in_control_stmt {-> P.in_control_stmt  } =
-     {elif_statement} kw_else kw_if expr block in_control_stmt {-> New in_control_stmt.elif_statement (kw_else , kw_if , expr , block, in_control_stmt  )  }   
-    | {else_statement} else_statement {-> New in_control_stmt.else_statement (else_statement  )  } ;
+     {elif_statement}   kw_else kw_if expr block in_control_stmt    {-> New in_control_stmt.elif_statement (kw_else , kw_if , expr , block, in_control_stmt  )  }   
+    | {else_statement}  else_statement                              {-> New in_control_stmt.else_statement (else_statement  )  } ;
 
     else_statement {-> P.else_statement  } =
      {else_block_statement} kw_else block {-> New else_statement.else_block_statement (kw_else , block  )  }   
@@ -174,20 +174,20 @@ Productions
      {assign} id indexing op_assign expr {-> New stmt.assign (id , indexing , op_assign , expr  )  } ;
 
     expr {-> P.expr  } =
-     {aexprvalprimeexpr1} val expr_prime {-> New expr.expr_val_prime (Null , val , expr_prime  )  }   
-    | {aexprvalprimeexpr2} bop_not val expr_prime {-> New expr.expr_val_prime (bop_not , val , expr_prime  )  }   
-    | {expr_special} special_expr id {-> New expr.expr_special (special_expr , id  )  }   
-    | {expr_array} array_expr {-> New expr.expr_array (array_expr  )  } ;
+     {aexprvalprimeexpr1}   val expr_prime          {-> New expr.expr_val_prime (val , expr_prime  )  }   
+    | {aexprvalprimeexpr2}  bop_not val expr_prime  {-> New expr.expr_val_prime2 (bop_not , val , expr_prime  )  }   
+    | {expr_special}        special_expr id         {-> New expr.expr_special (special_expr , id  )  }   
+    | {expr_array}          array_expr              {-> New expr.expr_array (array_expr  )  } ;
 
     expr_prime {-> P.expr_prime  } =
      {expr_prime_operator_val_prime} bin_infix_op val expr_prime {-> New expr_prime.expr_prime_operator_val_prime (bin_infix_op , val , expr_prime  )  }   
     | {-> New expr_prime ( )  } ;
 
     csv_op {-> csv_op  } =
-     {csv_operation_add} csv_add {-> csv_add.csv_op }   
-    | {csv_operation_remove} csv_remove {-> csv_remove.csv_op  }   
-    | {csv_operation_remove_at} csv_remove_at {-> csv_remove_at.csv_op  }   
-    | {csv_operation_insert} csv_insert {-> csv_insert.csv_op  } ;
+     {csv_operation_add}        csv_add         {-> csv_add.csv_op }   
+    | {csv_operation_remove}    csv_remove      {-> csv_remove.csv_op  }   
+    | {csv_operation_remove_at} csv_remove_at   {-> csv_remove_at.csv_op  }   
+    | {csv_operation_insert}    csv_insert      {-> csv_insert.csv_op  } ;
 
     csv_add {-> csv_op  } =
      {add_to_csv} kw_add orientation array_expr kw_in id {-> New csv_op.add_to_csv (kw_add , orientation , array_expr , kw_in , id  )  } ;
@@ -202,8 +202,8 @@ Productions
      {insert_from_csv} kw_insert orientation val array_expr kw_in id {-> New csv_op.insert_from_csv (kw_insert , orientation , val , array_expr , kw_in , id  )  } ;
 
     orientation {-> P.orientation  } =
-     {csv_orientation_row} kw_row {-> New orientation.csv_orientation_row (kw_row  )  }   
-    | {csv_orientation_column} kw_column {-> New orientation.csv_orientation_column (kw_column  )  } ;
+     {csv_orientation_row}      kw_row      {-> New orientation.csv_orientation_row (kw_row  )  }   
+    | {csv_orientation_column}  kw_column   {-> New orientation.csv_orientation_column (kw_column  )  } ;
 
     indexing {-> P.indexing  } =
      {indexing} l_brack expr r_brack indexing {-> New indexing.indexing ( expr , indexing  )  }   
@@ -217,10 +217,10 @@ Productions
     | {-> New array_expr_prime ( )  } ;
 
     array_op {-> array_op  } =
-     {array_operation_add} array_add {-> array_add.array_op  }   
-    | {array_operation_remove} array_remove {-> array_remove.array_op  }   
-    | {array_operation_remove_at} array_remove_at {-> array_remove_at.array_op }   
-    | {array_operation_insert} array_insert {-> array_insert.array_op } ;
+     {array_operation_add}          array_add       {-> array_add.array_op  }   
+    | {array_operation_remove}      array_remove    {-> array_remove.array_op  }   
+    | {array_operation_remove_at}   array_remove_at {-> array_remove_at.array_op }   
+    | {array_operation_insert}      array_insert    {-> array_insert.array_op } ;
 
     array_add {-> array_op  } =
      {add_to_array} kw_add l_par array_expr r_par {-> New array_op.add_to_array (kw_add , array_expr )  } ;
@@ -235,27 +235,27 @@ Productions
      {insert_to_array} kw_insert val array_expr kw_in id {-> New array_op.insert_to_array (kw_insert , val , array_expr , kw_in , id  )  } ;
 
     val {-> val  } =
-     {val_id} id {-> New val.val_id (id  )  }   
-    | {function_call_value} function_call {-> function_call.val }   
-    | {val_floatnum} floatnum {-> New val.val_floatnum (floatnum  )  }   
-    | {val_intnum} intnum {-> New val.val_intnum (intnum  )  }   
-    | {val_string} string {-> New val.val_string (string  )  }   
-    | {val_bool} bool {-> New val.val_bool (bool  )  } ;
+     {val_id}               id              {-> New val.val_id (id  )  }   
+    | {function_call_value} function_call   {-> function_call.val }   
+    | {val_floatnum}        floatnum        {-> New val.val_floatnum (floatnum  )  }   
+    | {val_intnum}          intnum          {-> New val.val_intnum (intnum  )  }   
+    | {val_string}          string          {-> New val.val_string (string  )  }   
+    | {val_bool}            bool            {-> New val.val_bool (bool  )  } ;
 
     bin_infix_op {-> P.bin_infix_op  } =
-     {plus_infix} op_plus {-> New bin_infix_op.plus_infix (op_plus  )  }   
-    | {minus_infix} op_minus {-> New bin_infix_op.minus_infix (op_minus  )  }   
-    | {multiplication_infix} op_mult {-> New bin_infix_op.multiplication_infix (op_mult  )  }   
-    | {division_infix} op_div {-> New bin_infix_op.division_infix (op_div  )  }   
-    | {modulo_infix} op_mod {-> New bin_infix_op.modulo_infix (op_mod  )  }   
-    | {and_infix} bop_and {-> New bin_infix_op.and_infix (bop_and  )  }   
-    | {or_infix} bop_or {-> New bin_infix_op.or_infix (bop_or  )  }   
-    | {equality_infix} bop_eq {-> New bin_infix_op.equality_infix (bop_eq  )  }   
-    | {greater_than_infix} bop_gthan {-> New bin_infix_op.greater_than_infix (bop_gthan  )  }   
-    | {greater_than_equal_infix} bop_gethan {-> New bin_infix_op.greater_than_equal_infix (bop_gethan  )  }   
-    | {less_than_infix} bop_lthan {-> New bin_infix_op.less_than_infix (bop_lthan  )  }   
-    | {less_than_equal_infix} bop_lethan {-> New bin_infix_op.less_than_equal_infix (bop_lethan  )  }   
-    | {not_equal_infix} bop_neq {-> New bin_infix_op.not_equal_infix (bop_neq  )  } ;
+     {plus_infix}                   op_plus     {-> New bin_infix_op.plus_infix (op_plus  )  }   
+    | {minus_infix}                 op_minus    {-> New bin_infix_op.minus_infix (op_minus  )  }   
+    | {multiplication_infix}        op_mult     {-> New bin_infix_op.multiplication_infix (op_mult  )  }   
+    | {division_infix}              op_div      {-> New bin_infix_op.division_infix (op_div  )  }   
+    | {modulo_infix}                op_mod      {-> New bin_infix_op.modulo_infix (op_mod  )  }   
+    | {and_infix}                   bop_and     {-> New bin_infix_op.and_infix (bop_and  )  }   
+    | {or_infix}                    bop_or      {-> New bin_infix_op.or_infix (bop_or  )  }   
+    | {equality_infix}              bop_eq      {-> New bin_infix_op.equality_infix (bop_eq  )  }   
+    | {greater_than_infix}          bop_gthan   {-> New bin_infix_op.greater_than_infix (bop_gthan  )  }   
+    | {greater_than_equal_infix}    bop_gethan  {-> New bin_infix_op.greater_than_equal_infix (bop_gethan  )  }   
+    | {less_than_infix}             bop_lthan   {-> New bin_infix_op.less_than_infix (bop_lthan  )  }   
+    | {less_than_equal_infix}       bop_lethan  {-> New bin_infix_op.less_than_equal_infix (bop_lethan  )  }   
+    | {not_equal_infix}             bop_neq     {-> New bin_infix_op.not_equal_infix (bop_neq  )  } ;
 
     special_expr {-> P.special_expr  } =
      {speical_expression} special_syntax special_expr_prime {-> New special_expr.speical_expression (special_syntax , special_expr_prime  )  } ;
@@ -265,154 +265,165 @@ Productions
     | {-> New special_expr_prime ( )  } ;
 
     special_syntax {-> special_syntax  } =
-     {sum_op} sum {-> sum.special_syntax  }   
-    | {filter_op} filter {-> filter.special_syntax  }   
-    | {groupby_op} groupby {-> groupby.special_syntax  }   
-    | {mean_op} mean {-> mean.special_syntax  }   
-    | {count_op} count {-> count.special_syntax  }   
-    | {sort_op} sort {-> sort.special_syntax  } ;
+     {sum_op}       sum     {-> sum.special_syntax  }   
+    | {filter_op}   filter  {-> filter.special_syntax  }   
+    | {groupby_op}  groupby {-> groupby.special_syntax  }   
+    | {mean_op}     mean    {-> mean.special_syntax  }   
+    | {count_op}    count   {-> count.special_syntax  }   
+    | {sort_op}     sort    {-> sort.special_syntax  } ;
 
     sum {-> special_syntax  } =
-     {sum} sop_sum l_par id r_par{-> New special_syntax.sum (sop_sum, id )  } ;
+     {sum} sop_sum{-> New special_syntax.sum (sop_sum )  } ;
 
     filter {-> special_syntax } =
-     {filter} sop_filter l_par id r_par {-> New special_syntax.filter (sop_filter , id )  } ;
+     {filter} sop_filter l_par expr r_par {-> New special_syntax.filter (sop_filter , expr )  } ;
 
     groupby {-> special_syntax } =
-     {groupby} sop_groupby l_par id r_par {-> New special_syntax.groupby (sop_groupby, id)  } ;
+     {groupby} sop_groupby l_par string r_par {-> New special_syntax.groupby (sop_groupby, string)  } ;
 
     mean {-> special_syntax } =
-     {mean} sop_mean l_par id r_par {-> New special_syntax.mean (sop_mean , id)  } ;
+     {mean} sop_mean {-> New special_syntax.mean (sop_mean)  } ;
 
     count {-> special_syntax  } =
-     {count} sop_count l_par id r_par {-> New special_syntax.count (sop_count, id)  } ;
+     {count} sop_count{-> New special_syntax.count (sop_count)  } ;
 
     sort {-> special_syntax } =
-     {sort_asc} sop_sort l_par id sop_comma kw_sort_order_asc r_par {-> New special_syntax.sort_asc (sop_sort , id, sop_comma, kw_sort_order_asc )  }   
-    | {sort_desc} sop_sort l_par id sop_comma kw_sort_order_dsc r_par {-> New special_syntax.sort_desc (sop_sort , id, sop_comma, kw_sort_order_dsc )  }   
-    | {sort} sop_sort l_par id r_par{-> New special_syntax.sort (sop_sort, id)  } ;
+     {sort_asc}     sop_sort l_par expr sop_comma kw_sort_order_asc r_par   {-> New special_syntax.sort_asc (sop_sort , expr, sop_comma, kw_sort_order_asc )  }   
+    | {sort_desc}   sop_sort l_par expr sop_comma kw_sort_order_dsc r_par   {-> New special_syntax.sort_desc (sop_sort , expr, sop_comma, kw_sort_order_dsc )  }   
+    | {sort}        sop_sort l_par expr r_par                               {-> New special_syntax.sort (sop_sort, expr)  } ;
 
 Abstract Syntax Tree
     program =
         {program} stmts;
         
     stmts =
-        {statements} stmt semi stmts | ;
+        {statements} stmt semi stmts 
+        | ;
 
     stmt =
-        {import_without_seperator} kw_import string kw_as id |
-        {import_with_seperator} kw_import string kw_separated_by char kw_as id |
-        {declaration} dcl | 
-        {assign} id indexing op_assign expr |
-        {array_operations} array_op |
-        {for_loop} kw_for id kw_in val block |
-        {while_loop} kw_while expr block |
-        {control_statement} kw_if expr block in_control_stmt | 
-        {print_statement} kw_print expr | 
-        {csv_operation} csv_op |
-        {export_statement} kw_export id kw_to expr |
-        {return} kw_return expr |
-        {break_statement} kw_break ;
+        {import_without_seperator}  kw_import string kw_as id 
+        | {import_with_seperator}   kw_import string kw_separated_by char kw_as id 
+        | {declaration}             dcl 
+        | {assign}                  id indexing op_assign expr 
+        | {array_operations}        array_op 
+        | {for_loop}                kw_for id kw_in val block 
+        | {while_loop}              kw_while expr block 
+        | {control_statement}       kw_if expr block in_control_stmt 
+        | {print_statement}         kw_print expr 
+        | {csv_operation}           csv_op 
+        | {export_statement}        kw_export id kw_to expr 
+        | {return}                  kw_return expr 
+        | {break_statement}         kw_break ;
 
     dcl =
-        {variable_declaration_initialization} type id op_assign expr |
-        {variable_declaration} type id |
-        {const_declaration_initialization} kw_const type id op_assign expr |
-        {function_declaration} type kw_function id function_param stmts ;
+        {variable_declaration_initialization}      type id op_assign expr 
+        | {variable_declaration}                type id 
+        | {const_declaration_initialization}    kw_const type id op_assign expr 
+        | {function_declaration}                type kw_function id function_param stmts ;
 
     function_param = 
-        {function_param} dcl function_param_prime | ;
+        {function_param} dcl function_param_prime 
+        | ;
 
     function_param_prime =
-        {function_param_prime} sop_comma dcl function_param_prime | ;
+        {function_param_prime} sop_comma dcl function_param_prime 
+        | ;
 
         
     function_call_param = 
-        {function_call_param} expr function_call_param_prime | ;
+        {function_call_param} expr function_call_param_prime 
+        | ;
 
     function_call_param_prime =
-        {function_call_param_prime} sop_comma expr function_call_param_prime | ;
+        {function_call_param_prime} sop_comma expr function_call_param_prime 
+        | ;
 
     block =
        {block_stmt} stmts ;
 
     in_control_stmt =
-       {elif_statement} kw_else kw_if expr block in_control_stmt |
-       {else_statement} else_statement;
+       {elif_statement}     kw_else kw_if expr block in_control_stmt 
+       | {else_statement}   else_statement;
     
     else_statement =
-       {else_block_statement} kw_else block | ;
+       {else_block_statement} kw_else block 
+       | ;
 
     expr =
-       {expr_val_prime} bop_not? val expr_prime | 
-       {expr_special} special_expr id |
-       {expr_array} array_expr;
+       {expr_val_prime}     val expr_prime 
+       | {expr_val_prime2}  bop_not? val expr_prime 
+       | {expr_special}     special_expr id 
+       | {expr_array}       array_expr;
     
     expr_prime = 
-       {expr_prime_operator_val_prime} bin_infix_op val expr_prime | ;
+       {expr_prime_operator_val_prime} bin_infix_op val expr_prime 
+       | ;
     
     csv_op = 
-        {add_to_csv} kw_add orientation array_expr kw_in id |
-        {remove_from_csv} kw_remove orientation kw_in id |
-        {remove_at_from_csv} kw_remove_at orientation val kw_in id |
-        {insert_from_csv} kw_insert orientation val array_expr kw_in id ;
+        {add_to_csv}            kw_add orientation array_expr kw_in id 
+        | {remove_from_csv}     kw_remove orientation kw_in id 
+        | {remove_at_from_csv}  kw_remove_at orientation val kw_in id 
+        | {insert_from_csv}     kw_insert orientation val array_expr kw_in id ;
 
     orientation = 
-        {csv_orientation_row} kw_row |
-        {csv_orientation_column} kw_column ;
+        {csv_orientation_row}       kw_row 
+        | {csv_orientation_column}  kw_column ;
 
     //index indmad ændret fra val til expr
     indexing =
-        {indexing} expr indexing | ;
+        {indexing} expr indexing 
+        | ;
 
     array_expr = 
         {array_expr_val_prime} val array_expr_prime ;
 
     array_expr_prime = 
-        {array_expr_prime_extra} sop_comma val array_expr_prime | ;
+        {array_expr_prime_extra} sop_comma val array_expr_prime 
+        | ;
 
     array_op =
-        {add_to_array} kw_add array_expr |
-        {remove_from_array} kw_remove kw_in id |
-        {remove_at_from_array} kw_remove_at indexing kw_in id |
-        {insert_to_array} kw_insert val array_expr kw_in id ;
+        {add_to_array}              kw_add array_expr 
+        | {remove_from_array}       kw_remove kw_in id 
+        | {remove_at_from_array}    kw_remove_at indexing kw_in id 
+        | {insert_to_array}         kw_insert val array_expr kw_in id ;
 
     //måske skal function call ikke være value men expression i stedet, time will tell
     val = 
-        {val_id} id |
-        {function_call} id function_call_param |
-        {val_floatnum} floatnum |
-        {val_intnum} intnum |
-        {val_string} string |
-        {val_bool} bool ;
+        {val_id}            id 
+        | {function_call}   id function_call_param 
+        | {val_floatnum}    floatnum 
+        | {val_intnum}      intnum 
+        | {val_string}      string 
+        | {val_bool}        bool ;
 
     bin_infix_op = 
-        {plus_infix} op_plus |
-        {minus_infix} op_minus |
-        {multiplication_infix} op_mult |
-        {division_infix} op_div |
-        {modulo_infix} op_mod |
-        {and_infix} bop_and |
-        {or_infix} bop_or |
-        {equality_infix} bop_eq |
-        {greater_than_infix} bop_gthan |
-        {greater_than_equal_infix} bop_gethan |
-        {less_than_infix} bop_lthan |
-        {less_than_equal_infix} bop_lethan | 
-        {not_equal_infix} bop_neq ;
+        {plus_infix}                    op_plus 
+        | {minus_infix}                 op_minus 
+        | {multiplication_infix}        op_mult 
+        | {division_infix}              op_div 
+        | {modulo_infix}                op_mod 
+        | {and_infix}                   bop_and 
+        | {or_infix}                    bop_or 
+        | {equality_infix}              bop_eq 
+        | {greater_than_infix}          bop_gthan 
+        | {greater_than_equal_infix}    bop_gethan 
+        | {less_than_infix}             bop_lthan 
+        | {less_than_equal_infix}       bop_lethan 
+        | {not_equal_infix}             bop_neq ;
     
     special_expr =
         {speical_expression} special_syntax special_expr_prime;
 
     special_expr_prime =
-        {special_expr_prime} special_syntax special_expr_prime | ;
+        {special_expr_prime} special_syntax special_expr_prime 
+        | ;
     
     special_syntax =
-        {sum} sop_sum id |
-        {filter} sop_filter id |
-        {groupby} sop_groupby id |
-        {mean} sop_mean id |
-        {count} sop_count id |
-        {sort_asc} sop_sort id sop_comma kw_sort_order_asc |
-        {sort_desc} sop_sort id sop_comma kw_sort_order_dsc |
-        {sort} sop_sort id;
+        {sum}           sop_sum 
+        | {filter}      sop_filter expr 
+        | {groupby}     sop_groupby string 
+        | {mean}        sop_mean 
+        | {count}       sop_count 
+        | {sort_asc}    sop_sort expr sop_comma kw_sort_order_asc 
+        | {sort_desc}   sop_sort expr sop_comma kw_sort_order_dsc 
+        | {sort}        sop_sort expr;

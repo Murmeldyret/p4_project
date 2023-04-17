@@ -73,7 +73,6 @@ class Translation extends DepthFirstAdapter {
 
     public void outACountSpecialSyntax(ACountSpecialSyntax node) {
         System.out.print(node.getSopCount());
-        System.out.print(node.getId());
     }
 
     public void outACsvOperationStmt(ACsvOperationStmt node) {
@@ -147,7 +146,7 @@ class Translation extends DepthFirstAdapter {
 
     public void outAFilterSpecialSyntax(AFilterSpecialSyntax node) {
         System.out.print(node.getSopFilter());
-        System.out.print(node.getId());
+        System.out.print(node.getExpr());
     }
 
     public void outAForLoopStmt(AForLoopStmt node) {
@@ -203,7 +202,7 @@ class Translation extends DepthFirstAdapter {
 
     public void outAGroupbySpecialSyntax(AGroupbySpecialSyntax node) {
         System.out.print(node.getSopGroupby());
-        System.out.print(node.getId());
+        System.out.print(node.getString());
     }
 
     public void outAImportWithoutSeperatorStmt(AImportWithoutSeperatorStmt node) {
@@ -254,7 +253,6 @@ class Translation extends DepthFirstAdapter {
 
     public void outAMeanSpecialSyntax(AMeanSpecialSyntax node) {
         System.out.print(node.getSopMean());
-        System.out.print(node.getId());
     }
 
     public void outAMinusInfixBinInfixOp(AMinusInfixBinInfixOp node) {//
@@ -325,21 +323,21 @@ class Translation extends DepthFirstAdapter {
 
     public void outASortAscSpecialSyntax(ASortAscSpecialSyntax node) {
         System.out.print(node.getSopSort());
-        System.out.print(node.getId());
+        System.out.print(node.getExpr());
         System.out.print(node.getSopComma());
         System.out.print(node.getKwSortOrderAsc());
     }
 
     public void outASortDescSpecialSyntax(ASortDescSpecialSyntax node) {
         System.out.print(node.getSopSort());
-        System.out.print(node.getId());
+        System.out.print(node.getExpr());
         System.out.print(node.getSopComma());
         System.out.print(node.getKwSortOrderDsc());
     }
 
     public void outASortSpecialSyntax(ASortSpecialSyntax node) {
         System.out.print(node.getSopSort());
-        System.out.print(node.getId());
+        System.out.print(node.getExpr());
     }
 
     public void outASpecialExprPrimeSpecialExprPrime(ASpecialExprPrimeSpecialExprPrime node) {
@@ -360,7 +358,6 @@ class Translation extends DepthFirstAdapter {
 
     public void outASumSpecialSyntax(ASumSpecialSyntax node) {
         System.out.print(node.getSopSum());
-        System.out.print(node.getId());
     }
 
     public void outAValBoolVal(AValBoolVal node) {
