@@ -12,7 +12,7 @@ public class Main {
             Parser parser = new Parser(lexer);
             Start startNode = parser.parse();
 
-            Visitor visitor = new Visitor();
+            PrettyPrinter visitor = new PrettyPrinter();
             startNode.apply(visitor);
         } catch (Exception e) {
             System.err.println(e.getMessage());

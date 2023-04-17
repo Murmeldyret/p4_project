@@ -5,7 +5,7 @@ import postfix.node.*;
 
 import java.io.*;
 
-public class Visitor extends DepthFirstAdapter {
+public class PrettyPrinter extends DepthFirstAdapter {
 
     static final int indent = 4;
     int indent_count = 0;
@@ -43,6 +43,7 @@ public class Visitor extends DepthFirstAdapter {
         prettyprint += node.getId().getText().toString();
         node.getIndexing().apply(this);
         node.setIndexing(null);
+
         space_print_check();
         prettyprint += node.getOpAssign().getText().toString();
     }
@@ -331,8 +332,6 @@ public class Visitor extends DepthFirstAdapter {
         space_print_check();
         prettyprint += node.getBool().getText().toString();
     }
-
-    
 
     private void print_indent() {
         for (int i = 0; i < indent_count; i++) {
