@@ -1,5 +1,6 @@
 package postfix.semantics.visitors;
 
+import postfix.node.AFunctionDeclarationDcl;
 import postfix.node.TId;
 import postfix.semantics.SymbolTable;
 import postfix.semantics.VariableListDeclaring;
@@ -31,6 +32,10 @@ public class TopDclVisitor extends SemanticVisitor {
             }
         }
 
+    }
+
+    void caseFunctionDeclaration(AFunctionDeclarationDcl funcDCL) {
+        
     }
 
 }
