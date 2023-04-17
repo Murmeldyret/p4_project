@@ -29,7 +29,7 @@ public class Compiler
    tree.apply(new Translation());
   }
   catch(ParserException e){
-    System.out.println(e.getMessage()+"101");
+    System.out.println(e.getMessage()+" Vores error");
   }
   catch(Exception e)
   {

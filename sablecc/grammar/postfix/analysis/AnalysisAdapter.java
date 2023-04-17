@@ -663,6 +663,108 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
+    public void caseTKwAs(TKwAs node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTKwImport(TKwImport node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTKwExport(TKwExport node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTKwPrint(TKwPrint node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTKwSeparatedBy(TKwSeparatedBy node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTKwFor(TKwFor node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTKwWhile(TKwWhile node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTKwIn(TKwIn node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTKwIf(TKwIf node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTKwElse(TKwElse node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTKwSortOrderAsc(TKwSortOrderAsc node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTKwSortOrderDsc(TKwSortOrderDsc node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTKwTo(TKwTo node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTKwConst(TKwConst node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTKwFunction(TKwFunction node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTKwReturn(TKwReturn node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTKwBreak(TKwBreak node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
     public void caseTId(TId node)
     {
         defaultCase(node);
@@ -808,108 +910,6 @@ public class AnalysisAdapter implements Analysis
 
     @Override
     public void caseTSopCount(TSopCount node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseTKwAs(TKwAs node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseTKwImport(TKwImport node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseTKwExport(TKwExport node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseTKwPrint(TKwPrint node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseTKwSeparatedBy(TKwSeparatedBy node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseTKwFor(TKwFor node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseTKwWhile(TKwWhile node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseTKwIn(TKwIn node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseTKwIf(TKwIf node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseTKwElse(TKwElse node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseTKwSortOrderAsc(TKwSortOrderAsc node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseTKwSortOrderDsc(TKwSortOrderDsc node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseTKwTo(TKwTo node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseTKwConst(TKwConst node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseTKwFunction(TKwFunction node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseTKwReturn(TKwReturn node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseTKwBreak(TKwBreak node)
     {
         defaultCase(node);
     }

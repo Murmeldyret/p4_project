@@ -1,0 +1,51 @@
+## testing stmt
+#testing dcl
+#assigns 22 to the string a din mor = far
+string a = 22;
+#for loop
+for a in b {return a;};
+#while loop
+while 1<2 {return 2+2 ;};
+#if statement
+if 2+2==4 {return 2+2;};
+if 2+2==4 {return 2+2;} else {return 2--2;};
+#print statement
+print 2 +2;
+
+#variable declaration initialization
+bool b = true;
+# variable declaration no initialization
+string str;
+# constant declaration
+const int constant = 42;
+# function declaration
+int function add2 (int x) 
+{
+    return x + 2;
+};
+#function call
+int res = add2(15 - 2);
+
+#export 
+export csvArr to PathToFile;
+#break
+break;
+
+array arr = filter (a);
+
+#testing array_op
+int a = [2];
+a[2] = 2;
+b[i] = 2; 
+array a = [2];
+array b = insert([2]);
+array c = add([2]);
+-----------------------AAAAA this works------VVVVVV this doesn't----------
+#csv statement
+add row [2] in a;
+add column [5,1] in b;
+
+# return statement
+return a >= b and b != 0;
+##In the branch of expr => val expr_prime, an error occurs when you 
+use multiple expressions in one statement.

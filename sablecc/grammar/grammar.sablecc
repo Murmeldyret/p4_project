@@ -5,6 +5,8 @@ Helpers
     number = ['0' .. '9']+;
     nonnumber = ['_'+[['a'..'z']+['A'..'Z']]] ;
     all = [00 .. 127];
+
+    //reserved_keywords = ('filter' | 'sum' | 'groupby' | 'mean' | 'sort' | 'count' | 'as' | 'import' | 'export' | 'print' | 'separated_by' | 'for' | 'while' | 'in' | 'if' | 'else' | 'asc' | 'desc' | 'to' | 'const' | 'function' | 'return' | 'break' | 'add' | 'remove' | 'remov_at' | 'insert' | 'column' | 'row') ;
     
     // different ways of producing end of line on different OS'
     cr = 13;
@@ -36,7 +38,26 @@ Tokens
     type = ('int' | 'bool' | 'float' | 'string' | 'csv' | 'char' | 'array' | 'void');
     char = 39 '.' 39;
 
-    id = nonnumber (nonnumber | number)*;
+    //Keywords
+    kw_as = 'as';
+    kw_import = 'import';
+    kw_export = 'export';
+    kw_print = 'print';
+    kw_separated_by = 'seperated_by';
+    kw_for = 'for';
+    kw_while = 'while';
+    kw_in = 'in';
+    kw_if = 'if';
+    kw_else = 'else';
+    kw_sort_order_asc = 'asc';
+    kw_sort_order_dsc = 'desc';
+    kw_to = 'to';
+    kw_const = 'const';
+    kw_function = 'function';
+    kw_return = 'return';
+    kw_break = 'break';
+    
+    id = (nonnumber(nonnumber|number)*);
     blank = (' ' | 13 | 10)+;
 
     //Operators
@@ -68,24 +89,6 @@ Tokens
     sop_sort = 'sort';
     sop_count = 'count';
 
-    //Keywords
-    kw_as = 'as';
-    kw_import = 'import';
-    kw_export = 'export';
-    kw_print = 'print';
-    kw_separated_by = 'seperated_by';
-    kw_for = 'for';
-    kw_while = 'while';
-    kw_in = 'in';
-    kw_if = 'if';
-    kw_else = 'else';
-    kw_sort_order_asc = 'asc';
-    kw_sort_order_dsc = 'desc';
-    kw_to = 'to';
-    kw_const = 'const';
-    kw_function = 'function';
-    kw_return = 'return';
-    kw_break = 'break';
 
     //array Keywords
     kw_add = 'add';
