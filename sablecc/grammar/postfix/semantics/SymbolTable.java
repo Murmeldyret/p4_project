@@ -12,6 +12,10 @@ public class SymbolTable implements Map<String, TId> {
 
     }
 
+    /**
+     * Constructs a symbol table with a reference to an outer symbol table
+     * @param outerSymbolTable The outer symbol table
+     */
     public SymbolTable(SymbolTable outerSymbolTable) {
         this.outerSymbolTable = outerSymbolTable;
     }
@@ -19,7 +23,17 @@ public class SymbolTable implements Map<String, TId> {
     private SymbolTable outerSymbolTable;
 
     private SymbolTable outerScope() {
-        throw new UnsupportedOperationException("Unimplemented method 'size'");
+        throw new UnsupportedOperationException("Unimplemented method 'outerScope'");
+    }
+
+    /**
+     * Tests whether an identifier exists within this symbol table or an outer one
+     * @param idName the identifier to test
+     * @return true if identifier exists within the current block, false otherwise
+     */
+    public boolean DeclaredLocally(String idName) {
+        throw new UnsupportedOperationException("Unimplemented method 'DeclaredLocally'");
+
     }
 
     @Override
