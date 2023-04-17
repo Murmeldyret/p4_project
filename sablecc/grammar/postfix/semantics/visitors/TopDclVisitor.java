@@ -23,6 +23,7 @@ public class TopDclVisitor extends SemanticVisitor {
 
     /**
      * prcoesses a variable declaration and adds it to the nearest symbol table
+     * 
      * @param vld
      * @throws VariableAlreadyDeclaredException
      */
