@@ -17,13 +17,16 @@ public class TopDclVisitor extends SemanticVisitor {
     void caseVariableListDeclaration(VariableListDeclaring vld) throws VariableAlreadyDeclaredException {
         TypeVisitor typeVisitor = new TypeVisitor(this.symbolTable);
 
+
         vld.getType().apply(typeVisitor);
 
         for (TId id : vld.getIdList()) {
             if (symbolTable.DeclaredLocally(id.getText())) { // TODO if symbolTable.DeclaredLocally(id)
                 throw new VariableAlreadyDeclaredException("Variable" + id + "has already been declared");
             } else {
-                // TODO fischer fig 8.13 marker 24
+                //fischer fig 8.13 marker 24
+                //TODO måske skal der være satelitdata til dette, idk
+                symbolTable.put(id.getText(), id);
 
             }
         }
