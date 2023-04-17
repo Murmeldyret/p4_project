@@ -8,10 +8,12 @@ import postfix.semantics.VariableListDeclaring;
 import postfix.semantics.Exceptions.VariableAlreadyDeclaredException;
 
 /**
- * Class for managing declarations, also responsible for calling TypeVisitor for the right hand side (or statements in case of functions)
+ * Class for managing declarations, also responsible for calling TypeVisitor for
+ * the right hand side (or statements in case of functions)
  */
 public class TopDclVisitor extends SemanticVisitor {
 
+    @Deprecated
     public TopDclVisitor() {
     }
 
@@ -34,10 +36,9 @@ public class TopDclVisitor extends SemanticVisitor {
 
             }
         }
-
     }
 
-    //lidt copy paste kode har aldrig gjort nogen noget
+    // lidt copy paste kode har aldrig gjort nogen noget
     void caseConstListDeclaration(VariableListDeclaring cld) throws VariableAlreadyDeclaredException {
         TypeVisitor typeVisitor = new TypeVisitor(this.symbolTable);
 
@@ -52,7 +53,6 @@ public class TopDclVisitor extends SemanticVisitor {
                 symbolTable.put(id.getText(), new IdAttributes(id, cld.getType(), false, true));
             }
         }
-
     }
 
     void caseFunctionDeclaration(AFunctionDeclarationDcl funcDCL) throws VariableAlreadyDeclaredException {
@@ -61,12 +61,12 @@ public class TopDclVisitor extends SemanticVisitor {
         funcDCL.getType().apply(typeVisitor);
 
         if (symbolTable.DeclaredLocally(funcDCL.getId().getText())) {
-            throw new VariableAlreadyDeclaredException("Function" + funcDCL.getId().getText() + "has already been declared");
+            throw new VariableAlreadyDeclaredException(
+                    "Function" + funcDCL.getId().getText() + "has already been declared");
+        } else {
+            symbolTable.put(funcDCL.getId().getText(),
+                    new IdAttributes(funcDCL.getId(), funcDCL.getType(), true, false));
         }
-        else {
-            symbolTable.put(funcDCL.getId().getText(), new IdAttributes(funcDCL.getId(), funcDCL.getType(), true, false));
-        }
-
 
     }
 
