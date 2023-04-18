@@ -1,6 +1,7 @@
 package postfix.semantics;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -18,10 +19,13 @@ public class SymbolTable implements Map<String, IdAttributes> {
         this.outerSymbolTable = outerSymbolTable;
     }
 
+    //holds the actual symbols
+    private HashMap<String, IdAttributes> hashMap;
+    
     private SymbolTable outerSymbolTable;
 
     private SymbolTable outerScope() {
-        throw new UnsupportedOperationException("Unimplemented method 'outerScope'");
+        return outerSymbolTable;
     }
 
     /**
@@ -30,9 +34,19 @@ public class SymbolTable implements Map<String, IdAttributes> {
      * @return true if identifier exists within the current block, false otherwise
      */
     public boolean DeclaredLocally(String idName) {
+        //TODO først implementer når scoperegler er aftalt
         throw new UnsupportedOperationException("Unimplemented method 'DeclaredLocally'");
 
     }
+
+    /**Retrieves the current declaratation with this name
+     * @param idName the name of the declaration to retrieve
+     * @return the current declaration if it exists, null otherwise
+     */
+    public IdAttributes RetrieveSymbol(String idName) {
+        throw new UnsupportedOperationException("Unimplemented method 'RetrieveSymbol'");
+    }
+
 
     @Override
     public int size() {
