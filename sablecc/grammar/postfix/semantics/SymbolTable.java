@@ -17,6 +17,7 @@ public class SymbolTable implements Map<String, IdAttributes> {
      */
     public SymbolTable(SymbolTable outerSymbolTable) {
         this.outerSymbolTable = outerSymbolTable;
+        hashMap = new HashMap<String, IdAttributes>();
     }
 
     //holds the actual symbols
