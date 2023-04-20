@@ -1,12 +1,16 @@
 package postfix.semantics.visitors;
 
+import postfix.node.AConstDeclarationInitializationDcl;
 import postfix.node.AFunctionDeclarationDcl;
+import postfix.node.AVariableDeclarationDcl;
+import postfix.node.AVariableDeclarationInitializationDcl;
 import postfix.node.TId;
 import postfix.semantics.IdAttributes;
 import postfix.semantics.SymbolTable;
 import postfix.semantics.VariableListDeclaring;
 import postfix.semantics.Exceptions.VariableAlreadyDeclaredException;
 
+//TODO skal stemme overens med de noder der faktisk eksisterer i AST
 /**
  * Class for managing declarations, also responsible for calling TypeVisitor for
  * the right hand side (or statements in case of functions)
@@ -19,6 +23,70 @@ public class TopDclVisitor extends SemanticVisitor {
 
     public TopDclVisitor(SymbolTable symbolTable) {
         super(symbolTable);
+    }
+
+    @Override
+    public void inAVariableDeclarationInitializationDcl(AVariableDeclarationInitializationDcl node){
+        TypeVisitor typeVisitor = new TypeVisitor(symbolTable);
+
+        node.apply(typeVisitor);
+
+        //TODO get expr value
+        String value = "";
+        if(symbolTable.DeclaredLocally(node.getId().getText())) {
+            throw new VariableAlreadyDeclaredException("Variable" + node.getId().toString() + "has already been declared");
+        }
+        else {
+            symbolTable.put(node.getId().toString(), new IdAttributes(node.getId(), node.getType(), value, false, false))
+        }
+    }
+
+    @Override
+    public void inAVariableDeclarationDcl(AVariableDeclarationDcl node) {
+        TypeVisitor typeVisitor = new TypeVisitor(symbolTable);
+
+        node.apply(typeVisitor);
+
+        if(symbolTable.DeclaredLocally(node.getId().getText())) {
+            throw new VariableAlreadyDeclaredException("Variable" + node.getId().toString() + "has already been declared");
+        }
+        else {
+            symbolTable.put(node.getId().toString(), new IdAttributes(node.getId(), node.getType(), null, false, false))
+        }
+    }
+
+    @Override
+    public void inAConstDeclarationInitializationDcl(AConstDeclarationInitializationDcl node) {
+        
+        TypeVisitor typeVisitor = new TypeVisitor(symbolTable);
+
+        node.apply(typeVisitor);
+
+        //TODO get expr value
+        String value = "";
+        if(symbolTable.DeclaredLocally(node.getId().getText())) {
+            throw new VariableAlreadyDeclaredException("Variable" + node.getId().toString() + "has already been declared");
+        }
+        else {
+            symbolTable.put(node.getId().toString(), new IdAttributes(node.getId(), node.getType(), value, false, true))
+        }
+
+    }
+
+    @Override
+    public void inAFunctionDeclarationDcl(AFunctionDeclarationDcl node) {
+        TypeVisitor typeVisitor = new TypeVisitor(this.symbolTable);
+
+        node.getType().apply(typeVisitor);
+
+        if (symbolTable.DeclaredLocally(node.getId().getText())) {
+            throw new VariableAlreadyDeclaredException(
+                    "Function" + node.getId().getText() + "has already been declared");
+        } else {
+            symbolTable.put(node.getId().getText(),
+                    new IdAttributes(node.getId(), node.getType(), null, true, false));
+        }
+
     }
 
     /**
@@ -59,21 +127,6 @@ public class TopDclVisitor extends SemanticVisitor {
                 symbolTable.put(id.getText(), new IdAttributes(id, cld.getType(), false, true));
             }
         }
-    }
-
-    void caseFunctionDeclaration(AFunctionDeclarationDcl funcDCL) throws VariableAlreadyDeclaredException {
-        TypeVisitor typeVisitor = new TypeVisitor(this.symbolTable);
-
-        funcDCL.getType().apply(typeVisitor);
-
-        if (symbolTable.DeclaredLocally(funcDCL.getId().getText())) {
-            throw new VariableAlreadyDeclaredException(
-                    "Function" + funcDCL.getId().getText() + "has already been declared");
-        } else {
-            symbolTable.put(funcDCL.getId().getText(),
-                    new IdAttributes(funcDCL.getId(), funcDCL.getType(), true, false));
-        }
-
     }
 
 }
