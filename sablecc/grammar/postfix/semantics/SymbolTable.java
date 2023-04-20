@@ -15,11 +15,21 @@ public class SymbolTable implements Map<String, IdAttributes> {
      * Constructs a symbol table with a reference to an outer symbol table
      * @param outerSymbolTable The outer symbol table
      */
-    public SymbolTable(SymbolTable outerSymbolTable) {
+    public SymbolTable(SymbolTable outerSymbolTable, Scopekind kind) {
+
         this.outerSymbolTable = outerSymbolTable;
+        this.kind = kind;
         hashMap = new HashMap<String, IdAttributes>();
     }
 
+    public enum Scopekind {
+        block,
+        ifBlock,
+        loopBlock,
+        functionBlock,
+    }
+
+    private Scopekind kind;
     //holds the actual symbols
     private HashMap<String, IdAttributes> hashMap;
     
