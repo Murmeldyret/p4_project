@@ -138,7 +138,12 @@ class Translation extends DepthFirstAdapter {
         System.out.print(node.getId());
     }
 
-    public void outAExprValPrimeExpr(AExprValPrimeExpr node) {//
+    public void outAExprValPrimeExpr(AExprValPrimeExpr node) {
+        System.out.print(node.getVal());
+        System.out.print(node.getExprPrime());
+    }
+
+    public void outAExprValPrime2Expr(AExprValPrime2Expr node) {
         System.out.print(node.getBopNot());
         System.out.print(node.getVal());
         System.out.print(node.getExprPrime());

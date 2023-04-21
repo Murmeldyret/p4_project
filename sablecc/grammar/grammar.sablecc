@@ -57,7 +57,6 @@ Tokens
     kw_return = 'return';
     kw_break = 'break';
     
-    id = (nonnumber(nonnumber|number)*);
     blank = (' ' | 13 | 10)+;
 
     //Operators
@@ -99,6 +98,7 @@ Tokens
     //csv operations
     kw_column = 'column';
     kw_row = 'row';
+    id = (nonnumber(nonnumber|number)*);
 
 Ignored Tokens
     blank,
@@ -117,6 +117,7 @@ Productions
      {import_stmt}                  import                              {-> import.stmt}   
     | {declaration}                 dcl                                 {-> New stmt.declaration (dcl  )  }   
     | {assignment_statement_stmt}   assignment                          {-> assignment.stmt  }   
+    | {function_call}               function_call                       {-> New stmt.function_call(function_call) }
     | {array_operations}            array_op                            {-> New stmt.array_operations (array_op  )  }   
     | {for_loop}                    kw_for id kw_in val block           {-> New stmt.for_loop (kw_for , id , kw_in , val , block  )  }   
     | {while_loop}                  kw_while expr block                 {-> New stmt.while_loop (kw_while , expr , block  )  }   
@@ -133,6 +134,7 @@ Productions
 
     dcl =
      {variable_declaration_initialization}  type id op_assign expr                                                  {-> New dcl.variable_declaration_initialization (type , id , op_assign , expr  )  }   
+    | {variable_declaration_array}          type id op_assign array_op                                              {-> New dcl.variable_declaration_array (type , id, op_assign, array_op )  }   
     | {variable_declaration}                type id                                                                 {-> New dcl.variable_declaration (type , id  )  }   
     | {const_declaration_initialization}    kw_const type id op_assign expr                                         {-> New dcl.const_declaration_initialization (kw_const , type , id , op_assign , expr  )  }   
     | {function_declaration}                type kw_function id l_par function_param r_par l_cbrack stmts r_cbrack  {-> New dcl.function_declaration (type , kw_function , id , function_param , stmts )  } ;
@@ -156,8 +158,8 @@ Productions
      {function_call_param_prime} sop_comma expr function_call_param_prime {-> New function_call_param_prime.function_call_param_prime (sop_comma , expr , function_call_param_prime  )  }   
     | {-> New function_call_param_prime ( )  } ;
 
-    function_call {-> val  } =
-     {function_call} id l_par function_call_param r_par {-> New val.function_call (id , function_call_param   )  } ;
+    function_call =
+     {function_call} id l_par function_call_param r_par ;
 
     block {-> P.block  } =
      {block_stmt} l_cbrack stmts r_cbrack {-> New block.block_stmt ( stmts )  };
@@ -180,7 +182,7 @@ Productions
     | {expr_array}          array_expr              {-> New expr.expr_array (array_expr  )  } ;
 
     expr_prime {-> P.expr_prime  } =
-     {expr_prime_operator_val_prime} bin_infix_op val expr_prime {-> New expr_prime.expr_prime_operator_val_prime (bin_infix_op , val , expr_prime  )  }   
+     {expr_prime_operator_val_prime}    bin_infix_op val expr_prime {-> New expr_prime.expr_prime_operator_val_prime (bin_infix_op , val , expr_prime  )  }   
     | {-> New expr_prime ( )  } ;
 
     csv_op {-> csv_op  } =
@@ -232,11 +234,12 @@ Productions
      {remove_at_from_array} kw_remove_at indexing kw_in id {-> New array_op.remove_at_from_array (kw_remove_at , indexing , kw_in , id  )  } ;
 
     array_insert {-> array_op } =
-     {insert_to_array} kw_insert val array_expr kw_in id {-> New array_op.insert_to_array (kw_insert , val , array_expr , kw_in , id  )  } ;
+     {insert_to_array} kw_insert val array_expr kw_in id {-> New array_op.insert_to_array (kw_insert , val , array_expr , kw_in , id  )  } 
+    |{insert_to_variable} kw_insert l_par array_expr r_par {-> New array_op.insert_to_variable(kw_insert, array_expr)} ;
 
     val {-> val  } =
-     {val_id}               id              {-> New val.val_id (id  )  }   
-    | {function_call_value} function_call   {-> function_call.val }   
+     {val_id}               id              {-> New val.val_id (id  )  }  
+    | {val_function_call}   function_call   {-> New val.val_function_call(function_call) }
     | {val_floatnum}        floatnum        {-> New val.val_floatnum (floatnum  )  }   
     | {val_intnum}          intnum          {-> New val.val_intnum (intnum  )  }   
     | {val_string}          string          {-> New val.val_string (string  )  }   
@@ -305,18 +308,20 @@ Abstract Syntax Tree
         | {import_with_seperator}   kw_import string kw_separated_by char kw_as id 
         | {declaration}             dcl 
         | {assign}                  id indexing op_assign expr 
+        | {function_call}           function_call
         | {array_operations}        array_op 
         | {for_loop}                kw_for id kw_in val block 
         | {while_loop}              kw_while expr block 
         | {control_statement}       kw_if expr block in_control_stmt 
-        | {print_statement}         kw_print expr 
         | {csv_operation}           csv_op 
+        | {print_statement}         kw_print expr 
         | {export_statement}        kw_export id kw_to expr 
         | {return}                  kw_return expr 
         | {break_statement}         kw_break ;
 
     dcl =
-        {variable_declaration_initialization}      type id op_assign expr 
+        {variable_declaration_initialization}   type id op_assign expr 
+        | {variable_declaration_array}          type id op_assign array_op  
         | {variable_declaration}                type id 
         | {const_declaration_initialization}    kw_const type id op_assign expr 
         | {function_declaration}                type kw_function id function_param stmts ;
@@ -338,6 +343,9 @@ Abstract Syntax Tree
         {function_call_param_prime} sop_comma expr function_call_param_prime 
         | ;
 
+    function_call =
+     {function_call} id l_par function_call_param r_par ;
+
     block =
        {block_stmt} stmts ;
 
@@ -356,7 +364,7 @@ Abstract Syntax Tree
        | {expr_array}       array_expr;
     
     expr_prime = 
-       {expr_prime_operator_val_prime} bin_infix_op val expr_prime 
+       {expr_prime_operator_val_prime}      bin_infix_op val expr_prime 
        | ;
     
     csv_op = 
@@ -385,12 +393,13 @@ Abstract Syntax Tree
         {add_to_array}              kw_add array_expr 
         | {remove_from_array}       kw_remove kw_in id 
         | {remove_at_from_array}    kw_remove_at indexing kw_in id 
-        | {insert_to_array}         kw_insert val array_expr kw_in id ;
+        | {insert_to_array}         kw_insert val array_expr kw_in id 
+        | {insert_to_variable}      kw_insert array_expr;
 
     //måske skal function call ikke være value men expression i stedet, time will tell
     val = 
-        {val_id}            id 
-        | {function_call}   id function_call_param 
+        {val_id}            id  
+        | {val_function_call}   function_call
         | {val_floatnum}    floatnum 
         | {val_intnum}      intnum 
         | {val_string}      string 
