@@ -9,6 +9,7 @@ import postfix.semantics.IdAttributes;
 import postfix.semantics.SymbolTable;
 import postfix.semantics.VariableListDeclaring;
 import postfix.semantics.Exceptions.VariableAlreadyDeclaredException;
+import postfix.semantics.IdAttributes.Attributes;
 
 //TODO skal stemme overens med de noder der faktisk eksisterer i AST
 /**
@@ -37,7 +38,7 @@ public class TopDclVisitor extends SemanticVisitor {
             throw new VariableAlreadyDeclaredException("Variable" + node.getId().toString() + "has already been declared");
         }
         else {
-            symbolTable.put(node.getId().toString(), new IdAttributes(node.getId(), node.getType(), value, false, false));
+            symbolTable.put(node.getId().toString(), new IdAttributes(node.getId(), node.getType(), value,Attributes.variable));
         }
     }
 
@@ -51,7 +52,7 @@ public class TopDclVisitor extends SemanticVisitor {
             throw new VariableAlreadyDeclaredException("Variable" + node.getId().toString() + "has already been declared");
         }
         else {
-            symbolTable.put(node.getId().toString(), new IdAttributes(node.getId(), node.getType(), null, false, false));
+            symbolTable.put(node.getId().toString(), new IdAttributes(node.getId(), node.getType(), null, Attributes.variable));
         }
     }
 
@@ -68,7 +69,7 @@ public class TopDclVisitor extends SemanticVisitor {
             throw new VariableAlreadyDeclaredException("Variable" + node.getId().toString() + "has already been declared");
         }
         else {
-            symbolTable.put(node.getId().toString(), new IdAttributes(node.getId(), node.getType(), value, false, true));
+            symbolTable.put(node.getId().toString(), new IdAttributes(node.getId(), node.getType(), value, Attributes.constant));
         }
 
     }
@@ -85,7 +86,7 @@ public class TopDclVisitor extends SemanticVisitor {
         }
         else {
             symbolTable.put(node.getId().getText(),
-                    new IdAttributes(node.getId(), node.getType(), null, true, false));
+                    new IdAttributes(node.getId(), node.getType(), null, Attributes.function));
         }
     }
 
