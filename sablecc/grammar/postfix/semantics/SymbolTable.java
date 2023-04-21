@@ -35,7 +35,7 @@ public class SymbolTable implements Map<String, IdAttributes> {
         /** Like a normal block, just for loops */
         loopBlock,
         /** A block where all outer variables are read only */
-        functionBlock,
+        functionBlock, variable,
     }
 
     private Scopekind kind;
