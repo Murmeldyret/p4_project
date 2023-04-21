@@ -24,11 +24,14 @@ public class SymbolTable implements Map<String, IdAttributes> {
         hashMap = new HashMap<String, IdAttributes>();
     }
 
+    /**
+     * Represents the scope type that this symbol table manages
+     */
     public enum Scopekind {
-        block,
-        ifBlock,
-        loopBlock,
-        functionBlock,
+        /**A normal block*/block,
+        /**Like a normal block, just for if statements*/ifBlock,
+        /**Like a normal block, just for loops*/loopBlock,
+        /**A block where all outer variables are read only*/functionBlock,
     }
 
     private Scopekind kind;
