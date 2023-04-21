@@ -90,7 +90,13 @@ public class SymbolTable implements Map<String, IdAttributes> {
 
     @Override
     public boolean containsValue(Object value) {
-        return hashMap.containsValue(value);
+        boolean res = false;
+        res = hashMap.containsValue(value);
+
+        if (outerSymbolTable != null && !res) {
+            res = outerSymbolTable.containsValue(value);
+        }
+        return res;
 
     }
 
