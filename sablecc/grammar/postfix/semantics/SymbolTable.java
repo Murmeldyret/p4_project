@@ -38,8 +38,10 @@ public class SymbolTable implements Map<String, IdAttributes> {
     // holds the actual symbols
     private HashMap<String, IdAttributes> hashMap;
 
+    /**Represents the outer scope, is null if no such scope exists */
     private SymbolTable outerSymbolTable;
 
+    
     private SymbolTable outerScope() {
         return outerSymbolTable;
     }

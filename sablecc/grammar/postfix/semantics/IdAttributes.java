@@ -19,33 +19,37 @@ public class IdAttributes {
 
     private Attributes attributes;
 
-    /**Represents information about what modifiers the identifer has */
+    /** Represents information about what modifiers the identifer has */
     public enum Attributes {
-        /**An identifier whose value cannot be changed */
+        /** An identifier whose value cannot be changed */
         constant,
-        /**An identifier, that is a function */
+        /** An identifier, that is a function */
         function,
-        //TODO csv skal måske ikke være her
-        /**A special csv type */
+        // TODO csv skal måske ikke være her
+        /** A special csv type */
         csv,
 
     }
     // TODO variabel der indeholder værdi
 
-    
     @Deprecated
     public IdAttributes(TId id, TType type, boolean isFunction, boolean isConst) {
     }
+
     @Deprecated
     public IdAttributes(TId id, TType type, String value, boolean isFunction, boolean isConst) {
     }
+
     public IdAttributes(TId id, TType type, String value, Attributes attributes) {
         this.id = id;
         this.type = type;
         this.value = value;
         this.attributes = attributes;
     }
-    
+
+    public Attributes getAttributes() {
+        return attributes;
+    }
 
     public TId getId() {
         return id;
@@ -66,6 +70,5 @@ public class IdAttributes {
     public boolean isConst() {
         return isConst;
     }
-
 
 }
