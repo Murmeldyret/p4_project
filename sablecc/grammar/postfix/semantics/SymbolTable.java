@@ -15,7 +15,7 @@ public class SymbolTable implements Map<String, IdAttributes> {
      * Constructs a symbol table with a reference to an outer symbol table
      * 
      * @param outerSymbolTable The outer symbol table
-     * @param kind Determines what this symbol can access
+     * @param kind             Determines what this symbol can access
      */
     public SymbolTable(SymbolTable outerSymbolTable, Scopekind kind) {
 
@@ -28,20 +28,23 @@ public class SymbolTable implements Map<String, IdAttributes> {
      * Represents the scope type that this symbol table manages
      */
     public enum Scopekind {
-        /**A normal block*/block,
-        /**Like a normal block, just for if statements*/ifBlock,
-        /**Like a normal block, just for loops*/loopBlock,
-        /**A block where all outer variables are read only*/functionBlock,
+        /** A normal block */
+        block,
+        /** Like a normal block, just for if statements */
+        ifBlock,
+        /** Like a normal block, just for loops */
+        loopBlock,
+        /** A block where all outer variables are read only */
+        functionBlock,
     }
 
     private Scopekind kind;
     // holds the actual symbols
     private HashMap<String, IdAttributes> hashMap;
 
-    /**Represents the outer scope, is null if no such scope exists */
+    /** Represents the outer scope, is null if no such scope exists */
     private SymbolTable outerSymbolTable;
 
-    
     private SymbolTable outerScope() {
         return outerSymbolTable;
     }
@@ -76,12 +79,16 @@ public class SymbolTable implements Map<String, IdAttributes> {
 
     @Override
     public boolean isEmpty() {
-        return hashMap.isEmpty();
+        boolean res = hashMap.isEmpty();
+        if (outerSymbolTable != null) {
+            res = res || outerSymbolTable.isEmpty();
+        }
+        return res;
     }
 
     @Override
     public boolean containsKey(Object key) {
-        if(key == null){
+        if (key == null) {
             throw new NullPointerException("Key cannot be null");
         }
         return hashMap.containsKey(key);
@@ -106,13 +113,13 @@ public class SymbolTable implements Map<String, IdAttributes> {
 
     @Override
     public IdAttributes get(Object key) {
-        if(key == null){
+        if (key == null) {
             throw new NullPointerException("Key cannot be null");
         }
-        if(hashMap.containsKey(key)){
+        if (hashMap.containsKey(key)) {
             return hashMap.get(key);
         }
-        if(outerSymbolTable != null){
+        if (outerSymbolTable != null) {
             return outerSymbolTable.get(key);
         }
         throw new IllegalArgumentException("Key does not exist in symbol table");
@@ -120,7 +127,7 @@ public class SymbolTable implements Map<String, IdAttributes> {
 
     @Override
     public IdAttributes put(String key, IdAttributes value) {
-        if(key == null){
+        if (key == null) {
             throw new NullPointerException("Key cannot be null");
         }
         return hashMap.put(key, value);
