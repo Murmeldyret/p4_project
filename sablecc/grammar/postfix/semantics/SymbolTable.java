@@ -70,38 +70,50 @@ public class SymbolTable implements Map<String, IdAttributes> {
 
     @Override
     public int size() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'size'");
+        return hashMap.size();
+
     }
 
     @Override
     public boolean isEmpty() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'isEmpty'");
+        return hashMap.isEmpty();
     }
 
     @Override
     public boolean containsKey(Object key) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'containsKey'");
+        if(key == null){
+            throw new NullPointerException("Key cannot be null");
+        }
+        return hashMap.containsKey(key);
+
     }
 
     @Override
     public boolean containsValue(Object value) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'containsValue'");
+        return hashMap.containsValue(value);
+
     }
 
     @Override
     public IdAttributes get(Object key) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'get'");
+        if(key == null){
+            throw new NullPointerException("Key cannot be null");
+        }
+        if(hashMap.containsKey(key)){
+            return hashMap.get(key);
+        }
+        if(outerSymbolTable != null){
+            return outerSymbolTable.get(key);
+        }
+        throw new IllegalArgumentException("Key does not exist in symbol table");
     }
 
     @Override
     public IdAttributes put(String key, IdAttributes value) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'put'");
+        if(key == null){
+            throw new NullPointerException("Key cannot be null");
+        }
+        return hashMap.put(key, value);
     }
 
     @Override
