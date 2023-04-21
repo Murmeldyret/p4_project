@@ -35,7 +35,7 @@ public class SymbolTable implements Map<String, IdAttributes> {
         /** Like a normal block, just for loops */
         loopBlock,
         /** A block where all outer variables are read only */
-        functionBlock, variable,
+        functionBlock,
     }
 
     private Scopekind kind;
@@ -47,6 +47,20 @@ public class SymbolTable implements Map<String, IdAttributes> {
 
     private SymbolTable outerScope() {
         return outerSymbolTable;
+    }
+
+    private boolean DeclaredExternally(IdAttributes id) {
+        boolean res = false;
+
+        if (outerSymbolTable != null) {
+
+        }
+
+        return res;
+    }
+
+    private boolean DeclaredLocally(IdAttributes id) {
+        return DeclaredLocally(id.getId().getText());
     }
 
     /**
@@ -135,13 +149,36 @@ public class SymbolTable implements Map<String, IdAttributes> {
     @Override
     public IdAttributes remove(Object key) {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'remove'");
+        // findes hashmap, hvis nej så fejl
+        // findes værdi ude for lokal scope og er i funktionsscope, så smid fejl
+        // findes værdi, hvis nej så return null
+
+        IdAttributes res = null;
+
+        if (hashMap == null && outerSymbolTable == null) {
+            throw new NullPointerException("Symbol table does not exists");
+        }
+        if (this.DeclaredLocally((IdAttributes) key)) {
+            res = hashMap.remove(key);
+        }
+        // findes, men i outer scope
+        else if (containsValue(key)) {
+            if (kind != Scopekind.functionBlock) {
+                res = outerSymbolTable.remove(key);
+            } else
+                throw new IllegalArgumentException("Function block scope cannot remove identifers outside local scope");
+        }
+        return res;
     }
 
     @Override
     public void putAll(Map<? extends String, ? extends IdAttributes> m) {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'putAll'");
+        // put loop
+
+        for (String keyString : m.keySet()) {
+            put(keyString, m.get(keyString));
+        }
     }
 
     @Override
@@ -156,8 +193,16 @@ public class SymbolTable implements Map<String, IdAttributes> {
         throw new UnsupportedOperationException("Unimplemented method 'keySet'");
     }
 
+    @Deprecated
     @Override
     public Collection<IdAttributes> values() {
+        Collection<IdAttributes> attributes = hashMap.values();
+        if (outerSymbolTable != null) {
+            // TODO outer scope kan have identiske keys hvilket skaber problemer, så denne
+            // metode kan ikke virke
+            attributes.addAll(outerSymbolTable.values());
+        }
+
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'values'");
     }
