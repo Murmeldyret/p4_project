@@ -21,6 +21,7 @@ public class IdAttributes {
 
     /** Represents information about what modifiers the identifer has */
     public enum Attributes {
+        variable,
         /** An identifier whose value cannot be changed */
         constant,
         /** An identifier, that is a function */
