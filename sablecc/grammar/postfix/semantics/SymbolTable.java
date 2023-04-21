@@ -74,7 +74,6 @@ public class SymbolTable implements Map<String, IdAttributes> {
     @Override
     public int size() {
         return hashMap.size();
-
     }
 
     @Override
