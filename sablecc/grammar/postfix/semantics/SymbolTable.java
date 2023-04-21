@@ -68,7 +68,7 @@ public class SymbolTable implements Map<String, IdAttributes> {
      * @return the current declaration if it exists, null otherwise
      */
     public IdAttributes RetrieveSymbol(String idName) {
-        throw new UnsupportedOperationException("Unimplemented method 'RetrieveSymbol'");
+        return get(idName);
     }
 
     @Override
