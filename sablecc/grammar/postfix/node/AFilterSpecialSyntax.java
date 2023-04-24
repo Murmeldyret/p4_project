@@ -8,7 +8,7 @@ import postfix.analysis.*;
 public final class AFilterSpecialSyntax extends PSpecialSyntax
 {
     private TSopFilter _sopFilter_;
-    private TId _id_;
+    private PExpr _expr_;
 
     public AFilterSpecialSyntax()
     {
@@ -17,12 +17,12 @@ public final class AFilterSpecialSyntax extends PSpecialSyntax
 
     public AFilterSpecialSyntax(
         @SuppressWarnings("hiding") TSopFilter _sopFilter_,
-        @SuppressWarnings("hiding") TId _id_)
+        @SuppressWarnings("hiding") PExpr _expr_)
     {
         // Constructor
         setSopFilter(_sopFilter_);
 
-        setId(_id_);
+        setExpr(_expr_);
 
     }
 
@@ -31,7 +31,7 @@ public final class AFilterSpecialSyntax extends PSpecialSyntax
     {
         return new AFilterSpecialSyntax(
             cloneNode(this._sopFilter_),
-            cloneNode(this._id_));
+            cloneNode(this._expr_));
     }
 
     @Override
@@ -65,16 +65,16 @@ public final class AFilterSpecialSyntax extends PSpecialSyntax
         this._sopFilter_ = node;
     }
 
-    public TId getId()
+    public PExpr getExpr()
     {
-        return this._id_;
+        return this._expr_;
     }
 
-    public void setId(TId node)
+    public void setExpr(PExpr node)
     {
-        if(this._id_ != null)
+        if(this._expr_ != null)
         {
-            this._id_.parent(null);
+            this._expr_.parent(null);
         }
 
         if(node != null)
@@ -87,7 +87,7 @@ public final class AFilterSpecialSyntax extends PSpecialSyntax
             node.parent(this);
         }
 
-        this._id_ = node;
+        this._expr_ = node;
     }
 
     @Override
@@ -95,7 +95,7 @@ public final class AFilterSpecialSyntax extends PSpecialSyntax
     {
         return ""
             + toString(this._sopFilter_)
-            + toString(this._id_);
+            + toString(this._expr_);
     }
 
     @Override
@@ -108,9 +108,9 @@ public final class AFilterSpecialSyntax extends PSpecialSyntax
             return;
         }
 
-        if(this._id_ == child)
+        if(this._expr_ == child)
         {
-            this._id_ = null;
+            this._expr_ = null;
             return;
         }
 
@@ -127,9 +127,9 @@ public final class AFilterSpecialSyntax extends PSpecialSyntax
             return;
         }
 
-        if(this._id_ == oldChild)
+        if(this._expr_ == oldChild)
         {
-            setId((TId) newChild);
+            setExpr((PExpr) newChild);
             return;
         }
 

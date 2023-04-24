@@ -8,7 +8,6 @@ import postfix.analysis.*;
 public final class ASumSpecialSyntax extends PSpecialSyntax
 {
     private TSopSum _sopSum_;
-    private TId _id_;
 
     public ASumSpecialSyntax()
     {
@@ -16,13 +15,10 @@ public final class ASumSpecialSyntax extends PSpecialSyntax
     }
 
     public ASumSpecialSyntax(
-        @SuppressWarnings("hiding") TSopSum _sopSum_,
-        @SuppressWarnings("hiding") TId _id_)
+        @SuppressWarnings("hiding") TSopSum _sopSum_)
     {
         // Constructor
         setSopSum(_sopSum_);
-
-        setId(_id_);
 
     }
 
@@ -30,8 +26,7 @@ public final class ASumSpecialSyntax extends PSpecialSyntax
     public Object clone()
     {
         return new ASumSpecialSyntax(
-            cloneNode(this._sopSum_),
-            cloneNode(this._id_));
+            cloneNode(this._sopSum_));
     }
 
     @Override
@@ -65,37 +60,11 @@ public final class ASumSpecialSyntax extends PSpecialSyntax
         this._sopSum_ = node;
     }
 
-    public TId getId()
-    {
-        return this._id_;
-    }
-
-    public void setId(TId node)
-    {
-        if(this._id_ != null)
-        {
-            this._id_.parent(null);
-        }
-
-        if(node != null)
-        {
-            if(node.parent() != null)
-            {
-                node.parent().removeChild(node);
-            }
-
-            node.parent(this);
-        }
-
-        this._id_ = node;
-    }
-
     @Override
     public String toString()
     {
         return ""
-            + toString(this._sopSum_)
-            + toString(this._id_);
+            + toString(this._sopSum_);
     }
 
     @Override
@@ -105,12 +74,6 @@ public final class ASumSpecialSyntax extends PSpecialSyntax
         if(this._sopSum_ == child)
         {
             this._sopSum_ = null;
-            return;
-        }
-
-        if(this._id_ == child)
-        {
-            this._id_ = null;
             return;
         }
 
@@ -124,12 +87,6 @@ public final class ASumSpecialSyntax extends PSpecialSyntax
         if(this._sopSum_ == oldChild)
         {
             setSopSum((TSopSum) newChild);
-            return;
-        }
-
-        if(this._id_ == oldChild)
-        {
-            setId((TId) newChild);
             return;
         }
 
