@@ -26,6 +26,8 @@ public class IdAttributes {
         constant,
         /** An identifier, that is a function */
         function,
+        /** An identifier, that is an array */
+        array,
         // TODO csv skal måske ikke være her
         /** A special csv type */
         csv,
