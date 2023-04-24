@@ -6,6 +6,7 @@ import java.util.Stack;
 
 import postfix.node.AExprValPrime2Expr;
 import postfix.node.AExprValPrimeExpr;
+import postfix.node.AFunctionCallFunctionCall;
 import postfix.node.AValBoolVal;
 import postfix.node.AValFloatnumVal;
 import postfix.node.AValFunctionCallVal;
@@ -90,7 +91,7 @@ public class TypeVisitor extends SemanticVisitor {
 
     @Override
     public void inAValFunctionCallVal(AValFunctionCallVal node) {
-        //TODO virker med garanti ikke, skal have funktionens identifier 
+        // TODO virker med garanti ikke, skal have funktionens identifier
         node.getFunctionCall().apply(this);
     }
 
@@ -108,6 +109,10 @@ public class TypeVisitor extends SemanticVisitor {
     @Override
     public void inAValStringVal(AValStringVal node) {
         typeStack.push("string");
+    }
+    @Override
+    public void inAFunctionCallFunctionCall(AFunctionCallFunctionCall node) {
+        typeStack.push(symbolTable.get(node.getId().getText()).getType().getText());
     }
 
 }
