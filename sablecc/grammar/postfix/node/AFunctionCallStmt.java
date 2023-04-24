@@ -5,46 +5,46 @@ package postfix.node;
 import postfix.analysis.*;
 
 @SuppressWarnings("nls")
-public final class AMeanSpecialSyntax extends PSpecialSyntax
+public final class AFunctionCallStmt extends PStmt
 {
-    private TSopMean _sopMean_;
+    private PFunctionCall _functionCall_;
 
-    public AMeanSpecialSyntax()
+    public AFunctionCallStmt()
     {
         // Constructor
     }
 
-    public AMeanSpecialSyntax(
-        @SuppressWarnings("hiding") TSopMean _sopMean_)
+    public AFunctionCallStmt(
+        @SuppressWarnings("hiding") PFunctionCall _functionCall_)
     {
         // Constructor
-        setSopMean(_sopMean_);
+        setFunctionCall(_functionCall_);
 
     }
 
     @Override
     public Object clone()
     {
-        return new AMeanSpecialSyntax(
-            cloneNode(this._sopMean_));
+        return new AFunctionCallStmt(
+            cloneNode(this._functionCall_));
     }
 
     @Override
     public void apply(Switch sw)
     {
-        ((Analysis) sw).caseAMeanSpecialSyntax(this);
+        ((Analysis) sw).caseAFunctionCallStmt(this);
     }
 
-    public TSopMean getSopMean()
+    public PFunctionCall getFunctionCall()
     {
-        return this._sopMean_;
+        return this._functionCall_;
     }
 
-    public void setSopMean(TSopMean node)
+    public void setFunctionCall(PFunctionCall node)
     {
-        if(this._sopMean_ != null)
+        if(this._functionCall_ != null)
         {
-            this._sopMean_.parent(null);
+            this._functionCall_.parent(null);
         }
 
         if(node != null)
@@ -57,23 +57,23 @@ public final class AMeanSpecialSyntax extends PSpecialSyntax
             node.parent(this);
         }
 
-        this._sopMean_ = node;
+        this._functionCall_ = node;
     }
 
     @Override
     public String toString()
     {
         return ""
-            + toString(this._sopMean_);
+            + toString(this._functionCall_);
     }
 
     @Override
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
-        if(this._sopMean_ == child)
+        if(this._functionCall_ == child)
         {
-            this._sopMean_ = null;
+            this._functionCall_ = null;
             return;
         }
 
@@ -84,9 +84,9 @@ public final class AMeanSpecialSyntax extends PSpecialSyntax
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
-        if(this._sopMean_ == oldChild)
+        if(this._functionCall_ == oldChild)
         {
-            setSopMean((TSopMean) newChild);
+            setFunctionCall((PFunctionCall) newChild);
             return;
         }
 

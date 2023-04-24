@@ -8,7 +8,6 @@ import postfix.analysis.*;
 public final class ACountSpecialSyntax extends PSpecialSyntax
 {
     private TSopCount _sopCount_;
-    private TId _id_;
 
     public ACountSpecialSyntax()
     {
@@ -16,13 +15,10 @@ public final class ACountSpecialSyntax extends PSpecialSyntax
     }
 
     public ACountSpecialSyntax(
-        @SuppressWarnings("hiding") TSopCount _sopCount_,
-        @SuppressWarnings("hiding") TId _id_)
+        @SuppressWarnings("hiding") TSopCount _sopCount_)
     {
         // Constructor
         setSopCount(_sopCount_);
-
-        setId(_id_);
 
     }
 
@@ -30,8 +26,7 @@ public final class ACountSpecialSyntax extends PSpecialSyntax
     public Object clone()
     {
         return new ACountSpecialSyntax(
-            cloneNode(this._sopCount_),
-            cloneNode(this._id_));
+            cloneNode(this._sopCount_));
     }
 
     @Override
@@ -65,37 +60,11 @@ public final class ACountSpecialSyntax extends PSpecialSyntax
         this._sopCount_ = node;
     }
 
-    public TId getId()
-    {
-        return this._id_;
-    }
-
-    public void setId(TId node)
-    {
-        if(this._id_ != null)
-        {
-            this._id_.parent(null);
-        }
-
-        if(node != null)
-        {
-            if(node.parent() != null)
-            {
-                node.parent().removeChild(node);
-            }
-
-            node.parent(this);
-        }
-
-        this._id_ = node;
-    }
-
     @Override
     public String toString()
     {
         return ""
-            + toString(this._sopCount_)
-            + toString(this._id_);
+            + toString(this._sopCount_);
     }
 
     @Override
@@ -105,12 +74,6 @@ public final class ACountSpecialSyntax extends PSpecialSyntax
         if(this._sopCount_ == child)
         {
             this._sopCount_ = null;
-            return;
-        }
-
-        if(this._id_ == child)
-        {
-            this._id_ = null;
             return;
         }
 
@@ -124,12 +87,6 @@ public final class ACountSpecialSyntax extends PSpecialSyntax
         if(this._sopCount_ == oldChild)
         {
             setSopCount((TSopCount) newChild);
-            return;
-        }
-
-        if(this._id_ == oldChild)
-        {
-            setId((TId) newChild);
             return;
         }
 

@@ -8,7 +8,7 @@ import postfix.analysis.*;
 public final class AGroupbySpecialSyntax extends PSpecialSyntax
 {
     private TSopGroupby _sopGroupby_;
-    private TId _id_;
+    private TString _string_;
 
     public AGroupbySpecialSyntax()
     {
@@ -17,12 +17,12 @@ public final class AGroupbySpecialSyntax extends PSpecialSyntax
 
     public AGroupbySpecialSyntax(
         @SuppressWarnings("hiding") TSopGroupby _sopGroupby_,
-        @SuppressWarnings("hiding") TId _id_)
+        @SuppressWarnings("hiding") TString _string_)
     {
         // Constructor
         setSopGroupby(_sopGroupby_);
 
-        setId(_id_);
+        setString(_string_);
 
     }
 
@@ -31,7 +31,7 @@ public final class AGroupbySpecialSyntax extends PSpecialSyntax
     {
         return new AGroupbySpecialSyntax(
             cloneNode(this._sopGroupby_),
-            cloneNode(this._id_));
+            cloneNode(this._string_));
     }
 
     @Override
@@ -65,16 +65,16 @@ public final class AGroupbySpecialSyntax extends PSpecialSyntax
         this._sopGroupby_ = node;
     }
 
-    public TId getId()
+    public TString getString()
     {
-        return this._id_;
+        return this._string_;
     }
 
-    public void setId(TId node)
+    public void setString(TString node)
     {
-        if(this._id_ != null)
+        if(this._string_ != null)
         {
-            this._id_.parent(null);
+            this._string_.parent(null);
         }
 
         if(node != null)
@@ -87,7 +87,7 @@ public final class AGroupbySpecialSyntax extends PSpecialSyntax
             node.parent(this);
         }
 
-        this._id_ = node;
+        this._string_ = node;
     }
 
     @Override
@@ -95,7 +95,7 @@ public final class AGroupbySpecialSyntax extends PSpecialSyntax
     {
         return ""
             + toString(this._sopGroupby_)
-            + toString(this._id_);
+            + toString(this._string_);
     }
 
     @Override
@@ -108,9 +108,9 @@ public final class AGroupbySpecialSyntax extends PSpecialSyntax
             return;
         }
 
-        if(this._id_ == child)
+        if(this._string_ == child)
         {
-            this._id_ = null;
+            this._string_ = null;
             return;
         }
 
@@ -127,9 +127,9 @@ public final class AGroupbySpecialSyntax extends PSpecialSyntax
             return;
         }
 
-        if(this._id_ == oldChild)
+        if(this._string_ == oldChild)
         {
-            setId((TId) newChild);
+            setString((TString) newChild);
             return;
         }
 
