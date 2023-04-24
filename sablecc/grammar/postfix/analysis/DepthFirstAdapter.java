@@ -1006,31 +1006,6 @@ public class DepthFirstAdapter extends AnalysisAdapter
     public void caseAExprValPrimeExpr(AExprValPrimeExpr node)
     {
         inAExprValPrimeExpr(node);
-        if(node.getVal() != null)
-        {
-            node.getVal().apply(this);
-        }
-        if(node.getExprPrime() != null)
-        {
-            node.getExprPrime().apply(this);
-        }
-        outAExprValPrimeExpr(node);
-    }
-
-    public void inAExprValPrime2Expr(AExprValPrime2Expr node)
-    {
-        defaultIn(node);
-    }
-
-    public void outAExprValPrime2Expr(AExprValPrime2Expr node)
-    {
-        defaultOut(node);
-    }
-
-    @Override
-    public void caseAExprValPrime2Expr(AExprValPrime2Expr node)
-    {
-        inAExprValPrime2Expr(node);
         if(node.getBopNot() != null)
         {
             node.getBopNot().apply(this);
@@ -1043,7 +1018,7 @@ public class DepthFirstAdapter extends AnalysisAdapter
         {
             node.getExprPrime().apply(this);
         }
-        outAExprValPrime2Expr(node);
+        outAExprValPrimeExpr(node);
     }
 
     public void inAExprSpecialExpr(AExprSpecialExpr node)

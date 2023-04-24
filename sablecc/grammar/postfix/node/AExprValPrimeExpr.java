@@ -7,6 +7,7 @@ import postfix.analysis.*;
 @SuppressWarnings("nls")
 public final class AExprValPrimeExpr extends PExpr
 {
+    private TBopNot _bopNot_;
     private PVal _val_;
     private PExprPrime _exprPrime_;
 
@@ -16,10 +17,13 @@ public final class AExprValPrimeExpr extends PExpr
     }
 
     public AExprValPrimeExpr(
+        @SuppressWarnings("hiding") TBopNot _bopNot_,
         @SuppressWarnings("hiding") PVal _val_,
         @SuppressWarnings("hiding") PExprPrime _exprPrime_)
     {
         // Constructor
+        setBopNot(_bopNot_);
+
         setVal(_val_);
 
         setExprPrime(_exprPrime_);
@@ -30,6 +34,7 @@ public final class AExprValPrimeExpr extends PExpr
     public Object clone()
     {
         return new AExprValPrimeExpr(
+            cloneNode(this._bopNot_),
             cloneNode(this._val_),
             cloneNode(this._exprPrime_));
     }
@@ -38,6 +43,31 @@ public final class AExprValPrimeExpr extends PExpr
     public void apply(Switch sw)
     {
         ((Analysis) sw).caseAExprValPrimeExpr(this);
+    }
+
+    public TBopNot getBopNot()
+    {
+        return this._bopNot_;
+    }
+
+    public void setBopNot(TBopNot node)
+    {
+        if(this._bopNot_ != null)
+        {
+            this._bopNot_.parent(null);
+        }
+
+        if(node != null)
+        {
+            if(node.parent() != null)
+            {
+                node.parent().removeChild(node);
+            }
+
+            node.parent(this);
+        }
+
+        this._bopNot_ = node;
     }
 
     public PVal getVal()
@@ -94,6 +124,7 @@ public final class AExprValPrimeExpr extends PExpr
     public String toString()
     {
         return ""
+            + toString(this._bopNot_)
             + toString(this._val_)
             + toString(this._exprPrime_);
     }
@@ -102,6 +133,12 @@ public final class AExprValPrimeExpr extends PExpr
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
+        if(this._bopNot_ == child)
+        {
+            this._bopNot_ = null;
+            return;
+        }
+
         if(this._val_ == child)
         {
             this._val_ = null;
@@ -121,6 +158,12 @@ public final class AExprValPrimeExpr extends PExpr
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
+        if(this._bopNot_ == oldChild)
+        {
+            setBopNot((TBopNot) newChild);
+            return;
+        }
+
         if(this._val_ == oldChild)
         {
             setVal((PVal) newChild);
