@@ -1,6 +1,7 @@
 package postfix.semantics.visitors;
 
 import postfix.node.AConstDeclarationInitializationDcl;
+import postfix.node.ADeclarationStmt;
 import postfix.node.AFunctionDeclarationDcl;
 import postfix.node.AVariableDeclarationDcl;
 import postfix.node.AVariableDeclarationInitializationDcl;
@@ -26,6 +27,10 @@ public class TopDclVisitor extends SemanticVisitor {
         super(symbolTable);
     }
 
+    @Override
+    public void inADeclarationStmt(ADeclarationStmt node) {
+        defaultIn(node);
+    }
     @Override
     public void inAVariableDeclarationInitializationDcl(AVariableDeclarationInitializationDcl node){
         TypeVisitor typeVisitor = new TypeVisitor(symbolTable);

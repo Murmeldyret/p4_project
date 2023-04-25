@@ -1,0 +1,3 @@
+# tests of declaratations with legal and illegal expressions
+
+int a = 2;

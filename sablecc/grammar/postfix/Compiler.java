@@ -22,21 +22,25 @@ public class Compiler {
             // Parse the input.
             Start tree = p.parse();
 
-            //
             tree.apply(new SemanticVisitor());
             // Apply the translation.
             // tree.apply(new Translation());
         } catch (ParserException e) {
             System.out.println(e.getMessage() + " Vores error");
-            System.out.println(e.getMessage());
         } catch (InvalidExpressionException e) {
             System.out.println(e.getMessage() + "InvalidExpressionException");
         } catch (VariableAlreadyDeclaredException e) {
             System.out.println(e.getMessage() + "VariableAlreadyDeclaredException");
-        } catch (Exception e) {
-
-        }
-
+        } catch (FileNotFoundException e) {
+            System.out.println("Input file not found");
+        } catch (LexerException e) {
+            System.out.println(e.getMessage());
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        } 
+        // catch (Exception e) {
+        //     System.out.println(e.getMessage());
+        // }
 
     }
 }
