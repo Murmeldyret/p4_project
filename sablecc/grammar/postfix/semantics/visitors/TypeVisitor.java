@@ -30,12 +30,21 @@ import postfix.node.PExprPrime;
 import postfix.node.PVal;
 import postfix.node.TBopNot;
 import postfix.semantics.SymbolTable;
+import postfix.semantics.Exceptions.InvalidExpressionException;
 
+
+/**
+ * TODO lav doc
+ */
 public class TypeVisitor extends SemanticVisitor {
 
     public TypeVisitor() {
     }
 
+    /**
+     * Should be called once at every new expression, not the top of the tree
+     * @param symbolTable
+     */
     public TypeVisitor(SymbolTable symbolTable) {
         super(symbolTable);
         typeStack = new Stack<String>();
@@ -127,6 +136,12 @@ public class TypeVisitor extends SemanticVisitor {
         node.getBopNot().apply(this);
         node.getVal().apply(this);
         node.getExprPrime().apply(this);
+    }
+    @Override
+    public void outAExprValPrimeExpr(AExprValPrimeExpr node) {
+       if(!typeCheckExpression(node)) {
+        throw new InvalidExpressionException("Expression does not produce a valid type", node);
+       }
     }
 
     @Override
