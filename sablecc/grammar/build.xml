@@ -1,5 +1,11 @@
-<project name="sprog" >
-    <target name="detteErEnTest">
-    <javac  srcdir="${postfix}/postfix" debug="on" includeDestClasses="false" includes="postfix/**"/>
+<project  >
+    <target name="build">
+        <javac  
+            srcdir="postfix" 
+            destdir="dest"
+            classpath="dest/postfix/Compiler.class"
+            debug="on" 
+            includeDestClasses="false" 
+        />
     </target>
 </project>

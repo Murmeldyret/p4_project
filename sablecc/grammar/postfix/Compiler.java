@@ -28,7 +28,8 @@ public class Compiler {
         } catch (ParserException e) {
             System.out.println(e.getMessage() + " Vores error");
         } catch (InvalidExpressionException e) {
-            System.out.println(e.getMessage() + "InvalidExpressionException");
+            System.out.println(e.getMessage() + " InvalidExpressionException");
+            throw e;
         } catch (VariableAlreadyDeclaredException e) {
             System.out.println(e.getMessage() + "VariableAlreadyDeclaredException");
         } catch (FileNotFoundException e) {
