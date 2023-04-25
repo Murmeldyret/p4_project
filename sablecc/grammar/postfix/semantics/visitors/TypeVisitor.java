@@ -32,7 +32,6 @@ import postfix.node.TBopNot;
 import postfix.semantics.SymbolTable;
 import postfix.semantics.Exceptions.InvalidExpressionException;
 
-
 /**
  * TODO lav doc
  */
@@ -43,6 +42,7 @@ public class TypeVisitor extends SemanticVisitor {
 
     /**
      * Should be called once at every new expression, not the top of the tree
+     * 
      * @param symbolTable
      */
     public TypeVisitor(SymbolTable symbolTable) {
@@ -72,7 +72,9 @@ public class TypeVisitor extends SemanticVisitor {
      * 
      * @param node The node whose type will be returned
      * @return
+     * @deprecated
      */
+    @Deprecated
     private String getSubExprType(PExprPrime node) {
         String res = "";
 
@@ -93,11 +95,6 @@ public class TypeVisitor extends SemanticVisitor {
         // operatorStack.push(getBinInfixOperator(node.getBinInfixOp()));
 
         node.getVal().apply(this);
-        return "";
-    }
-
-    private String getBinInfixOperator(PBinInfixOp node) {
-
         return "";
     }
 
@@ -129,19 +126,17 @@ public class TypeVisitor extends SemanticVisitor {
 
     @Override
     public void inAExprValPrimeExpr(AExprValPrimeExpr node) {
-        String outerType;
-        TBopNot bopNot;
-        PVal value;
 
         node.getBopNot().apply(this);
         node.getVal().apply(this);
         node.getExprPrime().apply(this);
     }
+
     @Override
     public void outAExprValPrimeExpr(AExprValPrimeExpr node) {
-       if(!typeCheckExpression(node)) {
-        throw new InvalidExpressionException("Expression does not produce a valid type", node);
-       }
+        if (!typeCheckExpression(node)) {
+            throw new InvalidExpressionException("Expression does not produce a valid type", node);
+        }
     }
 
     @Override

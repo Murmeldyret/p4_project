@@ -173,10 +173,10 @@ class Translation extends DepthFirstAdapter {
         System.out.print(node.getFunctionCallParamPrime());
     }
 
-    public void outAFunctionCallVal(AFunctionCallVal node) {
-        System.out.print(node.getId());
-        System.out.print(node.getFunctionCallParam());
-    }
+    // public void outAFunctionCallVal(AFunctionCallVal node) {
+    //     System.out.print(node.getId());
+    //     System.out.print(node.getFunctionCallParam());
+    // }
 
     public void outAFunctionDeclarationDcl(AFunctionDeclarationDcl node) {
         System.out.print(node.getType());
