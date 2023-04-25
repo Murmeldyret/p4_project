@@ -1,12 +1,23 @@
 package postfix.semantics.visitors;
 
-import java.util.HashMap;
-import java.util.Queue;
 import java.util.Stack;
 
-import postfix.node.AExprValPrime2Expr;
+import postfix.node.AAndInfixBinInfixOp;
+import postfix.node.ADivisionInfixBinInfixOp;
+import postfix.node.AEqualityInfixBinInfixOp;
+import postfix.node.AExprPrimeOperatorValPrimeExprPrime;
 import postfix.node.AExprValPrimeExpr;
 import postfix.node.AFunctionCallFunctionCall;
+import postfix.node.AGreaterThanEqualInfixBinInfixOp;
+import postfix.node.AGreaterThanInfixBinInfixOp;
+import postfix.node.ALessThanEqualInfixBinInfixOp;
+import postfix.node.ALessThanInfixBinInfixOp;
+import postfix.node.AMinusInfixBinInfixOp;
+import postfix.node.AModuloInfixBinInfixOp;
+import postfix.node.AMultiplicationInfixBinInfixOp;
+import postfix.node.ANotEqualInfixBinInfixOp;
+import postfix.node.AOrInfixBinInfixOp;
+import postfix.node.APlusInfixBinInfixOp;
 import postfix.node.AValBoolVal;
 import postfix.node.AValFloatnumVal;
 import postfix.node.AValFunctionCallVal;
@@ -14,9 +25,10 @@ import postfix.node.AValIdVal;
 import postfix.node.AValIntnumVal;
 import postfix.node.AValStringVal;
 import postfix.node.AVariableDeclarationInitializationDcl;
+import postfix.node.PBinInfixOp;
+import postfix.node.PExprPrime;
 import postfix.node.PVal;
 import postfix.node.TBopNot;
-import postfix.node.TId;
 import postfix.semantics.SymbolTable;
 
 public class TypeVisitor extends SemanticVisitor {
@@ -27,9 +39,11 @@ public class TypeVisitor extends SemanticVisitor {
     public TypeVisitor(SymbolTable symbolTable) {
         super(symbolTable);
         typeStack = new Stack<String>();
+        operatorStack = new Stack<String>();
     }
 
     protected Stack<String> typeStack;
+    protected Stack<String> operatorStack;
     protected TBopNot bopNot;
     protected PVal value;
 
@@ -42,6 +56,36 @@ public class TypeVisitor extends SemanticVisitor {
     private String getValType(PVal val) {
         return "";
 
+    }
+    /**
+     * Gets the type of of a subexpression of type ExprPrime
+     * @param node The node whose type will be returned
+     * @return
+     */
+    private String getSubExprType(PExprPrime node) {
+        String res = "";
+
+        if(node instanceof AExprPrimeOperatorValPrimeExprPrime) {
+            res = getAExprPrimeOperatorValPrimeExprPrimeType((AExprPrimeOperatorValPrimeExprPrime)node);
+        }
+        return res;
+    }
+    /**
+     * Helper method to {@link #getSubExprType(PExprPrime)}
+     * @param node
+     * @return
+     */
+    private String getAExprPrimeOperatorValPrimeExprPrimeType(AExprPrimeOperatorValPrimeExprPrime node) {
+
+        // operatorStack.push(getBinInfixOperator(node.getBinInfixOp()));
+
+
+        node.getVal().apply(this);
+        return "";
+    }
+    private String getBinInfixOperator(PBinInfixOp node) {
+        
+        return "";
     }
 
     /**
@@ -58,6 +102,9 @@ public class TypeVisitor extends SemanticVisitor {
         PVal value;
         String LHSType = getValType(node.getVal());
         String RHSType;
+        if (node.getExprPrime() != null) {
+
+        }
 
         return res;
     }
@@ -79,6 +126,8 @@ public class TypeVisitor extends SemanticVisitor {
 
     }
 
+
+    // value nodes
     @Override
     public void inAValBoolVal(AValBoolVal node) {
         typeStack.push("bool");
@@ -113,6 +162,61 @@ public class TypeVisitor extends SemanticVisitor {
     @Override
     public void inAFunctionCallFunctionCall(AFunctionCallFunctionCall node) {
         typeStack.push(symbolTable.get(node.getId().getText()).getType().getText());
+    }
+
+    // --Operator nodes--
+    //Hvis operators var token vil dette være en metode, oh well
+    @Override
+    public void inADivisionInfixBinInfixOp(ADivisionInfixBinInfixOp node) {
+        operatorStack.push(node.getOpDiv().getText());
+    }  
+    @Override
+    public void inAEqualityInfixBinInfixOp(AEqualityInfixBinInfixOp node) {
+        operatorStack.push(node.getBopEq().getText());
+    }
+    @Override
+    public void inAGreaterThanEqualInfixBinInfixOp(AGreaterThanEqualInfixBinInfixOp node) {
+        operatorStack.push(node.getBopGethan().getText());
+    }
+    @Override
+    public void inAGreaterThanInfixBinInfixOp(AGreaterThanInfixBinInfixOp node) {
+        operatorStack.push(node.getBopGthan().getText());
+    }
+    @Override
+    public void inALessThanEqualInfixBinInfixOp(ALessThanEqualInfixBinInfixOp node) {
+        operatorStack.push(node.getBopLethan().getText());
+    }
+    @Override
+    public void inALessThanInfixBinInfixOp(ALessThanInfixBinInfixOp node) {
+        operatorStack.push(node.getBopLthan().getText());
+    }
+    @Override
+    public void inAMinusInfixBinInfixOp(AMinusInfixBinInfixOp node) {
+        operatorStack.push(node.getOpMinus().getText());
+    }
+    @Override
+    public void inAModuloInfixBinInfixOp(AModuloInfixBinInfixOp node) {
+        operatorStack.push(node.getOpMod().getText());
+    }
+    @Override
+    public void inAMultiplicationInfixBinInfixOp(AMultiplicationInfixBinInfixOp node) {
+        operatorStack.push(node.getOpMult().getText());
+    }
+    @Override
+    public void inANotEqualInfixBinInfixOp(ANotEqualInfixBinInfixOp node) {
+        operatorStack.push(node.getBopNeq().getText());
+    }
+    @Override
+    public void inAOrInfixBinInfixOp(AOrInfixBinInfixOp node) {
+        operatorStack.push(node.getBopOr().getText());
+    }
+    @Override
+    public void inAPlusInfixBinInfixOp(APlusInfixBinInfixOp node) {
+        operatorStack.push(node.getOpPlus().getText());
+    }
+    @Override
+    public void inAAndInfixBinInfixOp(AAndInfixBinInfixOp node) {
+        operatorStack.push(node.getBopAnd().getText());
     }
 
 }
