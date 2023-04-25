@@ -124,13 +124,13 @@ public class TypeVisitor extends SemanticVisitor {
         node.getExpr().apply(this);
     }
 
-    @Override
-    public void inAExprValPrimeExpr(AExprValPrimeExpr node) {
+    // @Override
+    // public void inAExprValPrimeExpr(AExprValPrimeExpr node) {
 
-        node.getBopNot().apply(this);
-        node.getVal().apply(this);
-        node.getExprPrime().apply(this);
-    }
+    //     node.getBopNot().apply(this);
+    //     node.getVal().apply(this)to;
+    //     node.getExprPrime().apply(this);
+    // }
 
     @Override
     public void outAExprValPrimeExpr(AExprValPrimeExpr node) {
