@@ -57,21 +57,25 @@ public class TypeVisitor extends SemanticVisitor {
         return "";
 
     }
+
     /**
      * Gets the type of of a subexpression of type ExprPrime
+     * 
      * @param node The node whose type will be returned
      * @return
      */
     private String getSubExprType(PExprPrime node) {
         String res = "";
 
-        if(node instanceof AExprPrimeOperatorValPrimeExprPrime) {
-            res = getAExprPrimeOperatorValPrimeExprPrimeType((AExprPrimeOperatorValPrimeExprPrime)node);
+        if (node instanceof AExprPrimeOperatorValPrimeExprPrime) {
+            res = getAExprPrimeOperatorValPrimeExprPrimeType((AExprPrimeOperatorValPrimeExprPrime) node);
         }
         return res;
     }
+
     /**
      * Helper method to {@link #getSubExprType(PExprPrime)}
+     * 
      * @param node
      * @return
      */
@@ -79,12 +83,12 @@ public class TypeVisitor extends SemanticVisitor {
 
         // operatorStack.push(getBinInfixOperator(node.getBinInfixOp()));
 
-
         node.getVal().apply(this);
         return "";
     }
+
     private String getBinInfixOperator(PBinInfixOp node) {
-        
+
         return "";
     }
 
@@ -123,11 +127,16 @@ public class TypeVisitor extends SemanticVisitor {
         node.getBopNot().apply(this);
         node.getVal().apply(this);
         node.getExprPrime().apply(this);
-
     }
 
+    @Override
+    public void inAExprPrimeOperatorValPrimeExprPrime(AExprPrimeOperatorValPrimeExprPrime node) {
+        node.getBinInfixOp().apply(this);
+        node.getVal().apply(this);
+        node.getExprPrime().apply(this);
+    }
 
-    // value nodes
+    // PVal nodes
     @Override
     public void inAValBoolVal(AValBoolVal node) {
         typeStack.push("bool");
@@ -159,61 +168,74 @@ public class TypeVisitor extends SemanticVisitor {
     public void inAValStringVal(AValStringVal node) {
         typeStack.push("string");
     }
+
     @Override
     public void inAFunctionCallFunctionCall(AFunctionCallFunctionCall node) {
         typeStack.push(symbolTable.get(node.getId().getText()).getType().getText());
     }
 
-    // --Operator nodes--
-    //Hvis operators var token vil dette være en metode, oh well
+    // --PBinInfixOp nodes--
+    // Hvis operators var token vil dette være en metode, oh well
     @Override
     public void inADivisionInfixBinInfixOp(ADivisionInfixBinInfixOp node) {
         operatorStack.push(node.getOpDiv().getText());
-    }  
+    }
+
     @Override
     public void inAEqualityInfixBinInfixOp(AEqualityInfixBinInfixOp node) {
         operatorStack.push(node.getBopEq().getText());
     }
+
     @Override
     public void inAGreaterThanEqualInfixBinInfixOp(AGreaterThanEqualInfixBinInfixOp node) {
         operatorStack.push(node.getBopGethan().getText());
     }
+
     @Override
     public void inAGreaterThanInfixBinInfixOp(AGreaterThanInfixBinInfixOp node) {
         operatorStack.push(node.getBopGthan().getText());
     }
+
     @Override
     public void inALessThanEqualInfixBinInfixOp(ALessThanEqualInfixBinInfixOp node) {
         operatorStack.push(node.getBopLethan().getText());
     }
+
     @Override
     public void inALessThanInfixBinInfixOp(ALessThanInfixBinInfixOp node) {
         operatorStack.push(node.getBopLthan().getText());
     }
+
     @Override
     public void inAMinusInfixBinInfixOp(AMinusInfixBinInfixOp node) {
         operatorStack.push(node.getOpMinus().getText());
     }
+
     @Override
     public void inAModuloInfixBinInfixOp(AModuloInfixBinInfixOp node) {
         operatorStack.push(node.getOpMod().getText());
     }
+
     @Override
     public void inAMultiplicationInfixBinInfixOp(AMultiplicationInfixBinInfixOp node) {
         operatorStack.push(node.getOpMult().getText());
     }
+
     @Override
     public void inANotEqualInfixBinInfixOp(ANotEqualInfixBinInfixOp node) {
         operatorStack.push(node.getBopNeq().getText());
     }
+
     @Override
     public void inAOrInfixBinInfixOp(AOrInfixBinInfixOp node) {
         operatorStack.push(node.getBopOr().getText());
     }
+
     @Override
     public void inAPlusInfixBinInfixOp(APlusInfixBinInfixOp node) {
         operatorStack.push(node.getOpPlus().getText());
     }
+
     @Override
     public void inAAndInfixBinInfixOp(AAndInfixBinInfixOp node) {
         operatorStack.push(node.getBopAnd().getText());
