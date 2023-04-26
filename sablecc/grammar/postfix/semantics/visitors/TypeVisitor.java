@@ -2,35 +2,9 @@ package postfix.semantics.visitors;
 
 import java.util.Stack;
 
-import postfix.node.AAndInfixBinInfixOp;
-import postfix.node.ADivisionInfixBinInfixOp;
-import postfix.node.AEqualityInfixBinInfixOp;
-import postfix.node.AExprPrimeOperatorValPrimeExprPrime;
-import postfix.node.AExprValPrimeExpr;
-import postfix.node.AFunctionCallFunctionCall;
-import postfix.node.AGreaterThanEqualInfixBinInfixOp;
-import postfix.node.AGreaterThanInfixBinInfixOp;
-import postfix.node.ALessThanEqualInfixBinInfixOp;
-import postfix.node.ALessThanInfixBinInfixOp;
-import postfix.node.AMinusInfixBinInfixOp;
-import postfix.node.AModuloInfixBinInfixOp;
-import postfix.node.AMultiplicationInfixBinInfixOp;
-import postfix.node.ANotEqualInfixBinInfixOp;
-import postfix.node.AOrInfixBinInfixOp;
-import postfix.node.APlusInfixBinInfixOp;
-import postfix.node.AValBoolVal;
-import postfix.node.AValFloatnumVal;
-import postfix.node.AValFunctionCallVal;
-import postfix.node.AValIdVal;
-import postfix.node.AValIntnumVal;
-import postfix.node.AValStringVal;
-import postfix.node.AVariableDeclarationInitializationDcl;
-import postfix.node.PBinInfixOp;
-import postfix.node.PExprPrime;
-import postfix.node.PVal;
-import postfix.node.TBopNot;
 import postfix.semantics.SymbolTable;
 import postfix.semantics.Exceptions.InvalidExpressionException;
+import postfix.node.*;;
 
 /**
  * TODO lav doc

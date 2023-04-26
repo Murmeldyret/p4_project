@@ -6,13 +6,15 @@
     "configurations": [
         {
             "type": "java",
-            "name": "Current File",
+            "name": "Launch with Arguments Prompt",
             "request": "launch",
-            "mainClass": "sablecc/grammar/dest/postfix/Compiler"            
+            "mainClass": "postfix.Compiler",
+            "args": "${command:SpecifyProgramArgs}",
+            
         },
         {
             "type": "java",
-            "name": "Compiler",
+            "name": "CompilerSemanticsTest",
             "request": "launch",
             "mainClass": "postfix.Compiler",
             "projectName": "p4_project_c7578207",
