@@ -10,7 +10,7 @@
             "request": "launch",
             "mainClass": "postfix.Compiler",
             "args": "${command:SpecifyProgramArgs}",
-            
+            "preLaunchTask": "antBuild",
         },
         {
             "type": "java",

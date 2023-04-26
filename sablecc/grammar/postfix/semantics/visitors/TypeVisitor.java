@@ -1,5 +1,6 @@
 package postfix.semantics.visitors;
 
+import java.util.Queue;
 import java.util.Stack;
 
 import postfix.semantics.SymbolTable;
