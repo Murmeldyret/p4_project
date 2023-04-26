@@ -68,7 +68,7 @@ public class TypeVisitor extends SemanticVisitor {
 
         // operatorStack.push(getBinInfixOperator(node.getBinInfixOp()));
 
-        node.getVal().apply(this);
+        // node.getVal().apply(this);
         return "";
     }
 
@@ -93,18 +93,18 @@ public class TypeVisitor extends SemanticVisitor {
         return res;
     }
 
-    @Override
-    public void inAVariableDeclarationInitializationDcl(AVariableDeclarationInitializationDcl node) {
-        node.getExpr().apply(this);
-    }
-
     // @Override
-    // public void inAExprValPrimeExpr(AExprValPrimeExpr node) {
-
-    //     node.getBopNot().apply(this);
-    //     node.getVal().apply(this);
-    //     node.getExprPrime().apply(this);
+    // public void inAVariableDeclarationInitializationDcl(AVariableDeclarationInitializationDcl node) {
+    //     node.getExpr().apply(this);
     // }
+
+    @Override
+    public void inAExprValPrimeExpr(AExprValPrimeExpr node) {
+
+        if (node.getBopNot() != null) {
+            operatorStack.push(node.getBopNot().getText());
+        }
+    }
 
     @Override
     public void outAExprValPrimeExpr(AExprValPrimeExpr node) {
@@ -113,12 +113,12 @@ public class TypeVisitor extends SemanticVisitor {
         }
     }
 
-    @Override
-    public void inAExprPrimeOperatorValPrimeExprPrime(AExprPrimeOperatorValPrimeExprPrime node) {
-        node.getBinInfixOp().apply(this);
-        node.getVal().apply(this);
-        node.getExprPrime().apply(this);
-    }
+    // @Override
+    // public void inAExprPrimeOperatorValPrimeExprPrime(AExprPrimeOperatorValPrimeExprPrime node) {
+    //     node.getBinInfixOp().apply(this);
+    //     node.getVal().apply(this);
+    //     node.getExprPrime().apply(this);
+    // }
 
     // PVal nodes
     @Override
