@@ -74,6 +74,17 @@ public class TypeVisitor extends SemanticVisitor {
     }
 
     /**
+     * 
+     * @param node
+     * @return
+     */
+    private boolean typeCheckFunctionParmams(AFunctionCallFunctionCall node) {
+        boolean res = false;
+        //TODO gør noget
+
+        return res;
+    }
+    /**
      * Tests if an expression produces a valid value
      * 
      * @param node The expression node to test
@@ -132,11 +143,11 @@ public class TypeVisitor extends SemanticVisitor {
         typeStack.push("float");
     }
 
-    @Override
-    public void inAValFunctionCallVal(AValFunctionCallVal node) {
-        // TODO virker med garanti ikke, skal have funktionens identifier
-        node.getFunctionCall().apply(this);
-    }
+    // @Override
+    // public void inAValFunctionCallVal(AValFunctionCallVal node) {
+    //     // TODO virker med garanti ikke, skal have funktionens identifier
+    //     node.getFunctionCall().apply(this);
+    // }
 
     @Override
     public void inAValIdVal(AValIdVal node) {
@@ -157,6 +168,7 @@ public class TypeVisitor extends SemanticVisitor {
     @Override
     public void inAFunctionCallFunctionCall(AFunctionCallFunctionCall node) {
         typeStack.push(symbolTable.get(node.getId().getText()).getType().getText());
+
     }
 
     // --PBinInfixOp nodes--
