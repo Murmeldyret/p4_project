@@ -176,8 +176,7 @@ Productions
      {assign} id indexing op_assign expr {-> New stmt.assign (id , indexing , op_assign , expr  )  } ;
 
     expr {-> P.expr  } =
-     {aexprvalprimeexpr1}   val expr_prime          {-> New expr.expr_val_prime (val , expr_prime  )  }   
-    | {aexprvalprimeexpr2}  bop_not val expr_prime  {-> New expr.expr_val_prime2 (bop_not , val , expr_prime  )  }   
+      {aexprvalprimeexpr}  bop_not? val expr_prime  {-> New expr.expr_val_prime (bop_not , val , expr_prime  )  }   
     | {expr_special}        special_expr id         {-> New expr.expr_special (special_expr , id  )  }   
     | {expr_array}          array_expr              {-> New expr.expr_array (array_expr  )  } ;
 
@@ -357,9 +356,8 @@ Abstract Syntax Tree
        {else_block_statement} kw_else block 
        | ;
 
-    expr =
-       {expr_val_prime}     val expr_prime 
-       | {expr_val_prime2}  bop_not? val expr_prime 
+    expr = 
+         {expr_val_prime}  bop_not? val expr_prime 
        | {expr_special}     special_expr id 
        | {expr_array}       array_expr;
     

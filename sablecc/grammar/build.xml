@@ -1,0 +1,11 @@
+<project  >
+    <target name="build">
+        <javac  
+            srcdir="postfix" 
+            destdir="dest"
+            classpath="dest/postfix/Compiler.class"
+            debug="on" 
+            includeDestClasses="false" 
+        />
+    </target>
+</project>

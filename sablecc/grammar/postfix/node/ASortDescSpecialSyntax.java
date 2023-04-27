@@ -8,7 +8,7 @@ import postfix.analysis.*;
 public final class ASortDescSpecialSyntax extends PSpecialSyntax
 {
     private TSopSort _sopSort_;
-    private TId _id_;
+    private PExpr _expr_;
     private TSopComma _sopComma_;
     private TKwSortOrderDsc _kwSortOrderDsc_;
 
@@ -19,14 +19,14 @@ public final class ASortDescSpecialSyntax extends PSpecialSyntax
 
     public ASortDescSpecialSyntax(
         @SuppressWarnings("hiding") TSopSort _sopSort_,
-        @SuppressWarnings("hiding") TId _id_,
+        @SuppressWarnings("hiding") PExpr _expr_,
         @SuppressWarnings("hiding") TSopComma _sopComma_,
         @SuppressWarnings("hiding") TKwSortOrderDsc _kwSortOrderDsc_)
     {
         // Constructor
         setSopSort(_sopSort_);
 
-        setId(_id_);
+        setExpr(_expr_);
 
         setSopComma(_sopComma_);
 
@@ -39,7 +39,7 @@ public final class ASortDescSpecialSyntax extends PSpecialSyntax
     {
         return new ASortDescSpecialSyntax(
             cloneNode(this._sopSort_),
-            cloneNode(this._id_),
+            cloneNode(this._expr_),
             cloneNode(this._sopComma_),
             cloneNode(this._kwSortOrderDsc_));
     }
@@ -75,16 +75,16 @@ public final class ASortDescSpecialSyntax extends PSpecialSyntax
         this._sopSort_ = node;
     }
 
-    public TId getId()
+    public PExpr getExpr()
     {
-        return this._id_;
+        return this._expr_;
     }
 
-    public void setId(TId node)
+    public void setExpr(PExpr node)
     {
-        if(this._id_ != null)
+        if(this._expr_ != null)
         {
-            this._id_.parent(null);
+            this._expr_.parent(null);
         }
 
         if(node != null)
@@ -97,7 +97,7 @@ public final class ASortDescSpecialSyntax extends PSpecialSyntax
             node.parent(this);
         }
 
-        this._id_ = node;
+        this._expr_ = node;
     }
 
     public TSopComma getSopComma()
@@ -155,7 +155,7 @@ public final class ASortDescSpecialSyntax extends PSpecialSyntax
     {
         return ""
             + toString(this._sopSort_)
-            + toString(this._id_)
+            + toString(this._expr_)
             + toString(this._sopComma_)
             + toString(this._kwSortOrderDsc_);
     }
@@ -170,9 +170,9 @@ public final class ASortDescSpecialSyntax extends PSpecialSyntax
             return;
         }
 
-        if(this._id_ == child)
+        if(this._expr_ == child)
         {
-            this._id_ = null;
+            this._expr_ = null;
             return;
         }
 
@@ -201,9 +201,9 @@ public final class ASortDescSpecialSyntax extends PSpecialSyntax
             return;
         }
 
-        if(this._id_ == oldChild)
+        if(this._expr_ == oldChild)
         {
-            setId((TId) newChild);
+            setExpr((PExpr) newChild);
             return;
         }
 

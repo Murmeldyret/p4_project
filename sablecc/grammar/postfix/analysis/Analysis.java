@@ -19,16 +19,18 @@ public interface Analysis extends Switch
     void caseAImportWithSeperatorStmt(AImportWithSeperatorStmt node);
     void caseADeclarationStmt(ADeclarationStmt node);
     void caseAAssignStmt(AAssignStmt node);
+    void caseAFunctionCallStmt(AFunctionCallStmt node);
     void caseAArrayOperationsStmt(AArrayOperationsStmt node);
     void caseAForLoopStmt(AForLoopStmt node);
     void caseAWhileLoopStmt(AWhileLoopStmt node);
     void caseAControlStatementStmt(AControlStatementStmt node);
-    void caseAPrintStatementStmt(APrintStatementStmt node);
     void caseACsvOperationStmt(ACsvOperationStmt node);
+    void caseAPrintStatementStmt(APrintStatementStmt node);
     void caseAExportStatementStmt(AExportStatementStmt node);
     void caseAReturnStmt(AReturnStmt node);
     void caseABreakStatementStmt(ABreakStatementStmt node);
     void caseAVariableDeclarationInitializationDcl(AVariableDeclarationInitializationDcl node);
+    void caseAVariableDeclarationArrayDcl(AVariableDeclarationArrayDcl node);
     void caseAVariableDeclarationDcl(AVariableDeclarationDcl node);
     void caseAConstDeclarationInitializationDcl(AConstDeclarationInitializationDcl node);
     void caseAFunctionDeclarationDcl(AFunctionDeclarationDcl node);
@@ -40,6 +42,7 @@ public interface Analysis extends Switch
     void caseAFunctionCallParam(AFunctionCallParam node);
     void caseAFunctionCallParamPrimeFunctionCallParamPrime(AFunctionCallParamPrimeFunctionCallParamPrime node);
     void caseAFunctionCallParamPrime(AFunctionCallParamPrime node);
+    void caseAFunctionCallFunctionCall(AFunctionCallFunctionCall node);
     void caseABlockStmtBlock(ABlockStmtBlock node);
     void caseAElifStatementInControlStmt(AElifStatementInControlStmt node);
     void caseAElseStatementInControlStmt(AElseStatementInControlStmt node);
@@ -65,8 +68,9 @@ public interface Analysis extends Switch
     void caseARemoveFromArrayArrayOp(ARemoveFromArrayArrayOp node);
     void caseARemoveAtFromArrayArrayOp(ARemoveAtFromArrayArrayOp node);
     void caseAInsertToArrayArrayOp(AInsertToArrayArrayOp node);
+    void caseAInsertToVariableArrayOp(AInsertToVariableArrayOp node);
     void caseAValIdVal(AValIdVal node);
-    void caseAFunctionCallVal(AFunctionCallVal node);
+    void caseAValFunctionCallVal(AValFunctionCallVal node);
     void caseAValFloatnumVal(AValFloatnumVal node);
     void caseAValIntnumVal(AValIntnumVal node);
     void caseAValStringVal(AValStringVal node);
@@ -128,7 +132,6 @@ public interface Analysis extends Switch
     void caseTKwFunction(TKwFunction node);
     void caseTKwReturn(TKwReturn node);
     void caseTKwBreak(TKwBreak node);
-    void caseTId(TId node);
     void caseTBlank(TBlank node);
     void caseTOpAssign(TOpAssign node);
     void caseTOpPlus(TOpPlus node);
@@ -159,6 +162,7 @@ public interface Analysis extends Switch
     void caseTKwInsert(TKwInsert node);
     void caseTKwColumn(TKwColumn node);
     void caseTKwRow(TKwRow node);
+    void caseTId(TId node);
     void caseEOF(EOF node);
     void caseInvalidToken(InvalidToken node);
 }

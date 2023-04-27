@@ -1,0 +1,21 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "antBuild",
+            "command": "ant",
+            "type": "shell",
+            "args": ["build"],
+            "problemMatcher": [
+                "$tsc"
+            ],
+            "presentation": {
+                "reveal": "always"
+            },
+            "group": "build",
+            "options": {
+                "cwd": "${workspaceFolder}/sablecc/grammar"
+            }
+        }
+    ]
+}

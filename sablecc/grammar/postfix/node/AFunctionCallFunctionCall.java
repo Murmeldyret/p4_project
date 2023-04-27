@@ -5,39 +5,49 @@ package postfix.node;
 import postfix.analysis.*;
 
 @SuppressWarnings("nls")
-public final class AFunctionCallVal extends PVal
+public final class AFunctionCallFunctionCall extends PFunctionCall
 {
     private TId _id_;
+    private TLPar _lPar_;
     private PFunctionCallParam _functionCallParam_;
+    private TRPar _rPar_;
 
-    public AFunctionCallVal()
+    public AFunctionCallFunctionCall()
     {
         // Constructor
     }
 
-    public AFunctionCallVal(
+    public AFunctionCallFunctionCall(
         @SuppressWarnings("hiding") TId _id_,
-        @SuppressWarnings("hiding") PFunctionCallParam _functionCallParam_)
+        @SuppressWarnings("hiding") TLPar _lPar_,
+        @SuppressWarnings("hiding") PFunctionCallParam _functionCallParam_,
+        @SuppressWarnings("hiding") TRPar _rPar_)
     {
         // Constructor
         setId(_id_);
 
+        setLPar(_lPar_);
+
         setFunctionCallParam(_functionCallParam_);
+
+        setRPar(_rPar_);
 
     }
 
     @Override
     public Object clone()
     {
-        return new AFunctionCallVal(
+        return new AFunctionCallFunctionCall(
             cloneNode(this._id_),
-            cloneNode(this._functionCallParam_));
+            cloneNode(this._lPar_),
+            cloneNode(this._functionCallParam_),
+            cloneNode(this._rPar_));
     }
 
     @Override
     public void apply(Switch sw)
     {
-        ((Analysis) sw).caseAFunctionCallVal(this);
+        ((Analysis) sw).caseAFunctionCallFunctionCall(this);
     }
 
     public TId getId()
@@ -65,6 +75,31 @@ public final class AFunctionCallVal extends PVal
         this._id_ = node;
     }
 
+    public TLPar getLPar()
+    {
+        return this._lPar_;
+    }
+
+    public void setLPar(TLPar node)
+    {
+        if(this._lPar_ != null)
+        {
+            this._lPar_.parent(null);
+        }
+
+        if(node != null)
+        {
+            if(node.parent() != null)
+            {
+                node.parent().removeChild(node);
+            }
+
+            node.parent(this);
+        }
+
+        this._lPar_ = node;
+    }
+
     public PFunctionCallParam getFunctionCallParam()
     {
         return this._functionCallParam_;
@@ -90,12 +125,39 @@ public final class AFunctionCallVal extends PVal
         this._functionCallParam_ = node;
     }
 
+    public TRPar getRPar()
+    {
+        return this._rPar_;
+    }
+
+    public void setRPar(TRPar node)
+    {
+        if(this._rPar_ != null)
+        {
+            this._rPar_.parent(null);
+        }
+
+        if(node != null)
+        {
+            if(node.parent() != null)
+            {
+                node.parent().removeChild(node);
+            }
+
+            node.parent(this);
+        }
+
+        this._rPar_ = node;
+    }
+
     @Override
     public String toString()
     {
         return ""
             + toString(this._id_)
-            + toString(this._functionCallParam_);
+            + toString(this._lPar_)
+            + toString(this._functionCallParam_)
+            + toString(this._rPar_);
     }
 
     @Override
@@ -108,9 +170,21 @@ public final class AFunctionCallVal extends PVal
             return;
         }
 
+        if(this._lPar_ == child)
+        {
+            this._lPar_ = null;
+            return;
+        }
+
         if(this._functionCallParam_ == child)
         {
             this._functionCallParam_ = null;
+            return;
+        }
+
+        if(this._rPar_ == child)
+        {
+            this._rPar_ = null;
             return;
         }
 
@@ -127,9 +201,21 @@ public final class AFunctionCallVal extends PVal
             return;
         }
 
+        if(this._lPar_ == oldChild)
+        {
+            setLPar((TLPar) newChild);
+            return;
+        }
+
         if(this._functionCallParam_ == oldChild)
         {
             setFunctionCallParam((PFunctionCallParam) newChild);
+            return;
+        }
+
+        if(this._rPar_ == oldChild)
+        {
+            setRPar((TRPar) newChild);
             return;
         }
 

@@ -20,7 +20,6 @@ public class SemanticVisitor extends DepthFirstAdapter {
     @Override
     public void inStart(Start node) {
         this.symbolTable = new SymbolTable(null, SymbolTable.Scopekind.block);
-        defaultIn(node);
     }
 
     @Override
@@ -36,6 +35,7 @@ public class SemanticVisitor extends DepthFirstAdapter {
     @Override
     public void inADeclarationStmt(ADeclarationStmt node) {
         TopDclVisitor dclVisitor = new TopDclVisitor(symbolTable);
+        System.out.println("tester");
         node.apply(dclVisitor);
 
     }
