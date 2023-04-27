@@ -18,7 +18,8 @@
             "request": "launch",
             "mainClass": "postfix.Compiler",
             "projectName": "p4_project_c7578207",
-            "args": "sablecc/grammar/semanticTest.txt"
+            "args": "sablecc/grammar/semanticTest.txt",
+            "preLaunchTask": "antBuild",
         }
     ]
 }
