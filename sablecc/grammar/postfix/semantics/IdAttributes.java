@@ -19,6 +19,7 @@ public class IdAttributes {
     private boolean isConst;
     private List<String> parameterTypes;
     private List<String> parameterNames;
+    private String returnType;
 
     private Attributes attributes;
 
@@ -91,6 +92,14 @@ public class IdAttributes {
     public void addParameter(String type, String name) {
         parameterTypes.add(type);
         parameterNames.add(name);
+    }
+
+    public String getReturnType() {
+        return returnType;
+    }
+
+    public void setReturnType(String type) {
+        returnType = type;
     }
 
 }

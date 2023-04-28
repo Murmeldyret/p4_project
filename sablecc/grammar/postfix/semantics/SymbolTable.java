@@ -230,4 +230,15 @@ public class SymbolTable implements Map<String, IdAttributes> {
         }
     }
 
+    public void addFunctionReturnType(String functionName, String returnType) {
+        IdAttributes attributes = get(functionName);
+        if (attributes == null) {
+            throw new IllegalArgumentException("Function " + functionName + " does not exist");
+        }
+        if (attributes.getReturnType() != null) {
+            throw new IllegalArgumentException("Function " + functionName + " already has a return type");
+        }
+        attributes.setReturnType(returnType);
+    }
+
 }
