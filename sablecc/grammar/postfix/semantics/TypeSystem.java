@@ -1,7 +1,7 @@
 package postfix.semantics;
 
-import java.util.ArrayList;
 import java.util.HashMap;
+import postfix.semantics.Exceptions.InvalidExpressionException;
 
 /**
  * Helper class for TypeVisitor
@@ -11,7 +11,7 @@ public class TypeSystem {
     /**
      * An ordered pair of types that are legal under the given operator
      */
-    class binaryExpressionPairHelper {
+    class binaryExpressionPairHelper implements Comparable<binaryExpressionPairHelper> {
 
         public binaryExpressionPairHelper(String LeftType, String RightType) {
             this.LeftType = LeftType;
@@ -37,7 +37,6 @@ public class TypeSystem {
          * and
          * or
          */
-
         // virker dumt
         private final binaryExpressionPairHelper[] possiblePlusCombinations = {
                 new binaryExpressionPairHelper("string", "string"),
@@ -93,6 +92,21 @@ public class TypeSystem {
             }
         };
 
+        // key is operator, nested key is operands
+        //The horror
+        private final HashMap<String, HashMap<binaryExpressionPairHelper, String>> resultingType = new HashMap<>() {
+            {
+                put("+", new HashMap<>() {
+                    {
+                        put(new binaryExpressionPairHelper("int", "int"), "int");
+                        put(new binaryExpressionPairHelper("float", "float"), "float");
+                        put(new binaryExpressionPairHelper("string", "string"), "string");
+
+                    }
+                });
+            }
+        };
+
         /**
          * Returns an array of legal combinations with the given operator
          * 
@@ -109,6 +123,14 @@ public class TypeSystem {
             return res;
         }
 
+        @Override
+        public int compareTo(binaryExpressionPairHelper o) {
+            if (o == null) {
+                throw new NullPointerException();
+            }
+            return this.LeftType.compareTo(o.RightType) + this.RightType.compareTo(o.RightType);
+        }
+
     }
 
     private String[] operators = { "+", "-", "*", "/", "%", "<", "<=", ">", ">=", "==", "!=", "and", "or" };
@@ -123,6 +145,27 @@ public class TypeSystem {
      */
     public String LookupResultingType(String LType, String RType, String operator) {
         String res = "";
+        binaryExpressionPairHelper helper = new binaryExpressionPairHelper(LType, RType);
+
+        try {
+            binaryExpressionPairHelper[] legalOperationswithOperator = helper.getPossibleTypeCombinations(operator);
+
+            binaryExpressionPairHelper doesLegalCombinationExist = null;
+            for (binaryExpressionPairHelper binaryExpressionPairHelper : legalOperationswithOperator) {
+                if (helper.compareTo(binaryExpressionPairHelper) == 0) {
+                    doesLegalCombinationExist = binaryExpressionPairHelper;
+                }
+            }
+            if (doesLegalCombinationExist == null) {
+                throw new InvalidExpressionException("Cannot produce a valid value with " + LType + operator + RType);
+            }
+
+            // TODO resultattype af udtryk
+
+        } catch (NullPointerException e) {
+            throw new IllegalArgumentException(e);
+        }
+
         return res;
     }
 
