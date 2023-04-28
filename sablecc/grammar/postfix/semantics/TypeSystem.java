@@ -1,6 +1,7 @@
 package postfix.semantics;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Helper class for TypeVisitor
@@ -73,10 +74,23 @@ public class TypeSystem {
                 },
                 possibleOrCombinations = possibleAndCombinations;
 
-        public ArrayList<binaryExpressionPairHelper> getPossibleTypeCombinations(String operator) {
-            ArrayList<binaryExpressionPairHelper> resList = new ArrayList<TypeSystem.binaryExpressionPairHelper>() {
+        private final HashMap<String,binaryExpressionPairHelper[]> legalOperationsDic = new HashMap<>() {
+            {
+                put("+", possiblePlusCombinations);
+                put("-", possibleMinusCombinations);
+                put("*", possibleMultiplicationCombinations);
+                put("/", possibleDivisionCombinations);
+                put("%", possibleModuloCombinations);
+                put("<", possibleLessThanCombinations);
+                put("<=", possibleLessThanEqualCombinations);
+                put(">", possibleGreaterThanCombinations);
+                put(">=", possibleGreaterThanEqualCombinations);
 
-            };
+            }
+        }
+                
+        public binaryExpressionPairHelper[] getPossibleTypeCombinations(String operator) {
+            binaryExpressionPairHelper[] resList = {};
 
             return resList;
         }
