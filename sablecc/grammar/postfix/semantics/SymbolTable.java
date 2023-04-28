@@ -2,6 +2,7 @@ package postfix.semantics;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -211,6 +212,22 @@ public class SymbolTable implements Map<String, IdAttributes> {
     public Set<Entry<String, IdAttributes>> entrySet() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'entrySet'");
+    }
+
+    public void addFunctionParameters(String functionName, List<String> parameterTypes, List<String> parameterNames) {
+        IdAttributes attributes = get(functionName);
+        if (attributes == null) {
+            throw new IllegalArgumentException("Function " + functionName + " does not exist");
+        }
+        if (!attributes.getParameterTypes().isEmpty() || !attributes.getParameterNames().isEmpty()) {
+            throw new IllegalArgumentException("Function " + functionName + " already has parameters");
+        }
+        if (parameterTypes.size() != parameterNames.size()) {
+            throw new IllegalArgumentException("Function " + functionName + " has different number of parameters");
+        }
+        for (int i = 0; i < parameterTypes.size(); i++) {
+            attributes.addParameter(parameterTypes.get(i), parameterNames.get(i));
+        }
     }
 
 }

@@ -1,5 +1,6 @@
 package postfix.semantics;
 
+import java.util.List;
 import java.util.function.Function;
 
 import postfix.node.TId;
@@ -16,6 +17,8 @@ public class IdAttributes {
     private String value;
     private boolean isFunction;
     private boolean isConst;
+    private List<String> parameterTypes;
+    private List<String> parameterNames;
 
     private Attributes attributes;
 
@@ -43,11 +46,14 @@ public class IdAttributes {
     public IdAttributes(TId id, TType type, String value, boolean isFunction, boolean isConst) {
     }
 
-    public IdAttributes(TId id, TType type, String value, Attributes attributes) {
+    public IdAttributes(TId id, TType type, String value, Attributes attributes, List<String> parameterTypes,
+            List<String> parameterNames) {
         this.id = id;
         this.type = type;
         this.value = value;
         this.attributes = attributes;
+        this.parameterTypes = parameterTypes;
+        this.parameterNames = parameterNames;
     }
 
     public Attributes getAttributes() {
@@ -72,6 +78,19 @@ public class IdAttributes {
 
     public boolean isConst() {
         return isConst;
+    }
+
+    public List<String> getParameterTypes() {
+        return parameterTypes;
+    }
+
+    public List<String> getParameterNames() {
+        return parameterNames;
+    }
+
+    public void addParameter(String type, String name) {
+        parameterTypes.add(type);
+        parameterNames.add(name);
     }
 
 }
