@@ -74,7 +74,7 @@ public class TypeSystem {
                 },
                 possibleOrCombinations = possibleAndCombinations;
 
-        private final HashMap<String,binaryExpressionPairHelper[]> legalOperationsDic = new HashMap<>() {
+        private final HashMap<String, binaryExpressionPairHelper[]> legalOperationsDic = new HashMap<>() {
             {
                 put("+", possiblePlusCombinations);
                 put("-", possibleMinusCombinations);
@@ -85,14 +85,28 @@ public class TypeSystem {
                 put("<=", possibleLessThanEqualCombinations);
                 put(">", possibleGreaterThanCombinations);
                 put(">=", possibleGreaterThanEqualCombinations);
+                put("!=", possibleInequalityCombinations);
+                put("==", possibleEqualityCombinations);
+                put("and", possibleAndCombinations);
+                put("or", possibleOrCombinations);
 
             }
-        }
-                
-        public binaryExpressionPairHelper[] getPossibleTypeCombinations(String operator) {
-            binaryExpressionPairHelper[] resList = {};
+        };
 
-            return resList;
+        /**
+         * Returns an array of legal combinations with the given operator
+         * 
+         * @param operator The operator whose legal combinations will be returned
+         * @return An array of legal combinations with the given operator
+         * @throws NullPointerException Throws if an illegal operator has been specified
+         */
+        public binaryExpressionPairHelper[] getPossibleTypeCombinations(String operator) throws NullPointerException {
+            binaryExpressionPairHelper[] res = legalOperationsDic.get(operator);
+            if (res == null) {
+                throw new NullPointerException("Operator " + operator + " not regocnized");
+            }
+
+            return res;
         }
 
     }
