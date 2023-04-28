@@ -28,9 +28,12 @@ public class TypeVisitor extends SemanticVisitor {
 
     protected Stack<String> typeStack;
     protected Stack<String> operatorStack;
+
+    // Skal ikke bruges
     protected TBopNot bopNot;
     protected PVal value;
 
+    //
     /**
      * Gets the type of a PVal node
      * 
@@ -80,10 +83,11 @@ public class TypeVisitor extends SemanticVisitor {
      */
     private boolean typeCheckFunctionParmams(AFunctionCallFunctionCall node) {
         boolean res = false;
-        //TODO gør noget
+        // TODO gør noget
 
         return res;
     }
+
     /**
      * Tests if an expression produces a valid value
      * 
@@ -106,8 +110,10 @@ public class TypeVisitor extends SemanticVisitor {
     }
 
     // @Override
-    // public void inAVariableDeclarationInitializationDcl(AVariableDeclarationInitializationDcl node) {
-    //     node.getExpr().apply(this);
+    // public void
+    // inAVariableDeclarationInitializationDcl(AVariableDeclarationInitializationDcl
+    // node) {
+    // node.getExpr().apply(this);
     // }
 
     @Override
@@ -126,10 +132,12 @@ public class TypeVisitor extends SemanticVisitor {
     }
 
     // @Override
-    // public void inAExprPrimeOperatorValPrimeExprPrime(AExprPrimeOperatorValPrimeExprPrime node) {
-    //     node.getBinInfixOp().apply(this);
-    //     node.getVal().apply(this);
-    //     node.getExprPrime().apply(this);
+    // public void
+    // inAExprPrimeOperatorValPrimeExprPrime(AExprPrimeOperatorValPrimeExprPrime
+    // node) {
+    // node.getBinInfixOp().apply(this);
+    // node.getVal().apply(this);
+    // node.getExprPrime().apply(this);
     // }
 
     // PVal nodes
@@ -145,8 +153,8 @@ public class TypeVisitor extends SemanticVisitor {
 
     // @Override
     // public void inAValFunctionCallVal(AValFunctionCallVal node) {
-    //     // TODO virker med garanti ikke, skal have funktionens identifier
-    //     node.getFunctionCall().apply(this);
+    // // TODO virker med garanti ikke, skal have funktionens identifier
+    // node.getFunctionCall().apply(this);
     // }
 
     @Override

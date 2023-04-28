@@ -37,12 +37,41 @@ public class TypeSystem {
          * or
          */
 
-        private final ArrayList<binaryExpressionPairHelper> possiblePlusCombinations = new ArrayList<binaryExpressionPairHelper>() {{
-            add(new binaryExpressionPairHelper("string", "string"));
-            add(new binaryExpressionPairHelper("int", "int"));
-            add(new binaryExpressionPairHelper("float", "float"));
-            
-        }};
+        // virker dumt
+        private final binaryExpressionPairHelper[] possiblePlusCombinations = {
+                new binaryExpressionPairHelper("string", "string"),
+                new binaryExpressionPairHelper("int", "int"),
+                new binaryExpressionPairHelper("float", "float"),
+
+        },
+                possibleMinusCombinations = possiblePlusCombinations,
+                possibleMultiplicationCombinations = {
+                        new binaryExpressionPairHelper("int", "int"),
+                        new binaryExpressionPairHelper("float", "float"),
+                },
+                possibleDivisionCombinations = possibleMultiplicationCombinations,
+                possibleModuloCombinations = {
+                        new binaryExpressionPairHelper("int", "int"),
+                },
+                possibleLessThanCombinations = {
+                        new binaryExpressionPairHelper("int", "int"),
+                        new binaryExpressionPairHelper("float", "float"),
+                },
+                possibleLessThanEqualCombinations = possibleLessThanCombinations,
+                possibleGreaterThanCombinations = possibleLessThanCombinations,
+                possibleGreaterThanEqualCombinations = possibleLessThanCombinations,
+                possibleInequalityCombinations = {
+                        new binaryExpressionPairHelper("int", "int"),
+                        new binaryExpressionPairHelper("float", "float"),
+                        new binaryExpressionPairHelper("string", "string"),
+                        new binaryExpressionPairHelper("bool", "bool"),
+                // TODO Array?
+                },
+                possibleEqualityCombinations = possibleInequalityCombinations,
+                possibleAndCombinations = {
+                        new binaryExpressionPairHelper("bool", "bool"),
+                },
+                possibleOrCombinations = possibleAndCombinations;
 
         public ArrayList<binaryExpressionPairHelper> getPossibleTypeCombinations(String operator) {
             ArrayList<binaryExpressionPairHelper> resList = new ArrayList<TypeSystem.binaryExpressionPairHelper>() {
@@ -54,6 +83,8 @@ public class TypeSystem {
 
     }
 
+    private String[] operators = { "+", "-", "*", "/", "%", "<", "<=", ">", ">=", "==", "!=", "and", "or" };
+
     /**
      * Returns the type of value produced by the input (sub)expression
      * 
@@ -64,7 +95,6 @@ public class TypeSystem {
      */
     public String LookupResultingType(String LType, String RType, String operator) {
         String res = "";
-
         return res;
     }
 
