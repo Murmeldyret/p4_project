@@ -1,7 +1,6 @@
 package postfix.semantics;
 
 import java.util.List;
-import java.util.function.Function;
 
 import postfix.node.TId;
 import postfix.node.TType;
@@ -47,14 +46,11 @@ public class IdAttributes {
     public IdAttributes(TId id, TType type, String value, boolean isFunction, boolean isConst) {
     }
 
-    public IdAttributes(TId id, TType type, String value, Attributes attributes, List<String> parameterTypes,
-            List<String> parameterNames) {
+    public IdAttributes(TId id, TType type, String value, Attributes attributes) {
         this.id = id;
         this.type = type;
         this.value = value;
         this.attributes = attributes;
-        this.parameterTypes = parameterTypes;
-        this.parameterNames = parameterNames;
     }
 
     public Attributes getAttributes() {
