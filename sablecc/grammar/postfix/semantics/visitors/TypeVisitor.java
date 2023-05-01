@@ -95,6 +95,7 @@ public class TypeVisitor extends SemanticVisitor {
      * @param node The expression node to test
      * @return true if the expression produces a valid value under the current type
      *         system.
+     * @throws invalidExpressionException if the given expression does not produce a valid value
      */
     private boolean typeCheckExpression(AExprValPrimeExpr node) {
         boolean res = false;
@@ -109,19 +110,20 @@ public class TypeVisitor extends SemanticVisitor {
                 while (!operatorQueue.isEmpty()) {
                     String operator = operatorQueue.remove();
 
-                    //TODO skal faktisk tjekke om operatoren er en binInfixOp
+                    // TODO skal faktisk tjekke om operatoren er en binInfixOp
                     isBinaryInFixOp = true;
                     if (isBinaryInFixOp) {
-                        String LhsType = typeQueue.remove();
+                        String LhsType = SimplifiedExpressionTypeQueue.isEmpty() ? typeQueue.remove() : SimplifiedExpressionTypeQueue.remove() ;
                         String RhsType = typeQueue.remove();
 
                         SimplifiedExpressionTypeQueue.add(typeSystem.LookupResultingType(LhsType, RhsType, operator));
                     }
 
                 }
-
+                res = true;
             } catch (IllegalArgumentException e) {
                 // TODO: handle exception
+                throw new InvalidExpressionException("Expression does not produce a valid value", node);
             }
 
         }
