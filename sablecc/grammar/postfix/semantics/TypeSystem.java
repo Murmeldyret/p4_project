@@ -121,56 +121,56 @@ public class TypeSystem {
                         put(new binaryExpressionPairHelper("float", "float"), "float");
                     }
                 });
-                put("<", new HashMap<>(){
+                put("<", new HashMap<>() {
                     {
                         put(new binaryExpressionPairHelper("int", "int"), "bool");
                         put(new binaryExpressionPairHelper("float", "float"), "bool");
-                        //string?
+                        // string?
                     }
                 });
-                put("<=", new HashMap<>(){
+                put("<=", new HashMap<>() {
                     {
                         put(new binaryExpressionPairHelper("int", "int"), "bool");
                         put(new binaryExpressionPairHelper("float", "float"), "bool");
-                        //string?
+                        // string?
                     }
                 });
-                put(">", new HashMap<>(){
+                put(">", new HashMap<>() {
                     {
                         put(new binaryExpressionPairHelper("int", "int"), "bool");
                         put(new binaryExpressionPairHelper("float", "float"), "bool");
-                        //string?
+                        // string?
                     }
                 });
-                put(">=", new HashMap<>(){
+                put(">=", new HashMap<>() {
                     {
                         put(new binaryExpressionPairHelper("int", "int"), "bool");
                         put(new binaryExpressionPairHelper("float", "float"), "bool");
-                        //string?
+                        // string?
                     }
                 });
-                put("==", new HashMap<>(){
-                    {
-                        put(new binaryExpressionPairHelper("int", "int"), "bool");
-                        put(new binaryExpressionPairHelper("float", "float"), "bool");
-                        put(new binaryExpressionPairHelper("bool", "bool"), "bool");
-                        put(new binaryExpressionPairHelper("string", "string"),"bool");
-                    }
-                });
-                put("!=", new HashMap<>(){
+                put("==", new HashMap<>() {
                     {
                         put(new binaryExpressionPairHelper("int", "int"), "bool");
                         put(new binaryExpressionPairHelper("float", "float"), "bool");
                         put(new binaryExpressionPairHelper("bool", "bool"), "bool");
-                        put(new binaryExpressionPairHelper("string", "string"),"bool");
+                        put(new binaryExpressionPairHelper("string", "string"), "bool");
                     }
                 });
-                put("and", new HashMap<>(){
+                put("!=", new HashMap<>() {
+                    {
+                        put(new binaryExpressionPairHelper("int", "int"), "bool");
+                        put(new binaryExpressionPairHelper("float", "float"), "bool");
+                        put(new binaryExpressionPairHelper("bool", "bool"), "bool");
+                        put(new binaryExpressionPairHelper("string", "string"), "bool");
+                    }
+                });
+                put("and", new HashMap<>() {
                     {
                         put(new binaryExpressionPairHelper("bool", "bool"), "bool");
                     }
                 });
-                put("or", new HashMap<>(){
+                put("or", new HashMap<>() {
                     {
                         put(new binaryExpressionPairHelper("bool", "bool"), "bool");
                     }
