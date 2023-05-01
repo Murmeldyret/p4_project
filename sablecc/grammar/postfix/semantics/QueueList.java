@@ -5,7 +5,9 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.Queue;
 
-/** List like implementation of a queue data structure */
+/** List like implementation of a queue data structure 
+ * @see https://docs.oracle.com/javase/8/docs/api/java/util/Queue.html
+*/
 public class QueueList<E> implements Queue<E>{
 
     private ArrayList<E> internalList;

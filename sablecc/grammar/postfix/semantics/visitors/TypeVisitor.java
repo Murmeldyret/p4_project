@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import postfix.semantics.QueueList;
 import postfix.semantics.SymbolTable;
+import postfix.semantics.TypeSystem;
 import postfix.semantics.Exceptions.InvalidExpressionException;
 import postfix.node.*;;
 
@@ -97,13 +98,31 @@ public class TypeVisitor extends SemanticVisitor {
      */
     private boolean typeCheckExpression(AExprValPrimeExpr node) {
         boolean res = false;
+        TypeSystem typeSystem = new TypeSystem();
 
-        TBopNot bopNot;
-        PVal value;
-        String LHSType = getValType(node.getVal());
-        String RHSType;
+        QueueList<String> SimplifiedExpressionTypeQueue = new QueueList<>();
+
         if (node.getExprPrime() != null) {
-            // typeQueue og operatorQueue skal være queue
+            try {
+
+                Boolean isBinaryInFixOp;
+                while (!operatorQueue.isEmpty()) {
+                    String operator = operatorQueue.remove();
+
+                    //TODO skal faktisk tjekke om operatoren er en binInfixOp
+                    isBinaryInFixOp = true;
+                    if (isBinaryInFixOp) {
+                        String LhsType = typeQueue.remove();
+                        String RhsType = typeQueue.remove();
+
+                        SimplifiedExpressionTypeQueue.add(typeSystem.LookupResultingType(LhsType, RhsType, operator));
+                    }
+
+                }
+
+            } catch (IllegalArgumentException e) {
+                // TODO: handle exception
+            }
 
         }
 

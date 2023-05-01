@@ -214,7 +214,7 @@ public class TypeSystem {
      * @param operator The binary infix operator
      * @return The resulting type
      */
-    public String LookupResultingType(String LType, String RType, String operator) {
+    public String LookupResultingType(String LType, String RType, String operator) throws InvalidExpressionException, IllegalArgumentException {
         String res = "";
         binaryExpressionPairHelper helper = new binaryExpressionPairHelper(LType, RType);
 
