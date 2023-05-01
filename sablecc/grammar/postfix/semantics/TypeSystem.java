@@ -37,42 +37,7 @@ public class TypeSystem {
          * and
          * or
          */
-        // virker dumt
-        private final binaryExpressionPairHelper[] possiblePlusCombinations = {
-                new binaryExpressionPairHelper("string", "string"),
-                new binaryExpressionPairHelper("int", "int"),
-                new binaryExpressionPairHelper("float", "float"),
-
-        },
-                possibleMinusCombinations = possiblePlusCombinations,
-                possibleMultiplicationCombinations = {
-                        new binaryExpressionPairHelper("int", "int"),
-                        new binaryExpressionPairHelper("float", "float"),
-                },
-                possibleDivisionCombinations = possibleMultiplicationCombinations,
-                possibleModuloCombinations = {
-                        new binaryExpressionPairHelper("int", "int"),
-                },
-                possibleLessThanCombinations = {
-                        new binaryExpressionPairHelper("int", "int"),
-                        new binaryExpressionPairHelper("float", "float"),
-                },
-                possibleLessThanEqualCombinations = possibleLessThanCombinations,
-                possibleGreaterThanCombinations = possibleLessThanCombinations,
-                possibleGreaterThanEqualCombinations = possibleLessThanCombinations,
-                possibleInequalityCombinations = {
-                        new binaryExpressionPairHelper("int", "int"),
-                        new binaryExpressionPairHelper("float", "float"),
-                        new binaryExpressionPairHelper("string", "string"),
-                        new binaryExpressionPairHelper("bool", "bool"),
-                // TODO Array?
-                },
-                possibleEqualityCombinations = possibleInequalityCombinations,
-                possibleAndCombinations = {
-                        new binaryExpressionPairHelper("bool", "bool"),
-                },
-                possibleOrCombinations = possibleAndCombinations;
-
+        
         private final HashMap<String, binaryExpressionPairHelper[]> legalOperationsDic = new HashMap<>() {
             {
                 put("+", possiblePlusCombinations);
@@ -88,10 +53,10 @@ public class TypeSystem {
                 put("==", possibleEqualityCombinations);
                 put("and", possibleAndCombinations);
                 put("or", possibleOrCombinations);
-
+                
             }
         };
-
+        
         /**
          * Returns an array of legal combinations with the given operator
          * 
@@ -104,10 +69,10 @@ public class TypeSystem {
             if (res == null) {
                 throw new NullPointerException("Operator " + operator + " not regocnized");
             }
-
+            
             return res;
         }
-
+        
         @Override
         public int compareTo(binaryExpressionPairHelper o) {
             if (o == null) {
@@ -115,9 +80,44 @@ public class TypeSystem {
             }
             return this.LeftType.compareTo(o.RightType) + this.RightType.compareTo(o.RightType);
         }
-
+        
     }
+    // virker dumt
+    private final binaryExpressionPairHelper[] possiblePlusCombinations = {
+            new binaryExpressionPairHelper("string", "string"),
+            new binaryExpressionPairHelper("int", "int"),
+            new binaryExpressionPairHelper("float", "float"),
 
+    },
+            possibleMinusCombinations = possiblePlusCombinations,
+            possibleMultiplicationCombinations = {
+                    new binaryExpressionPairHelper("int", "int"),
+                    new binaryExpressionPairHelper("float", "float"),
+            },
+            possibleDivisionCombinations = possibleMultiplicationCombinations,
+            possibleModuloCombinations = {
+                    new binaryExpressionPairHelper("int", "int"),
+            },
+            possibleLessThanCombinations = {
+                    new binaryExpressionPairHelper("int", "int"),
+                    new binaryExpressionPairHelper("float", "float"),
+            },
+            possibleLessThanEqualCombinations = possibleLessThanCombinations,
+            possibleGreaterThanCombinations = possibleLessThanCombinations,
+            possibleGreaterThanEqualCombinations = possibleLessThanCombinations,
+            possibleInequalityCombinations = {
+                    new binaryExpressionPairHelper("int", "int"),
+                    new binaryExpressionPairHelper("float", "float"),
+                    new binaryExpressionPairHelper("string", "string"),
+                    new binaryExpressionPairHelper("bool", "bool"),
+            // TODO Array?
+            },
+            possibleEqualityCombinations = possibleInequalityCombinations,
+            possibleAndCombinations = {
+                    new binaryExpressionPairHelper("bool", "bool"),
+            },
+            possibleOrCombinations = possibleAndCombinations;
+    
     // key is operator, nested key is operands
     // The horror
     private final HashMap<String, HashMap<binaryExpressionPairHelper, String>> resultingType = new HashMap<>() {
