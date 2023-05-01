@@ -221,12 +221,13 @@ public class SymbolTable implements Map<String, IdAttributes> {
      * @param parameterTypes the types of the parameters to add
      * @param parameterNames the names of the parameters to add
      * @return the attributes of the function
-     * @throws IllegalArgumentException if the function does not exist, already has parameters or the number of types and names are different
+     * @throws NullPointerException if the function does not exist
+     * @throws IllegalArgumentException if the function already has parameters or the number of types and names are different
      */
     public IdAttributes addFunctionParameters(String functionName, List<String> parameterTypes, List<String> parameterNames) {
         IdAttributes attributes = get(functionName);
         if (attributes == null) {
-            throw new IllegalArgumentException("Function " + functionName + " does not exist");
+            throw new NullPointerException("Function " + functionName + " does not exist");
         }
         if (!attributes.getParameterTypes().isEmpty() || !attributes.getParameterNames().isEmpty()) {
             throw new IllegalArgumentException("Function " + functionName + " already has parameters");
@@ -248,12 +249,13 @@ public class SymbolTable implements Map<String, IdAttributes> {
      * @param functionName the name of the function to add a return type to
      * @param returnType the return type to add to the function
      * @return the attributes of the function
-     * @throws IllegalArgumentException if the function does not exist or already has a return type
+     * @throws NullPointerException if the function does not exist
+     * @throws IllegalArgumentException if the function already has a return type
      */
     public IdAttributes addFunctionReturnType(String functionName, String returnType) {
         IdAttributes attributes = get(functionName);
         if (attributes == null) {
-            throw new IllegalArgumentException("Function " + functionName + " does not exist");
+            throw new NullPointerException("Function " + functionName + " does not exist");
         }
         if (attributes.getReturnType() != null) {
             throw new IllegalArgumentException("Function " + functionName + " already has a return type");
