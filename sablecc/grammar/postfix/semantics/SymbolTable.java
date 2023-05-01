@@ -239,8 +239,7 @@ public class SymbolTable implements Map<String, IdAttributes> {
             attributes.addParameter(parameterTypes.get(i), parameterNames.get(i));
         }
 
-        // return hashMap.put(functionName, attributes);
-        // return attributes;
+        return hashMap.put(functionName, attributes);
     }
 
     /**
@@ -262,9 +261,7 @@ public class SymbolTable implements Map<String, IdAttributes> {
         }
         attributes.setReturnType(returnType);
         
-        // return hashMap.put(functionName, attributes);
-        // return attributes;
+        return hashMap.put(functionName, attributes);
     }
-
 
 }
