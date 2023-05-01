@@ -85,18 +85,11 @@ public class SymbolTable implements Map<String, IdAttributes> {
         return get(idName);
     }
 
-    /**
-     * Returns the size of the current scope
-     */
     @Override
     public int size() {
         return hashMap.size();
     }
 
-    /**
-     * Checks if the current scope is empty if there is an outer scope, check if it
-     * is empty as well
-     */
     @Override
     public boolean isEmpty() {
         boolean res = hashMap.isEmpty();
