@@ -92,93 +92,6 @@ public class TypeSystem {
             }
         };
 
-        // key is operator, nested key is operands
-        // The horror
-        private final HashMap<String, HashMap<binaryExpressionPairHelper, String>> resultingType = new HashMap<>() {
-            {
-                put("+", new HashMap<>() {
-                    {
-                        put(new binaryExpressionPairHelper("int", "int"), "int");
-                        put(new binaryExpressionPairHelper("float", "float"), "float");
-                        put(new binaryExpressionPairHelper("string", "string"), "string");
-                    }
-                });
-                put("-", new HashMap<>() {
-                    {
-                        put(new binaryExpressionPairHelper("int", "int"), "int");
-                        put(new binaryExpressionPairHelper("float", "float"), "float");
-                    }
-                });
-                put("/", new HashMap<>() {
-                    {
-                        put(new binaryExpressionPairHelper("int", "int"), "int");
-                        put(new binaryExpressionPairHelper("float", "float"), "float");
-                    }
-                });
-                put("*", new HashMap<>() {
-                    {
-                        put(new binaryExpressionPairHelper("int", "int"), "int");
-                        put(new binaryExpressionPairHelper("float", "float"), "float");
-                    }
-                });
-                put("<", new HashMap<>() {
-                    {
-                        put(new binaryExpressionPairHelper("int", "int"), "bool");
-                        put(new binaryExpressionPairHelper("float", "float"), "bool");
-                        // string?
-                    }
-                });
-                put("<=", new HashMap<>() {
-                    {
-                        put(new binaryExpressionPairHelper("int", "int"), "bool");
-                        put(new binaryExpressionPairHelper("float", "float"), "bool");
-                        // string?
-                    }
-                });
-                put(">", new HashMap<>() {
-                    {
-                        put(new binaryExpressionPairHelper("int", "int"), "bool");
-                        put(new binaryExpressionPairHelper("float", "float"), "bool");
-                        // string?
-                    }
-                });
-                put(">=", new HashMap<>() {
-                    {
-                        put(new binaryExpressionPairHelper("int", "int"), "bool");
-                        put(new binaryExpressionPairHelper("float", "float"), "bool");
-                        // string?
-                    }
-                });
-                put("==", new HashMap<>() {
-                    {
-                        put(new binaryExpressionPairHelper("int", "int"), "bool");
-                        put(new binaryExpressionPairHelper("float", "float"), "bool");
-                        put(new binaryExpressionPairHelper("bool", "bool"), "bool");
-                        put(new binaryExpressionPairHelper("string", "string"), "bool");
-                    }
-                });
-                put("!=", new HashMap<>() {
-                    {
-                        put(new binaryExpressionPairHelper("int", "int"), "bool");
-                        put(new binaryExpressionPairHelper("float", "float"), "bool");
-                        put(new binaryExpressionPairHelper("bool", "bool"), "bool");
-                        put(new binaryExpressionPairHelper("string", "string"), "bool");
-                    }
-                });
-                put("and", new HashMap<>() {
-                    {
-                        put(new binaryExpressionPairHelper("bool", "bool"), "bool");
-                    }
-                });
-                put("or", new HashMap<>() {
-                    {
-                        put(new binaryExpressionPairHelper("bool", "bool"), "bool");
-                    }
-                });
-
-            }
-        };
-
         /**
          * Returns an array of legal combinations with the given operator
          * 
@@ -205,6 +118,92 @@ public class TypeSystem {
 
     }
 
+    // key is operator, nested key is operands
+    // The horror
+    private final HashMap<String, HashMap<binaryExpressionPairHelper, String>> resultingType = new HashMap<>() {
+        {
+            put("+", new HashMap<>() {
+                {
+                    put(new binaryExpressionPairHelper("int", "int"), "int");
+                    put(new binaryExpressionPairHelper("float", "float"), "float");
+                    put(new binaryExpressionPairHelper("string", "string"), "string");
+                }
+            });
+            put("-", new HashMap<>() {
+                {
+                    put(new binaryExpressionPairHelper("int", "int"), "int");
+                    put(new binaryExpressionPairHelper("float", "float"), "float");
+                }
+            });
+            put("/", new HashMap<>() {
+                {
+                    put(new binaryExpressionPairHelper("int", "int"), "int");
+                    put(new binaryExpressionPairHelper("float", "float"), "float");
+                }
+            });
+            put("*", new HashMap<>() {
+                {
+                    put(new binaryExpressionPairHelper("int", "int"), "int");
+                    put(new binaryExpressionPairHelper("float", "float"), "float");
+                }
+            });
+            put("<", new HashMap<>() {
+                {
+                    put(new binaryExpressionPairHelper("int", "int"), "bool");
+                    put(new binaryExpressionPairHelper("float", "float"), "bool");
+                    // string?
+                }
+            });
+            put("<=", new HashMap<>() {
+                {
+                    put(new binaryExpressionPairHelper("int", "int"), "bool");
+                    put(new binaryExpressionPairHelper("float", "float"), "bool");
+                    // string?
+                }
+            });
+            put(">", new HashMap<>() {
+                {
+                    put(new binaryExpressionPairHelper("int", "int"), "bool");
+                    put(new binaryExpressionPairHelper("float", "float"), "bool");
+                    // string?
+                }
+            });
+            put(">=", new HashMap<>() {
+                {
+                    put(new binaryExpressionPairHelper("int", "int"), "bool");
+                    put(new binaryExpressionPairHelper("float", "float"), "bool");
+                    // string?
+                }
+            });
+            put("==", new HashMap<>() {
+                {
+                    put(new binaryExpressionPairHelper("int", "int"), "bool");
+                    put(new binaryExpressionPairHelper("float", "float"), "bool");
+                    put(new binaryExpressionPairHelper("bool", "bool"), "bool");
+                    put(new binaryExpressionPairHelper("string", "string"), "bool");
+                }
+            });
+            put("!=", new HashMap<>() {
+                {
+                    put(new binaryExpressionPairHelper("int", "int"), "bool");
+                    put(new binaryExpressionPairHelper("float", "float"), "bool");
+                    put(new binaryExpressionPairHelper("bool", "bool"), "bool");
+                    put(new binaryExpressionPairHelper("string", "string"), "bool");
+                }
+            });
+            put("and", new HashMap<>() {
+                {
+                    put(new binaryExpressionPairHelper("bool", "bool"), "bool");
+                }
+            });
+            put("or", new HashMap<>() {
+                {
+                    put(new binaryExpressionPairHelper("bool", "bool"), "bool");
+                }
+            });
+
+        }
+    };
     private String[] operators = { "+", "-", "*", "/", "%", "<", "<=", ">", ">=", "==", "!=", "and", "or" };
 
     /**
@@ -232,13 +231,12 @@ public class TypeSystem {
                 throw new InvalidExpressionException("Cannot produce a valid value with " + LType + operator + RType);
             }
 
-            // TODO resultattype af udtryk
+            res = resultingType.get(operator).get(doesLegalCombinationExist);
 
+            return res;
         } catch (NullPointerException e) {
             throw new IllegalArgumentException(e);
         }
-
-        return res;
     }
 
 }
