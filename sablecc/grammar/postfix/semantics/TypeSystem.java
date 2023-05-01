@@ -37,7 +37,7 @@ public class TypeSystem {
          * and
          * or
          */
-        
+
         private final HashMap<String, binaryExpressionPairHelper[]> legalOperationsDic = new HashMap<>() {
             {
                 put("+", possiblePlusCombinations);
@@ -53,10 +53,10 @@ public class TypeSystem {
                 put("==", possibleEqualityCombinations);
                 put("and", possibleAndCombinations);
                 put("or", possibleOrCombinations);
-                
+
             }
         };
-        
+
         /**
          * Returns an array of legal combinations with the given operator
          * 
@@ -69,10 +69,10 @@ public class TypeSystem {
             if (res == null) {
                 throw new NullPointerException("Operator " + operator + " not regocnized");
             }
-            
+
             return res;
         }
-        
+
         @Override
         public int compareTo(binaryExpressionPairHelper o) {
             if (o == null) {
@@ -80,8 +80,32 @@ public class TypeSystem {
             }
             return this.LeftType.compareTo(o.RightType) + this.RightType.compareTo(o.RightType);
         }
-        
+
+        @Override
+        public boolean equals(Object obj) {
+            if (obj == null) {
+                return false;
+            }
+            if (obj == this) {
+                return true;
+            }
+            if (!(obj instanceof binaryExpressionPairHelper)) {
+                return false;
+            }
+            boolean res = false;
+            binaryExpressionPairHelper resObj = (binaryExpressionPairHelper)obj;
+            res = this.LeftType.equals(resObj.LeftType) && this.RightType.equals(resObj.RightType);
+            return res;
+        }
+
+        @Override
+        public int hashCode() {
+            // TODO Auto-generated method stub
+            return LeftType.hashCode() + RightType.hashCode();
+        }
+
     }
+
     // virker dumt
     private final binaryExpressionPairHelper[] possiblePlusCombinations = {
             new binaryExpressionPairHelper("string", "string"),
@@ -117,7 +141,7 @@ public class TypeSystem {
                     new binaryExpressionPairHelper("bool", "bool"),
             },
             possibleOrCombinations = possibleAndCombinations;
-    
+
     // key is operator, nested key is operands
     // The horror
     private final HashMap<String, HashMap<binaryExpressionPairHelper, String>> resultingType = new HashMap<>() {

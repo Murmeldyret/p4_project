@@ -11,6 +11,7 @@
             "mainClass": "postfix.Compiler",
             "args": "${command:SpecifyProgramArgs}",
             "preLaunchTask": "antBuild",
+            "cwd": "${workspaceFolder}"
         },
         {
             "type": "java",

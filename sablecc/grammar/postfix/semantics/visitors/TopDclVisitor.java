@@ -60,7 +60,6 @@ public class TopDclVisitor extends SemanticVisitor {
             symbolTable.put(node.getId().toString(), new IdAttributes(node.getId(), node.getType(), null, Attributes.variable));
         }
     }
-
     @Override
     public void inAConstDeclarationInitializationDcl(AConstDeclarationInitializationDcl node) {
         
