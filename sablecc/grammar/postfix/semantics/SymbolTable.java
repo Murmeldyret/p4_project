@@ -85,17 +85,25 @@ public class SymbolTable implements Map<String, IdAttributes> {
         return get(idName);
     }
 
+    /**
+     * Returns the size of the current scope
+     */
     @Override
     public int size() {
         return hashMap.size();
     }
 
+    /**
+     * Checks if the current scope is empty if there is an outer scope, check if it
+     * is empty as well
+     */
     @Override
     public boolean isEmpty() {
         boolean res = hashMap.isEmpty();
         if (outerSymbolTable != null) {
-            res = res || outerSymbolTable.isEmpty();
+            res = res && outerSymbolTable.isEmpty();
         }
+
         return res;
     }
 
@@ -104,8 +112,9 @@ public class SymbolTable implements Map<String, IdAttributes> {
         if (key == null) {
             throw new NullPointerException("Key cannot be null");
         }
-        return hashMap.containsKey(key);
 
+        // Check if the key exists in the current scope (hashMap)
+        return hashMap.containsKey(key);
     }
 
     @Override
@@ -113,15 +122,17 @@ public class SymbolTable implements Map<String, IdAttributes> {
         if (value == null) {
             throw new NullPointerException("Value cannot be null");
         }
-        boolean res = false;
 
-        res = hashMap.containsValue(value);
+        // Check if the value exists in the current scope (hashMap)
+        boolean res = hashMap.containsValue(value);
 
+        // If there is an outer scope and the value is not in the current scope,
+        // check if the value exists in the outer scope
         if (outerSymbolTable != null && !res) {
             res = outerSymbolTable.containsValue(value);
         }
-        return res;
 
+        return res;
     }
 
     @Override
@@ -129,12 +140,18 @@ public class SymbolTable implements Map<String, IdAttributes> {
         if (key == null) {
             throw new NullPointerException("Key cannot be null");
         }
-        if (hashMap.containsKey(key)) {
-            return hashMap.get(key);
+
+        // Check if the key exists in the current scope (hashMap) and return its value
+        IdAttributes value = hashMap.get(key);
+        if (value != null) {
+            return value;
         }
+
+        // If there is an outer scope, recursively search for the key in the outer scope
         if (outerSymbolTable != null) {
             return outerSymbolTable.get(key);
         }
+
         throw new IllegalArgumentException("Key does not exist in symbol table");
     }
 
@@ -143,31 +160,38 @@ public class SymbolTable implements Map<String, IdAttributes> {
         if (key == null) {
             throw new NullPointerException("Key cannot be null");
         }
+
+        // Add the key-value pair to the current scope (hashMap)
         return hashMap.put(key, value);
     }
 
     @Override
     public IdAttributes remove(Object key) {
         // TODO Auto-generated method stub
-        // findes hashmap, hvis nej så fejl
-        // findes værdi ude for lokal scope og er i funktionsscope, så smid fejl
-        // findes værdi, hvis nej så return null
 
         IdAttributes res = null;
 
+        // Check if both hashMap and outerSymbolTable are null, and if so, throw a
+        // NullPointerException
         if (hashMap == null && outerSymbolTable == null) {
             throw new NullPointerException("Symbol table does not exists");
         }
+
+        // Check if the key is declared locally (in the current scope)
         if (this.DeclaredLocally((IdAttributes) key)) {
             res = hashMap.remove(key);
         }
-        // findes, men i outer scope
-        else if (containsValue(key)) {
+
+        // If the key is not found locally, check if the outerSymbolTable is not null
+        // and if the key is present in the outer scope
+        else if (outerSymbolTable != null && outerSymbolTable.containsKey(key)) {
             if (kind != Scopekind.functionBlock) {
                 res = outerSymbolTable.remove(key);
             } else
                 throw new IllegalArgumentException("Function block scope cannot remove identifers outside local scope");
         }
+
+        // Return the removed IdAttributes (if any), otherwise null
         return res;
     }
 
