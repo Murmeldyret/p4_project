@@ -214,6 +214,15 @@ public class SymbolTable implements Map<String, IdAttributes> {
         throw new UnsupportedOperationException("Unimplemented method 'entrySet'");
     }
 
+    /**
+     * Adds parameters to a function
+     * 
+     * @param functionName the name of the function to add parameters to
+     * @param parameterTypes the types of the parameters to add
+     * @param parameterNames the names of the parameters to add
+     * @return the attributes of the function
+     * @throws IllegalArgumentException if the function does not exist, already has parameters or the number of types and names are different
+     */
     public IdAttributes addFunctionParameters(String functionName, List<String> parameterTypes, List<String> parameterNames) {
         IdAttributes attributes = get(functionName);
         if (attributes == null) {
@@ -228,11 +237,19 @@ public class SymbolTable implements Map<String, IdAttributes> {
         for (int i = 0; i < parameterTypes.size(); i++) {
             attributes.addParameter(parameterTypes.get(i), parameterNames.get(i));
         }
-        
+
         // return hashMap.put(functionName, attributes);
         // return attributes;
     }
 
+    /**
+     * Adds a return type to a function
+     * 
+     * @param functionName the name of the function to add a return type to
+     * @param returnType the return type to add to the function
+     * @return the attributes of the function
+     * @throws IllegalArgumentException if the function does not exist or already has a return type
+     */
     public IdAttributes addFunctionReturnType(String functionName, String returnType) {
         IdAttributes attributes = get(functionName);
         if (attributes == null) {
