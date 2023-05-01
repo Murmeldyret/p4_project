@@ -5,14 +5,21 @@ import postfix.node.AExprValPrimeExpr;
 /**
  * An Exception that occurs when an expression does not produce a valid value
  */
-public class InvalidExpressionException extends TypeError{
+public class InvalidExpressionException extends TypeError {
 
-    public InvalidExpressionException(String mesString) {
-        super(mesString);
-        //TODO Auto-generated constructor stub
+    private AExprValPrimeExpr node;
+
+    // TODO: Auto-generated constructor stub
+    public InvalidExpressionException(String message) {
+        super(message);
     }
-    public InvalidExpressionException(String mesString, AExprValPrimeExpr node) {
-        super(mesString);
+
+    public InvalidExpressionException(String message, AExprValPrimeExpr node) {
+        super(message);
+        this.node = node;
     }
-    
+
+    public AExprValPrimeExpr getNode() {
+        return node;
+    }
 }
