@@ -115,8 +115,9 @@ public class TypeVisitor extends SemanticVisitor {
                     if (isBinaryInFixOp) {
                         String LhsType = SimplifiedExpressionTypeQueue.isEmpty() ? typeQueue.remove() : SimplifiedExpressionTypeQueue.remove() ;
                         String RhsType = typeQueue.remove();
-
+                        System.out.print("Operands are: " + LhsType + " and " + RhsType + " with operator: " + operator + "," );
                         SimplifiedExpressionTypeQueue.add(typeSystem.LookupResultingType(LhsType, RhsType, operator));
+                        System.out.println("and evaluated to type " + SimplifiedExpressionTypeQueue.element());
                     }
 
                 }
