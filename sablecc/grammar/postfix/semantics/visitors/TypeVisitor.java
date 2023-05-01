@@ -95,7 +95,8 @@ public class TypeVisitor extends SemanticVisitor {
      * @param node The expression node to test
      * @return true if the expression produces a valid value under the current type
      *         system.
-     * @throws invalidExpressionException if the given expression does not produce a valid value
+     * @throws invalidExpressionException if the given expression does not produce a
+     *                                    valid value
      */
     private boolean typeCheckExpression(AExprValPrimeExpr node) {
         boolean res = false;
@@ -113,11 +114,15 @@ public class TypeVisitor extends SemanticVisitor {
                     // TODO skal faktisk tjekke om operatoren er en binInfixOp
                     isBinaryInFixOp = true;
                     if (isBinaryInFixOp) {
-                        String LhsType = SimplifiedExpressionTypeQueue.isEmpty() ? typeQueue.remove() : SimplifiedExpressionTypeQueue.remove() ;
+                        String LhsType = SimplifiedExpressionTypeQueue.isEmpty() ? typeQueue.remove()
+                                : SimplifiedExpressionTypeQueue.remove();
                         String RhsType = typeQueue.remove();
-                        System.out.print("Operands are: " + LhsType + " and " + RhsType + " with operator: " + operator + "," );
+                        // System.out.print(
+                        // "Operands are: " + LhsType + " and " + RhsType + " with operator: " +
+                        // operator + ",");
                         SimplifiedExpressionTypeQueue.add(typeSystem.LookupResultingType(LhsType, RhsType, operator));
-                        System.out.println("and evaluated to type " + SimplifiedExpressionTypeQueue.element());
+                        // System.out.println("and evaluated to type " +
+                        // SimplifiedExpressionTypeQueue.element());
                     }
 
                 }
@@ -128,7 +133,9 @@ public class TypeVisitor extends SemanticVisitor {
             }
 
         }
-
+        // System.out.println(
+        // "Expression evaluating to type " + SimplifiedExpressionTypeQueue.element() +
+        // " Returning " + res);
         return res;
     }
 
