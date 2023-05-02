@@ -1752,12 +1752,13 @@ public class Parser
         PExpr pexprNode1;
         {
             // Block
-        PVal pvalNode2;
-        PExprPrime pexprprimeNode3;
-        pvalNode2 = (PVal)nodeArrayList1.get(0);
-        pexprprimeNode3 = (PExprPrime)nodeArrayList2.get(0);
+        @SuppressWarnings("unused") Object nullNode2 = null;
+        PVal pvalNode3;
+        PExprPrime pexprprimeNode4;
+        pvalNode3 = (PVal)nodeArrayList1.get(0);
+        pexprprimeNode4 = (PExprPrime)nodeArrayList2.get(0);
 
-        pexprNode1 = new AExprValPrimeExpr(pvalNode2, pexprprimeNode3);
+        pexprNode1 = new AExprValPrimeExpr(null, pvalNode3, pexprprimeNode4);
         }
 	nodeList.add(pexprNode1);
         return nodeList;
@@ -1783,7 +1784,7 @@ public class Parser
         pvalNode3 = (PVal)nodeArrayList2.get(0);
         pexprprimeNode4 = (PExprPrime)nodeArrayList3.get(0);
 
-        pexprNode1 = new AExprValPrime2Expr(tbopnotNode2, pvalNode3, pexprprimeNode4);
+        pexprNode1 = new AExprValPrimeExpr(tbopnotNode2, pvalNode3, pexprprimeNode4);
         }
 	nodeList.add(pexprNode1);
         return nodeList;
