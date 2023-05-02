@@ -71,7 +71,6 @@ public class SymbolTable implements Map<String, IdAttributes> {
      */
     public boolean DeclaredLocally(String idName) {
         return hashMap.containsKey(idName);
-
     }
 
     /**
@@ -154,7 +153,7 @@ public class SymbolTable implements Map<String, IdAttributes> {
         }
 
         // Add the key-value pair to the current scope (hashMap)
-        return hashMap.put(key, value);
+        return hashMap.put(key.stripTrailing(), value);
     }
 
     @Override
