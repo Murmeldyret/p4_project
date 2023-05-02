@@ -41,15 +41,32 @@ public class SemanticVisitor extends DepthFirstAdapter {
 
     @Override
     public void inAAssignStmt(AAssignStmt node) {
-        // type visitor
+        String variableId = node.getId().getText();
+        PExpr expression = node.getExpr();
+
+        if (!symbolTable.containsKey(variableId)) {
+            throw new RuntimeException("Variable " + variableId + " is not declared.");
+        }
+
+        String variableType = symbolTable.get(variableId).getType().getText();
+
+        TypeVisitor typeVisitor = new TypeVisitor(symbolTable);
+        expression.apply(typeVisitor);
+
+        String expressionType = "";
+        if (!typeVisitor.typeQueue.isEmpty()) {
+            expressionType = typeVisitor.typeQueue.remove();
+        }
+
+        if (!variableType.equals(expressionType)) {
+            throw new RuntimeException("Type mismatch: Cannot assign a value of type " + expressionType
+                    + " to variable " + variableId + " of type " + variableType + ".");
+        }
     }
 
     @Override
     public void inAForLoopStmt(AForLoopStmt node) {
-        //Type Visitor
+        // Type Visitor
     }
-
-
-
 
 }
