@@ -6,6 +6,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import postfix.node.TId;
+import postfix.node.TType;
+import postfix.semantics.IdAttributes.Attributes;
+
 public class SymbolTable implements Map<String, IdAttributes> {
 
     public SymbolTable() {
@@ -266,5 +270,17 @@ public class SymbolTable implements Map<String, IdAttributes> {
         
         return hashMap.put(functionName, attributes);
     }
+    public SymbolTable CreateNewScope(String id, Scopekind kind) {
+        if (get(id).getAttributes() != Attributes.function) {
+            throw new IllegalArgumentException("Cannot create a scope from a non-function");
+        }
+        SymbolTable functionTable = new SymbolTable(this, kind);
+        for (int i = 0; i < get(id).getParameterNames().size(); i++) {
+            functionTable.put(get(id).getParameterNames().get(i), new IdAttributes(new TId(get(id).getParameterNames().get(i)), new TType(get(id).getParameterTypes().get(i)),"",Attributes.variable));
+        }
+
+        return functionTable;
+
+    
 
 }
