@@ -27,6 +27,7 @@ public class SymbolTable implements Map<String, IdAttributes> {
         this.outerSymbolTable = outerSymbolTable;
         this.kind = kind;
         hashMap = new HashMap<String, IdAttributes>();
+        functionMap = new HashMap<>();
     }
 
     /**
@@ -46,6 +47,11 @@ public class SymbolTable implements Map<String, IdAttributes> {
     private Scopekind kind;
     // holds the actual symbols
     private HashMap<String, IdAttributes> hashMap;
+    /**
+     * holds information about functions in current scope
+     */
+    private HashMap<String, SymbolTable> functionMap;
+
 
     /** Represents the outer scope, is null if no such scope exists */
     private SymbolTable outerSymbolTable;
@@ -297,8 +303,14 @@ public class SymbolTable implements Map<String, IdAttributes> {
         for (int i = 0; i < get(id).getParameterNames().size(); i++) {
             functionTable.put(get(id).getParameterNames().get(i), new IdAttributes(new TId(get(id).getParameterNames().get(i)), new TType(get(id).getParameterTypes().get(i)),"",Attributes.variable));
         }
-
+        functionMap.put(id, functionTable);
         return functionTable;
+    }
+    public SymbolTable getFunctionSymbolTable(String id) {
+        if (get(id).getAttributes() != Attributes.function) {
+            throw new IllegalArgumentException(id + " does not refer to a function");
+        }
+        return functionMap.get(id);
     }
     
 
