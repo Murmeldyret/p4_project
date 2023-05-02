@@ -203,7 +203,17 @@ public class TypeVisitor extends SemanticVisitor {
     @Override
     public void inAFunctionCallFunctionCall(AFunctionCallFunctionCall node) {
         typeQueue.add(symbolTable.get(node.getId().getText()).getType().getText());
+        // symbolTable = symbolTable.getFunctionSymbolTable(symbolTable.get(node.getId().getText()).getId().getText());
+    }
+    @Override
+    public void outAFunctionCallFunctionCall(AFunctionCallFunctionCall node) {
+        // symbolTable = symbolTable.getOuterSymbolTable();
+    }
 
+    @Override
+    public void inAFunctionDeclarationDcl(AFunctionDeclarationDcl node) {
+        // TODO Auto-generated method stub
+        super.inAFunctionDeclarationDcl(node);
     }
 
     // --PBinInfixOp nodes--

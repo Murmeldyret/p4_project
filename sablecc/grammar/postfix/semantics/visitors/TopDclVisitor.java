@@ -88,9 +88,7 @@ public class TopDclVisitor extends SemanticVisitor {
 
     @Override
     public void inAFunctionDeclarationDcl(AFunctionDeclarationDcl node) {
-        TypeVisitor typeVisitor = new TypeVisitor(symbolTable);
-
-        node.apply(typeVisitor);
+       
 
         if(symbolTable.DeclaredLocally(node.getId().getText())) {
             throw new VariableAlreadyDeclaredException("null");
@@ -103,7 +101,10 @@ public class TopDclVisitor extends SemanticVisitor {
     }
     @Override
     public void outAFunctionDeclarationDcl(AFunctionDeclarationDcl node) {
-       if (symbolTable.getOuterSymbolTable() == null) {
+        TypeVisitor typeVisitor = new TypeVisitor(symbolTable);
+
+        node.apply(typeVisitor);
+        if (symbolTable.getOuterSymbolTable() == null) {
         throw new NullPointerException("cannot go to outer scope: already in global scope");
        }
         symbolTable = symbolTable.getOuterSymbolTable();
