@@ -49,6 +49,7 @@ public interface Analysis extends Switch
     void caseAElseBlockStatementElseStatement(AElseBlockStatementElseStatement node);
     void caseAElseStatement(AElseStatement node);
     void caseAExprValPrimeExpr(AExprValPrimeExpr node);
+    void caseAExprValPrime2Expr(AExprValPrime2Expr node);
     void caseAExprSpecialExpr(AExprSpecialExpr node);
     void caseAExprArrayExpr(AExprArrayExpr node);
     void caseAExprPrimeOperatorValPrimeExprPrime(AExprPrimeOperatorValPrimeExprPrime node);

@@ -1014,11 +1014,36 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
         {
             node.getVal().apply(this);
         }
+        outAExprValPrimeExpr(node);
+    }
+
+    public void inAExprValPrime2Expr(AExprValPrime2Expr node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAExprValPrime2Expr(AExprValPrime2Expr node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAExprValPrime2Expr(AExprValPrime2Expr node)
+    {
+        inAExprValPrime2Expr(node);
+        if(node.getExprPrime() != null)
+        {
+            node.getExprPrime().apply(this);
+        }
+        if(node.getVal() != null)
+        {
+            node.getVal().apply(this);
+        }
         if(node.getBopNot() != null)
         {
             node.getBopNot().apply(this);
         }
-        outAExprValPrimeExpr(node);
+        outAExprValPrime2Expr(node);
     }
 
     public void inAExprSpecialExpr(AExprSpecialExpr node)

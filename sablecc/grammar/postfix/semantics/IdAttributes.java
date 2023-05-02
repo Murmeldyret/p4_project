@@ -1,6 +1,6 @@
 package postfix.semantics;
 
-import java.util.function.Function;
+import java.util.List;
 
 import postfix.node.TId;
 import postfix.node.TType;
@@ -16,6 +16,9 @@ public class IdAttributes {
     private String value;
     private boolean isFunction;
     private boolean isConst;
+    private List<String> parameterTypes;
+    private List<String> parameterNames;
+    private String returnType;
 
     private Attributes attributes;
 
@@ -26,6 +29,8 @@ public class IdAttributes {
         constant,
         /** An identifier, that is a function */
         function,
+        /** An identifier, that is an array */
+        array,
         // TODO csv skal måske ikke være her
         /** A special csv type */
         csv,
@@ -70,6 +75,27 @@ public class IdAttributes {
 
     public boolean isConst() {
         return isConst;
+    }
+
+    public List<String> getParameterTypes() {
+        return parameterTypes;
+    }
+
+    public List<String> getParameterNames() {
+        return parameterNames;
+    }
+
+    public void addParameter(String type, String name) {
+        parameterTypes.add(type);
+        parameterNames.add(name);
+    }
+
+    public String getReturnType() {
+        return returnType;
+    }
+
+    public void setReturnType(String type) {
+        returnType = type;
     }
 
 }

@@ -2,8 +2,13 @@ package postfix.semantics;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import postfix.node.TId;
+import postfix.node.TType;
+import postfix.semantics.IdAttributes.Attributes;
 
 public class SymbolTable implements Map<String, IdAttributes> {
 
@@ -227,5 +232,70 @@ public class SymbolTable implements Map<String, IdAttributes> {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'entrySet'");
     }
+
+    /**
+     * Adds parameters to a function
+     * 
+     * @param functionName the name of the function to add parameters to
+     * @param parameterTypes the types of the parameters to add
+     * @param parameterNames the names of the parameters to add
+     * @return the attributes of the function
+     * @throws NullPointerException if the function does not exist
+     * @throws IllegalArgumentException if the function already has parameters or the number of types and names are different
+     */
+    public IdAttributes addFunctionParameters(String functionName, List<String> parameterTypes, List<String> parameterNames) {
+        IdAttributes attributes = get(functionName);
+        if (attributes == null) {
+            throw new NullPointerException("Function " + functionName + " does not exist");
+        }
+        if (!attributes.getParameterTypes().isEmpty() || !attributes.getParameterNames().isEmpty()) {
+            throw new IllegalArgumentException("Function " + functionName + " already has parameters");
+        }
+        if (parameterTypes.size() != parameterNames.size()) {
+            throw new IllegalArgumentException("Function " + functionName + " has different number of parameters");
+        }
+        for (int i = 0; i < parameterTypes.size(); i++) {
+            attributes.addParameter(parameterTypes.get(i), parameterNames.get(i));
+        }
+
+        return hashMap.put(functionName, attributes);
+    }
+
+    /**
+     * Adds a return type to a function
+     * 
+     * @param functionName the name of the function to add a return type to
+     * @param returnType the return type to add to the function
+     * @return the attributes of the function
+     * @throws NullPointerException if the function does not exist
+     * @throws IllegalArgumentException if the function already has a return type
+     */
+    public IdAttributes addFunctionReturnType(String functionName, String returnType) {
+        IdAttributes attributes = get(functionName);
+        if (attributes == null) {
+            throw new NullPointerException("Function " + functionName + " does not exist");
+        }
+        if (attributes.getReturnType() != null) {
+            throw new IllegalArgumentException("Function " + functionName + " already has a return type");
+        }
+        if (kind != Scopekind.functionBlock) {
+            throw new IllegalArgumentException("Function " + functionName + " is not a function");
+        }
+        attributes.setReturnType(returnType);
+        
+        return hashMap.put(functionName, attributes);
+    }
+    public SymbolTable CreateNewScope(String id, Scopekind kind) {
+        if (get(id).getAttributes() != Attributes.function) {
+            throw new IllegalArgumentException("Cannot create a scope from a non-function");
+        }
+        SymbolTable functionTable = new SymbolTable(this, kind);
+        for (int i = 0; i < get(id).getParameterNames().size(); i++) {
+            functionTable.put(get(id).getParameterNames().get(i), new IdAttributes(new TId(get(id).getParameterNames().get(i)), new TType(get(id).getParameterTypes().get(i)),"",Attributes.variable));
+        }
+
+        return functionTable;
+    }
+    
 
 }

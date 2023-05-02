@@ -6,6 +6,8 @@ import postfix.node.AAssignStmt;
 import postfix.node.AFunctionDeclarationDcl;
 import postfix.node.AVariableDeclarationDcl;
 import postfix.node.AVariableDeclarationInitializationDcl;
+import postfix.node.AVariableDeclarationArrayDcl;
+import postfix.node.TId;
 import postfix.semantics.*;
 import postfix.semantics.Exceptions.VariableAlreadyDeclaredException;
 import postfix.semantics.IdAttributes.Attributes;
@@ -95,6 +97,20 @@ public class TopDclVisitor extends SemanticVisitor {
         else {
             symbolTable.put(node.getId().getText(),
                     new IdAttributes(node.getId(), node.getType(), null, Attributes.function));
+        }
+    }
+
+    @Override
+    public void inAVariableDeclarationArrayDcl(AVariableDeclarationArrayDcl node) {
+        TypeVisitor typeVisitor = new TypeVisitor(symbolTable);
+
+        node.apply(typeVisitor);
+
+        if(symbolTable.DeclaredLocally(node.getId().getText())) {
+            throw new VariableAlreadyDeclaredException("Variable" + node.getId().toString() + "has already been declared");
+        }
+        else {
+            symbolTable.put(node.getId().toString(), new IdAttributes(node.getId(), node.getType(), null, Attributes.array));
         }
     }
 
