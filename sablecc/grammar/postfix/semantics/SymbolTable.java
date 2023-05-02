@@ -280,7 +280,7 @@ public class SymbolTable implements Map<String, IdAttributes> {
         }
 
         return functionTable;
-
+    }
     
 
 }
