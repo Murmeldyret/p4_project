@@ -29,7 +29,8 @@ public class TypeVisitor extends SemanticVisitor {
 
     protected QueueList<String> typeQueue;
     protected QueueList<String> operatorQueue;
-
+    /** The type of an expression, evaluated after an expression has been visited */
+    protected String expressionType = "";
 
     //
     /**
@@ -95,8 +96,8 @@ public class TypeVisitor extends SemanticVisitor {
      * @throws invalidExpressionException if the given expression does not produce a
      *                                    valid value
      */
-    private boolean typeCheckExpression(AExprValPrimeExpr node) {
-        boolean res = false;
+    private String typeCheckExpression(AExprValPrimeExpr node) {
+        String res = "";
         TypeSystem typeSystem = new TypeSystem();
 
         QueueList<String> SimplifiedExpressionTypeQueue = new QueueList<>();
@@ -117,13 +118,17 @@ public class TypeVisitor extends SemanticVisitor {
                         // System.out.print(
                         // "Operands are: " + LhsType + " and " + RhsType + " with operator: " +
                         // operator + ",");
+
+                        // This queue should have a size of 1 when exiting the loop
                         SimplifiedExpressionTypeQueue.add(typeSystem.LookupResultingType(LhsType, RhsType, operator));
+
                         // System.out.println("and evaluated to type " +
                         // SimplifiedExpressionTypeQueue.element());
                     }
 
                 }
-                res = true;
+
+                res = SimplifiedExpressionTypeQueue.remove();
             } catch (IllegalArgumentException e) {
                 // TODO: handle exception
                 throw new InvalidExpressionException("Expression does not produce a valid value", node);
@@ -153,9 +158,7 @@ public class TypeVisitor extends SemanticVisitor {
 
     @Override
     public void outAExprValPrimeExpr(AExprValPrimeExpr node) {
-        if (!typeCheckExpression(node)) {
-            throw new InvalidExpressionException("Expression does not produce a valid type", node);
-        }
+        expressionType = typeCheckExpression(node);
     }
 
     // @Override
@@ -178,12 +181,6 @@ public class TypeVisitor extends SemanticVisitor {
         typeQueue.add("float");
     }
 
-    // @Override
-    // public void inAValFunctionCallVal(AValFunctionCallVal node) {
-    // // TODO virker med garanti ikke, skal have funktionens identifier
-    // node.getFunctionCall().apply(this);
-    // }
-
     @Override
     public void inAValIdVal(AValIdVal node) {
         // Seems legit
@@ -202,7 +199,40 @@ public class TypeVisitor extends SemanticVisitor {
 
     @Override
     public void inAFunctionCallFunctionCall(AFunctionCallFunctionCall node) {
+        // ny type visitor når den ser denne?
+        // tjek om udtryk stemmer overens med funktionens parametertype
+        // TypeVisitor typeVisitor = new TypeVisitor(symbolTable);
+        // node.apply(typeVisitor);
+
         typeQueue.add(symbolTable.get(node.getId().getText()).getType().getText());
+    }
+
+    @Override
+    public void inAFunctionCallParamFunctionCallParam(AFunctionCallParamFunctionCallParam node) {
+        // type check expression, and type check expression prime
+        if (node.getExpr() != null) {
+            node.getExpr().apply(new TypeVisitor(symbolTable));
+        }
+    }
+
+    @Override
+    public void outAFunctionCallParamFunctionCallParam(AFunctionCallParamFunctionCallParam node) {
+        // all PExpr are AExprValPrimeExpr
+        expressionType = typeCheckExpression((AExprValPrimeExpr) node.getExpr());
+        if (/*expression type matches function parameter type */ true) {
+            
+        }
+    }
+
+    @Override
+    public void inAFunctionCallParamPrimeFunctionCallParamPrime(AFunctionCallParamPrimeFunctionCallParamPrime node) {
+        if (node.getExpr() != null) {
+            node.getExpr().apply(new TypeVisitor(symbolTable));
+        }
+    }
+
+    @Override
+    public void outAFunctionCallParamPrimeFunctionCallParamPrime(AFunctionCallParamPrimeFunctionCallParamPrime node) {
 
     }
 
