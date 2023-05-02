@@ -88,7 +88,8 @@ public class TopDclVisitor extends SemanticVisitor {
 
     @Override
     public void inAFunctionDeclarationDcl(AFunctionDeclarationDcl node) {
-       
+       TopDclVisitor topDclVisitor = new TopDclVisitor(new SymbolTable(symbolTable, Scopekind.functionBlock));
+        node.getFunctionParam().apply(topDclVisitor);
 
         if(symbolTable.DeclaredLocally(node.getId().getText())) {
             throw new VariableAlreadyDeclaredException("null");
@@ -96,7 +97,7 @@ public class TopDclVisitor extends SemanticVisitor {
         else {
             symbolTable.put(node.getId().getText(),
                     new IdAttributes(node.getId(), node.getType(), null, Attributes.function));
-            symbolTable = symbolTable.CreateNewScope(node.getId().getText(), Scopekind.functionBlock);
+            // symbolTable = symbolTable.CreateNewScope(node.getId().getText(), Scopekind.functionBlock);
         }
     }
     @Override
