@@ -30,9 +30,6 @@ public class TypeVisitor extends SemanticVisitor {
     protected QueueList<String> typeQueue;
     protected QueueList<String> operatorQueue;
 
-    // Skal ikke bruges
-    protected TBopNot bopNot;
-    protected PVal value;
 
     //
     /**

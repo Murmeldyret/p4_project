@@ -11,7 +11,6 @@ import java.io.*;
 public class Compiler {
     public static void main(String[] arguments) {
         try {
-            System.out.println("Code Something:");
 
             // Create a Parser instance.
             Parser p = new Parser(

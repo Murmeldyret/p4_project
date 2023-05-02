@@ -16,28 +16,9 @@ public class TypeSystem {
         public binaryExpressionPairHelper(String LeftType, String RightType) {
             this.LeftType = LeftType;
             this.RightType = RightType;
-
         }
 
         private String LeftType, RightType;
-
-        /*
-         * Possible binary infix operators
-         * +
-         * -
-         * *
-         * /
-         * %
-         * <
-         * >
-         * <=
-         * >=
-         * !=
-         * ==
-         * and
-         * or
-         */
-
         private final HashMap<String, binaryExpressionPairHelper[]> legalOperationsDic = new HashMap<>() {
             {
                 put("+", possiblePlusCombinations);
@@ -53,7 +34,6 @@ public class TypeSystem {
                 put("==", possibleEqualityCombinations);
                 put("and", possibleAndCombinations);
                 put("or", possibleOrCombinations);
-
             }
         };
 
@@ -65,12 +45,11 @@ public class TypeSystem {
          * @throws NullPointerException Throws if an illegal operator has been specified
          */
         public binaryExpressionPairHelper[] getPossibleTypeCombinations(String operator) throws NullPointerException {
-            binaryExpressionPairHelper[] res = legalOperationsDic.get(operator);
-            if (res == null) {
+            binaryExpressionPairHelper[] resultType = legalOperationsDic.get(operator);
+            if (resultType == null) {
                 throw new NullPointerException("Operator " + operator + " not regocnized");
             }
-
-            return res;
+            return resultType;
         }
 
         @Override
@@ -92,10 +71,10 @@ public class TypeSystem {
             if (!(obj instanceof binaryExpressionPairHelper)) {
                 return false;
             }
-            boolean res = false;
-            binaryExpressionPairHelper resObj = (binaryExpressionPairHelper)obj;
-            res = this.LeftType.equals(resObj.LeftType) && this.RightType.equals(resObj.RightType);
-            return res;
+            boolean resultType = false;
+            binaryExpressionPairHelper resObj = (binaryExpressionPairHelper) obj;
+            resultType = this.LeftType.equals(resObj.LeftType) && this.RightType.equals(resObj.RightType);
+            return resultType;
         }
 
         @Override
@@ -111,13 +90,11 @@ public class TypeSystem {
             new binaryExpressionPairHelper("string", "string"),
             new binaryExpressionPairHelper("int", "int"),
             new binaryExpressionPairHelper("float", "float"),
-
     },
-            possibleMinusCombinations = possiblePlusCombinations,
-            possibleMultiplicationCombinations = {
+            possibleMinusCombinations = {
                     new binaryExpressionPairHelper("int", "int"),
-                    new binaryExpressionPairHelper("float", "float"),
-            },
+                    new binaryExpressionPairHelper("float", "float") },
+            possibleMultiplicationCombinations = possibleMinusCombinations,
             possibleDivisionCombinations = possibleMultiplicationCombinations,
             possibleModuloCombinations = {
                     new binaryExpressionPairHelper("int", "int"),
@@ -142,8 +119,12 @@ public class TypeSystem {
             },
             possibleOrCombinations = possibleAndCombinations;
 
-    // key is operator, nested key is operands
-    // The horror
+    /**
+     * The outer dictionary takes an operator as a key and returns a dictionary with
+     * key-value mappings of legal combinations
+     * The inner dictionary key is a binaryExpressionPairHelper class that maps to a
+     * resulting type (e.g int or string)
+     */
     private final HashMap<String, HashMap<binaryExpressionPairHelper, String>> resultingType = new HashMap<>() {
         {
             put("+", new HashMap<>() {
@@ -237,28 +218,31 @@ public class TypeSystem {
      * @param RType    The right hand side type
      * @param operator The binary infix operator
      * @return The resulting type
+     * @throws InvalidExpressionException if a valid value cannot be produced with the given types and operator
+     * @throws IllegalArgumentException if an invalid operator is used 
      */
     public String LookupResultingType(String LType, String RType, String operator)
             throws InvalidExpressionException, IllegalArgumentException {
-        String res = "";
+        String resultType = "";
         binaryExpressionPairHelper helper = new binaryExpressionPairHelper(LType, RType);
 
         try {
             binaryExpressionPairHelper[] legalOperationswithOperator = helper.getPossibleTypeCombinations(operator);
 
-            binaryExpressionPairHelper doesLegalCombinationExist = null;
+            binaryExpressionPairHelper matchingCombination = null;
+
             for (binaryExpressionPairHelper binaryExpressionPairHelper : legalOperationswithOperator) {
                 if (helper.compareTo(binaryExpressionPairHelper) == 0) {
-                    doesLegalCombinationExist = binaryExpressionPairHelper;
+                    matchingCombination = binaryExpressionPairHelper;
                 }
             }
-            if (doesLegalCombinationExist == null) {
+            if (matchingCombination == null) {
                 throw new InvalidExpressionException("Cannot produce a valid value with " + LType + operator + RType);
             }
 
-            res = resultingType.get(operator).get(doesLegalCombinationExist);
+            resultType = resultingType.get(operator).get(matchingCombination);
 
-            return res;
+            return resultType;
         } catch (NullPointerException e) {
             throw new IllegalArgumentException(e);
         }
