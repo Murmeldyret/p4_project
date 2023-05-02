@@ -50,6 +50,10 @@ public class SymbolTable implements Map<String, IdAttributes> {
     /** Represents the outer scope, is null if no such scope exists */
     private SymbolTable outerSymbolTable;
 
+    public SymbolTable getOuterSymbolTable() {
+        return outerSymbolTable;
+    }
+
     private SymbolTable outerScope() {
         return outerSymbolTable;
     }

@@ -11,6 +11,7 @@ import postfix.node.TId;
 import postfix.semantics.*;
 import postfix.semantics.Exceptions.VariableAlreadyDeclaredException;
 import postfix.semantics.IdAttributes.Attributes;
+import postfix.semantics.SymbolTable.Scopekind;
 
 //TODO skal stemme overens med de noder der faktisk eksisterer i AST
 /**
@@ -97,7 +98,15 @@ public class TopDclVisitor extends SemanticVisitor {
         else {
             symbolTable.put(node.getId().getText(),
                     new IdAttributes(node.getId(), node.getType(), null, Attributes.function));
+            symbolTable = symbolTable.CreateNewScope(node.getId().getText(), Scopekind.functionBlock);
         }
+    }
+    @Override
+    public void outAFunctionDeclarationDcl(AFunctionDeclarationDcl node) {
+       if (symbolTable.getOuterSymbolTable() == null) {
+        throw new NullPointerException("cannot go to outer scope: already in global scope");
+       }
+        symbolTable = symbolTable.getOuterSymbolTable();
     }
 
     @Override
