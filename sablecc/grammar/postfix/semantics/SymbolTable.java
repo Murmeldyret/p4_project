@@ -259,6 +259,9 @@ public class SymbolTable implements Map<String, IdAttributes> {
         if (attributes.getReturnType() != null) {
             throw new IllegalArgumentException("Function " + functionName + " already has a return type");
         }
+        if (kind != Scopekind.functionBlock) {
+            throw new IllegalArgumentException("Function " + functionName + " is not a function");
+        }
         attributes.setReturnType(returnType);
         
         return hashMap.put(functionName, attributes);
