@@ -70,8 +70,7 @@ public class SymbolTable implements Map<String, IdAttributes> {
      * @return true if identifier exists within the current block, false otherwise
      */
     public boolean DeclaredLocally(String idName) {
-        // TODO først implementer når scoperegler er aftalt
-        throw new UnsupportedOperationException("Unimplemented method 'DeclaredLocally'");
+        return hashMap.containsKey(idName);
 
     }
 

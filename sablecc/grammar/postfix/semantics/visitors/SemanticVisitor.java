@@ -35,7 +35,6 @@ public class SemanticVisitor extends DepthFirstAdapter {
     @Override
     public void inADeclarationStmt(ADeclarationStmt node) {
         TopDclVisitor dclVisitor = new TopDclVisitor(symbolTable);
-        System.out.println("tester");
         node.apply(dclVisitor);
 
     }
