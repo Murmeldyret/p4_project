@@ -1,8 +1,11 @@
 package postfix.semantics.Exceptions;
 
-public class TypeError extends Exception {
-    
-    public TypeError(String mesString) {
-        super(mesString);
+/**
+ * 
+ */
+public class TypeError extends RuntimeException {
+
+    public TypeError(String message) {
+        super(message);
     }
 }

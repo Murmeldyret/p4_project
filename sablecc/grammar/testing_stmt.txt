@@ -31,7 +31,7 @@ export csvArr to PathToFile;
 #break
 break;
 
-array arr = filter (a);
+# array arr = filter (a);
 
 #testing array_op
 int a = [2];
