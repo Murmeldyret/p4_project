@@ -91,8 +91,9 @@ public class TopDclVisitor extends SemanticVisitor {
 
     @Override
     public void inAFunctionDeclarationDcl(AFunctionDeclarationDcl node) {
-        TopDclVisitor topDclVisitor = new TopDclVisitor(new SymbolTable(symbolTable, Scopekind.functionBlock));
-        node.getFunctionParam().apply(topDclVisitor);
+        symbolTable = new SymbolTable(symbolTable, Scopekind.functionBlock);
+        // TopDclVisitor topDclVisitor = new TopDclVisitor(symbolTable);
+        // node.getFunctionParam().apply(topDclVisitor);
 
         if (symbolTable.DeclaredLocally(node.getId().getText())) {
             throw new VariableAlreadyDeclaredException("null");
