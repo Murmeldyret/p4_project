@@ -6,6 +6,7 @@ import postfix.semantics.QueueList;
 import postfix.semantics.SymbolTable;
 import postfix.semantics.TypeSystem;
 import postfix.semantics.Exceptions.InvalidExpressionException;
+import postfix.semantics.Exceptions.invalidReturnExpression;
 import postfix.node.*;;
 
 /**
@@ -27,9 +28,23 @@ public class TypeVisitor extends SemanticVisitor {
         operatorQueue = new QueueList<String>();
     }
 
+    /**
+     * Should be used when visiting assignments (or declarations with assignments)
+     * or functions
+     * 
+     * @param symbolTable The symboltable for this scope
+     * @param type        The type that a resulting expression should produce (i.e
+     *                    from function return statements or assignments)
+     */
+    public TypeVisitor(SymbolTable symbolTable, String type) {
+        this(symbolTable);
+        expressionType = type;
+    }
+
     protected QueueList<String> typeQueue;
     protected QueueList<String> operatorQueue;
-
+    /** The type that an expression or return statement must return */
+    protected String expressionType;
 
     //
     /**
@@ -95,8 +110,9 @@ public class TypeVisitor extends SemanticVisitor {
      * @throws invalidExpressionException if the given expression does not produce a
      *                                    valid value
      */
-    private boolean typeCheckExpression(AExprValPrimeExpr node) {
-        boolean res = false;
+    private String typeCheckExpression(AExprValPrimeExpr node) {
+        // boolean res = false;
+        String res = "";
         TypeSystem typeSystem = new TypeSystem();
 
         QueueList<String> SimplifiedExpressionTypeQueue = new QueueList<>();
@@ -123,7 +139,7 @@ public class TypeVisitor extends SemanticVisitor {
                     }
 
                 }
-                res = true;
+                res = SimplifiedExpressionTypeQueue.remove();
             } catch (IllegalArgumentException e) {
                 // TODO: handle exception
                 throw new InvalidExpressionException("Expression does not produce a valid value", node);
@@ -136,6 +152,21 @@ public class TypeVisitor extends SemanticVisitor {
         return res;
     }
 
+    @Override
+    public void inAReturnStmt(AReturnStmt node) {
+        // TODO Auto-generated method stub
+        super.inAReturnStmt(node);
+    }
+
+    @Override
+    public void outAReturnStmt(AReturnStmt node) {
+        // TODO skal lige testes
+        String expr = typeCheckExpression(null);
+        if (expr != expressionType) {
+            throw new invalidReturnExpression(
+                    "Cannot return a value of type " + expr + " on a function whose return type is " + expressionType);
+        }
+    }
     // @Override
     // public void
     // inAVariableDeclarationInitializationDcl(AVariableDeclarationInitializationDcl
@@ -153,9 +184,10 @@ public class TypeVisitor extends SemanticVisitor {
 
     @Override
     public void outAExprValPrimeExpr(AExprValPrimeExpr node) {
-        if (!typeCheckExpression(node)) {
-            throw new InvalidExpressionException("Expression does not produce a valid type", node);
-        }
+        // if (!typeCheckExpression(node)) {
+        // throw new InvalidExpressionException("Expression does not produce a valid
+        // type", node);
+        // }
     }
 
     // @Override
@@ -203,8 +235,10 @@ public class TypeVisitor extends SemanticVisitor {
     @Override
     public void inAFunctionCallFunctionCall(AFunctionCallFunctionCall node) {
         typeQueue.add(symbolTable.get(node.getId().getText()).getType().getText());
-        // symbolTable = symbolTable.getFunctionSymbolTable(symbolTable.get(node.getId().getText()).getId().getText());
+        // symbolTable =
+        // symbolTable.getFunctionSymbolTable(symbolTable.get(node.getId().getText()).getId().getText());
     }
+
     @Override
     public void outAFunctionCallFunctionCall(AFunctionCallFunctionCall node) {
         // symbolTable = symbolTable.getOuterSymbolTable();

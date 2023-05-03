@@ -40,7 +40,7 @@ public class TopDclVisitor extends SemanticVisitor {
 
     @Override
     public void inAVariableDeclarationInitializationDcl(AVariableDeclarationInitializationDcl node) {
-        TypeVisitor typeVisitor = new TypeVisitor(symbolTable);
+        TypeVisitor typeVisitor = new TypeVisitor(symbolTable, node.getType().getText());
 
         node.apply(typeVisitor);
 
@@ -73,7 +73,7 @@ public class TopDclVisitor extends SemanticVisitor {
     @Override
     public void inAConstDeclarationInitializationDcl(AConstDeclarationInitializationDcl node) {
 
-        TypeVisitor typeVisitor = new TypeVisitor(symbolTable);
+        TypeVisitor typeVisitor = new TypeVisitor(symbolTable, node.getType().getText());
 
         node.apply(typeVisitor);
 
@@ -107,7 +107,7 @@ public class TopDclVisitor extends SemanticVisitor {
 
     @Override
     public void outAFunctionDeclarationDcl(AFunctionDeclarationDcl node) {
-        TypeVisitor typeVisitor = new TypeVisitor(symbolTable);
+        TypeVisitor typeVisitor = new TypeVisitor(symbolTable, node.getType().getText());
 
         node.apply(typeVisitor);
         if (symbolTable.getOuterSymbolTable() == null) {
@@ -118,7 +118,7 @@ public class TopDclVisitor extends SemanticVisitor {
 
     @Override
     public void inAVariableDeclarationArrayDcl(AVariableDeclarationArrayDcl node) {
-        TypeVisitor typeVisitor = new TypeVisitor(symbolTable);
+        TypeVisitor typeVisitor = new TypeVisitor(symbolTable, node.getType().getText());
 
         node.apply(typeVisitor);
 
