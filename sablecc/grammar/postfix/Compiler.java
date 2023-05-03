@@ -30,7 +30,8 @@ public class Compiler {
             System.out.println(e.getMessage() + " InvalidExpressionException");
             throw e;
         } catch (VariableAlreadyDeclaredException e) {
-            System.out.println(e.getMessage() + "VariableAlreadyDeclaredException");
+            System.out.println(e.getMessage() + " VariableAlreadyDeclaredException");
+            throw e;
         } catch (FileNotFoundException e) {
             System.out.println("Input file not found");
         } catch (LexerException e) {
