@@ -117,10 +117,7 @@ public class TopDclVisitor extends SemanticVisitor {
         symbolTable = symbolTable.getOuterSymbolTable();
     }
 
-    @Override
-    public void outAReturnStmt(AReturnStmt node) {
-        node.apply(new TypeVisitor(symbolTable, symbolTable.getReturnType()));
-    }
+
 
     @Override
     public void inAVariableDeclarationArrayDcl(AVariableDeclarationArrayDcl node) {
