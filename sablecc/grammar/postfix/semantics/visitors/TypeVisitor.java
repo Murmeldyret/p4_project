@@ -12,7 +12,6 @@ import postfix.node.*;;
  * TODO lav doc
  */
 public class TypeVisitor extends SemanticVisitor {
-
     public TypeVisitor() {
     }
 
@@ -29,7 +28,6 @@ public class TypeVisitor extends SemanticVisitor {
 
     protected QueueList<String> typeQueue;
     protected QueueList<String> operatorQueue;
-
 
     //
     /**
@@ -103,23 +101,18 @@ public class TypeVisitor extends SemanticVisitor {
 
         if (node.getExprPrime() != null) {
             try {
-
-                Boolean isBinaryInFixOp;
                 while (!operatorQueue.isEmpty()) {
                     String operator = operatorQueue.remove();
 
-                    // TODO skal faktisk tjekke om operatoren er en binInfixOp
-                    isBinaryInFixOp = true;
+                    Boolean isBinaryInFixOp = typeSystem.isBinaryInfixOperator(operator);
+
                     if (isBinaryInFixOp) {
                         String LhsType = SimplifiedExpressionTypeQueue.isEmpty() ? typeQueue.remove()
                                 : SimplifiedExpressionTypeQueue.remove();
                         String RhsType = typeQueue.remove();
-                        // System.out.print(
-                        // "Operands are: " + LhsType + " and " + RhsType + " with operator: " +
-                        // operator + ",");
-                        SimplifiedExpressionTypeQueue.add(typeSystem.LookupResultingType(LhsType, RhsType, operator));
-                        // System.out.println("and evaluated to type " +
-                        // SimplifiedExpressionTypeQueue.element());
+
+                        String resultingType = typeSystem.LookupResultingType(LhsType, RhsType, operator);
+                        SimplifiedExpressionTypeQueue.add(resultingType);
                     }
 
                 }
@@ -130,9 +123,6 @@ public class TypeVisitor extends SemanticVisitor {
             }
 
         }
-        // System.out.println(
-        // "Expression evaluating to type " + SimplifiedExpressionTypeQueue.element() +
-        // " Returning " + res);
         return res;
     }
 
