@@ -46,49 +46,6 @@ public class TypeVisitor extends SemanticVisitor {
     /** The type that an expression or return statement must return */
     protected String expressionType;
 
-    //
-    /**
-     * Gets the type of a PVal node
-     * 
-     * @param val the node whose type will be returned
-     * @return
-     */
-    private String getValType(PVal val) {
-        return "";
-
-    }
-
-    /**
-     * Gets the type of of a subexpression of type ExprPrime
-     * 
-     * @param node The node whose type will be returned
-     * @return
-     * @deprecated
-     */
-    @Deprecated
-    private String getSubExprType(PExprPrime node) {
-        String res = "";
-
-        if (node instanceof AExprPrimeOperatorValPrimeExprPrime) {
-            res = getAExprPrimeOperatorValPrimeExprPrimeType((AExprPrimeOperatorValPrimeExprPrime) node);
-        }
-        return res;
-    }
-
-    /**
-     * Helper method to {@link #getSubExprType(PExprPrime)}
-     * 
-     * @param node
-     * @return
-     */
-    private String getAExprPrimeOperatorValPrimeExprPrimeType(AExprPrimeOperatorValPrimeExprPrime node) {
-
-        // operatorQueue.add(getBinInfixOperator(node.getBinInfixOp()));
-
-        // node.getVal().apply(this);
-        return "";
-    }
-
     /**
      * 
      * @param node
