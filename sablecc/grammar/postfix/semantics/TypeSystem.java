@@ -248,4 +248,13 @@ public class TypeSystem {
         }
     }
 
+    public boolean isBinaryInfixOperator(String Operator)
+    {
+        for(String op : operators) {
+            if(op.equals(Operator)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
