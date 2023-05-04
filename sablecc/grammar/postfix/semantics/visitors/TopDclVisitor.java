@@ -4,6 +4,7 @@ import postfix.node.AConstDeclarationInitializationDcl;
 import postfix.node.ADeclarationStmt;
 import postfix.node.AAssignStmt;
 import postfix.node.AFunctionDeclarationDcl;
+import postfix.node.AReturnStmt;
 import postfix.node.AVariableDeclarationDcl;
 import postfix.node.AVariableDeclarationInitializationDcl;
 import postfix.node.AVariableDeclarationArrayDcl;
@@ -91,7 +92,7 @@ public class TopDclVisitor extends SemanticVisitor {
 
     @Override
     public void inAFunctionDeclarationDcl(AFunctionDeclarationDcl node) {
-        symbolTable = new SymbolTable(symbolTable, Scopekind.functionBlock);
+        symbolTable = new SymbolTable(symbolTable, Scopekind.functionBlock, node.getType().getText());
         // TopDclVisitor topDclVisitor = new TopDclVisitor(symbolTable);
         // node.getFunctionParam().apply(topDclVisitor);
 
@@ -114,6 +115,11 @@ public class TopDclVisitor extends SemanticVisitor {
             throw new NullPointerException("cannot go to outer scope: already in global scope");
         }
         symbolTable = symbolTable.getOuterSymbolTable();
+    }
+
+    @Override
+    public void outAReturnStmt(AReturnStmt node) {
+        node.apply(new TypeVisitor(symbolTable, symbolTable.getReturnType()));
     }
 
     @Override

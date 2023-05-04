@@ -28,8 +28,16 @@ public class SymbolTable implements Map<String, IdAttributes> {
         this.kind = kind;
         hashMap = new HashMap<String, IdAttributes>();
         functionMap = new HashMap<>();
+        returnType = null;
     }
 
+    public SymbolTable(SymbolTable outerSymbolTable, Scopekind kind, String functionReturnType) {
+        this(outerSymbolTable, kind);
+        returnType = functionReturnType;
+    }
+
+    private String returnType;
+    
     /**
      * Represents the scope type that this symbol table manages
      */
@@ -43,7 +51,10 @@ public class SymbolTable implements Map<String, IdAttributes> {
         /** A block where all outer variables are read only */
         functionBlock,
     }
-
+    
+    public String getReturnType() {
+        return returnType;
+    }
     private Scopekind kind;
     // holds the actual symbols
     private HashMap<String, IdAttributes> hashMap;
@@ -51,7 +62,7 @@ public class SymbolTable implements Map<String, IdAttributes> {
      * holds information about functions in current scope
      */
     private HashMap<String, SymbolTable> functionMap;
-
+    
     /** Represents the outer scope, is null if no such scope exists */
     private SymbolTable outerSymbolTable;
 
