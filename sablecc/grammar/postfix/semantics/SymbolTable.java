@@ -27,8 +27,17 @@ public class SymbolTable implements Map<String, IdAttributes> {
         this.outerSymbolTable = outerSymbolTable;
         this.kind = kind;
         hashMap = new HashMap<String, IdAttributes>();
+        functionMap = new HashMap<>();
+        returnType = null;
     }
 
+    public SymbolTable(SymbolTable outerSymbolTable, Scopekind kind, String functionReturnType) {
+        this(outerSymbolTable, kind);
+        returnType = functionReturnType;
+    }
+
+    private String returnType;
+    
     /**
      * Represents the scope type that this symbol table manages
      */
@@ -42,13 +51,24 @@ public class SymbolTable implements Map<String, IdAttributes> {
         /** A block where all outer variables are read only */
         functionBlock,
     }
-
+    
+    public String getReturnType() {
+        return returnType;
+    }
     private Scopekind kind;
     // holds the actual symbols
     private HashMap<String, IdAttributes> hashMap;
-
+    /**
+     * holds information about functions in current scope
+     */
+    private HashMap<String, SymbolTable> functionMap;
+    
     /** Represents the outer scope, is null if no such scope exists */
     private SymbolTable outerSymbolTable;
+
+    public SymbolTable getOuterSymbolTable() {
+        return outerSymbolTable;
+    }
 
     private SymbolTable outerScope() {
         return outerSymbolTable;
@@ -141,14 +161,18 @@ public class SymbolTable implements Map<String, IdAttributes> {
         IdAttributes value = hashMap.get(key);
         if (value != null) {
             return value;
+        } else {
+            if (outerScope() == null) {
+                throw new IllegalArgumentException("Key does not exist in symbol table");
+            }
+            return outerScope().get(key);
         }
 
         // If there is an outer scope, recursively search for the key in the outer scope
-        if (outerSymbolTable != null) {
-            return outerSymbolTable.get(key);
-        }
+        // if (outerSymbolTable != null) {
+        // return outerSymbolTable.get(key);
+        // }
 
-        throw new IllegalArgumentException("Key does not exist in symbol table");
     }
 
     @Override
@@ -236,14 +260,16 @@ public class SymbolTable implements Map<String, IdAttributes> {
     /**
      * Adds parameters to a function
      * 
-     * @param functionName the name of the function to add parameters to
+     * @param functionName   the name of the function to add parameters to
      * @param parameterTypes the types of the parameters to add
      * @param parameterNames the names of the parameters to add
      * @return the attributes of the function
-     * @throws NullPointerException if the function does not exist
-     * @throws IllegalArgumentException if the function already has parameters or the number of types and names are different
+     * @throws NullPointerException     if the function does not exist
+     * @throws IllegalArgumentException if the function already has parameters or
+     *                                  the number of types and names are different
      */
-    public IdAttributes addFunctionParameters(String functionName, List<String> parameterTypes, List<String> parameterNames) {
+    public IdAttributes addFunctionParameters(String functionName, List<String> parameterTypes,
+            List<String> parameterNames) {
         IdAttributes attributes = get(functionName);
         if (attributes == null) {
             throw new NullPointerException("Function " + functionName + " does not exist");
@@ -265,9 +291,9 @@ public class SymbolTable implements Map<String, IdAttributes> {
      * Adds a return type to a function
      * 
      * @param functionName the name of the function to add a return type to
-     * @param returnType the return type to add to the function
+     * @param returnType   the return type to add to the function
      * @return the attributes of the function
-     * @throws NullPointerException if the function does not exist
+     * @throws NullPointerException     if the function does not exist
      * @throws IllegalArgumentException if the function already has a return type
      */
     public IdAttributes addFunctionReturnType(String functionName, String returnType) {
@@ -282,20 +308,32 @@ public class SymbolTable implements Map<String, IdAttributes> {
             throw new IllegalArgumentException("Function " + functionName + " is not a function");
         }
         attributes.setReturnType(returnType);
-        
+
         return hashMap.put(functionName, attributes);
     }
+
     public SymbolTable CreateNewScope(String id, Scopekind kind) {
         if (get(id).getAttributes() != Attributes.function) {
             throw new IllegalArgumentException("Cannot create a scope from a non-function");
         }
         SymbolTable functionTable = new SymbolTable(this, kind);
-        for (int i = 0; i < get(id).getParameterNames().size(); i++) {
-            functionTable.put(get(id).getParameterNames().get(i), new IdAttributes(new TId(get(id).getParameterNames().get(i)), new TType(get(id).getParameterTypes().get(i)),"",Attributes.variable));
-        }
 
+        if (!get(id).getParameterNames().isEmpty()) {
+            for (int i = 0; i < get(id).getParameterNames().size(); i++) {
+                functionTable.put(get(id).getParameterNames().get(i),
+                        new IdAttributes(new TId(get(id).getParameterNames().get(i)),
+                                new TType(get(id).getParameterTypes().get(i)), null, Attributes.variable));
+            }
+        }
+        functionMap.put(id, functionTable);
         return functionTable;
     }
-    
+
+    public SymbolTable getFunctionSymbolTable(String id) {
+        if (get(id).getAttributes() != Attributes.function) {
+            throw new IllegalArgumentException(id + " does not refer to a function");
+        }
+        return functionMap.get(id);
+    }
 
 }

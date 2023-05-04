@@ -65,6 +65,11 @@ public class SemanticVisitor extends DepthFirstAdapter {
     }
 
     @Override
+    public void outAReturnStmt(AReturnStmt node) {
+        node.apply(new TypeVisitor(symbolTable, symbolTable.getReturnType()));
+    }
+
+    @Override
     public void inAForLoopStmt(AForLoopStmt node) {
         // Type Visitor
     }
