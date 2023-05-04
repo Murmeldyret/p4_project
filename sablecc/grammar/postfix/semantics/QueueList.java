@@ -4,16 +4,25 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Queue;
+import java.util.List;
 
 /** List like implementation of a queue data structure 
  * @see https://docs.oracle.com/javase/8/docs/api/java/util/Queue.html
 */
 public class QueueList<E> implements Queue<E>{
 
-    private ArrayList<E> internalList;
+    private List<E> internalList;
 
     public QueueList() {
         internalList = new ArrayList<>();
+    }
+
+    /**
+     * Creates a new queue and fills it with the contents of input list
+     * @param list The list of elements to fill the queue with
+     */
+    public QueueList(List<E> list) {
+        internalList = list;
     }
 
     @Override

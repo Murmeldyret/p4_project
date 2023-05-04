@@ -26,10 +26,11 @@ public class Compiler {
             // tree.apply(new Translation());
         } catch (ParserException e) {
             System.out.println(e.getMessage() + " Vores error");
-        } catch (InvalidExpressionException e) {
-            System.out.println(e.getMessage() + " InvalidExpressionException");
-            throw e;
         } 
+        // catch (InvalidExpressionException e) {
+        //     System.out.println(e.getMessage() + " InvalidExpressionException");
+        //     throw e;
+        // } 
         // catch (VariableAlreadyDeclaredException e) {
         //     System.out.println(e.getMessage() + " VariableAlreadyDeclaredException");
         //     throw e;

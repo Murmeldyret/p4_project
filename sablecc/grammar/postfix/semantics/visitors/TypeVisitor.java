@@ -117,7 +117,7 @@ public class TypeVisitor extends SemanticVisitor {
     public void outAReturnStmt(AReturnStmt node) {
         // TODO skal lige testes
         String expr = typeCheckExpression();
-        if (expr != expressionType) {
+        if (!expr.equals(expressionType)) {
             throw new invalidReturnExpression(
                     "Cannot return a value of type " + expr + " on a function whose return type is " + expressionType);
         }
