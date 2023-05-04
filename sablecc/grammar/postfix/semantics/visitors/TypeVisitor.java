@@ -67,14 +67,13 @@ public class TypeVisitor extends SemanticVisitor {
      * @throws invalidExpressionException if the given expression does not produce a
      *                                    valid value
      */
-    private String typeCheckExpression(AExprValPrimeExpr node) {
+    private String typeCheckExpression() {
         // boolean res = false;
         String res = "";
         TypeSystem typeSystem = new TypeSystem();
 
         QueueList<String> SimplifiedExpressionTypeQueue = new QueueList<>();
 
-        if (node.getExprPrime() != null) {
             try {
 
                 Boolean isBinaryInFixOp;
@@ -99,10 +98,9 @@ public class TypeVisitor extends SemanticVisitor {
                 res = SimplifiedExpressionTypeQueue.remove();
             } catch (IllegalArgumentException e) {
                 // TODO: handle exception
-                throw new InvalidExpressionException("Expression does not produce a valid value", node);
+                throw new InvalidExpressionException("Expression does not produce a valid value");
             }
 
-        }
         // System.out.println(
         // "Expression evaluating to type " + SimplifiedExpressionTypeQueue.element() +
         // " Returning " + res);
@@ -118,7 +116,7 @@ public class TypeVisitor extends SemanticVisitor {
     @Override
     public void outAReturnStmt(AReturnStmt node) {
         // TODO skal lige testes
-        String expr = typeCheckExpression(null);
+        String expr = typeCheckExpression();
         if (expr != expressionType) {
             throw new invalidReturnExpression(
                     "Cannot return a value of type " + expr + " on a function whose return type is " + expressionType);
