@@ -1,5 +1,6 @@
 package postfix.semantics;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import postfix.node.TId;
@@ -51,6 +52,8 @@ public class IdAttributes {
         this.type = type;
         this.value = value;
         this.attributes = attributes;
+        this.parameterNames = new ArrayList<>();
+        this.parameterTypes = new ArrayList<>();
     }
 
     public Attributes getAttributes() {

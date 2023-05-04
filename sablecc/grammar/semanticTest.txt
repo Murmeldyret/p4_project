@@ -2,4 +2,6 @@
 
 int a = 2+2+2;
 
+int function foo(int a, int b) {return true or false ; };
 
+foo(a,2);
