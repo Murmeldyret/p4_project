@@ -1,8 +1,7 @@
 package postfix;
 
 import postfix.parser.*;
-import postfix.semantics.Exceptions.InvalidExpressionException;
-import postfix.semantics.Exceptions.VariableAlreadyDeclaredException;
+import postfix.semantics.Exceptions.*;
 import postfix.semantics.visitors.SemanticVisitor;
 import postfix.lexer.*;
 import postfix.node.*;
