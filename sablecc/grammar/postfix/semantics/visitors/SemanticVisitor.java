@@ -78,7 +78,7 @@ public class SemanticVisitor extends DepthFirstAdapter {
 
     @Override
     public void inAForLoopStmt(AForLoopStmt node) {
-        // Type Visitor
+        // !Grammatikken for skal omskrives, så vent med at implementere denne.
     }
 
     @Override
