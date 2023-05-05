@@ -37,7 +37,6 @@ public class IdAttributes {
         csv,
 
     }
-    // TODO variabel der indeholder værdi
 
     @Deprecated
     public IdAttributes(TId id, TType type, boolean isFunction, boolean isConst) {

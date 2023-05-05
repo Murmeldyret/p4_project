@@ -6,7 +6,7 @@ import java.util.Iterator;
 import java.util.Queue;
 import java.util.List;
 
-/** List like implementation of a queue data structure 
+/** List like implementation of a queue data (First In First Out) structure 
  * @see https://docs.oracle.com/javase/8/docs/api/java/util/Queue.html
 */
 public class QueueList<E> implements Queue<E>{

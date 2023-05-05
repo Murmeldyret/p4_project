@@ -10,6 +10,11 @@ import postfix.node.TId;
 import postfix.node.TType;
 import postfix.semantics.IdAttributes.Attributes;
 
+/**
+ * A dictionary-like data structure that keeps track of symbol declarations in their respective scope
+ * The key is an identifier and the value is a class containing important attributes about the identifier
+ * @see {@link postfix.semantics.IdAttributes}
+ */
 public class SymbolTable implements Map<String, IdAttributes> {
 
     public SymbolTable() {

@@ -6,10 +6,10 @@ import postfix.semantics.Exceptions.VariableAlreadyDeclaredException;
 import postfix.semantics.IdAttributes.Attributes;
 import postfix.semantics.SymbolTable.Scopekind;
 
-//TODO skal stemme overens med de noder der faktisk eksisterer i AST
 /**
  * Class for managing declarations, also responsible for calling TypeVisitor for
  * the right hand side (or statements in case of functions)
+ * @see {@link postfix.semantics.visitors.TypeVisitor}
  */
 public class TopDclVisitor extends SemanticVisitor {
 

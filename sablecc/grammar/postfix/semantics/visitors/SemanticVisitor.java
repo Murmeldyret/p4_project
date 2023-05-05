@@ -6,6 +6,9 @@ import postfix.semantics.QueueList;
 import postfix.semantics.SymbolTable;
 import postfix.semantics.Exceptions.invalidFunctionCallException;
 
+/**
+ * Responsible for verifying that a program is semantically correct
+ */
 public class SemanticVisitor extends DepthFirstAdapter {
 
     public SemanticVisitor() {

@@ -6,7 +6,9 @@ import postfix.semantics.Exceptions.*;
 import postfix.node.*;
 
 /**
- * TODO lav doc
+ * Represents a type checker whose responsibilty is to type check expressions and verify that they produce a valid value.
+ * Should be called once at every expression in the AST
+ * @see {@link postfix.semantics.TypeSystem}
  */
 public class TypeVisitor extends SemanticVisitor {
     public TypeVisitor() {
