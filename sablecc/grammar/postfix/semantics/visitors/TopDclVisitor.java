@@ -4,9 +4,12 @@ import postfix.node.AConstDeclarationInitializationDcl;
 import postfix.node.ADeclarationStmt;
 import postfix.node.AAssignStmt;
 import postfix.node.AFunctionDeclarationDcl;
+import postfix.node.AFunctionParamFunctionParam;
+import postfix.node.AFunctionParamPrimeFunctionParamPrime;
 import postfix.node.AReturnStmt;
 import postfix.node.AVariableDeclarationDcl;
 import postfix.node.AVariableDeclarationInitializationDcl;
+import postfix.node.Node;
 import postfix.node.AVariableDeclarationArrayDcl;
 import postfix.node.TId;
 import postfix.semantics.*;
@@ -68,6 +71,20 @@ public class TopDclVisitor extends SemanticVisitor {
         } else {
             symbolTable.put(node.getId().toString(),
                     new IdAttributes(node.getId(), node.getType(), null, Attributes.variable));
+            // seems legit
+            if (node.parent() instanceof AFunctionParamFunctionParam
+                    || node.parent() instanceof AFunctionParamPrimeFunctionParamPrime) {
+                Node functionDCL = node.parent();
+
+                while (!(functionDCL instanceof AFunctionDeclarationDcl)) {
+                    //find the parent function declaration
+                    functionDCL = functionDCL.parent();
+                }
+                AFunctionDeclarationDcl funcDCL = (AFunctionDeclarationDcl) functionDCL;
+                symbolTable.get(funcDCL.getId().getText()).addParameter(node.getType().getText(),
+                        node.getId().getText());
+
+            }
         }
     }
 
@@ -92,7 +109,6 @@ public class TopDclVisitor extends SemanticVisitor {
 
     @Override
     public void inAFunctionDeclarationDcl(AFunctionDeclarationDcl node) {
-        symbolTable = new SymbolTable(symbolTable, Scopekind.functionBlock, node.getType().getText());
         // TopDclVisitor topDclVisitor = new TopDclVisitor(symbolTable);
         // node.getFunctionParam().apply(topDclVisitor);
 
@@ -101,9 +117,18 @@ public class TopDclVisitor extends SemanticVisitor {
         } else {
             symbolTable.put(node.getId().getText(),
                     new IdAttributes(node.getId(), node.getType(), null, Attributes.function));
+            symbolTable.CreateNewScope(node.getId().getText(), Scopekind.functionBlock, node.getType().getText());
+            symbolTable = symbolTable.getFunctionSymbolTable(node.getId().getText());
             // symbolTable = symbolTable.CreateNewScope(node.getId().getText(),
             // Scopekind.functionBlock);
         }
+    }
+
+    @Override
+    public void outAReturnStmt(AReturnStmt node) {
+        // skal først besøges efter funktionsdeklaration er færdig
+        node.apply(new TypeVisitor(symbolTable, symbolTable.getReturnType()));
+        // træd ud af scope?
     }
 
     @Override
@@ -116,8 +141,6 @@ public class TopDclVisitor extends SemanticVisitor {
         }
         symbolTable = symbolTable.getOuterSymbolTable();
     }
-
-
 
     @Override
     public void inAVariableDeclarationArrayDcl(AVariableDeclarationArrayDcl node) {

@@ -163,7 +163,7 @@ public class SymbolTable implements Map<String, IdAttributes> {
             return value;
         } else {
             if (outerScope() == null) {
-                throw new IllegalArgumentException("Key does not exist in symbol table");
+                throw new IllegalArgumentException("Key "+key.toString()+ " does not exist in symbol table");
             }
             return outerScope().get(key);
         }
@@ -180,7 +180,9 @@ public class SymbolTable implements Map<String, IdAttributes> {
         if (key == null) {
             throw new NullPointerException("Key cannot be null");
         }
-
+        // if (value.getAttributes().equals(Attributes.function)) {
+        //     CreateNewScope(key, Scopekind.functionBlock, value.getReturnType());
+        // }
         // Add the key-value pair to the current scope (hashMap)
         return hashMap.put(key.stripTrailing(), value);
     }
@@ -312,11 +314,11 @@ public class SymbolTable implements Map<String, IdAttributes> {
         return hashMap.put(functionName, attributes);
     }
 
-    public SymbolTable CreateNewScope(String id, Scopekind kind) {
+    public SymbolTable CreateNewScope(String id, Scopekind kind, String type) {
         if (get(id).getAttributes() != Attributes.function) {
             throw new IllegalArgumentException("Cannot create a scope from a non-function");
         }
-        SymbolTable functionTable = new SymbolTable(this, kind);
+        SymbolTable functionTable = new SymbolTable(this, kind, type);
 
         if (!get(id).getParameterNames().isEmpty()) {
             for (int i = 0; i < get(id).getParameterNames().size(); i++) {

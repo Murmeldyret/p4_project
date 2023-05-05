@@ -100,5 +100,12 @@ public class IdAttributes {
     public void setReturnType(String type) {
         returnType = type;
     }
+    /**
+     * Returns the list of parameter types in the order that they are declared
+     * @return
+     */
+    public QueueList<String> getParameterTypeListAsQueueList() {
+        return new QueueList<>(parameterTypes);
+    }
 
 }
