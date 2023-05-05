@@ -80,9 +80,10 @@ public class SemanticVisitor extends DepthFirstAdapter {
     public void outAElseBlockStatementElseStatement(AElseBlockStatementElseStatement node) {
         // TODO tilbage til ydre tabel
     }
+
     @Override
     public void inAIndexingIndexing(AIndexingIndexing node) {
-        //indeksering med andet end heltal er fy fy
+        // indeksering med andet end heltal er fy fy
         node.getExpr().apply(new TypeVisitor(symbolTable, "int"));
     }
 
@@ -178,4 +179,27 @@ public class SemanticVisitor extends DepthFirstAdapter {
         }
         // symbolTable = symbolTable.getOuterSymbolTable();
     }
+
+    // --special syntax--
+    // @Override
+    // public void inAExprSpecialExpr(AExprSpecialExpr node) {
+
+    // }
+    @Override
+    public void inAFilterSpecialSyntax(AFilterSpecialSyntax node) {
+        super.inAFilterSpecialSyntax(node);
+    }
+    @Override
+    public void inASortAscSpecialSyntax(ASortAscSpecialSyntax node) {
+        node.getExpr().apply(new TypeVisitor(symbolTable, "csv"));
+    }
+    @Override
+    public void inASortDescSpecialSyntax(ASortDescSpecialSyntax node) {
+        node.getExpr().apply(new TypeVisitor(symbolTable, "csv"));
+    }
+    @Override
+    public void inASortSpecialSyntax(ASortSpecialSyntax node) {
+        node.getExpr().apply(new TypeVisitor(symbolTable, "csv"));
+    }
+
 }
