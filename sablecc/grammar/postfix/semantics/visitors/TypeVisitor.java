@@ -11,9 +11,15 @@ import postfix.node.*;
  * @see {@link postfix.semantics.TypeSystem}
  */
 public class TypeVisitor extends SemanticVisitor {
+    protected QueueList<String> typeQueue;
+
+    protected QueueList<String> operatorQueue;
+
+    /** The type that an expression or return statement must return */
+    protected String expressionType;
+
     public TypeVisitor() {
     }
-
     /**
      * Should be called once at every new expression, not the top of the tree
      * 
@@ -24,7 +30,6 @@ public class TypeVisitor extends SemanticVisitor {
         typeQueue = new QueueList<String>();
         operatorQueue = new QueueList<String>();
     }
-
     /**
      * Should be used when visiting assignments (or declarations with assignments)
      * or functions
@@ -36,64 +41,6 @@ public class TypeVisitor extends SemanticVisitor {
     public TypeVisitor(SymbolTable symbolTable, String type) {
         this(symbolTable);
         expressionType = type;
-    }
-
-    protected QueueList<String> typeQueue;
-    protected QueueList<String> operatorQueue;
-    /** The type that an expression or return statement must return */
-    protected String expressionType;
-
-    /**
-     * 
-     * @param node
-     * @return
-     */
-    private boolean typeCheckFunctionParmams(AFunctionCallFunctionCall node) {
-        boolean res = false;
-        // TODO gør noget
-
-        return res;
-    }
-
-    /**
-     * Tests if an expression produces a valid value
-     * 
-     * @param node The expression node to test
-     * @return true if the expression produces a valid value under the current type
-     *         system.
-     * @throws invalidExpressionException if the given expression does not produce a
-     *                                    valid value
-     */
-    private String typeCheckExpression() {
-        // boolean res = false;
-        String res = "";
-        TypeSystem typeSystem = new TypeSystem();
-
-        QueueList<String> SimplifiedExpressionTypeQueue = new QueueList<>();
-
-            try {
-                while (!operatorQueue.isEmpty()) {
-                    String operator = operatorQueue.remove();
-
-                    Boolean isBinaryInFixOp = typeSystem.isBinaryInfixOperator(operator);
-
-                    if (isBinaryInFixOp) {
-                        String LhsType = SimplifiedExpressionTypeQueue.isEmpty() ? typeQueue.remove()
-                                : SimplifiedExpressionTypeQueue.remove();
-                        String RhsType = typeQueue.remove();
-
-                        String resultingType = typeSystem.LookupResultingType(LhsType, RhsType, operator);
-                        SimplifiedExpressionTypeQueue.add(resultingType);
-                    }
-
-                }
-                res = SimplifiedExpressionTypeQueue.remove();
-            } catch (IllegalArgumentException e) {
-                // TODO: handle exception
-                throw new InvalidExpressionException("Expression does not produce a valid value");
-            }
-
-        return res;
     }
 
     @Override
@@ -134,15 +81,6 @@ public class TypeVisitor extends SemanticVisitor {
         // }
     }
 
-    // @Override
-    // public void
-    // inAExprPrimeOperatorValPrimeExprPrime(AExprPrimeOperatorValPrimeExprPrime
-    // node) {
-    // node.getBinInfixOp().apply(this);
-    // node.getVal().apply(this);
-    // node.getExprPrime().apply(this);
-    // }
-
     // PVal nodes
     @Override
     public void inAValBoolVal(AValBoolVal node) {
@@ -155,9 +93,12 @@ public class TypeVisitor extends SemanticVisitor {
     }
 
     // @Override
-    // public void inAValFunctionCallVal(AValFunctionCallVal node) {
-    // // TODO virker med garanti ikke, skal have funktionens identifier
-    // node.getFunctionCall().apply(this);
+    // public void
+    // inAExprPrimeOperatorValPrimeExprPrime(AExprPrimeOperatorValPrimeExprPrime
+    // node) {
+    // node.getBinInfixOp().apply(this);
+    // node.getVal().apply(this);
+    // node.getExprPrime().apply(this);
     // }
 
     @Override
@@ -170,6 +111,12 @@ public class TypeVisitor extends SemanticVisitor {
     public void inAValIntnumVal(AValIntnumVal node) {
         typeQueue.add("int");
     }
+
+    // @Override
+    // public void inAValFunctionCallVal(AValFunctionCallVal node) {
+    // // TODO virker med garanti ikke, skal have funktionens identifier
+    // node.getFunctionCall().apply(this);
+    // }
 
     @Override
     public void inAValStringVal(AValStringVal node) {
@@ -188,7 +135,6 @@ public class TypeVisitor extends SemanticVisitor {
         // symbolTable = symbolTable.getOuterSymbolTable();
     }
 
-
     // --PBinInfixOp nodes--
     // Hvis operators var token vil dette være en metode, oh well
     @Override
@@ -200,6 +146,7 @@ public class TypeVisitor extends SemanticVisitor {
     public void inAEqualityInfixBinInfixOp(AEqualityInfixBinInfixOp node) {
         operatorQueue.add(node.getBopEq().getText());
     }
+
 
     @Override
     public void inAGreaterThanEqualInfixBinInfixOp(AGreaterThanEqualInfixBinInfixOp node) {
@@ -254,6 +201,59 @@ public class TypeVisitor extends SemanticVisitor {
     @Override
     public void inAAndInfixBinInfixOp(AAndInfixBinInfixOp node) {
         operatorQueue.add(node.getBopAnd().getText());
+    }
+
+    /**
+     * 
+     * @param node
+     * @return
+     */
+    private boolean typeCheckFunctionParmams(AFunctionCallFunctionCall node) {
+        boolean res = false;
+        // TODO gør noget
+
+        return res;
+    }
+
+    /**
+     * Tests if an expression produces a valid value
+     * 
+     * @param node The expression node to test
+     * @return true if the expression produces a valid value under the current type
+     *         system.
+     * @throws invalidExpressionException if the given expression does not produce a
+     *                                    valid value
+     */
+    private String typeCheckExpression() {
+        // boolean res = false;
+        String res = "";
+        TypeSystem typeSystem = new TypeSystem();
+
+        QueueList<String> SimplifiedExpressionTypeQueue = new QueueList<>();
+
+            try {
+                while (!operatorQueue.isEmpty()) {
+                    String operator = operatorQueue.remove();
+
+                    Boolean isBinaryInFixOp = typeSystem.isBinaryInfixOperator(operator);
+
+                    if (isBinaryInFixOp) {
+                        String LhsType = SimplifiedExpressionTypeQueue.isEmpty() ? typeQueue.remove()
+                                : SimplifiedExpressionTypeQueue.remove();
+                        String RhsType = typeQueue.remove();
+
+                        String resultingType = typeSystem.LookupResultingType(LhsType, RhsType, operator);
+                        SimplifiedExpressionTypeQueue.add(resultingType);
+                    }
+
+                }
+                res = SimplifiedExpressionTypeQueue.remove();
+            } catch (IllegalArgumentException e) {
+                // TODO: handle exception
+                throw new InvalidExpressionException("Expression does not produce a valid value");
+            }
+
+        return res;
     }
 
 }
