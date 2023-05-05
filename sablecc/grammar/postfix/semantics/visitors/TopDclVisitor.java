@@ -1,17 +1,6 @@
 package postfix.semantics.visitors;
 
-import postfix.node.AConstDeclarationInitializationDcl;
-import postfix.node.ADeclarationStmt;
-import postfix.node.AAssignStmt;
-import postfix.node.AFunctionDeclarationDcl;
-import postfix.node.AFunctionParamFunctionParam;
-import postfix.node.AFunctionParamPrimeFunctionParamPrime;
-import postfix.node.AReturnStmt;
-import postfix.node.AVariableDeclarationDcl;
-import postfix.node.AVariableDeclarationInitializationDcl;
-import postfix.node.Node;
-import postfix.node.AVariableDeclarationArrayDcl;
-import postfix.node.TId;
+import postfix.node.*;
 import postfix.semantics.*;
 import postfix.semantics.Exceptions.VariableAlreadyDeclaredException;
 import postfix.semantics.IdAttributes.Attributes;

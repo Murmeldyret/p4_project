@@ -1,13 +1,9 @@
 package postfix.semantics.visitors;
 
-import java.util.ArrayList;
 
-import postfix.semantics.QueueList;
-import postfix.semantics.SymbolTable;
-import postfix.semantics.TypeSystem;
-import postfix.semantics.Exceptions.InvalidExpressionException;
-import postfix.semantics.Exceptions.invalidReturnExpression;
-import postfix.node.*;;
+import postfix.semantics.*;
+import postfix.semantics.Exceptions.*;
+import postfix.node.*;
 
 /**
  * TODO lav doc
@@ -190,11 +186,6 @@ public class TypeVisitor extends SemanticVisitor {
         // symbolTable = symbolTable.getOuterSymbolTable();
     }
 
-    @Override
-    public void inAFunctionDeclarationDcl(AFunctionDeclarationDcl node) {
-        // TODO Auto-generated method stub
-        super.inAFunctionDeclarationDcl(node);
-    }
 
     // --PBinInfixOp nodes--
     // Hvis operators var token vil dette være en metode, oh well
