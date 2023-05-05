@@ -8,7 +8,6 @@ import postfix.semantics.Exceptions.invalidFunctionCallException;
 
 public class SemanticVisitor extends DepthFirstAdapter {
 
-    // TODO Kapitel 8.8 i fischer bogen
     public SemanticVisitor() {
 
     }
