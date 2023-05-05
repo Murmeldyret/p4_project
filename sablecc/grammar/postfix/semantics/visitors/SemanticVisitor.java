@@ -69,11 +69,9 @@ public class SemanticVisitor extends DepthFirstAdapter {
 
     // @Override
     // public void outAFunctionDeclarationDcl(AFunctionDeclarationDcl node) {
-    //     // TODO Auto-generated method stub
-    //     super.outAFunctionDeclarationDcl(node);
+    // // TODO Auto-generated method stub
+    // super.outAFunctionDeclarationDcl(node);
     // }
-    
-
 
     @Override
     public void inAForLoopStmt(AForLoopStmt node) {
@@ -82,8 +80,8 @@ public class SemanticVisitor extends DepthFirstAdapter {
 
     @Override
     public void inAFunctionCallFunctionCall(AFunctionCallFunctionCall node) {
-        //funktionsparametre
-        
+        // funktionsparametre
+
         functionParameterTypeList = symbolTable.get(node.getId().getText()).getParameterTypeListAsQueueList();
         // skal først træde ind i funktionsblock når man kommer til stmts
         // symbolTable = symbolTable.getFunctionSymbolTable(node.getId().getText());
@@ -91,17 +89,18 @@ public class SemanticVisitor extends DepthFirstAdapter {
 
     @Override
     public void inAFunctionCallParamFunctionCallParam(AFunctionCallParamFunctionCallParam node) {
-        //TODO antal af givne parametre skal stemme overens med den erklærede funktion
+        // TODO antal af givne parametre skal stemme overens med den erklærede funktion
         node.getExpr().apply(new TypeVisitor(symbolTable, functionParameterTypeList.remove()));
+
     }
+
     @Override
     public void inAFunctionCallParamPrimeFunctionCallParamPrime(AFunctionCallParamPrimeFunctionCallParamPrime node) {
         node.getExpr().apply(new TypeVisitor(symbolTable, functionParameterTypeList.remove()));
     }
 
-
     @Override
     public void outAFunctionCallFunctionCall(AFunctionCallFunctionCall node) {
-    //    symbolTable =  symbolTable.getOuterSymbolTable();
+        // symbolTable = symbolTable.getOuterSymbolTable();
     }
 }
