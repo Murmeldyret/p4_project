@@ -4,6 +4,7 @@ import postfix.analysis.DepthFirstAdapter;
 import postfix.node.*;
 import postfix.semantics.QueueList;
 import postfix.semantics.SymbolTable;
+import postfix.semantics.Exceptions.invalidFunctionCallException;
 
 public class SemanticVisitor extends DepthFirstAdapter {
 
@@ -90,17 +91,33 @@ public class SemanticVisitor extends DepthFirstAdapter {
     @Override
     public void inAFunctionCallParamFunctionCallParam(AFunctionCallParamFunctionCallParam node) {
         // TODO antal af givne parametre skal stemme overens med den erklærede funktion
+        if (functionParameterTypeList.isEmpty()) {
+            throw new invalidFunctionCallException("Cannot pass parameters to a function that does not take any parameters");
+        }
         node.getExpr().apply(new TypeVisitor(symbolTable, functionParameterTypeList.remove()));
 
     }
 
     @Override
     public void inAFunctionCallParamPrimeFunctionCallParamPrime(AFunctionCallParamPrimeFunctionCallParamPrime node) {
+        if (functionParameterTypeList.isEmpty()) {
+            int i = 1;
+            Node parent = node.parent();
+            while (!(parent instanceof AFunctionCallFunctionCall)) {
+                i++;
+                parent = parent.parent();
+            }
+            AFunctionCallFunctionCall functionCallNode = (AFunctionCallFunctionCall)parent;
+            throw new invalidFunctionCallException("Cannot pass " +i + " parameters to a function that only takes " +symbolTable.get(functionCallNode.getId().getText()).getParameterTypeListAsQueueList().size()+ " parameters");
+        }
         node.getExpr().apply(new TypeVisitor(symbolTable, functionParameterTypeList.remove()));
     }
 
     @Override
     public void outAFunctionCallFunctionCall(AFunctionCallFunctionCall node) {
+        if (!functionParameterTypeList.isEmpty()) {
+            throw new invalidFunctionCallException("Function" +node.getId().getText()+"()" + " takes "+ functionParameterTypeList.size() +" more parameters"+ " at line " + node.getId().getLine());
+        }
         // symbolTable = symbolTable.getOuterSymbolTable();
     }
 }
