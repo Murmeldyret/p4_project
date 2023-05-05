@@ -83,7 +83,7 @@ public class SemanticVisitor extends DepthFirstAdapter {
     @Override
     public void inAFunctionCallFunctionCall(AFunctionCallFunctionCall node) {
         //funktionsparametre
-        //TODO virker ikke da parametertypeliste aldrig bliver fyldt ud
+        
         functionParameterTypeList = symbolTable.get(node.getId().getText()).getParameterTypeListAsQueueList();
         // skal først træde ind i funktionsblock når man kommer til stmts
         // symbolTable = symbolTable.getFunctionSymbolTable(node.getId().getText());
