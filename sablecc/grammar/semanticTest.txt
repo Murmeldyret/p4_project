@@ -3,5 +3,6 @@
 int a = 2+2+2;
 
 int function foo(int a, int b) {return a+b ; };
+bool function bar(int c, bool b) {return foo(c,2) and b; };
 
-foo(a,2);
+bar(a,true);
