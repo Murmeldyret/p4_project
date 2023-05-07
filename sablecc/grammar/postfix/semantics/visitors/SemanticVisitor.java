@@ -23,6 +23,16 @@ public class SemanticVisitor extends DepthFirstAdapter {
     protected SymbolTable symbolTable;
     protected QueueList<String> functionParameterTypeList;
 
+    /**
+     * Print to the console.
+     */
+    public void caseAPrintStatementStmt(APrintStatementStmt node) {
+        // TODO: Mangler expression validation..
+        PExpr expression = node.getExpr();
+        System.out.print(expression);
+        super.caseAPrintStatementStmt(node);
+    }
+
     @Override
     public void inStart(Start node) {
         this.symbolTable = new SymbolTable(null, SymbolTable.Scopekind.block);
@@ -189,14 +199,17 @@ public class SemanticVisitor extends DepthFirstAdapter {
     public void inAFilterSpecialSyntax(AFilterSpecialSyntax node) {
         super.inAFilterSpecialSyntax(node);
     }
+
     @Override
     public void inASortAscSpecialSyntax(ASortAscSpecialSyntax node) {
         node.getExpr().apply(new TypeVisitor(symbolTable, "csv"));
     }
+
     @Override
     public void inASortDescSpecialSyntax(ASortDescSpecialSyntax node) {
         node.getExpr().apply(new TypeVisitor(symbolTable, "csv"));
     }
+
     @Override
     public void inASortSpecialSyntax(ASortSpecialSyntax node) {
         node.getExpr().apply(new TypeVisitor(symbolTable, "csv"));
