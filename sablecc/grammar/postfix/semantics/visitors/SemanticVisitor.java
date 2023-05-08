@@ -17,7 +17,6 @@ public class SemanticVisitor extends DepthFirstAdapter {
 
     public SemanticVisitor(SymbolTable symbolTable) {
         this.symbolTable = symbolTable;
-        functionParameterTypeList = new QueueList<>();
     }
 
     protected SymbolTable symbolTable;
