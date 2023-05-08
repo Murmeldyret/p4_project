@@ -23,16 +23,6 @@ public class SemanticVisitor extends DepthFirstAdapter {
     protected SymbolTable symbolTable;
     protected QueueList<String> functionParameterTypeList;
 
-    /**
-     * Print to the console.
-     */
-    public void caseAPrintStatementStmt(APrintStatementStmt node) {
-        // TODO: Mangler expression validation..
-        PExpr expression = node.getExpr();
-        System.out.print(expression);
-        super.caseAPrintStatementStmt(node);
-    }
-
     @Override
     public void inStart(Start node) {
         this.symbolTable = new SymbolTable(null, SymbolTable.Scopekind.block);
@@ -61,7 +51,10 @@ public class SemanticVisitor extends DepthFirstAdapter {
 
     @Override
     public void inAPrintStatementStmt(APrintStatementStmt node) {
-        // ? skal man kunne printe andet end strings?
+        // TODO: Mangler expression validation..
+        PExpr expression = node.getExpr();
+        System.out.print(expression);
+        super.inAPrintStatementStmt(node);
     }
 
     @Override

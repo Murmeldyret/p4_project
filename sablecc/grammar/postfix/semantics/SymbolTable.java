@@ -50,7 +50,8 @@ public class SymbolTable implements Map<String, IdAttributes> {
         return kind;
     }
 
-    public HashMap<String, IdAttributes> getHashMap() {
+    // Never used atm.
+    private HashMap<String, IdAttributes> getHashMap() {
         return hashMap;
     }
 
