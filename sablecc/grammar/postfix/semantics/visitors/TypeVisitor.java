@@ -1,25 +1,23 @@
 package postfix.semantics.visitors;
 
-
 import postfix.semantics.*;
 import postfix.semantics.Exceptions.*;
 import postfix.node.*;
 
 /**
- * Represents a type checker whose responsibilty is to type check expressions and verify that they produce a valid value.
+ * Represents a type checker whose responsibilty is to type check expressions
+ * and verify that they produce a valid value.
  * Should be called once at every expression in the AST
+ * 
  * @see {@link postfix.semantics.TypeSystem}
  */
 public class TypeVisitor extends SemanticVisitor {
-    protected QueueList<String> typeQueue;
 
-    protected QueueList<String> operatorQueue;
-
-    /** The type that an expression or return statement must return */
-    protected String expressionType;
+    private TypeSystem typeSystem = new TypeSystem();
 
     public TypeVisitor() {
     }
+
     /**
      * Should be called once at every new expression, not the top of the tree
      * 
@@ -30,6 +28,7 @@ public class TypeVisitor extends SemanticVisitor {
         typeQueue = new QueueList<String>();
         operatorQueue = new QueueList<String>();
     }
+
     /**
      * Should be used when visiting assignments (or declarations with assignments)
      * or functions
@@ -42,6 +41,12 @@ public class TypeVisitor extends SemanticVisitor {
         this(symbolTable);
         expressionType = type;
     }
+
+    protected QueueList<String> typeQueue;
+    protected QueueList<String> operatorQueue;
+
+    /** The type that an expression or return statement must return */
+    protected String expressionType;
 
     @Override
     public void inAReturnStmt(AReturnStmt node) {
@@ -75,10 +80,12 @@ public class TypeVisitor extends SemanticVisitor {
 
     @Override
     public void outAExprValPrimeExpr(AExprValPrimeExpr node) {
-        // if (!typeCheckExpression(node)) {
-        // throw new InvalidExpressionException("Expression does not produce a valid
-        // type", node);
-        // }
+        String resultingType = typeCheckExpression();
+
+        // Validate the resulting type and throw an exception if it's invalid
+        if ("INVALID_TYPE".equals(resultingType)) {
+            throw new InvalidExpressionException("Invalid expression type detected", node);
+        }
     }
 
     // PVal nodes
@@ -160,7 +167,6 @@ public class TypeVisitor extends SemanticVisitor {
     public void inAEqualityInfixBinInfixOp(AEqualityInfixBinInfixOp node) {
         operatorQueue.add(node.getBopEq().getText());
     }
-
 
     @Override
     public void inAGreaterThanEqualInfixBinInfixOp(AGreaterThanEqualInfixBinInfixOp node) {
@@ -245,27 +251,34 @@ public class TypeVisitor extends SemanticVisitor {
 
         QueueList<String> SimplifiedExpressionTypeQueue = new QueueList<>();
 
-            try {
-                while (!operatorQueue.isEmpty()) {
-                    String operator = operatorQueue.remove();
+        try {
+            while (!operatorQueue.isEmpty()) {
+                String operator = operatorQueue.remove();
 
-                    Boolean isBinaryInFixOp = typeSystem.isBinaryInfixOperator(operator);
+                Boolean isBinaryInFixOp = typeSystem.isBinaryInfixOperator(operator);
 
-                    if (isBinaryInFixOp) {
-                        String LhsType = SimplifiedExpressionTypeQueue.isEmpty() ? typeQueue.remove()
-                                : SimplifiedExpressionTypeQueue.remove();
-                        String RhsType = typeQueue.remove();
+                if (isBinaryInFixOp) {
+                    String LhsType = SimplifiedExpressionTypeQueue.isEmpty() ? typeQueue.remove()
+                            : SimplifiedExpressionTypeQueue.remove();
+                    String RhsType = typeQueue.remove();
 
-                        String resultingType = typeSystem.LookupResultingType(LhsType, RhsType, operator);
-                        SimplifiedExpressionTypeQueue.add(resultingType);
-                    }
+                    // if (typeSystem.isArithmeticOperator(operator)) {
+                    // if (!typeSystem.isArithmeticType(LhsType) ||
+                    // !typeSystem.isArithmeticType(RhsType)) {
+                    // throw new InvalidExpressionException("Arithmetic operation " + operator
+                    // + " cannot be applied to types " + LhsType + " and " + RhsType);
+                    // }
+                    // }
 
+                    String resultingType = typeSystem.lookupResultingTypeNew(LhsType, RhsType, operator);
+                    SimplifiedExpressionTypeQueue.add(resultingType);
                 }
-                res = SimplifiedExpressionTypeQueue.remove();
-            } catch (IllegalArgumentException e) {
-                // TODO: handle exception
-                throw new InvalidExpressionException("Expression does not produce a valid value");
             }
+            res = SimplifiedExpressionTypeQueue.remove();
+        } catch (InvalidExpressionException | IllegalArgumentException e) {
+            System.out.println("Error: " + e.getMessage());
+            res = "INVALID_TYPE";
+        }
 
         return res;
     }
