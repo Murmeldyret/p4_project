@@ -11,14 +11,85 @@ import postfix.node.TType;
 import postfix.semantics.IdAttributes.Attributes;
 
 /**
- * A dictionary-like data structure that keeps track of symbol declarations in their respective scope
- * The key is an identifier and the value is a class containing important attributes about the identifier
+ * A dictionary-like data structure that keeps track of symbol declarations in
+ * their respective scope
+ * The key is an identifier and the value is a class containing important
+ * attributes about the identifier
+ * 
  * @see {@link postfix.semantics.IdAttributes}
  */
 public class SymbolTable implements Map<String, IdAttributes> {
 
     public SymbolTable() {
 
+    }
+
+    private String returnType;
+    private Scopekind kind;
+
+    /** Holds the actual symbols */
+    private HashMap<String, IdAttributes> hashMap;
+
+    /** holds information about functions in current scope */
+    private HashMap<String, SymbolTable> functionMap;
+
+    /** Represents the outer scope, is null if no such scope exists */
+    private SymbolTable outerSymbolTable;
+
+    /**
+     * Represents the scope type that this symbol table manages
+     */
+    public enum Scopekind {
+        block,
+        ifBlock,
+        loopBlock,
+        functionBlock,
+    }
+
+    public Scopekind getKind() {
+        return kind;
+    }
+
+    // Never used atm.
+    private HashMap<String, IdAttributes> getHashMap() {
+        return hashMap;
+    }
+
+    public HashMap<String, SymbolTable> getFunctionMap() {
+        return functionMap;
+    }
+
+    public SymbolTable getOuterSymbolTable() {
+        return outerSymbolTable;
+    }
+
+    private SymbolTable outerScope() {
+        return outerSymbolTable;
+    }
+
+    private boolean DeclaredExternally(IdAttributes id) {
+        return outerSymbolTable != null;
+    }
+
+    /**
+     * Tests whether an identifier exists within this symbol table or an outer one
+     */
+    public boolean DeclaredLocally(String idName) {
+        return hashMap.containsKey(idName);
+    }
+
+    private boolean DeclaredLocally(IdAttributes id) {
+        return DeclaredLocally(id.getId().getText());
+    }
+
+    public boolean isDeclared(String idName) {
+        if (DeclaredLocally(idName)) {
+            return true;
+        } else if (outerSymbolTable != null) {
+            return outerSymbolTable.isDeclared(idName);
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -41,66 +112,8 @@ public class SymbolTable implements Map<String, IdAttributes> {
         returnType = functionReturnType;
     }
 
-    private String returnType;
-    
-    /**
-     * Represents the scope type that this symbol table manages
-     */
-    public enum Scopekind {
-        /** A normal block */
-        block,
-        /** Like a normal block, just for if statements */
-        ifBlock,
-        /** Like a normal block, just for loops */
-        loopBlock,
-        /** A block where all outer variables are read only */
-        functionBlock,
-    }
-    
     public String getReturnType() {
         return returnType;
-    }
-    private Scopekind kind;
-    // holds the actual symbols
-    private HashMap<String, IdAttributes> hashMap;
-    /**
-     * holds information about functions in current scope
-     */
-    private HashMap<String, SymbolTable> functionMap;
-    
-    /** Represents the outer scope, is null if no such scope exists */
-    private SymbolTable outerSymbolTable;
-
-    public SymbolTable getOuterSymbolTable() {
-        return outerSymbolTable;
-    }
-
-    private SymbolTable outerScope() {
-        return outerSymbolTable;
-    }
-
-    private boolean DeclaredExternally(IdAttributes id) {
-        boolean res = false;
-
-        if (outerSymbolTable != null) {
-
-        }
-
-        return res;
-    }
-
-    private boolean DeclaredLocally(IdAttributes id) {
-        return DeclaredLocally(id.getId().getText());
-    }
-
-    /**
-     * Tests whether an identifier exists within this symbol table or an outer one
-     * 
-     * @param idName the identifier to test
-     * @return true if identifier exists within the current block, false otherwise
-     */
-    public boolean DeclaredLocally(String idName) {
-        return hashMap.containsKey(idName);
     }
 
     /**
@@ -168,7 +181,7 @@ public class SymbolTable implements Map<String, IdAttributes> {
             return value;
         } else {
             if (outerScope() == null) {
-                throw new IllegalArgumentException("Key "+key.toString()+ " does not exist in symbol table");
+                throw new IllegalArgumentException("Key " + key.toString() + " does not exist in symbol table");
             }
             return outerScope().get(key);
         }
@@ -186,7 +199,7 @@ public class SymbolTable implements Map<String, IdAttributes> {
             throw new NullPointerException("Key cannot be null");
         }
         // if (value.getAttributes().equals(Attributes.function)) {
-        //     CreateNewScope(key, Scopekind.functionBlock, value.getReturnType());
+        // CreateNewScope(key, Scopekind.functionBlock, value.getReturnType());
         // }
         // Add the key-value pair to the current scope (hashMap)
         return hashMap.put(key.stripTrailing(), value);

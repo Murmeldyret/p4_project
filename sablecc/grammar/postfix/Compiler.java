@@ -1,7 +1,7 @@
 package postfix;
 
+import postfix.semantics.Exceptions.InvalidExpressionException;
 import postfix.parser.*;
-import postfix.semantics.Exceptions.*;
 import postfix.semantics.visitors.SemanticVisitor;
 import postfix.lexer.*;
 import postfix.node.*;
@@ -9,6 +9,7 @@ import java.io.*;
 
 public class Compiler {
     public static void main(String[] arguments) {
+        System.out.println("Running parser...");
         try {
 
             // Create a Parser instance.
@@ -24,26 +25,15 @@ public class Compiler {
             // Apply the translation.
             // tree.apply(new Translation());
         } catch (ParserException e) {
-            System.out.println(e.getMessage() + " Vores error");
-        } 
-        // catch (InvalidExpressionException e) {
-        //     System.out.println(e.getMessage() + " InvalidExpressionException");
-        //     throw e;
-        // } 
-        // catch (VariableAlreadyDeclaredException e) {
-        //     System.out.println(e.getMessage() + " VariableAlreadyDeclaredException");
-        //     throw e;
-        // } 
-        catch (FileNotFoundException e) {
+            System.out.println(e.getMessage() + " Parser error");
+        } catch (InvalidExpressionException e) {
+            System.out.println(e.getMessage() + " InvalidExpressionException");
+        } catch (FileNotFoundException e) {
             System.out.println("Input file not found");
         } catch (LexerException e) {
             System.out.println(e.getMessage());
         } catch (IOException e) {
             System.out.println(e.getMessage());
-        } 
-        // catch (Exception e) {
-        //     System.out.println(e.getMessage());
-        // }
-
+        }
     }
 }
