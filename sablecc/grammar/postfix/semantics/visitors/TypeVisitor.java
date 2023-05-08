@@ -129,6 +129,20 @@ public class TypeVisitor extends SemanticVisitor {
         // symbolTable =
         // symbolTable.getFunctionSymbolTable(symbolTable.get(node.getId().getText()).getId().getText());
     }
+    @Override
+    public void inAFunctionCallParamFunctionCallParam(AFunctionCallParamFunctionCallParam node) {
+        // // TODO Auto-generated method stub
+        // super.inAFunctionCallParamFunctionCallParam(node);
+        //! Vigtig, skal være her
+        defaultIn(node);
+    }
+    @Override
+    public void inAFunctionCallParamPrimeFunctionCallParamPrime(AFunctionCallParamPrimeFunctionCallParamPrime node) {
+        // // TODO Auto-generated method stub
+        // super.inAFunctionCallParamPrimeFunctionCallParamPrime(node);
+        //! Vigtig, skal være her
+        defaultIn(node);
+    }
 
     @Override
     public void outAFunctionCallFunctionCall(AFunctionCallFunctionCall node) {

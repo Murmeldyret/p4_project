@@ -237,7 +237,7 @@ public class TypeSystem {
                 }
             }
             if (matchingCombination == null) {
-                throw new InvalidExpressionException("Cannot produce a valid value with " + LType + operator + RType);
+                throw new InvalidExpressionException("Cannot produce a valid value with " + LType + " " + operator + " " + RType);
             }
 
             resultType = resultingType.get(operator).get(matchingCombination);

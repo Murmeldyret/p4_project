@@ -3,6 +3,6 @@
 int a = 2+2+2;
 
 int function foo(int a, int b) {return a+b ; };
-bool function bar(int c, bool b) {return foo(c,2) and b; };
+bool function bar(int c, bool b) { if b {return foo(c,2);} else {return -1;}; };
 
 bar(a,true);
