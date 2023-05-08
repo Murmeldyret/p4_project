@@ -281,17 +281,20 @@ public class TypeVisitor extends SemanticVisitor {
      */
     private String typeCheckExpression() {
         String res = "";
-        TypeSystem typeSystem = new TypeSystem();
+        // TypeSystem typeSystem = new TypeSystem();
 
-        QueueList<String> SimplifiedExpressionTypeQueue = new QueueList<>();
+        // QueueList<String> SimplifiedExpressionTypeQueue = new QueueList<>();
 
         try {
-            while(SimplifyExpression()){
-                // evt. tilføj debug info her
-            }
+            boolean canSimplify = true;
+            do {
+                canSimplify = SimplifyExpression();
+                // evt debug statements hvis man er interesseret i sådan noget
+            } while (canSimplify);
             if (simplifiedTypeQueue.isEmpty()) {
-                
+                throw new IllegalArgumentException();
             }
+            res = simplifiedTypeQueue.remove();
             // while (!operatorQueue.isEmpty()) {
             //     String operator = operatorQueue.remove();
 
