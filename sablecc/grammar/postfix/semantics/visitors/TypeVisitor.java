@@ -195,10 +195,10 @@ public class TypeVisitor extends SemanticVisitor {
         outAFunctionCallParamPrimeFunctionCallParamPrime(node);
     }
 
-    @Override
-    public void outAFunctionCallFunctionCall(AFunctionCallFunctionCall node) {
-        // symbolTable = symbolTable.getOuterSymbolTable();
-    }
+    // @Override
+    // public void outAFunctionCallFunctionCall(AFunctionCallFunctionCall node) {
+    //     // symbolTable = symbolTable.getOuterSymbolTable();
+    // }
 
     // --PBinInfixOp nodes--
     // Hvis operators var token vil dette være en metode, oh well
