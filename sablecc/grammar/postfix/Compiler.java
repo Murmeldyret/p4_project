@@ -26,10 +26,12 @@ public class Compiler {
             // tree.apply(new Translation());
         } catch (ParserException e) {
             System.out.println(e.getMessage() + " Parser error");
-        } catch (InvalidExpressionException e) {
-            // System.out.println(e.getMessage() + " InvalidExpressionException");
-            e.printStackTrace();
-        } catch (FileNotFoundException e) {
+        } 
+        // catch (InvalidExpressionException e) {
+        //     // System.out.println(e.getMessage() + " InvalidExpressionException");
+        //     e.printStackTrace();
+        // } 
+        catch (FileNotFoundException e) {
             System.out.println("Input file not found");
         } catch (LexerException e) {
             System.out.println(e.getMessage());
