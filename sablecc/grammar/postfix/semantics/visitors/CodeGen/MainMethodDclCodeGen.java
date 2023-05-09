@@ -4,6 +4,7 @@ import java.lang.reflect.Method;
 import java.util.List;
 
 import postfix.analysis.DepthFirstAdapter;
+import postfix.node.AFunctionDeclarationDcl;
 import postfix.node.Start;
 import postfix.semantics.SymbolTable;
 
