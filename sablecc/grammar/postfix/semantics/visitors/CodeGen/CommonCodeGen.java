@@ -11,7 +11,7 @@ public class CommonCodeGen extends DepthFirstAdapter {
     // Variables
     SymbolTable symbolTable;
 
-    private String program;
+    public String program;
     
     //Constructor
     public CommonCodeGen() {};
@@ -28,7 +28,7 @@ public class CommonCodeGen extends DepthFirstAdapter {
 
     @Override
     public void outAPrintStatementStmt(APrintStatementStmt node) {
-        program += ")";
+        program += ");";
     }
 
     @Override

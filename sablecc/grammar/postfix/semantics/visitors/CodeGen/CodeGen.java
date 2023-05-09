@@ -1,9 +1,13 @@
 package postfix.semantics.visitors.CodeGen;
 
 import postfix.analysis.DepthFirstAdapter;
+import postfix.node.AProgramProgram;
+import postfix.node.AStatementsStmts;
+import postfix.node.AStmts;
 import postfix.node.Start;
 import postfix.semantics.QueueList;
 import postfix.semantics.SymbolTable;
+import postfix.semantics.visitors.CodeGen.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -38,19 +42,27 @@ public class CodeGen extends DepthFirstAdapter {
     }
 
     @Override
+    public void inAProgramProgram(AProgramProgram node) {
+        MainMethodDclCodeGen mainVisitor = new MainMethodDclCodeGen(symbolTable, program);
+        node.getStmts().apply(mainVisitor);
+        program = mainVisitor.program;
+    }
+
+    @Override
     public void outStart(Start node) {
         program += "}\n";
         codeCompiling();
     }
 
     private void codeCompiling() {
+        System.out.println(program);
         File root;
         File sourceFile;
 
         try {
             root = Files.createTempDirectory("java").toFile();
             // ! Please fix later
-            sourceFile = new File(root, "test/Main.java");
+            sourceFile = new File(root, "program/Main.java");
             sourceFile.getParentFile().mkdirs();
             Files.write(sourceFile.toPath(), program.getBytes(StandardCharsets.UTF_8));
 
