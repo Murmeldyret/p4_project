@@ -5,12 +5,13 @@ import java.util.List;
 
 import postfix.node.TId;
 import postfix.node.TType;
+import postfix.semantics.Exceptions.invalidFunctionCallException;
 
 /**
  * Represents all necessary attributes, about an identifier, that a symbol table
  * monitors
  */
-public class IdAttributes {
+public class IdAttributes implements Cloneable {
 
     private TId id;
     private TType type;
@@ -36,6 +37,13 @@ public class IdAttributes {
         /** A special csv type */
         csv,
 
+    }
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        IdAttributes clone = new IdAttributes(id,type,value,attributes);
+        clone.setReturnType(getReturnType());
+        //TODO giv fuld klon
+        return super.clone();
     }
 
     @Deprecated
