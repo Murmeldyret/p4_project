@@ -9,6 +9,7 @@ import postfix.semantics.SymbolTable.Scopekind;
 /**
  * Class for managing declarations, also responsible for calling TypeVisitor for
  * the right hand side (or statements in case of functions)
+ * 
  * @see {@link postfix.semantics.visitors.TypeVisitor}
  */
 public class TopDclVisitor extends SemanticVisitor {
@@ -56,7 +57,7 @@ public class TopDclVisitor extends SemanticVisitor {
 
         if (symbolTable.DeclaredLocally(node.getId().getText())) {
             throw new VariableAlreadyDeclaredException(
-                    "Variable " + node.getId().toString() + " has already been declared");
+                    "Variable " + node.getId().getText() + " has already been declared");
         } else {
             symbolTable.put(node.getId().toString(),
                     new IdAttributes(node.getId(), node.getType(), null, Attributes.variable));
@@ -66,7 +67,7 @@ public class TopDclVisitor extends SemanticVisitor {
                 Node functionDCL = node.parent();
 
                 while (!(functionDCL instanceof AFunctionDeclarationDcl)) {
-                    //find the parent function declaration
+                    // find the parent function declaration
                     functionDCL = functionDCL.parent();
                 }
                 AFunctionDeclarationDcl funcDCL = (AFunctionDeclarationDcl) functionDCL;
@@ -107,10 +108,33 @@ public class TopDclVisitor extends SemanticVisitor {
             symbolTable.put(node.getId().getText(),
                     new IdAttributes(node.getId(), node.getType(), null, Attributes.function));
             symbolTable.CreateNewScope(node.getId().getText(), Scopekind.functionBlock, node.getType().getText());
-            symbolTable = symbolTable.getFunctionSymbolTable(node.getId().getText());
+            // symbolTable = symbolTable.getFunctionSymbolTable(node.getId().getText());
             // symbolTable = symbolTable.CreateNewScope(node.getId().getText(),
             // Scopekind.functionBlock);
         }
+    }
+
+    @Override
+    public void caseAFunctionDeclarationDcl(AFunctionDeclarationDcl node) {
+
+        inAFunctionDeclarationDcl(node);
+        if (node.getType() != null) {
+            node.getType().apply(this);
+        }
+        if (node.getKwFunction() != null) {
+            node.getKwFunction().apply(this);
+        }
+        if (node.getId() != null) {
+            node.getId().apply(this);
+        }
+        symbolTable = symbolTable.getFunctionSymbolTable(node.getId().getText());
+        if (node.getFunctionParam() != null) {
+            node.getFunctionParam().apply(this);
+        }
+        if (node.getStmts() != null) {
+            node.getStmts().apply(this);
+        }
+        outAFunctionDeclarationDcl(node);
     }
 
     @Override
