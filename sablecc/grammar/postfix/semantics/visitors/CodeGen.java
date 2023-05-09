@@ -18,7 +18,7 @@ public class CodeGen extends DepthFirstAdapter {
     protected SymbolTable symbolTable;
     protected QueueList<String> functionParameterTypeList;
 
-    private String program;
+    protected String program;
 
     // Constructors
     public CodeGen() {
@@ -33,11 +33,17 @@ public class CodeGen extends DepthFirstAdapter {
     // a main class and so on.
     @Override
     public void inStart(Start node) {
-        program = "public class Main {\n    public static void main(String[] args) {\n        System.out.println(\"Hello\");\n    }\n}";
+        // Everything is inside the Main class. We don't need classes in our program.
+        program = "public class Main {";
     }
 
     @Override
     public void outStart(Start node) {
+        program += "}\n";
+        codeCompiling();
+    }
+
+    private void codeCompiling() {
         File root;
 
         try {
@@ -55,7 +61,6 @@ public class CodeGen extends DepthFirstAdapter {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-
     }
 
 }
