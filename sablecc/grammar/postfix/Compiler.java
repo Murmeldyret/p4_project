@@ -1,7 +1,9 @@
 package postfix;
 
+import postfix.semantics.SymbolTable;
 import postfix.semantics.Exceptions.InvalidExpressionException;
 import postfix.parser.*;
+import postfix.semantics.visitors.CodeGen;
 import postfix.semantics.visitors.SemanticVisitor;
 import postfix.lexer.*;
 import postfix.node.*;
@@ -9,6 +11,7 @@ import java.io.*;
 
 public class Compiler {
     public static void main(String[] arguments) {
+        SymbolTable symbolTable;
         System.out.println("Running parser...");
         try {
 
@@ -21,7 +24,10 @@ public class Compiler {
             // Parse the input.
             Start tree = p.parse();
 
-            tree.apply(new SemanticVisitor());
+            symbolTable = new SymbolTable(null, SymbolTable.Scopekind.block);
+
+            tree.apply(new SemanticVisitor(symbolTable));
+            tree.apply(new CodeGen(symbolTable));
             // Apply the translation.
             // tree.apply(new Translation());
         } catch (ParserException e) {

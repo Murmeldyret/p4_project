@@ -24,7 +24,6 @@ public class SemanticVisitor extends DepthFirstAdapter {
 
     @Override
     public void inStart(Start node) {
-        this.symbolTable = new SymbolTable(null, SymbolTable.Scopekind.block);
     }
 
     @Override
