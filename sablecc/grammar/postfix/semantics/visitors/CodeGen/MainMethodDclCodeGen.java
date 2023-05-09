@@ -5,6 +5,7 @@ import java.util.List;
 
 import postfix.analysis.DepthFirstAdapter;
 import postfix.node.AFunctionDeclarationDcl;
+import postfix.node.AStmts;
 import postfix.node.Start;
 import postfix.semantics.SymbolTable;
 
@@ -22,11 +23,7 @@ public class MainMethodDclCodeGen extends CommonCodeGen {
     }
 
     @Override
-    public void inStart(Start node) {
-    }
-
-    @Override
-    public void outStart(Start node) {
+    public void outAStmts(AStmts node) {
         mainMethod = super.program;
         mainMethod += "}";
 
@@ -35,11 +32,13 @@ public class MainMethodDclCodeGen extends CommonCodeGen {
 
     // Concatinate all functions
     private void functionConcatanation() {
-        System.out.println(mainMethod);
+
         program += mainMethod;
 
-        for (String function : methodArray) {
-            program += function;
+        if (methodArray != null) {
+            for (String function : methodArray) {
+                program += function;
+            }
         }
     }
 }
