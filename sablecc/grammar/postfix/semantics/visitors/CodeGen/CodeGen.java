@@ -45,7 +45,7 @@ public class CodeGen extends DepthFirstAdapter {
 
     private void codeCompiling() {
         File root;
-        File sourceFile
+        File sourceFile;
 
         try {
             root = Files.createTempDirectory("java").toFile();
