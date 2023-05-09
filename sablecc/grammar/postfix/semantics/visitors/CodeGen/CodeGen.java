@@ -1,4 +1,4 @@
-package postfix.semantics.visitors;
+package postfix.semantics.visitors.CodeGen;
 
 import postfix.analysis.DepthFirstAdapter;
 import postfix.node.Start;
@@ -45,11 +45,12 @@ public class CodeGen extends DepthFirstAdapter {
 
     private void codeCompiling() {
         File root;
+        File sourceFile
 
         try {
             root = Files.createTempDirectory("java").toFile();
             // ! Please fix later
-            File sourceFile = new File(root, "test/Main.java");
+            sourceFile = new File(root, "test/Main.java");
             sourceFile.getParentFile().mkdirs();
             Files.write(sourceFile.toPath(), program.getBytes(StandardCharsets.UTF_8));
 
