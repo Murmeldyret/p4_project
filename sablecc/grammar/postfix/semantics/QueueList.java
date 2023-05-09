@@ -22,7 +22,7 @@ public class QueueList<E> implements Queue<E>{
      * @param list The list of elements to fill the queue with
      */
     public QueueList(List<E> list) {
-        internalList = list;
+        internalList = new ArrayList<>(list);
     }
 
     @Override
