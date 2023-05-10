@@ -12,7 +12,7 @@ import postfix.semantics.Exceptions.invalidFunctionCallException;
 public class SemanticVisitor extends DepthFirstAdapter {
 
     public SemanticVisitor() {
-
+        symbolTable = new SymbolTable(null, SymbolTable.Scopekind.block);
     }
 
     public SemanticVisitor(SymbolTable symbolTable) {

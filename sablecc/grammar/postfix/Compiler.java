@@ -24,10 +24,8 @@ public class Compiler {
             // Parse the input.
             Start tree = p.parse();
 
-            symbolTable = new SymbolTable(null, SymbolTable.Scopekind.block);
-
-            tree.apply(new SemanticVisitor(symbolTable));
-            tree.apply(new CodeGen(symbolTable));
+            tree.apply(new SemanticVisitor());
+            tree.apply(new CodeGen());
             // Apply the translation.
             // tree.apply(new Translation());
         } catch (ParserException e) {

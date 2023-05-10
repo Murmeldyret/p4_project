@@ -77,9 +77,9 @@ public class CommonCodeGen extends DepthFirstAdapter {
                 case "float":
                     return "double ";
                 case "bool":
-                    return "bool ";
+                    return "boolean ";
                 case "string":
-                    return "string ";
+                    return "String ";
                 case "csv":
                     return "csv ";
                 case "char":
