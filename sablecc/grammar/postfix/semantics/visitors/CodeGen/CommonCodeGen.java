@@ -4,6 +4,7 @@ import java.util.List;
 
 import postfix.analysis.DepthFirstAdapter;
 import postfix.node.AAssignStmt;
+import postfix.node.ADeclarationStmt;
 import postfix.node.AExprValPrimeExpr;
 import postfix.node.AForLoopStmt;
 import postfix.node.APrintStatementStmt;
@@ -31,6 +32,11 @@ public class CommonCodeGen extends DepthFirstAdapter {
     }
 
     @Override
+    public void outADeclarationStmt(ADeclarationStmt node) {
+        program += ";";
+    }
+
+    @Override
     public void inAPrintStatementStmt(APrintStatementStmt node) {
         program += "System.out.println(";
     }
@@ -42,9 +48,12 @@ public class CommonCodeGen extends DepthFirstAdapter {
 
     @Override
     public void inAVariableDeclarationInitializationDcl(AVariableDeclarationInitializationDcl node) {
-        if (!symbolTable.isDeclared(node.getId().getText().toString()))
+        if (!symbolTable.DeclaredLocally(node.getId().getText().toString()))
         {
             // Call function here.
+            String type = typeSwitch(node.getType().getText().toString());
+
+            program += type + node.getId().getText().toString() + " = ";
         }
     }
 
