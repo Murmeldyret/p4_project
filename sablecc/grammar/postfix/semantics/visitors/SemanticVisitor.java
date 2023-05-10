@@ -2,6 +2,7 @@ package postfix.semantics.visitors;
 
 import postfix.analysis.DepthFirstAdapter;
 import postfix.node.*;
+import postfix.semantics.IdAttributes;
 import postfix.semantics.QueueList;
 import postfix.semantics.SymbolTable;
 import postfix.semantics.Exceptions.invalidFunctionCallException;
@@ -10,7 +11,6 @@ import postfix.semantics.Exceptions.invalidFunctionCallException;
  * Responsible for verifying that a program is semantically correct
  */
 public class SemanticVisitor extends DepthFirstAdapter {
-
     public SemanticVisitor() {
         symbolTable = new SymbolTable(null, SymbolTable.Scopekind.block);
     }
@@ -28,9 +28,20 @@ public class SemanticVisitor extends DepthFirstAdapter {
 
     @Override
     public void inAImportWithoutSeperatorStmt(AImportWithoutSeperatorStmt node) {
-        // ? Måske skal path string være expr i stedet, med type check for at godkende
-        // at det er en string
-        // add to symbol table
+        String filePath = node.getString().getText();
+        String variableId = node.getId().getText();
+
+        // Remove quotes from filepath string
+        if (filePath.length() > 2) {
+            filePath = filePath.substring(1, filePath.length() - 1);
+        }
+
+        TType type = new TType("string");
+        String value = filePath;
+
+        IdAttributes idAttributes = new IdAttributes(node.getId(), type, value, IdAttributes.Attributes.variable);
+
+        symbolTable.put(variableId, idAttributes);
     }
 
     @Override
@@ -42,9 +53,19 @@ public class SemanticVisitor extends DepthFirstAdapter {
 
     @Override
     public void inAExportStatementStmt(AExportStatementStmt node) {
-        // ? i guess id skal være af typen csv
-        node.getId().apply(new TypeVisitor(symbolTable, "csv"));
-        node.getExpr().apply(new TypeVisitor(symbolTable, "string"));
+        String filePath = node.getExpr().toString().trim();
+        String variableId = node.getId().getText();
+
+        if (!symbolTable.containsKey(variableId)) {
+            throw new RuntimeException("Variable is not declared.");
+        }
+
+        TType type = new TType("string");
+        String value = filePath;
+
+        IdAttributes fileAttributes = new IdAttributes(node.getId(), type, value, IdAttributes.Attributes.variable);
+
+        symbolTable.put(filePath, fileAttributes);
     }
 
     @Override
