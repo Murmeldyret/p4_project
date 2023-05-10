@@ -5,6 +5,7 @@ import java.util.List;
 
 import postfix.analysis.DepthFirstAdapter;
 import postfix.node.AFunctionDeclarationDcl;
+import postfix.node.AProgramProgram;
 import postfix.node.AStmts;
 import postfix.node.Start;
 import postfix.semantics.SymbolTable;
@@ -23,7 +24,7 @@ public class MainMethodDclCodeGen extends CommonCodeGen {
     }
 
     @Override
-    public void outAStmts(AStmts node) {
+    public void outAProgramProgram(AProgramProgram node) {
         mainMethod = super.program;
         mainMethod += "}";
 
