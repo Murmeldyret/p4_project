@@ -8,6 +8,36 @@ bool d = 5.5 < 6.5;
 int e = 5 * 5;
 float f = 5.5 * 2.5;
 
+e = 2;
+
+int i = 0;
+
+while i < 10 {
+    print i;
+    i = i + 1;
+};
+
+# if 2 > 5 {
+#     print "hello";
+# } else if 20 < 4 {
+#     print "hello 2";
+# } else {
+#     print "hello 3";
+# };
+
+i = 0;
+
+while i < 3 {
+    if i < 1 {
+        print "if";
+    } else if i < 2 {
+        print "else if";
+    } else {
+        print "else";
+    };
+    i = i + 1;
+};
+
 # Illegal expressions (Can still be done...)
 # bool g = 5 + 6;
 # bool x = 2 < 3;
