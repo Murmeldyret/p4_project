@@ -103,8 +103,12 @@ public class CommonCodeGen extends DepthFirstAdapter {
     
     @Override
     public void inAForLoopStmt(AForLoopStmt node) {
-        program += "for ( " + symbolTable.get(node.getId().getText()) + " : " + node.getId().getText() + " )";
-        program += " { }";
+        program += "for ( " + symbolTable.get(node.getId().getText()).getType().getText() + " " + node.getId().getText() + " : ";
+
+        node.getVal().apply(this);
+        node.setVal(null);
+
+        program += ") ";
 
     }
 
