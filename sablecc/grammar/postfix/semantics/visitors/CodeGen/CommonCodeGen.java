@@ -3,8 +3,12 @@ package postfix.semantics.visitors.CodeGen;
 import java.util.List;
 
 import postfix.analysis.DepthFirstAdapter;
+import postfix.node.AAssignStmt;
 import postfix.node.AExprValPrimeExpr;
+import postfix.node.AForLoopStmt;
 import postfix.node.APrintStatementStmt;
+import postfix.node.AVariableDeclarationDcl;
+import postfix.node.AVariableDeclarationInitializationDcl;
 import postfix.semantics.SymbolTable;
 
 public class CommonCodeGen extends DepthFirstAdapter {
@@ -38,4 +42,40 @@ public class CommonCodeGen extends DepthFirstAdapter {
 
         program += node.getVal().toString();
     }
+
+    @Override
+    public void inAVariableDeclarationDcl(AVariableDeclarationDcl node) {
+        if (symbolTable.isDeclared(node.getId().getText())) {
+            System.out.println("variable" + node.getId().getText() + " is already declared");
+        } else {
+            typeSwitch(node.getType().getText().toString());
+        }
+    }
+
+    @Override
+    public void outAVariableDeclarationDcl(AVariableDeclarationDcl node) {
+        program += ";";
+    }
+
+    private String typeSwitch(String type) {
+            switch (type) {
+                case "int":
+                    return "int ";
+                case "float":
+                    return "double ";
+                case "bool":
+                    return "bool ";
+                case "string":
+                    return "string ";
+                case "csv":
+                    return "csv ";
+                case "char":
+                    return "char ";
+                case "array":
+                    return "array ";
+            }
+            return "";
+    }
+
+
 }
