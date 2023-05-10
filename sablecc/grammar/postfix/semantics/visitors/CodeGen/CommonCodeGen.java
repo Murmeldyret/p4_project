@@ -8,6 +8,11 @@ import postfix.node.AExprValPrimeExpr;
 import postfix.node.AForLoopStmt;
 import postfix.node.APrintStatementStmt;
 import postfix.node.AVariableDeclarationDcl;
+import postfix.node.AExprPrimeOperatorValPrimeExprPrime;
+import postfix.node.AExprValPrimeExpr;
+import postfix.node.AFunctionDeclarationDcl;
+import postfix.node.APrintStatementStmt;
+import postfix.node.AStatementsStmts;
 import postfix.node.AVariableDeclarationInitializationDcl;
 import postfix.semantics.SymbolTable;
 
@@ -36,9 +41,17 @@ public class CommonCodeGen extends DepthFirstAdapter {
     }
 
     @Override
+    public void inAVariableDeclarationInitializationDcl(AVariableDeclarationInitializationDcl node) {
+        if (!symbolTable.isDeclared(node.getId().getText().toString()))
+        {
+            // Call function here.
+        }
+    }
+
+    @Override
     public void inAExprValPrimeExpr(AExprValPrimeExpr node) {
         if (node.getBopNot() != null)
-            program += node.getBopNot().getText().toString();
+            program += "!";
 
         program += node.getVal().toString();
     }
@@ -77,5 +90,13 @@ public class CommonCodeGen extends DepthFirstAdapter {
             return "";
     }
 
+    @Override
+    public void inAExprPrimeOperatorValPrimeExprPrime(AExprPrimeOperatorValPrimeExprPrime node) {
+        String expr = "";
 
+        expr += node.getBinInfixOp().toString();
+        expr += node.getVal().toString();
+
+        program += expr;
+    }
 }
