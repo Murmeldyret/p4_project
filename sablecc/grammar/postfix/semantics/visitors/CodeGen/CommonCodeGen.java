@@ -77,9 +77,5 @@ public class CommonCodeGen extends DepthFirstAdapter {
             return "";
     }
 
-    @Override
-    public void inAForLoopStmt(AForLoopStmt node) {
-        if (symbolTable.isDeclared(node.getId().getText()))
-    }
 
 }
