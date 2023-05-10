@@ -386,17 +386,21 @@ public class SymbolTable implements Map<String, IdAttributes> {
             throw new IllegalArgumentException(id + " does not refer to a function");
         }
         SymbolTable funcMap = functionMap.get(id);
-        //TODO få funktioner fra ydre scopes
+        // TODO få funktioner fra ydre scopes
         if (funcMap == null) {
 
             SymbolTable outerTable = outerScope();
-            while (funcMap != null) {
+            while (outerTable != null) {
                 funcMap = outerTable.getFunctionSymbolTable(id);
+                if (funcMap != null) {
+                    break; // ?
+                }
             }
-
         }
-        ;
-        return functionMap.get(id);
+        if (funcMap == null) {
+            throw new IllegalArgumentException("No such function " + id);
+        }
+        return funcMap;
     }
 
     // Never used atm.
