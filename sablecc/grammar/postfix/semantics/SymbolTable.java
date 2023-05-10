@@ -178,12 +178,12 @@ public class SymbolTable implements Map<String, IdAttributes> {
         // Check if the key exists in the current scope (hashMap) and return its value
         IdAttributes value = hashMap.get(key);
         if (value != null) {
-            return value;
+            return (IdAttributes) value.clone();
         } else {
             if (outerScope() == null) {
                 throw new IllegalArgumentException("Key " + key.toString() + " does not exist in symbol table");
             }
-            return outerScope().get(key);
+            return (IdAttributes) outerScope().get(key).clone();
         }
 
         // If there is an outer scope, recursively search for the key in the outer scope
@@ -191,6 +191,28 @@ public class SymbolTable implements Map<String, IdAttributes> {
         // return outerSymbolTable.get(key);
         // }
 
+    }
+
+    /**
+     * works like the public get, except it does not return a clone
+     * 
+     * @see {@link postfix.semantics.SymbolTable#get(Object)}
+     */
+    private IdAttributes privateGet(Object key) {
+        if (key == null) {
+            throw new NullPointerException("Key cannot be null");
+        }
+
+        // Check if the key exists in the current scope (hashMap) and return its value
+        IdAttributes value = hashMap.get(key);
+        if (value != null) {
+            return value;
+        } else {
+            if (outerScope() == null) {
+                throw new IllegalArgumentException("Key " + key.toString() + " does not exist in symbol table");
+            }
+            return outerScope().privateGet(key);
+        }
     }
 
     @Override
@@ -202,7 +224,11 @@ public class SymbolTable implements Map<String, IdAttributes> {
         // CreateNewScope(key, Scopekind.functionBlock, value.getReturnType());
         // }
         // Add the key-value pair to the current scope (hashMap)
-        return hashMap.put(key.stripTrailing(), value);
+        IdAttributes res = hashMap.put(key.stripTrailing(), value);
+        if (res != null) {
+            res = (IdAttributes) res.clone();
+        }
+        return res;
     }
 
     @Override
@@ -232,6 +258,9 @@ public class SymbolTable implements Map<String, IdAttributes> {
         }
 
         // Return the removed IdAttributes (if any), otherwise null
+        if (res != null) {
+            res = (IdAttributes) res.clone();
+        }
         return res;
     }
 
@@ -303,8 +332,31 @@ public class SymbolTable implements Map<String, IdAttributes> {
         for (int i = 0; i < parameterTypes.size(); i++) {
             attributes.addParameter(parameterTypes.get(i), parameterNames.get(i));
         }
+        IdAttributes res = hashMap.put(functionName, attributes);
+        if (res != null) {
+            res = (IdAttributes) res.clone();
+        }
 
-        return hashMap.put(functionName, attributes);
+        return res;
+    }
+
+    /**
+     * Adds parameter information to a function declaration inside the symbolTable
+     * 
+     * @param functionName  the declared name of the function
+     * @param parameterType the type of the parameter
+     * @param parameterName the name of the parameter
+     */
+    public void addFunctionParameter(String functionName, String parameterType, String parameterName) {
+        IdAttributes attributes = privateGet(functionName);
+        if (attributes == null) {
+            throw new NullPointerException("Function " + functionName + " does not exist");
+        }
+        if (attributes.getAttributes() != Attributes.function) {
+            throw new IllegalArgumentException(
+                    "Cannot add a parameter to " + functionName + " Because it is not a function");
+        }
+        attributes.addParameter(parameterType, parameterName);
     }
 
     /**
@@ -328,8 +380,11 @@ public class SymbolTable implements Map<String, IdAttributes> {
             throw new IllegalArgumentException("Function " + functionName + " is not a function");
         }
         attributes.setReturnType(returnType);
-
-        return hashMap.put(functionName, attributes);
+        IdAttributes res = hashMap.put(functionName, attributes);
+        if (res != null) {
+            res = (IdAttributes) res.clone();
+        }
+        return res;
     }
 
     public SymbolTable CreateNewScope(String id, Scopekind kind, String type) {

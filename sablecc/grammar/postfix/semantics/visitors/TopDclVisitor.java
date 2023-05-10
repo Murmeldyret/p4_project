@@ -71,7 +71,9 @@ public class TopDclVisitor extends SemanticVisitor {
                     functionDCL = functionDCL.parent();
                 }
                 AFunctionDeclarationDcl funcDCL = (AFunctionDeclarationDcl) functionDCL;
-                symbolTable.get(funcDCL.getId().getText()).addParameter(node.getType().getText(),
+                // symbolTable.get(funcDCL.getId().getText()).addParameter(node.getType().getText(),
+                // node.getId().getText());
+                symbolTable.addFunctionParameter(funcDCL.getId().getText(), node.getType().getText(),
                         node.getId().getText());
 
             }
