@@ -5,6 +5,7 @@ import java.util.List;
 import postfix.analysis.DepthFirstAdapter;
 import postfix.node.AAssignStmt;
 import postfix.node.AExprValPrimeExpr;
+import postfix.node.AForLoopStmt;
 import postfix.node.APrintStatementStmt;
 import postfix.node.AVariableDeclarationDcl;
 import postfix.node.AVariableDeclarationInitializationDcl;
@@ -47,30 +48,38 @@ public class CommonCodeGen extends DepthFirstAdapter {
         if (symbolTable.isDeclared(node.getId().getText())) {
             System.out.println("variable" + node.getId().getText() + " is already declared");
         } else {
-            switch (node.getType().getText().toString()) {
-                case "int":
-                    program += "int " + node.getId().getText() + ";";
-                    break;
-                case "float":
-                    program += "float " + node.getId().getText() + ";";
-                    break; 
-                case "bool":
-                    program += "bool " + node.getId().getText() + ";";
-                    break; 
-                case "string":
-                    program += "string " + node.getId().getText() + ";";
-                    break; 
-                case "csv":
-                    program += "csv " + node.getId().getText() + ";";
-                    break; 
-                case "char":
-                    program += "char " + node.getId().getText() + ";";
-                    break; 
-                case "array":
-                    program += "array " + node.getId().getText() + ";";
-                    break; 
-            }
+            typeSwitch(node.getType().getText().toString());
         }
+    }
+
+    @Override
+    public void outAVariableDeclarationDcl(AVariableDeclarationDcl node) {
+        program += ";";
+    }
+
+    private String typeSwitch(String type) {
+            switch (type) {
+                case "int":
+                    return "int ";
+                case "float":
+                    return "double ";
+                case "bool":
+                    return "bool ";
+                case "string":
+                    return "string ";
+                case "csv":
+                    return "csv ";
+                case "char":
+                    return "char ";
+                case "array":
+                    return "array ";
+            }
+            return "";
+    }
+
+    @Override
+    public void inAForLoopStmt(AForLoopStmt node) {
+        if (symbolTable.isDeclared(node.getId().getText()))
     }
 
 }
