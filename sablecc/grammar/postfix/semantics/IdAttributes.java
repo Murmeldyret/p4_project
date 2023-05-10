@@ -16,7 +16,9 @@ public class IdAttributes implements Cloneable {
     private TId id;
     private TType type;
     private String value;
+    @Deprecated
     private boolean isFunction;
+    @Deprecated
     private boolean isConst;
     private List<String> parameterTypes;
     private List<String> parameterNames;

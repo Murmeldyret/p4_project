@@ -116,28 +116,28 @@ public class TopDclVisitor extends SemanticVisitor {
         }
     }
 
-    @Override
-    public void caseAFunctionDeclarationDcl(AFunctionDeclarationDcl node) {
+    // @Override
+    // public void caseAFunctionDeclarationDcl(AFunctionDeclarationDcl node) {
 
-        inAFunctionDeclarationDcl(node);
-        if (node.getType() != null) {
-            node.getType().apply(this);
-        }
-        if (node.getKwFunction() != null) {
-            node.getKwFunction().apply(this);
-        }
-        if (node.getId() != null) {
-            node.getId().apply(this);
-        }
-        symbolTable = symbolTable.getFunctionSymbolTable(node.getId().getText());
-        if (node.getFunctionParam() != null) {
-            node.getFunctionParam().apply(this);
-        }
-        if (node.getStmts() != null) {
-            node.getStmts().apply(this);
-        }
-        outAFunctionDeclarationDcl(node);
-    }
+    //     inAFunctionDeclarationDcl(node);
+    //     if (node.getType() != null) {
+    //         node.getType().apply(this);
+    //     }
+    //     if (node.getKwFunction() != null) {
+    //         node.getKwFunction().apply(this);
+    //     }
+    //     if (node.getId() != null) {
+    //         node.getId().apply(this);
+    //     }
+    //     symbolTable = symbolTable.getFunctionSymbolTable(node.getId().getText());
+    //     if (node.getFunctionParam() != null) {
+    //         node.getFunctionParam().apply(this);
+    //     }
+    //     if (node.getStmts() != null) {
+    //         node.getStmts().apply(this);
+    //     }
+    //     outAFunctionDeclarationDcl(node);
+    // }
 
     @Override
     public void outAReturnStmt(AReturnStmt node) {
