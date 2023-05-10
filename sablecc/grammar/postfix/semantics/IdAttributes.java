@@ -40,9 +40,10 @@ public class IdAttributes implements Cloneable {
     }
 
     @Override
-    protected Object clone() throws CloneNotSupportedException {
+    protected Object clone() {
         IdAttributes clone = new IdAttributes((TId) id.clone(), (TType) type.clone(), value, attributes);
         clone.setReturnType(getReturnType());
+        // parameterNames og parameterTypes skulle meget gerne altid have samme størrelse, ellers er det grælt
         for (int i = 0; i < parameterNames.size(); i++) {
             clone.addParameter(parameterNames.get(i), parameterTypes.get(i));
         }

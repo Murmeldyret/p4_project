@@ -183,7 +183,7 @@ public class SymbolTable implements Map<String, IdAttributes> {
             if (outerScope() == null) {
                 throw new IllegalArgumentException("Key " + key.toString() + " does not exist in symbol table");
             }
-            return outerScope().get(key);
+            return (IdAttributes)outerScope().get(key).clone();
         }
 
         // If there is an outer scope, recursively search for the key in the outer scope
@@ -202,7 +202,7 @@ public class SymbolTable implements Map<String, IdAttributes> {
         // CreateNewScope(key, Scopekind.functionBlock, value.getReturnType());
         // }
         // Add the key-value pair to the current scope (hashMap)
-        return hashMap.put(key.stripTrailing(), value);
+        return (IdAttributes)hashMap.put(key.stripTrailing(), value).clone();
     }
 
     @Override
@@ -232,7 +232,7 @@ public class SymbolTable implements Map<String, IdAttributes> {
         }
 
         // Return the removed IdAttributes (if any), otherwise null
-        return res;
+        return (IdAttributes)res.clone();
     }
 
     @Override
@@ -304,7 +304,7 @@ public class SymbolTable implements Map<String, IdAttributes> {
             attributes.addParameter(parameterTypes.get(i), parameterNames.get(i));
         }
 
-        return hashMap.put(functionName, attributes);
+        return (IdAttributes)hashMap.put(functionName, attributes).clone();
     }
 
     /**
@@ -329,7 +329,7 @@ public class SymbolTable implements Map<String, IdAttributes> {
         }
         attributes.setReturnType(returnType);
 
-        return hashMap.put(functionName, attributes);
+        return (IdAttributes)hashMap.put(functionName, attributes).clone();
     }
 
     public SymbolTable CreateNewScope(String id, Scopekind kind, String type) {
