@@ -158,6 +158,28 @@ public class SemanticVisitor extends DepthFirstAdapter {
     }
 
     @Override
+    public void caseAFunctionDeclarationDcl(AFunctionDeclarationDcl node) {
+        inAFunctionDeclarationDcl(node);
+        if (node.getType() != null) {
+            node.getType().apply(this);
+        }
+        if (node.getKwFunction() != null) {
+            node.getKwFunction().apply(this);
+        }
+        if (node.getId() != null) {
+            node.getId().apply(this);
+        }
+        //! uh oh
+        symbolTable = symbolTable.getFunctionSymbolTable(node.getId().getText());
+        if (node.getFunctionParam() != null) {
+            node.getFunctionParam().apply(this);
+        }
+        if (node.getStmts() != null) {
+            node.getStmts().apply(this);
+        }
+        outAFunctionDeclarationDcl(node);
+    }
+    @Override
     public void inAFunctionCallFunctionCall(AFunctionCallFunctionCall node) {
         // funktionsparametre
 
@@ -171,7 +193,7 @@ public class SemanticVisitor extends DepthFirstAdapter {
         // TODO antal af givne parametre skal stemme overens med den erklærede funktion
         if (functionParameterTypeList.isEmpty()) {
             throw new invalidFunctionCallException(
-                    "Cannot pass parameters to a function that does not take any parameters");
+                    "Cannot pass parameters to a function that does not take any parameters",node);
         }
         node.getExpr().apply(new TypeVisitor(symbolTable, functionParameterTypeList.remove()));
 
@@ -189,7 +211,7 @@ public class SemanticVisitor extends DepthFirstAdapter {
             AFunctionCallFunctionCall functionCallNode = (AFunctionCallFunctionCall) parent;
             throw new invalidFunctionCallException("Cannot pass " + i + " parameters to a function that only takes "
                     + symbolTable.get(functionCallNode.getId().getText()).getParameterTypeListAsQueueList().size()
-                    + " parameters");
+                    + " parameters",node);
         }
         node.getExpr().apply(new TypeVisitor(symbolTable, functionParameterTypeList.remove()));
     }
