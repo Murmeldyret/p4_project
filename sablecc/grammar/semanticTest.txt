@@ -1,12 +1,12 @@
 # tests of declaratations with legal and illegal expressions
 
 # Legal expressions
-# int a = 2+2+2;
-# float b = 5.5 + 1.5;
-# bool c = 5 < 6;
-# bool d = 5.5 < 6.5;
-# int e = 5 * 5;
-# float f = 5.5 * 2.5;
+int a = 2+2+2;
+float b = 5.5 + 1.5;
+bool c = 5 < 6;
+bool d = 5.5 < 6.5;
+int e = 5 * 5;
+float f = 5.5 * 2.5;
 
 e = 2;
 
