@@ -44,7 +44,7 @@ public class CodeGen extends DepthFirstAdapter {
     @Override
     public void inAProgramProgram(AProgramProgram node) {
         MainMethodDclCodeGen mainVisitor = new MainMethodDclCodeGen(symbolTable, program);
-        node.getStmts().apply(mainVisitor);
+        node.apply(mainVisitor);
         program = mainVisitor.program;
     }
 
