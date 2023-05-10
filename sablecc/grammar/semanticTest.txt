@@ -1,4 +1,6 @@
-# tests of declaratations with legal and illegal expressions
+# Csv Operations
+import "data.csv" as ok;
+export ok to ok4;
 
 # Legal expressions
 int a = 2+2+2;
