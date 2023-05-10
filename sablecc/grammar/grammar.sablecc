@@ -35,7 +35,7 @@ Tokens
     intnum = sign? (number)+ ;
     floatnum = sign? (number)+ '.' (number)+;
     bool = 'true' | 'false';
-    type = ('int' | 'bool' | 'float' | 'string' | 'csv' | 'char' | 'array' | 'void');
+    type = ('int' | 'bool' | 'float' | 'string' | 'csv' | 'char' | 'void');
     char = 39 '.' 39;
 
     //Keywords
@@ -134,7 +134,7 @@ Productions
 
     dcl =
      {variable_declaration_initialization}  type id op_assign expr                                                  {-> New dcl.variable_declaration_initialization (type , id , op_assign , expr  )  }   
-    | {variable_declaration_array}          type id op_assign array_op                                              {-> New dcl.variable_declaration_array (type , id, op_assign, array_op )  }   
+    | {variable_declaration_array}          type array id                                                           {-> New dcl.variable_declaration_array (type , array, id )  }   
     | {variable_declaration}                type id                                                                 {-> New dcl.variable_declaration (type , id  )  }   
     | {const_declaration_initialization}    kw_const type id op_assign expr                                         {-> New dcl.const_declaration_initialization (kw_const , type , id , op_assign , expr  )  }   
     | {function_declaration}                type kw_function id l_par function_param r_par l_cbrack stmts r_cbrack  {-> New dcl.function_declaration (type , kw_function , id , function_param , stmts )  } ;
@@ -224,7 +224,7 @@ Productions
     | {array_operation_insert}      array_insert    {-> array_insert.array_op } ;
 
     array_add {-> array_op  } =
-     {add_to_array} kw_add l_par array_expr r_par {-> New array_op.add_to_array (kw_add , array_expr )  } ;
+     {add_to_array} kw_add array_expr kw_to id {-> New array_op.add_to_array (kw_add , array_expr, to, id )  } ;
 
     array_remove {-> array_op   } =
      {remove_from_array} kw_remove kw_in id {-> New array_op.remove_from_array (kw_remove , kw_in , id  )  } ;
@@ -320,7 +320,7 @@ Abstract Syntax Tree
 
     dcl =
         {variable_declaration_initialization}   type id op_assign expr 
-        | {variable_declaration_array}          type id op_assign array_op  
+        | {variable_declaration_array}          type array id  
         | {variable_declaration}                type id 
         | {const_declaration_initialization}    kw_const type id op_assign expr 
         | {function_declaration}                type kw_function id function_param stmts ;
@@ -388,7 +388,7 @@ Abstract Syntax Tree
         | ;
 
     array_op =
-        {add_to_array}              kw_add array_expr 
+        {add_to_array}              kw_add array_expr to id
         | {remove_from_array}       kw_remove kw_in id 
         | {remove_at_from_array}    kw_remove_at indexing kw_in id 
         | {insert_to_array}         kw_insert val array_expr kw_in id 
