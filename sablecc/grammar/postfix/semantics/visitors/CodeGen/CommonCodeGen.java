@@ -67,17 +67,9 @@ public class CommonCodeGen extends DepthFirstAdapter {
 
     @Override
     public void inAVariableDeclarationDcl(AVariableDeclarationDcl node) {
-        if (symbolTable.isDeclared(node.getId().getText())) {
-            System.out.println("variable" + node.getId().getText() + " is already declared");
-        } else {
-            typeSwitch(node.getType().getText().toString());
-        }
+        program += typeSwitch(node.getType().getText()) + node.getId().getText();
     }
 
-    @Override
-    public void outAVariableDeclarationDcl(AVariableDeclarationDcl node) {
-        program += ";";
-    }
 
     private String typeSwitch(String type) {
             switch (type) {
@@ -108,4 +100,12 @@ public class CommonCodeGen extends DepthFirstAdapter {
 
         program += expr;
     }
+    
+    @Override
+    public void inAForLoopStmt(AForLoopStmt node) {
+        program += "for ( " + symbolTable.get(node.getId().getText()) + " : " + node.getId().getText() + " )";
+        program += " { }";
+
+    }
+
 }
