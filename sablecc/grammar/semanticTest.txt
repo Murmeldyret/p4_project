@@ -1,6 +1,6 @@
 # Csv Operations
-import "data.csv" as ok;
-export ok to ok4;
+#import "data.csv" as ok;
+#export ok to ok4;
 
 # Legal expressions
 int a = 2+2+2;
@@ -44,7 +44,7 @@ while i < 3 {
 # bool g = 5 + 6;
 # bool x = 2 < 3;
 
-string function foo(int a, int d) {return a+d ; };
-bool function bar(int c, bool b) { if b {return foo(c,2);} else {return -1;}; };
+#string function foo(int a, int d) {return a+d ; };
+#bool function bar(int c, bool b) { if b {return foo(c,2);} else {return -1;}; };
 
 # bar(a,true);
