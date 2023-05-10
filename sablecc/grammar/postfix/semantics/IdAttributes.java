@@ -38,12 +38,47 @@ public class IdAttributes implements Cloneable {
         csv,
 
     }
+
     @Override
     protected Object clone() throws CloneNotSupportedException {
-        IdAttributes clone = new IdAttributes(id,type,value,attributes);
+        IdAttributes clone = new IdAttributes((TId) id.clone(), (TType) type.clone(), value, attributes);
         clone.setReturnType(getReturnType());
-        //TODO giv fuld klon
-        return super.clone();
+        for (int i = 0; i < parameterNames.size(); i++) {
+            clone.addParameter(parameterNames.get(i), parameterTypes.get(i));
+        }
+        return clone;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        IdAttributes other = (IdAttributes) obj;
+        boolean idEquals = id.getText().equals(other.id.getText());
+        boolean typeEquals = type.getText().equals(other.type.getText());
+        boolean parameterNamesEquals = parameterNames.equals(other.parameterNames);
+        boolean parameterTypesEquals = parameterTypes.equals(other.parameterTypes);
+        boolean returnTypeEquals = returnType.equals(other.returnType);
+        boolean attributesEquals = attributes.equals(other.attributes);
+
+        boolean res = idEquals &&
+                typeEquals &&
+                parameterNamesEquals &&
+                parameterTypesEquals &&
+                returnTypeEquals &&
+                attributesEquals;
+        return res;
+    }
+
+    @Override
+    public int hashCode() {
+        int hashCode = 0;
+        hashCode += id.getText().hashCode() +
+                type.getText().hashCode() +
+                parameterNames.hashCode() +
+                parameterTypes.hashCode() +
+                returnType.hashCode() +
+                attributes.hashCode();
+
+        return hashCode;
     }
 
     @Deprecated
@@ -107,8 +142,10 @@ public class IdAttributes implements Cloneable {
     public void setReturnType(String type) {
         returnType = type;
     }
+
     /**
      * Returns the list of parameter types in the order that they are declared
+     * 
      * @return
      */
     public QueueList<String> getParameterTypeListAsQueueList() {
