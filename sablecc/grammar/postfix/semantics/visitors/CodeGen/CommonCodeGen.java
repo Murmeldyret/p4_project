@@ -3,8 +3,11 @@ package postfix.semantics.visitors.CodeGen;
 import java.util.List;
 
 import postfix.analysis.DepthFirstAdapter;
+import postfix.node.AAssignStmt;
 import postfix.node.AExprValPrimeExpr;
 import postfix.node.APrintStatementStmt;
+import postfix.node.AVariableDeclarationDcl;
+import postfix.node.AVariableDeclarationInitializationDcl;
 import postfix.semantics.SymbolTable;
 
 public class CommonCodeGen extends DepthFirstAdapter {
@@ -38,4 +41,36 @@ public class CommonCodeGen extends DepthFirstAdapter {
 
         program += node.getVal().toString();
     }
+
+    @Override
+    public void inAVariableDeclarationDcl(AVariableDeclarationDcl node) {
+        if (symbolTable.isDeclared(node.getId().getText())) {
+            System.out.println("variable" + node.getId().getText() + " is already declared");
+        } else {
+            switch (node.getType().getText().toString()) {
+                case "int":
+                    program += "int " + node.getId().getText() + ";";
+                    break;
+                case "float":
+                    program += "float " + node.getId().getText() + ";";
+                    break; 
+                case "bool":
+                    program += "bool " + node.getId().getText() + ";";
+                    break; 
+                case "string":
+                    program += "string " + node.getId().getText() + ";";
+                    break; 
+                case "csv":
+                    program += "csv " + node.getId().getText() + ";";
+                    break; 
+                case "char":
+                    program += "char " + node.getId().getText() + ";";
+                    break; 
+                case "array":
+                    program += "array " + node.getId().getText() + ";";
+                    break; 
+            }
+        }
+    }
+
 }
