@@ -178,7 +178,7 @@ public class SymbolTable implements Map<String, IdAttributes> {
         // Check if the key exists in the current scope (hashMap) and return its value
         IdAttributes value = hashMap.get(key);
         if (value != null) {
-            return value;
+            return (IdAttributes) value.clone();
         } else {
             if (outerScope() == null) {
                 throw new IllegalArgumentException("Key " + key.toString() + " does not exist in symbol table");
@@ -191,6 +191,28 @@ public class SymbolTable implements Map<String, IdAttributes> {
         // return outerSymbolTable.get(key);
         // }
 
+    }
+
+    /**
+     * works like the public get, except it does not return a clone
+     * 
+     * @see {@link postfix.semantics.SymbolTable#get(Object)}
+     */
+    private IdAttributes privateGet(Object key) {
+        if (key == null) {
+            throw new NullPointerException("Key cannot be null");
+        }
+
+        // Check if the key exists in the current scope (hashMap) and return its value
+        IdAttributes value = hashMap.get(key);
+        if (value != null) {
+            return value;
+        } else {
+            if (outerScope() == null) {
+                throw new IllegalArgumentException("Key " + key.toString() + " does not exist in symbol table");
+            }
+            return outerScope().privateGet(key);
+        }
     }
 
     @Override
@@ -316,6 +338,25 @@ public class SymbolTable implements Map<String, IdAttributes> {
         }
 
         return res;
+    }
+
+    /**
+     * Adds parameter information to a function declaration inside the symbolTable
+     * 
+     * @param functionName  the declared name of the function
+     * @param parameterType the type of the parameter
+     * @param parameterName the name of the parameter
+     */
+    public void addFunctionParameter(String functionName, String parameterType, String parameterName) {
+        IdAttributes attributes = privateGet(functionName);
+        if (attributes == null) {
+            throw new NullPointerException("Function " + functionName + " does not exist");
+        }
+        if (attributes.getAttributes() != Attributes.function) {
+            throw new IllegalArgumentException(
+                    "Cannot add a parameter to " + functionName + " Because it is not a function");
+        }
+        attributes.addParameter(parameterType, parameterName);
     }
 
     /**

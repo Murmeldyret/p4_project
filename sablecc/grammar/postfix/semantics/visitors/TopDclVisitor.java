@@ -9,6 +9,7 @@ import postfix.semantics.SymbolTable.Scopekind;
 /**
  * Class for managing declarations, also responsible for calling TypeVisitor for
  * the right hand side (or statements in case of functions)
+ * 
  * @see {@link postfix.semantics.visitors.TypeVisitor}
  */
 public class TopDclVisitor extends SemanticVisitor {
@@ -66,11 +67,13 @@ public class TopDclVisitor extends SemanticVisitor {
                 Node functionDCL = node.parent();
 
                 while (!(functionDCL instanceof AFunctionDeclarationDcl)) {
-                    //find the parent function declaration
+                    // find the parent function declaration
                     functionDCL = functionDCL.parent();
                 }
                 AFunctionDeclarationDcl funcDCL = (AFunctionDeclarationDcl) functionDCL;
-                symbolTable.get(funcDCL.getId().getText()).addParameter(node.getType().getText(),
+                // symbolTable.get(funcDCL.getId().getText()).addParameter(node.getType().getText(),
+                // node.getId().getText());
+                symbolTable.addFunctionParameter(funcDCL.getId().getText(), node.getType().getText(),
                         node.getId().getText());
 
             }

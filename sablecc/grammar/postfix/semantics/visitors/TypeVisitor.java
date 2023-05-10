@@ -3,7 +3,6 @@ package postfix.semantics.visitors;
 import postfix.semantics.*;
 import postfix.semantics.Exceptions.*;
 
-import javax.print.FlavorException;
 
 import postfix.node.*;
 
