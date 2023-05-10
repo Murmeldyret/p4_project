@@ -1,6 +1,7 @@
 package postfix.semantics;
 
 import java.util.Collection;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,8 +21,14 @@ import postfix.semantics.IdAttributes.Attributes;
  */
 public class SymbolTable implements Map<String, IdAttributes> {
 
-    public SymbolTable() {
-
+    /**
+     * Represents the scope type that this symbol table manages
+     */
+    public enum Scopekind {
+        block,
+        ifBlock,
+        loopBlock,
+        functionBlock,
     }
 
     private String returnType;
@@ -36,60 +43,7 @@ public class SymbolTable implements Map<String, IdAttributes> {
     /** Represents the outer scope, is null if no such scope exists */
     private SymbolTable outerSymbolTable;
 
-    /**
-     * Represents the scope type that this symbol table manages
-     */
-    public enum Scopekind {
-        block,
-        ifBlock,
-        loopBlock,
-        functionBlock,
-    }
-
-    public Scopekind getKind() {
-        return kind;
-    }
-
-    // Never used atm.
-    private HashMap<String, IdAttributes> getHashMap() {
-        return hashMap;
-    }
-
-    public HashMap<String, SymbolTable> getFunctionMap() {
-        return functionMap;
-    }
-
-    public SymbolTable getOuterSymbolTable() {
-        return outerSymbolTable;
-    }
-
-    private SymbolTable outerScope() {
-        return outerSymbolTable;
-    }
-
-    private boolean DeclaredExternally(IdAttributes id) {
-        return outerSymbolTable != null;
-    }
-
-    /**
-     * Tests whether an identifier exists within this symbol table or an outer one
-     */
-    public boolean DeclaredLocally(String idName) {
-        return hashMap.containsKey(idName);
-    }
-
-    private boolean DeclaredLocally(IdAttributes id) {
-        return DeclaredLocally(id.getId().getText());
-    }
-
-    public boolean isDeclared(String idName) {
-        if (DeclaredLocally(idName)) {
-            return true;
-        } else if (outerSymbolTable != null) {
-            return outerSymbolTable.isDeclared(idName);
-        } else {
-            return false;
-        }
+    public SymbolTable() {
     }
 
     /**
@@ -112,7 +66,52 @@ public class SymbolTable implements Map<String, IdAttributes> {
         returnType = functionReturnType;
     }
 
+    public Scopekind getKind() {
+        return kind;
+    }
+
+    public HashMap<String, SymbolTable> getFunctionMap() {
+        return functionMap;
+    }
+
+    public SymbolTable getOuterSymbolTable() {
+        return outerSymbolTable;
+    }
+
+    /**
+     * Tests whether an identifier exists within this symbol table or an outer one
+     */
+    public boolean DeclaredLocally(String idName) {
+        return hashMap.containsKey(idName);
+    }
+
+    public boolean isDeclared(String idName) {
+        if (DeclaredLocally(idName)) {
+            return true;
+        } else if (outerSymbolTable != null) {
+            return outerSymbolTable.isDeclared(idName);
+        } else {
+            return false;
+        }
+    }
+
     public String getReturnType() {
+        String returnType = null;
+        if (kind != Scopekind.functionBlock) {
+            SymbolTable outerTable = getOuterSymbolTable();
+            while (outerTable != null) {
+                if (outerTable.kind == Scopekind.functionBlock) {
+                    returnType = outerTable.returnType;
+                }
+
+                outerTable = getOuterSymbolTable();
+            }
+            if (returnType == null) {
+                // TODO kast en god exception
+            }
+        } else {
+            returnType = this.returnType;
+        }
         return returnType;
     }
 
@@ -191,28 +190,6 @@ public class SymbolTable implements Map<String, IdAttributes> {
         // return outerSymbolTable.get(key);
         // }
 
-    }
-
-    /**
-     * works like the public get, except it does not return a clone
-     * 
-     * @see {@link postfix.semantics.SymbolTable#get(Object)}
-     */
-    private IdAttributes privateGet(Object key) {
-        if (key == null) {
-            throw new NullPointerException("Key cannot be null");
-        }
-
-        // Check if the key exists in the current scope (hashMap) and return its value
-        IdAttributes value = hashMap.get(key);
-        if (value != null) {
-            return value;
-        } else {
-            if (outerScope() == null) {
-                throw new IllegalArgumentException("Key " + key.toString() + " does not exist in symbol table");
-            }
-            return outerScope().privateGet(key);
-        }
     }
 
     @Override
@@ -408,7 +385,57 @@ public class SymbolTable implements Map<String, IdAttributes> {
         if (get(id).getAttributes() != Attributes.function) {
             throw new IllegalArgumentException(id + " does not refer to a function");
         }
+        SymbolTable funcMap = functionMap.get(id);
+        //TODO få funktioner fra ydre scopes
+        if (funcMap == null) {
+
+            SymbolTable outerTable = outerScope();
+            while (funcMap != null) {
+                funcMap = outerTable.getFunctionSymbolTable(id);
+            }
+
+        }
+        ;
         return functionMap.get(id);
+    }
+
+    // Never used atm.
+    private HashMap<String, IdAttributes> getHashMap() {
+        return hashMap;
+    }
+
+    private SymbolTable outerScope() {
+        return outerSymbolTable;
+    }
+
+    private boolean DeclaredExternally(IdAttributes id) {
+        return outerSymbolTable != null;
+    }
+
+    private boolean DeclaredLocally(IdAttributes id) {
+        return DeclaredLocally(id.getId().getText());
+    }
+
+    /**
+     * works like the public get, except it does not return a clone
+     * 
+     * @see {@link postfix.semantics.SymbolTable#get(Object)}
+     */
+    private IdAttributes privateGet(Object key) {
+        if (key == null) {
+            throw new NullPointerException("Key cannot be null");
+        }
+
+        // Check if the key exists in the current scope (hashMap) and return its value
+        IdAttributes value = hashMap.get(key);
+        if (value != null) {
+            return value;
+        } else {
+            if (outerScope() == null) {
+                throw new IllegalArgumentException("Key " + key.toString() + " does not exist in symbol table");
+            }
+            return outerScope().privateGet(key);
+        }
     }
 
 }

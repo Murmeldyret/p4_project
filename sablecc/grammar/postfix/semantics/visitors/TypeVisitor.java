@@ -85,7 +85,7 @@ public class TypeVisitor extends SemanticVisitor {
     @Override
     public void outAExprValPrimeExpr(AExprValPrimeExpr node) {
         String resultingType = typeCheckExpression(node);
-
+    
         // Validate the resulting type and throw an exception if it's invalid
         if ("INVALID_TYPE".equals(resultingType)) {
             throw new InvalidExpressionException("Invalid expression type detected", node);
