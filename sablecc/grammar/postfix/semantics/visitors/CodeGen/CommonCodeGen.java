@@ -1,5 +1,7 @@
 package postfix.semantics.visitors.CodeGen;
 
+import java.util.ArrayList;
+
 import postfix.analysis.DepthFirstAdapter;
 import postfix.node.AAddToArrayArrayOp;
 import postfix.node.AAssignStmt;
@@ -12,6 +14,7 @@ import postfix.node.AExprValPrimeExpr;
 import postfix.node.AForLoopStmt;
 import postfix.node.AFunctionCallStmt;
 import postfix.node.APrintStatementStmt;
+import postfix.node.ARemoveFromArrayArrayOp;
 import postfix.node.AVariableDeclarationArrayDcl;
 import postfix.node.AVariableDeclarationDcl;
 import postfix.node.AExprPrimeOperatorValPrimeExprPrime;
@@ -196,4 +199,8 @@ public class CommonCodeGen extends DepthFirstAdapter {
         
     }
 
+    @Override
+    public void inARemoveFromArrayArrayOp(ARemoveFromArrayArrayOp node) {
+        program += node.getId().getText() + ".remove(" + node.getId().getText() + ".size() - 1);";
+    }
 }
