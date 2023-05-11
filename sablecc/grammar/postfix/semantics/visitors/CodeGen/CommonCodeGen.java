@@ -6,6 +6,7 @@ import postfix.analysis.DepthFirstAdapter;
 import postfix.node.AAddToArrayArrayOp;
 import postfix.node.AAssignStmt;
 import postfix.node.ABlockStmtBlock;
+import postfix.node.AConstDeclarationInitializationDcl;
 import postfix.node.AControlStatementStmt;
 import postfix.node.ADeclarationStmt;
 import postfix.node.AElifStatementInControlStmt;
@@ -100,6 +101,13 @@ public class CommonCodeGen extends DepthFirstAdapter {
 
             program += type + node.getId().getText().toString() + " = ";
         }
+    }
+
+    @Override
+    public void inAConstDeclarationInitializationDcl(AConstDeclarationInitializationDcl node) {
+        String type = typeSwitch(node.getType().getText().toString());
+        program += "final " + type + " " + node.getId().getText().strip() + " = " + node.getExpr().toString().strip() + ";";
+        node.setExpr(null);
     }
 
     @Override
