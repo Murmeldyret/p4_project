@@ -1,7 +1,5 @@
 package postfix.semantics.visitors.CodeGen;
 
-import java.util.List;
-
 import postfix.analysis.DepthFirstAdapter;
 import postfix.node.AAssignStmt;
 import postfix.node.ABlockStmtBlock;
@@ -11,15 +9,11 @@ import postfix.node.AElifStatementInControlStmt;
 import postfix.node.AElseBlockStatementElseStatement;
 import postfix.node.AExprValPrimeExpr;
 import postfix.node.AForLoopStmt;
-import postfix.node.AFunctionCallFunctionCall;
 import postfix.node.AFunctionCallStmt;
 import postfix.node.APrintStatementStmt;
+import postfix.node.AVariableDeclarationArrayDcl;
 import postfix.node.AVariableDeclarationDcl;
 import postfix.node.AExprPrimeOperatorValPrimeExprPrime;
-import postfix.node.AExprValPrimeExpr;
-import postfix.node.AFunctionDeclarationDcl;
-import postfix.node.APrintStatementStmt;
-import postfix.node.AStatementsStmts;
 import postfix.node.AVariableDeclarationInitializationDcl;
 import postfix.node.AWhileLoopStmt;
 import postfix.semantics.SymbolTable;
@@ -148,12 +142,8 @@ public class CommonCodeGen extends DepthFirstAdapter {
                 return "boolean ";
             case "string":
                 return "String ";
-            case "csv":
-                return "csv ";
             case "char":
                 return "char ";
-            case "array":
-                return "array ";
         }
         return "";
     }
@@ -179,4 +169,8 @@ public class CommonCodeGen extends DepthFirstAdapter {
 
     }
 
+    @Override
+    public void inAVariableDeclarationArrayDcl(AVariableDeclarationArrayDcl node) {
+        
+    }
 }
