@@ -37,8 +37,9 @@ public class CodeGen extends DepthFirstAdapter {
     // a main class and so on.
     @Override
     public void inStart(Start node) {
+        program = "import java.util.*;\n";
         // Everything is inside the Main class. We don't need classes in our program.
-        program = "public class Main {";
+        program += "public class Main {";
     }
 
     @Override
