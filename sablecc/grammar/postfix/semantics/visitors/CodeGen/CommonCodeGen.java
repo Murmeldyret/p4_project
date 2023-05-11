@@ -13,7 +13,10 @@ import postfix.node.AElseBlockStatementElseStatement;
 import postfix.node.AExprValPrimeExpr;
 import postfix.node.AForLoopStmt;
 import postfix.node.AFunctionCallStmt;
+import postfix.node.AIndexing;
+import postfix.node.AInsertToArrayArrayOp;
 import postfix.node.APrintStatementStmt;
+import postfix.node.ARemoveAtFromArrayArrayOp;
 import postfix.node.ARemoveFromArrayArrayOp;
 import postfix.node.AVariableDeclarationArrayDcl;
 import postfix.node.AVariableDeclarationDcl;
@@ -203,4 +206,27 @@ public class CommonCodeGen extends DepthFirstAdapter {
     public void inARemoveFromArrayArrayOp(ARemoveFromArrayArrayOp node) {
         program += node.getId().getText() + ".remove(" + node.getId().getText() + ".size() - 1);";
     }
+
+    @Override
+    public void inARemoveAtFromArrayArrayOp(ARemoveAtFromArrayArrayOp node) {
+        //System.out.println(node.getIndexing());
+        program += node.getId().getText().strip() + ".remove(" + node.getIndexing().toString().strip() + ");";
+
+        node.setIndexing(null);
+
+    }
+
+    @Override
+    public void inAInsertToArrayArrayOp(AInsertToArrayArrayOp node) {
+        // Insert val [0] in ArrayList
+        Object o = node.getArrayExpr();
+
+        if (o instanceof String)
+        {
+            program += node.getId().getText() + ".add(" + node.getArrayExpr().toString().strip() + ", \"" + node.getVal().toString().strip() + "\");";
+        } else {
+            program += node.getId().getText() + ".add(" + node.getArrayExpr().toString().strip() + ", " + node.getVal().toString().strip() + ");";
+        }
+    }
+
 }
