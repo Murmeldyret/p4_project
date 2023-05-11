@@ -171,6 +171,8 @@ public class CommonCodeGen extends DepthFirstAdapter {
 
     @Override
     public void inAVariableDeclarationArrayDcl(AVariableDeclarationArrayDcl node) {
-        
+        program += typeSwitch(node.getType().getText()) + "[] " + node.getId().getText();
     }
+
+
 }
