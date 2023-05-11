@@ -1,6 +1,7 @@
 package postfix.semantics.visitors.CodeGen;
 
 import postfix.analysis.DepthFirstAdapter;
+import postfix.node.AAddToArrayArrayOp;
 import postfix.node.AAssignStmt;
 import postfix.node.ABlockStmtBlock;
 import postfix.node.AControlStatementStmt;
@@ -128,22 +129,22 @@ public class CommonCodeGen extends DepthFirstAdapter {
 
     @Override
     public void inAVariableDeclarationDcl(AVariableDeclarationDcl node) {
-        program += typeSwitch(node.getType().getText()) + node.getId().getText();
+        program += " " + typeSwitch(node.getType().getText()) + node.getId().getText();
     }
 
 
     private String typeSwitch(String type) {
         switch (type) {
             case "int":
-                return "int ";
+                return "int";
             case "float":
-                return "double ";
+                return "double";
             case "bool":
-                return "boolean ";
+                return "boolean";
             case "string":
-                return "String ";
+                return "String";
             case "char":
-                return "char ";
+                return "char";
         }
         return "";
     }
@@ -171,8 +172,28 @@ public class CommonCodeGen extends DepthFirstAdapter {
 
     @Override
     public void inAVariableDeclarationArrayDcl(AVariableDeclarationArrayDcl node) {
-        program += typeSwitch(node.getType().getText()) + "[] " + node.getId().getText();
+        if (typeSwitch(node.getType().getText()) == "int")
+        {
+            program += "ArrayList<Integer> " + node.getId().getText() + " = new ArrayList<Integer>()";
+        } else if (typeSwitch(node.getType().getText()) == "double") {
+            program += "ArrayList<Double> " + node.getId().getText() + " = new ArrayList<Double>()";
+        } else {
+            program += "ArrayList<" + typeSwitch(node.getType().getText()) + "> " + node.getId().getText() + " = new ArrayList<" + typeSwitch(node.getType().getText()) + ">()";
+        }
+        
     }
 
+    @Override
+    public void inAAddToArrayArrayOp(AAddToArrayArrayOp node) {
+        Object o = node.getArrayExpr();
+
+        if (o instanceof String)
+        {
+            program += node.getId().getText() + ".add(\"" + node.getArrayExpr().toString().strip() + "\");";
+        } else {
+            program += node.getId().getText() + ".add(" + node.getArrayExpr().toString().strip() + ");";
+        }
+        
+    }
 
 }
