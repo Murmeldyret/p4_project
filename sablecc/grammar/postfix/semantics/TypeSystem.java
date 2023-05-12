@@ -22,16 +22,18 @@ public class TypeSystem {
     }
 
     // public boolean isArithmeticType(String type) {
-    //     return type.equals("int") || type.equals("float");
+    // return type.equals("int") || type.equals("float");
     // }
 
     // public boolean isArithmeticOperator(String operator) {
-    //     return operator.equals("+") || operator.equals("-") || operator.equals("*") || operator.equals("/")
-    //             || operator.equals("%");
+    // return operator.equals("+") || operator.equals("-") || operator.equals("*")
+    // || operator.equals("/")
+    // || operator.equals("%");
     // }
 
     public String lookupUnaryType(String operandType, String operator)
             throws InvalidExpressionException, IllegalArgumentException {
+        // skal måske bruges til typecasting (hvis vi når det)
         if (!isUnaryOperator(operator)) {
             throw new IllegalArgumentException("Operator " + operator + " not recognized");
         }
@@ -61,6 +63,7 @@ public class TypeSystem {
         legalOperations.put("or", Map.of("bool", "bool"));
     }
 
+    //FIXME virker ikke
     public String lookupResultingTypeNew(String LType, String RType, String operator)
             throws InvalidExpressionException, IllegalArgumentException {
         Map<String, String> typeMapping = legalOperations.get(operator);
