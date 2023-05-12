@@ -48,9 +48,6 @@ public class IdAttributes implements Cloneable {
         // parameterNames og parameterTypes skulle meget gerne altid have samme størrelse, ellers er det grælt
         clone.parameterNames = new ArrayList<>(parameterNames);
         clone.parameterTypes = new ArrayList<>(parameterTypes);
-        // for (int i = 0; i < parameterNames.size(); i++) {
-        //     clone.addParameter(parameterNames.get(i), parameterTypes.get(i));
-        // }
         return clone;
     }
 
