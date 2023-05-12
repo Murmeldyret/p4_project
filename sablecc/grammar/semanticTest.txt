@@ -8,7 +8,7 @@ export ok to ok4;
 # bool c = 5 < 6;
 # bool d = 5.5 < 6.5;
 # int e = 5 * 5;
-# float f = 5.5 * 2.5;
+float f = 5.5 * 2.5;
 
 # Illegal expressions (Can still be done...)
 # bool g = 5 + 6;

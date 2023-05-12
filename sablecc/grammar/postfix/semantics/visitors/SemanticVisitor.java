@@ -6,6 +6,7 @@ import postfix.semantics.IdAttributes;
 import postfix.semantics.QueueList;
 import postfix.semantics.SymbolTable;
 import postfix.semantics.Exceptions.invalidFunctionCallException;
+import postfix.semantics.IdAttributes.Attributes;
 
 /**
  * Responsible for verifying that a program is semantically correct
@@ -132,6 +133,13 @@ public class SemanticVisitor extends DepthFirstAdapter {
             throw new RuntimeException("Type mismatch: Cannot assign a value of type " + expressionType
                     + " to variable " + variableId + " of type " + variableType + ".");
         }
+        IdAttributes oldId = symbolTable.get(variableId);
+
+        if (!oldId.getAttributes().equals(Attributes.variable)) {
+            throw new invalidFunctionCallException("Cannot assign a new value to " + variableId + " because it is not a variable (it is " + oldId.getAttributes().name() + ")" , node);
+        }
+        symbolTable.put(node.getId().getText(),
+                new IdAttributes(node.getId(), oldId.getType(), expression.toString().strip(), oldId.getAttributes()));
     }
 
     // @Override
@@ -168,7 +176,7 @@ public class SemanticVisitor extends DepthFirstAdapter {
         if (node.getId() != null) {
             node.getId().apply(this);
         }
-        //! uh oh
+        // ! uh oh
         symbolTable = symbolTable.getFunctionSymbolTable(node.getId().getText());
         if (node.getFunctionParam() != null) {
             node.getFunctionParam().apply(this);
@@ -178,6 +186,7 @@ public class SemanticVisitor extends DepthFirstAdapter {
         }
         outAFunctionDeclarationDcl(node);
     }
+
     @Override
     public void inAFunctionCallFunctionCall(AFunctionCallFunctionCall node) {
         // funktionsparametre
@@ -192,7 +201,7 @@ public class SemanticVisitor extends DepthFirstAdapter {
         // TODO antal af givne parametre skal stemme overens med den erklærede funktion
         if (functionParameterTypeList.isEmpty()) {
             throw new invalidFunctionCallException(
-                    "Cannot pass parameters to a function that does not take any parameters",node);
+                    "Cannot pass parameters to a function that does not take any parameters", node);
         }
         node.getExpr().apply(new TypeVisitor(symbolTable, functionParameterTypeList.remove()));
 
@@ -210,7 +219,7 @@ public class SemanticVisitor extends DepthFirstAdapter {
             AFunctionCallFunctionCall functionCallNode = (AFunctionCallFunctionCall) parent;
             throw new invalidFunctionCallException("Cannot pass " + i + " parameters to a function that only takes "
                     + symbolTable.get(functionCallNode.getId().getText()).getParameterTypeListAsQueueList().size()
-                    + " parameters",node);
+                    + " parameters", node);
         }
         node.getExpr().apply(new TypeVisitor(symbolTable, functionParameterTypeList.remove()));
     }
