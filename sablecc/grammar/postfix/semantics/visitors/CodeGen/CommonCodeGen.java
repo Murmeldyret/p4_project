@@ -1,6 +1,8 @@
 package postfix.semantics.visitors.CodeGen;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import postfix.analysis.DepthFirstAdapter;
 import postfix.node.AAddToArrayArrayOp;
@@ -197,16 +199,38 @@ public class CommonCodeGen extends DepthFirstAdapter {
         
     }
 
+    private boolean isInteger(String s) {
+        try {
+            Integer.parseInt(s);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+    
+    private boolean isDouble(String s) {
+        try {
+            Double.parseDouble(s);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
     @Override
     public void inAAddToArrayArrayOp(AAddToArrayArrayOp node) {
-        Object o = node.getArrayExpr();
+        String[] sArr = node.getArrayExpr().toString().split(","); 
 
-        if (o instanceof String)
-        {
-            program += node.getId().getText() + ".add(\"" + node.getArrayExpr().toString().strip() + "\");";
-        } else {
-            program += node.getId().getText() + ".add(" + node.getArrayExpr().toString().strip() + ");";
+        for (String s : sArr) {
+            if (isInteger(s.strip()))
+            {
+                program += node.getId().getText() + ".add(" + s.strip() + ");";
+            } else if (isDouble(s.strip())) {
+                program += node.getId().getText() + ".add(" + s.strip() + ");";
+            } else {
+                program += node.getId().getText() + ".add(\"" + s.strip() + "\");";
+            }
         }
+            
         
     }
 
