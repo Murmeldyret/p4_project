@@ -15,6 +15,6 @@ export ok to ok4;
 # bool x = 2 < 3;
 
 int function foo(int a, int d) {return a+d ; };
-bool function bar(int c, bool b) { if b {return foo(c,2) < 10;} else {return -1;}; };
+bool function bar(int c, bool b) { if b {return foo(c,2) < 10;} else {return -1 != c;}; };
 
 bar(a,true);
