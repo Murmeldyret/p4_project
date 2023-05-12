@@ -95,7 +95,12 @@ public class SymbolTable implements Map<String, IdAttributes> {
         }
     }
 
-    public String getReturnType() {
+    /**
+     * Gets the return type of the current block. If current block is not a function, it searches outer scope
+     * @return The return type of the current function block
+     * @throws IllegalArgumentException if this and every outer scope is not a function
+     */
+    public String getReturnType() throws IllegalArgumentException {
         String returnType = null;
         if (kind != Scopekind.functionBlock) {
             SymbolTable outerTable = getOuterSymbolTable();
@@ -107,7 +112,7 @@ public class SymbolTable implements Map<String, IdAttributes> {
                 outerTable = getOuterSymbolTable();
             }
             if (returnType == null) {
-                // TODO kast en god exception
+                throw new IllegalArgumentException("Not inside a function block, scope does not return any value");
             }
         } else {
             returnType = this.returnType;

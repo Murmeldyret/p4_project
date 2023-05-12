@@ -1,10 +1,34 @@
 package postfix.semantics.visitors;
 
-import postfix.semantics.*;
-import postfix.semantics.Exceptions.*;
-
-
-import postfix.node.*;
+import postfix.node.AAndInfixBinInfixOp;
+import postfix.node.ADivisionInfixBinInfixOp;
+import postfix.node.AEqualityInfixBinInfixOp;
+import postfix.node.AExprValPrimeExpr;
+import postfix.node.AFunctionCallFunctionCall;
+import postfix.node.AFunctionCallParamFunctionCallParam;
+import postfix.node.AFunctionCallParamPrimeFunctionCallParamPrime;
+import postfix.node.AGreaterThanEqualInfixBinInfixOp;
+import postfix.node.AGreaterThanInfixBinInfixOp;
+import postfix.node.ALessThanEqualInfixBinInfixOp;
+import postfix.node.ALessThanInfixBinInfixOp;
+import postfix.node.AMinusInfixBinInfixOp;
+import postfix.node.AModuloInfixBinInfixOp;
+import postfix.node.AMultiplicationInfixBinInfixOp;
+import postfix.node.ANotEqualInfixBinInfixOp;
+import postfix.node.AOrInfixBinInfixOp;
+import postfix.node.APlusInfixBinInfixOp;
+import postfix.node.AReturnStmt;
+import postfix.node.AValBoolVal;
+import postfix.node.AValFloatnumVal;
+import postfix.node.AValIdVal;
+import postfix.node.AValIntnumVal;
+import postfix.node.AValStringVal;
+import postfix.semantics.QueueList;
+import postfix.semantics.SymbolTable;
+import postfix.semantics.TypeSystem;
+import postfix.semantics.Exceptions.InvalidExpressionException;
+import postfix.semantics.Exceptions.invalidFunctionCallException;
+import postfix.semantics.Exceptions.invalidReturnExpression;
 
 /**
  * Represents a type checker whose responsibilty is to type check expressions
@@ -50,6 +74,8 @@ public class TypeVisitor extends SemanticVisitor {
     protected QueueList<String> simplifiedTypeQueue;
     /** The type that an expression or return statement must return */
     protected String expressionType;
+    /** The type that an expression actually produces */
+    protected String actualExpressionType;
 
     @Override
     public void inAReturnStmt(AReturnStmt node) {
@@ -59,6 +85,11 @@ public class TypeVisitor extends SemanticVisitor {
 
     @Override
     public void outAReturnStmt(AReturnStmt node) {
+        if (!(expressionType.equals(actualExpressionType))) {
+            throw new invalidReturnExpression("Cannot return a value of type " + actualExpressionType
+                    + " on a function that has a return type of " + expressionType + " (Line: "
+                    + node.getKwReturn().getLine() + ")");
+        }
         // TODO skal lige testes
         // String expr = typeCheckExpression();
         // if (!expr.equals(expressionType)) {
@@ -84,10 +115,10 @@ public class TypeVisitor extends SemanticVisitor {
 
     @Override
     public void outAExprValPrimeExpr(AExprValPrimeExpr node) {
-        String resultingType = typeCheckExpression(node);
-    
+        actualExpressionType = typeCheckExpression(node);
+
         // Validate the resulting type and throw an exception if it's invalid
-        if ("INVALID_TYPE".equals(resultingType)) {
+        if ("INVALID_TYPE".equals(actualExpressionType)) {
             throw new InvalidExpressionException("Invalid expression type detected", node);
         }
     }
@@ -196,7 +227,7 @@ public class TypeVisitor extends SemanticVisitor {
 
     // @Override
     // public void outAFunctionCallFunctionCall(AFunctionCallFunctionCall node) {
-    //     // symbolTable = symbolTable.getOuterSymbolTable();
+    // // symbolTable = symbolTable.getOuterSymbolTable();
     // }
 
     // --PBinInfixOp nodes--

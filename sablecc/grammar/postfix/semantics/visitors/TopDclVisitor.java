@@ -39,13 +39,12 @@ public class TopDclVisitor extends SemanticVisitor {
         node.apply(typeVisitor);
 
         // TODO get expr value
-        String value = "";
         if (symbolTable.DeclaredLocally(node.getId().getText())) {
             throw new VariableAlreadyDeclaredException(
                     "Variable" + node.getId().toString() + "has already been declared");
         } else {
             symbolTable.put(node.getId().toString(),
-                    new IdAttributes(node.getId(), node.getType(), value, Attributes.variable));
+                    new IdAttributes(node.getId(), node.getType(), node.getExpr().toString().strip(), Attributes.variable));
         }
     }
 
