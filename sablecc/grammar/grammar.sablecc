@@ -139,7 +139,7 @@ Productions
     | {variable_declaration}                type id                                                                 {-> New dcl.variable_declaration (type , id  )  }
     | {variable_declaration_array_init}     type kw_array id op_assign array_expr                                   {-> New dcl.variable_declaration_array_init (type, kw_array, id, op_assign, array_expr)}
     | {const_declaration_initialization}    kw_const type id op_assign expr                                         {-> New dcl.const_declaration_initialization (kw_const , type , id , op_assign , expr  )  }   
-    | {function_declaration}                type kw_function id l_par function_param r_par l_cbrack stmts r_cbrack  {-> New dcl.function_declaration (type , kw_function , id , function_param , stmts )  } ;
+    | {function_declaration}                type kw_function id l_par function_param r_par block                    {-> New dcl.function_declaration (type , kw_function , id , function_param , block )  } ;
 
     function_param {-> P.function_param  } =
      {function_param} dcl function_param_prime {-> New function_param.function_param (dcl , function_param_prime  )  }   
@@ -326,7 +326,7 @@ Abstract Syntax Tree
         | {variable_declaration}                type id 
         | {variable_declaration_array_init}     type kw_array id op_assign array_expr
         | {const_declaration_initialization}    kw_const type id op_assign expr 
-        | {function_declaration}                type kw_function id function_param stmts ;
+        | {function_declaration}                type kw_function id function_param block ;
 
     function_param = 
         {function_param} dcl function_param_prime 
