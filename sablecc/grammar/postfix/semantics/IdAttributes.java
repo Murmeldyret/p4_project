@@ -42,7 +42,7 @@ public class IdAttributes implements Cloneable {
     }
 
     @Override
-    protected Object clone() {
+    public Object clone() {
         IdAttributes clone = new IdAttributes((TId) id.clone(), (TType) type.clone(), value, attributes);
         clone.setReturnType(getReturnType());
         // parameterNames og parameterTypes skulle meget gerne altid have samme størrelse, ellers er det grælt

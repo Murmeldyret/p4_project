@@ -120,7 +120,6 @@ public class SemanticVisitor extends DepthFirstAdapter {
         }
 
         String variableType = symbolTable.get(variableId).getType().getText();
-
         TypeVisitor typeVisitor = new TypeVisitor(symbolTable);
         expression.apply(typeVisitor);
 
