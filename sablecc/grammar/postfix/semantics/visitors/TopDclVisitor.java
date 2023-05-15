@@ -153,6 +153,7 @@ public class TopDclVisitor extends SemanticVisitor {
         if (symbolTable.getOuterSymbolTable() == null) {
             throw new NullPointerException("cannot go to outer scope: already in global scope");
         }
+        symbolTable.put(node.getId().getText(),(IdAttributes)symbolTable.getOuterSymbolTable().get(node.getId().getText()).clone());
         symbolTable = symbolTable.getOuterSymbolTable();
     }
 
