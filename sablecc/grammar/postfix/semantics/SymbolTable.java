@@ -411,6 +411,11 @@ public class SymbolTable implements Map<String, IdAttributes> {
     }
 
 
+    /**
+     * Gets the symbol table beloning to a given function
+     * @param id the name of the function
+     * @return the function symbol table belonging to the given function, input parameters as local symbols
+     */
     public SymbolTable getFunctionSymbolTable(String id) {
         if (get(id).getAttributes() != Attributes.function) {
             throw new IllegalArgumentException(id + " does not refer to a function");
