@@ -7,6 +7,7 @@ import postfix.semantics.QueueList;
 import postfix.semantics.SymbolTable;
 import postfix.semantics.Exceptions.invalidFunctionCallException;
 import postfix.semantics.IdAttributes.Attributes;
+import postfix.semantics.SymbolTable.Scopekind;
 
 /**
  * Responsible for verifying that a program is semantically correct
@@ -103,6 +104,18 @@ public class SemanticVisitor extends DepthFirstAdapter {
     @Override
     public void outAElseBlockStatementElseStatement(AElseBlockStatementElseStatement node) {
         // TODO tilbage til ydre tabel
+    }
+    @Override
+    public void inABlockStmtBlock(ABlockStmtBlock node) {
+        symbolTable = new SymbolTable(symbolTable, Scopekind.block);
+    }
+    @Override
+    public void outABlockStmtBlock(ABlockStmtBlock node) {
+        symbolTable = symbolTable.getOuterSymbolTable();
+        if (symbolTable == null) {
+            // Burde aldrig ske
+            throw new Error("cannot set symbol table to null");
+        }
     }
 
     @Override
