@@ -59,7 +59,7 @@ public class TypeSystem {
     }
 
     public boolean isUnaryOperator(String operator) {
-        return "!".equals(operator);
+        return "not".equals(operator);
     }
 
     public String lookupUnaryType(String operandType, String operator)
