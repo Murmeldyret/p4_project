@@ -85,6 +85,11 @@ public class SymbolTable implements Map<String, IdAttributes> {
         return hashMap.containsKey(idName);
     }
 
+    /**
+     * Tests if a symbol is already declared in this or any outer scope
+     * @param idName The identifier to test
+     * @return {@code true} if the identifier exists, false otherwise
+     */
     public boolean isDeclared(String idName) {
         if (DeclaredLocally(idName)) {
             return true;
@@ -120,6 +125,7 @@ public class SymbolTable implements Map<String, IdAttributes> {
         return returnType;
     }
 
+    @Deprecated
     /**
      * Retrieves the current declaratation with this name
      * 
@@ -246,6 +252,7 @@ public class SymbolTable implements Map<String, IdAttributes> {
         return res;
     }
 
+    @Deprecated
     @Override
     public void putAll(Map<? extends String, ? extends IdAttributes> m) {
         // TODO Auto-generated method stub
@@ -255,13 +262,14 @@ public class SymbolTable implements Map<String, IdAttributes> {
             put(keyString, m.get(keyString));
         }
     }
-
+    @Deprecated
     @Override
     public void clear() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'clear'");
     }
 
+    @Deprecated
     @Override
     public Set<String> keySet() {
         // TODO Auto-generated method stub
@@ -282,6 +290,7 @@ public class SymbolTable implements Map<String, IdAttributes> {
         throw new UnsupportedOperationException("Unimplemented method 'values'");
     }
 
+    @Deprecated
     @Override
     public Set<Entry<String, IdAttributes>> entrySet() {
         // TODO Auto-generated method stub
@@ -369,6 +378,13 @@ public class SymbolTable implements Map<String, IdAttributes> {
         return res;
     }
 
+    /**
+     * Creates and returns a new function scope with the specified name and return type
+     * @param id The name of the scope. is indexed with this parameter
+     * @param kind The kind of scope to create
+     * @param type The return type of this scope
+     * @return 
+     */
     public SymbolTable CreateNewScope(String id, Scopekind kind, String type) {
         if (get(id).getAttributes() != Attributes.function) {
             throw new IllegalArgumentException("Cannot create a scope from a non-function");
@@ -386,6 +402,7 @@ public class SymbolTable implements Map<String, IdAttributes> {
         // functionTable.put(id, (IdAttributes)get(id).clone()); //funktionsparametre kommer ikke med her
         return functionTable;
     }
+
 
     public SymbolTable getFunctionSymbolTable(String id) {
         if (get(id).getAttributes() != Attributes.function) {
