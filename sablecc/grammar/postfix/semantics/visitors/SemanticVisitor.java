@@ -6,6 +6,7 @@ import postfix.semantics.IdAttributes;
 import postfix.semantics.QueueList;
 import postfix.semantics.SymbolTable;
 import postfix.semantics.Exceptions.invalidFunctionCallException;
+import postfix.semantics.Exceptions.invalidReturnExpression;
 import postfix.semantics.IdAttributes.Attributes;
 import postfix.semantics.SymbolTable.Scopekind;
 
@@ -87,6 +88,12 @@ public class SemanticVisitor extends DepthFirstAdapter {
     @Override
     public void inAReturnStmt(AReturnStmt node) {
         // TODO skal være i funktionsblock
+        try {
+            symbolTable.getReturnType();
+        } catch (IllegalArgumentException e) {
+            //Sejt hack
+            throw new invalidReturnExpression("Cannot return when not inside a funciton block", node);
+        }
     }
 
     @Override
