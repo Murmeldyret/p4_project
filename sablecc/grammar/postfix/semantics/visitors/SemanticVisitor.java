@@ -112,6 +112,11 @@ public class SemanticVisitor extends DepthFirstAdapter {
     }
 
     @Override
+    public void inAArrayExprValPrimeArrayExpr(AArrayExprValPrimeArrayExpr node) {
+        // node.apply(new TypeVisitor(symbolTable,null)); //TODO ?
+        //! Vent til omskrivning af grammatik
+    }
+    @Override
     public void inAAssignStmt(AAssignStmt node) {
         String variableId = node.getId().getText();
         PExpr expression = node.getExpr();
