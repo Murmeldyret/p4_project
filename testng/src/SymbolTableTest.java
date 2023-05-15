@@ -5,8 +5,7 @@ import org.testng.Assert;
 
 import postfix.node.TId;
 import postfix.node.TType;
-import postfix.semantics.IdAttributes;
-import postfix.semantics.SymbolTable;
+import postfix.semantics.*;
 import postfix.semantics.IdAttributes.Attributes;
 import postfix.semantics.SymbolTable.Scopekind;
 
@@ -15,7 +14,7 @@ public class SymbolTableTest {
     SymbolTable TestSymbolTable = new SymbolTable(null, Scopekind.block);
     
     public void eraseTable(){
-        SymbolTable TestSymbolTable = new SymbolTable(null, Scopekind.block);
+        TestSymbolTable = new SymbolTable(null, Scopekind.block);
     }
     public void input(String key, String sameKey, String type, String value, Attributes options){
         TestSymbolTable.put(key, new IdAttributes(new TId(sameKey),new TType(type) , value, options));
@@ -27,127 +26,205 @@ public class SymbolTableTest {
     */
 
     //Actual Tests
-    //getKind og getHashMap???
     @Test //Nedpriotiter
     public void testGetFunctionMap(){
-        TestSymbolTable.getFunctionMap();
-
+        eraseTable();
+        input("func", "func", "int", null , Attributes.function);
+        input("func1", "func1", "string", null , Attributes.function);
+        input("func2", "func2", "boolean", null , Attributes.function);
+        input("func3", "func3", "float", null , Attributes.function);
+        
+        TestSymbolTable.CreateNewScope("func", Scopekind.functionBlock, "String");
+        TestSymbolTable.CreateNewScope("func1", Scopekind.functionBlock, "String");
+        TestSymbolTable.CreateNewScope("func2", Scopekind.functionBlock, "String");
+        TestSymbolTable.CreateNewScope("func3", Scopekind.functionBlock, "String");
+        
+        Assert.assertEquals(TestSymbolTable.getFunctionMap().size(), 4);
     }
 
-    @Test //Nedprioriter
-    public void testGetOuterSymbolTable(){
-        TestSymbolTable.getOuterSymbolTable();
+    @Test
+    public void testGetToOuterSymbolTable(){
+        eraseTable();
+       
+        input("a", "a", "int", "10", Attributes.variable);
+        input("b", "b", "int", "11", Attributes.variable);
+        
+        SymbolTable Test1LocalSymbolTable = new SymbolTable(TestSymbolTable, Scopekind.block);
+        //Test1LocalSymbolTable.put("c", new IdAttributes(new TId("c"),new TType("float") , "10.5", Attributes.variable));
+        
+        SymbolTable Test2LocalSymbolTable = new SymbolTable(Test1LocalSymbolTable, Scopekind.block);
+        //Test2LocalSymbolTable.put("d", new IdAttributes(new TId("d"),new TType("string") , "testlocal", Attributes.variable));
+        
+        Assert.assertEquals(Test1LocalSymbolTable, Test2LocalSymbolTable.getOuterSymbolTable());
+        
+        eraseTable();
     }
 
     @Test
     public void testDeclaredLocally(){
-        TestSymbolTable.DeclaredLocally(null);
+        eraseTable();
+        SymbolTable TestLocalSymbolTable = new SymbolTable(TestSymbolTable, Scopekind.block);
+        input("a", "a", "int", "10", Attributes.variable);
+        TestLocalSymbolTable.put("b", new IdAttributes(new TId("b"),new TType("float") , "10.5", Attributes.variable));
+        Assert.assertTrue(TestLocalSymbolTable.DeclaredLocally("b"));
     }
 
     @Test
+    public void testNotDeclaredLocally(){
+        eraseTable();
+        SymbolTable TestLocalSymbolTable = new SymbolTable(TestSymbolTable, Scopekind.block);
+        input("a", "a", "int", "10", Attributes.variable);
+        TestLocalSymbolTable.put("b", new IdAttributes(new TId("b"),new TType("float") , "10.5", Attributes.variable));
+        Assert.assertTrue(!TestLocalSymbolTable.DeclaredLocally("a"));
+    }
+
+
+    @Test
     public void testIsDeclared(){
-        TestSymbolTable.isDeclared(null);
+        eraseTable();
+        SymbolTable TestLocalSymbolTable = new SymbolTable(TestSymbolTable, Scopekind.block);
+        input("a", "a", "int", "10", Attributes.variable);
+        TestLocalSymbolTable.put("b", new IdAttributes(new TId("b"),new TType("float") , "10.5", Attributes.variable));
+        Assert.assertTrue(TestLocalSymbolTable.isDeclared("a"));
     }
 
     @Test //Nedprioriter
     public void testGetReturnType(){
-        TestSymbolTable.getReturnType();
+        eraseTable();
+        
+        input("func", "func", "int", null , Attributes.function);
+        TestSymbolTable.addFunctionParameter("func", "int", "Calc");
+        TestSymbolTable.CreateNewScope("func", Scopekind.functionBlock, "int");
+        
+        Assert.assertEquals(TestSymbolTable.getFunctionSymbolTable("func").getReturnType(), "int");
     }
 
-    @Test //Anders get returnere ikke en value men noget der nærmere ligner en adresse
+    @Test
     public void testRetrieveSymbol(){
-        /*input("b", "b","int", "2", Attributes.variable);
+        eraseTable();
+        input("b", "b","int", "2", Attributes.variable);
         IdAttributes confirmed = TestSymbolTable.RetrieveSymbol("b");
         IdAttributes expected = new IdAttributes(new TId("b"),new TType("int") , "2", Attributes.variable);
-        System.out.println(confirmed);
         Assert.assertEquals(confirmed,expected);
-        eraseTable(); */
     }
 
     @Test //Arbejder kun i current scope, lav test som fejler i et andet scope
     public void testSize(){
+        eraseTable();
         input("a", "a", "int", "10", Attributes.variable);
         input("c", "c", "string", "John Doe", Attributes.variable);
         input("d", "d", "int", "69", Attributes.variable);
         int size = TestSymbolTable.size();
         Assert.assertEquals(size, 3, null);
-        eraseTable();
     }
 
     @Test
     public void testIsEmpty(){
+        eraseTable();
         Assert.assertTrue(TestSymbolTable.isEmpty());
     }
 
     @Test
     public void testContainsKey(){
+        eraseTable();
         input("a", "a", "int", "10", Attributes.variable);
         Boolean keyExists = TestSymbolTable.containsKey("a");
         Assert.assertTrue(keyExists);
-        eraseTable();
     }
 
-    @Test //Anders har fucked op igen.
+    @Test
     public void testContainsValue(){
+        eraseTable();
         input("a", "a", "int", "10", Attributes.variable);
         Boolean valueExists = TestSymbolTable.containsValue(new IdAttributes(new TId("a"),new TType("int"),"10",Attributes.variable));
+        
         Assert.assertTrue(valueExists);
-        eraseTable();
     }
 
-    @Test //Anders, hvordan asserter man attributes.
+    @Test
     public void testGet(){
-        input("c", "c", "string", "John Doe", Attributes.variable);
-        IdAttributes copySymbolTable = TestSymbolTable.get("c");
-        Assert.assertTrue(TestSymbolTable.equals(copySymbolTable));
         eraseTable();
+        IdAttributes testAttributes = new IdAttributes(new TId("b"), new TType("string"), null, Attributes.variable);
+        TestSymbolTable.put("b", testAttributes);
+        IdAttributes CopyTestAttributes = TestSymbolTable.get("b");
+        
+        Assert.assertTrue(CopyTestAttributes.equals(testAttributes));
     }
 
-    @Test //Virker ikke fordi put skal bruge en værdi af IdAttributes
+    @Test
     public void testPut(){
+        eraseTable();
         input("a", "a", "int", "10", Attributes.variable);
         TestSymbolTable.put("b", new IdAttributes(new TId("b"),new TType("int") , "5", Attributes.variable));
+        
         Assert.assertEquals(TestSymbolTable.size(), 2);
-        //Assert.assertEquals(TestSymbolTable.containsValue(TestSymbolTable), 12);
-        eraseTable();
     }
 
-    @Test //String går ikke til IdAttributes. Anders?
+    @Test
+    public void testPutKeyCollision(){
+        eraseTable();
+        input("a", "a", "int", "10", Attributes.variable);
+        input("a", "a", "int", "10", Attributes.variable);
+        
+        Assert.assertEquals(TestSymbolTable.size(), 1);
+    }
+
+    @Test ( expectedExceptions = {NullPointerException.class})
+    public void testPutNullPointer(){
+        eraseTable();
+        input(null, null, "int", "10", Attributes.variable);
+    }
+
+    @Test
     public void testRemove(){
+        eraseTable();
         input("a", "a", "int", "10", Attributes.variable);
         input("d", "d", "int", "15", Attributes.variable);
         TestSymbolTable.remove("d");
+        
         Assert.assertEquals(TestSymbolTable.size(), 1);
-        eraseTable();
     }
 
-    @Test //Anders, der mangler en implementering på keySet()
-    public void testPutAll(){
-        SymbolTable TestCopySymbolTable = new SymbolTable(null, Scopekind.block);
-        TestCopySymbolTable.put("1", new IdAttributes(new TId("1"),new TType("int") , "5", Attributes.variable));
-        TestCopySymbolTable.put("2", new IdAttributes(new TId("2"),new TType("int") , "6", Attributes.variable));
-        TestCopySymbolTable.put("3", new IdAttributes(new TId("3"),new TType("int") , "7", Attributes.variable));
-        TestCopySymbolTable.put("4", new IdAttributes(new TId("4"),new TType("int") , "8", Attributes.variable));
-        TestSymbolTable.putAll(TestCopySymbolTable);
-        Assert.assertEquals(TestSymbolTable.size(), 4);
+    @Test ( expectedExceptions = {IllegalArgumentException.class})
+    public void testNullRemove(){
         eraseTable();
-    }
-
-    @Test //Anders, når du instantiere en funktion, så vil den ikke anerkende at det er en funktion
-    public void testAddFunctionReturnType(){
-        /*input("b", "b","int", "2", Attributes.function); 
-        IdAttributes testReturnT = TestSymbolTable.addFunctionReturnType("b", "int");
-        Assert.assertEquals(testReturnT, TestSymbolTable.getReturnType());
-        eraseTable(); */
+        input("bait", "bait", "int", "15" , Attributes.variable);
+        SymbolTable TestLocalSymbolTable = new SymbolTable(TestSymbolTable, Scopekind.functionBlock);
+        TestLocalSymbolTable.put("func", new IdAttributes(new TId("func"),new TType("float") , null, Attributes.function));
+        TestLocalSymbolTable.addFunctionParameter("func", "int", "Calc");
+        TestLocalSymbolTable.remove("bait");
     }
 
     @Test
     public void testCreateNewScope(){
-        TestSymbolTable.CreateNewScope(null, null, null);
+        eraseTable();
+        input("func", "func", "int", null , Attributes.function);
+        TestSymbolTable.addFunctionParameter("func", "int", "Calc");
+        TestSymbolTable.CreateNewScope("func", Scopekind.functionBlock, "string");
+        
+        Assert.assertTrue(TestSymbolTable.DeclaredLocally("func"));
+    }
+
+    @Test( expectedExceptions = {IllegalArgumentException.class})
+    public void testDontCreateNewScope(){
+        eraseTable();
+        input("func", "func", "int", "100" , Attributes.variable);
+        TestSymbolTable.addFunctionParameter("func", "int", "Sinus");
+        TestSymbolTable.CreateNewScope("func", Scopekind.functionBlock, "string");
     }
 
     @Test
     public void testGetFunctionSymbolTable(){
-        TestSymbolTable.getFunctionSymbolTable(null);
+        input("func", "func", "string", null , Attributes.function);
+        TestSymbolTable.addFunctionParameter("func", "int", "Sinus");
+        TestSymbolTable.CreateNewScope("func", Scopekind.functionBlock, "string");
+        
+        SymbolTable TestLocalSymbolTable = new SymbolTable(TestSymbolTable, Scopekind.functionBlock);
+        TestLocalSymbolTable.put("func1", new IdAttributes(new TId("func1"),new TType("float"), null, Attributes.function));
+        TestLocalSymbolTable.addFunctionParameter("func1", "int", "sinus");
+        TestLocalSymbolTable.CreateNewScope("func1", Scopekind.functionBlock, "float");
+        TestLocalSymbolTable.put("func2", new IdAttributes(new TId("func2"),new TType("float"), null, Attributes.function));
+
+        Assert.assertTrue(TestLocalSymbolTable.getFunctionSymbolTable("func1").containsKey("sinus"));
     }
 }

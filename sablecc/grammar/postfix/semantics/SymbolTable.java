@@ -1,7 +1,6 @@
 package postfix.semantics;
 
 import java.util.Collection;
-import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -239,7 +238,7 @@ public class SymbolTable implements Map<String, IdAttributes> {
         }
 
         // Check if the key is declared locally (in the current scope)
-        if (this.DeclaredLocally((IdAttributes) key)) {
+        if (DeclaredLocally((String)key)) {
             res = hashMap.remove(key);
         }
 
@@ -366,6 +365,7 @@ public class SymbolTable implements Map<String, IdAttributes> {
      * @throws NullPointerException     if the function does not exist
      * @throws IllegalArgumentException if the function already has a return type
      */
+    @Deprecated
     public IdAttributes addFunctionReturnType(String functionName, String returnType) {
         IdAttributes attributes = get(functionName);
         if (attributes == null) {
