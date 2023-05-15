@@ -235,8 +235,7 @@ Productions
      {remove_at_from_array} kw_remove_at indexing kw_in id {-> New array_op.remove_at_from_array (kw_remove_at , indexing , kw_in , id  )  } ;
 
     array_insert {-> array_op } =
-     {insert_to_array} kw_insert val array_expr kw_in id {-> New array_op.insert_to_array (kw_insert , val , array_expr , kw_in , id  )  } 
-    |{insert_to_variable} kw_insert l_par array_expr r_par {-> New array_op.insert_to_variable(kw_insert, array_expr)} ;
+     {insert_to_array} kw_insert val array_expr kw_in id {-> New array_op.insert_to_array (kw_insert , val , array_expr , kw_in , id  )  } ;
 
     val {-> val  } =
      {val_id}               id              {-> New val.val_id (id  )  }  
@@ -394,8 +393,7 @@ Abstract Syntax Tree
         {add_to_array}              kw_add array_expr kw_to id
         | {remove_from_array}       kw_remove kw_in id 
         | {remove_at_from_array}    kw_remove_at indexing kw_in id 
-        | {insert_to_array}         kw_insert val array_expr kw_in id 
-        | {insert_to_variable}      kw_insert array_expr;
+        | {insert_to_array}         kw_insert val array_expr kw_in id ;
 
     //måske skal function call ikke være value men expression i stedet, time will tell
     val = 
