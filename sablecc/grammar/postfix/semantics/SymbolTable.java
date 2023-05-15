@@ -69,7 +69,10 @@ public class SymbolTable implements Map<String, IdAttributes> {
     public Scopekind getKind() {
         return kind;
     }
-
+    /**
+     * Gets a map of all functions declared in the current scope
+     * @return A map of all functions that can be called from this scope
+     */
     public HashMap<String, SymbolTable> getFunctionMap() {
         return functionMap;
     }
