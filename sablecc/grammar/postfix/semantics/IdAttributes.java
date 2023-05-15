@@ -58,7 +58,11 @@ public class IdAttributes implements Cloneable {
         boolean typeEquals = type.getText().equals(other.type.getText());
         boolean parameterNamesEquals = parameterNames.equals(other.parameterNames);
         boolean parameterTypesEquals = parameterTypes.equals(other.parameterTypes);
-        boolean returnTypeEquals = returnType.equals(other.returnType);
+        boolean returnTypeEquals;
+        if (returnType != null) {
+            returnTypeEquals  = returnType.equals(other.returnType);
+        }
+        else {returnTypeEquals = true;}
         boolean attributesEquals = attributes.equals(other.attributes);
 
         boolean res = idEquals &&
