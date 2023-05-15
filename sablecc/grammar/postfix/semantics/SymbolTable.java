@@ -77,6 +77,10 @@ public class SymbolTable implements Map<String, IdAttributes> {
         return functionMap;
     }
 
+    /**
+     * Gets the outer symbol table that encapsulates this table
+     * @return
+     */
     public SymbolTable getOuterSymbolTable() {
         return outerSymbolTable;
     }

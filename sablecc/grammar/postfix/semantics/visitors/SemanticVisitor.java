@@ -55,7 +55,7 @@ public class SemanticVisitor extends DepthFirstAdapter {
 
     @Override
     public void inAExportStatementStmt(AExportStatementStmt node) {
-        String filePath = node.getExpr().toString().trim();
+        String filePath = node.getExpr().toString().trim(); // TODO virker ikke nødvendigvis
         String variableId = node.getId().getText();
 
         if (!symbolTable.containsKey(variableId)) {
