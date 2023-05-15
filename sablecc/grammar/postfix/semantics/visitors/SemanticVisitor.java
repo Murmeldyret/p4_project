@@ -179,6 +179,25 @@ public class SemanticVisitor extends DepthFirstAdapter {
         }
         outAFunctionDeclarationDcl(node);
     }
+
+    @Override
+    public void caseAVariableDeclarationArrayDcl(AVariableDeclarationArrayDcl node) {
+        inAVariableDeclarationArrayDcl(node);
+        if(node.getType() != null)
+        {
+            node.getType().apply(this);
+        }
+        if(node.getKwArray() != null)
+        {
+            node.getKwArray().apply(this);
+        } 
+        if(node.getId() != null)
+        {
+            node.getId().apply(this);
+        }
+        outAVariableDeclarationArrayDcl(node);
+    }
+
     @Override
     public void inAFunctionCallFunctionCall(AFunctionCallFunctionCall node) {
         // funktionsparametre
@@ -249,5 +268,91 @@ public class SemanticVisitor extends DepthFirstAdapter {
     public void inASortSpecialSyntax(ASortSpecialSyntax node) {
         node.getExpr().apply(new TypeVisitor(symbolTable, "csv"));
     }
+
+    @Override
+    public void inAAddToArrayArrayOp(AAddToArrayArrayOp node) {
+        String arrayId = node.getId().getText();
+        TType arrayType = symbolTable.get(arrayId).getType();
+
+        if (!symbolTable.containsKey(arrayId)) {
+            throw new RuntimeException("Array " + arrayId + " is not declared.");
+        }
+
+        PArrayExpr arrayExpression = node.getArrayExpr();
+
+        TypeVisitor typeVisitor = new TypeVisitor(symbolTable);
+        arrayExpression.apply(typeVisitor);
+
+        String expressionType = "";
+        if (!typeVisitor.typeQueue.isEmpty()) {
+            expressionType = typeVisitor.typeQueue.remove();
+        }
+
+        if (!arrayType.toString().equals(expressionType)) {
+            throw new RuntimeException("Type mismatch: Cannot add a value of type " + expressionType
+                    + " to array " + arrayId + " of type " + arrayType + ".");
+        }
+        node.getArrayExpr().apply(typeVisitor);
+    }
+
+    @Override
+    public void inARemoveFromArrayArrayOp(ARemoveFromArrayArrayOp node) {
+        String arrayId = node.getId().getText();
+
+        if (!symbolTable.containsKey(arrayId)) {
+            throw new RuntimeException("Array " + arrayId + " is not declared.");
+        }
+    }
+
+    @Override
+    public void inARemoveAtFromArrayArrayOp(ARemoveAtFromArrayArrayOp node) {
+        String arrayId = node.getId().getText();
+        PVal index = node.getVal();
+
+        if (!symbolTable.containsKey(arrayId)) {
+            throw new RuntimeException("Array " + arrayId + " is not declared.");
+        }
+
+        if (index != null) {
+            index.apply(new TypeVisitor(symbolTable, "int"));
+        } else {
+            throw new RuntimeException("Index must be of type int.");
+        }
+
+    }
+
+    @Override
+    public void inAInsertToArrayArrayOp(AInsertToArrayArrayOp node) {
+        String arrayId = node.getId().getText();
+        String arrayType = symbolTable.get(arrayId).getType().getText();
+        PVal index = node.getVal();
+
+        if (!symbolTable.containsKey(arrayId)) {
+            throw new RuntimeException("Array " + arrayId + " is not declared.");
+        }
+
+        if (index != null) {
+            index.apply(new TypeVisitor(symbolTable, "int"));
+        } else {
+            throw new RuntimeException("Index must be of type int.");
+        }
+
+        PArrayExpr arrayExpression = node.getArrayExpr();
+
+        TypeVisitor typeVisitor = new TypeVisitor(symbolTable);
+        arrayExpression.apply(typeVisitor);
+
+        String expressionType = "";
+        if (!typeVisitor.typeQueue.isEmpty()) {
+            expressionType = typeVisitor.typeQueue.remove();
+        }
+
+        if (!arrayType.equals(expressionType)) {
+            throw new RuntimeException("Type mismatch: Cannot add a value of type " + expressionType
+                    + " to array " + arrayId + " of type " + arrayType + ".");
+        }
+        node.getArrayExpr().apply(typeVisitor);
+    }
+
 
 }
