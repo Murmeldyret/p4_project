@@ -1,6 +1,7 @@
 package postfix.semantics.visitors;
 
 import postfix.node.AAndInfixBinInfixOp;
+import postfix.node.AArrayExprValPrimeArrayExpr;
 import postfix.node.ADivisionInfixBinInfixOp;
 import postfix.node.AEqualityInfixBinInfixOp;
 import postfix.node.AExprValPrimeExpr;
@@ -105,12 +106,18 @@ public class TypeVisitor extends SemanticVisitor {
     // node.getExpr().apply(this);
     // }
 
+    // normal expressions
     @Override
     public void inAExprValPrimeExpr(AExprValPrimeExpr node) {
 
         if (node.getBopNot() != null) {
             operatorQueue.add(node.getBopNot().getText());
         }
+    }
+    //Array expressions
+    @Override
+    public void inAArrayExprValPrimeArrayExpr(AArrayExprValPrimeArrayExpr node) {
+        //! vent til grammatikomskrivning
     }
 
     @Override
