@@ -16,6 +16,7 @@ import postfix.node.AElseBlockStatementElseStatement;
 import postfix.node.AExprValPrimeExpr;
 import postfix.node.AForLoopStmt;
 import postfix.node.AFunctionCallStmt;
+import postfix.node.AFunctionDeclarationDcl;
 import postfix.node.AIndexing;
 import postfix.node.AInsertToArrayArrayOp;
 import postfix.node.APrintStatementStmt;
@@ -101,7 +102,7 @@ public class CommonCodeGen extends DepthFirstAdapter {
             
             String type = typeSwitch(node.getType().getText().toString());
 
-            program += type + node.getId().getText().toString() + " = ";
+            program += type + " " + node.getId().getText().toString() + " = ";
         }
     }
 
@@ -140,15 +141,16 @@ public class CommonCodeGen extends DepthFirstAdapter {
         if (node.getBopNot() != null)
             program += "!";
 
-        program += node.getVal().toString();
+        program += node.getVal().toString().strip();
     }
 
     @Override
     public void inAVariableDeclarationDcl(AVariableDeclarationDcl node) {
-        program += " " + typeSwitch(node.getType().getText()) + node.getId().getText();
+        program += typeSwitch(node.getType().getText()) + " " + node.getId().getText();
     }
 
 
+    // Returns the appropriate types for code generation
     private String typeSwitch(String type) {
         switch (type) {
             case "int":
@@ -216,6 +218,7 @@ public class CommonCodeGen extends DepthFirstAdapter {
             return false;
         }
     }
+
     @Override
     public void inAAddToArrayArrayOp(AAddToArrayArrayOp node) {
         String[] sArr = node.getArrayExpr().toString().split(","); 
