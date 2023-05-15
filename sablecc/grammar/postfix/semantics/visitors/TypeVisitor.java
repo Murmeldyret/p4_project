@@ -121,6 +121,9 @@ public class TypeVisitor extends SemanticVisitor {
         if ("INVALID_TYPE".equals(actualExpressionType)) {
             throw new InvalidExpressionException("Invalid expression type detected", node);
         }
+        if (!expressionType.equals(actualExpressionType)) {
+            throw new InvalidExpressionException("Expression produces a value of type " + actualExpressionType + ", must be of type " + expressionType, node);
+        }
     }
 
     // PVal nodes
