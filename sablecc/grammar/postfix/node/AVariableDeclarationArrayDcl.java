@@ -8,9 +8,8 @@ import postfix.analysis.*;
 public final class AVariableDeclarationArrayDcl extends PDcl
 {
     private TType _type_;
+    private TKwArray _kwArray_;
     private TId _id_;
-    private TOpAssign _opAssign_;
-    private PArrayOp _arrayOp_;
 
     public AVariableDeclarationArrayDcl()
     {
@@ -19,18 +18,15 @@ public final class AVariableDeclarationArrayDcl extends PDcl
 
     public AVariableDeclarationArrayDcl(
         @SuppressWarnings("hiding") TType _type_,
-        @SuppressWarnings("hiding") TId _id_,
-        @SuppressWarnings("hiding") TOpAssign _opAssign_,
-        @SuppressWarnings("hiding") PArrayOp _arrayOp_)
+        @SuppressWarnings("hiding") TKwArray _kwArray_,
+        @SuppressWarnings("hiding") TId _id_)
     {
         // Constructor
         setType(_type_);
 
+        setKwArray(_kwArray_);
+
         setId(_id_);
-
-        setOpAssign(_opAssign_);
-
-        setArrayOp(_arrayOp_);
 
     }
 
@@ -39,9 +35,8 @@ public final class AVariableDeclarationArrayDcl extends PDcl
     {
         return new AVariableDeclarationArrayDcl(
             cloneNode(this._type_),
-            cloneNode(this._id_),
-            cloneNode(this._opAssign_),
-            cloneNode(this._arrayOp_));
+            cloneNode(this._kwArray_),
+            cloneNode(this._id_));
     }
 
     @Override
@@ -75,6 +70,31 @@ public final class AVariableDeclarationArrayDcl extends PDcl
         this._type_ = node;
     }
 
+    public TKwArray getKwArray()
+    {
+        return this._kwArray_;
+    }
+
+    public void setKwArray(TKwArray node)
+    {
+        if(this._kwArray_ != null)
+        {
+            this._kwArray_.parent(null);
+        }
+
+        if(node != null)
+        {
+            if(node.parent() != null)
+            {
+                node.parent().removeChild(node);
+            }
+
+            node.parent(this);
+        }
+
+        this._kwArray_ = node;
+    }
+
     public TId getId()
     {
         return this._id_;
@@ -100,64 +120,13 @@ public final class AVariableDeclarationArrayDcl extends PDcl
         this._id_ = node;
     }
 
-    public TOpAssign getOpAssign()
-    {
-        return this._opAssign_;
-    }
-
-    public void setOpAssign(TOpAssign node)
-    {
-        if(this._opAssign_ != null)
-        {
-            this._opAssign_.parent(null);
-        }
-
-        if(node != null)
-        {
-            if(node.parent() != null)
-            {
-                node.parent().removeChild(node);
-            }
-
-            node.parent(this);
-        }
-
-        this._opAssign_ = node;
-    }
-
-    public PArrayOp getArrayOp()
-    {
-        return this._arrayOp_;
-    }
-
-    public void setArrayOp(PArrayOp node)
-    {
-        if(this._arrayOp_ != null)
-        {
-            this._arrayOp_.parent(null);
-        }
-
-        if(node != null)
-        {
-            if(node.parent() != null)
-            {
-                node.parent().removeChild(node);
-            }
-
-            node.parent(this);
-        }
-
-        this._arrayOp_ = node;
-    }
-
     @Override
     public String toString()
     {
         return ""
             + toString(this._type_)
-            + toString(this._id_)
-            + toString(this._opAssign_)
-            + toString(this._arrayOp_);
+            + toString(this._kwArray_)
+            + toString(this._id_);
     }
 
     @Override
@@ -170,21 +139,15 @@ public final class AVariableDeclarationArrayDcl extends PDcl
             return;
         }
 
+        if(this._kwArray_ == child)
+        {
+            this._kwArray_ = null;
+            return;
+        }
+
         if(this._id_ == child)
         {
             this._id_ = null;
-            return;
-        }
-
-        if(this._opAssign_ == child)
-        {
-            this._opAssign_ = null;
-            return;
-        }
-
-        if(this._arrayOp_ == child)
-        {
-            this._arrayOp_ = null;
             return;
         }
 
@@ -201,21 +164,15 @@ public final class AVariableDeclarationArrayDcl extends PDcl
             return;
         }
 
+        if(this._kwArray_ == oldChild)
+        {
+            setKwArray((TKwArray) newChild);
+            return;
+        }
+
         if(this._id_ == oldChild)
         {
             setId((TId) newChild);
-            return;
-        }
-
-        if(this._opAssign_ == oldChild)
-        {
-            setOpAssign((TOpAssign) newChild);
-            return;
-        }
-
-        if(this._arrayOp_ == oldChild)
-        {
-            setArrayOp((PArrayOp) newChild);
             return;
         }
 
