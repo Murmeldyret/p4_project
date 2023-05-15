@@ -92,6 +92,28 @@ public class TypeVisitor extends SemanticVisitor {
         }
     }
 
+    @Override
+    public void inAArrayOperationsStmt(AArrayOperationsStmt node) {
+        if (node.getArrayOp() != null) {
+            operatorQueue.add(node.getArrayOp().toString());
+        }
+    }
+
+    @Override
+    public void inAArrayExprValPrimeArrayExpr(AArrayExprValPrimeArrayExpr node) {
+        if (node.getVal() != null) {
+            node.getVal().apply(this);
+        }
+        if (node.getArrayExprPrime() != null) {
+            node.getArrayExprPrime().apply(this);
+        }
+    }
+
+    @Override
+    public void outAArrayExprValPrimeArrayExpr(AArrayExprValPrimeArrayExpr node) {
+
+    }
+
     // PVal nodes
     @Override
     public void inAValBoolVal(AValBoolVal node) {
