@@ -102,16 +102,6 @@ public class SemanticVisitor extends DepthFirstAdapter {
         node.apply(dclVisitor);
 
     }
-
-    @Override
-    public void inAElseBlockStatementElseStatement(AElseBlockStatementElseStatement node) {
-        // TODO ny undersymboltabel
-    }
-
-    @Override
-    public void outAElseBlockStatementElseStatement(AElseBlockStatementElseStatement node) {
-        // TODO tilbage til ydre tabel
-    }
     @Override
     public void inABlockStmtBlock(ABlockStmtBlock node) {
         symbolTable = new SymbolTable(symbolTable, Scopekind.block);
@@ -202,6 +192,7 @@ public class SemanticVisitor extends DepthFirstAdapter {
             node.getId().apply(this);
         }
         // ! uh oh
+        //TODO kan godt være at denne ikke er nødvendig længere
         symbolTable = symbolTable.getFunctionSymbolTable(node.getId().getText());
         if (node.getFunctionParam() != null) {
             node.getFunctionParam().apply(this);
