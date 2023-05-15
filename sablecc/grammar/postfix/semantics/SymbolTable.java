@@ -383,6 +383,7 @@ public class SymbolTable implements Map<String, IdAttributes> {
             }
         }
         functionMap.put(id, functionTable);
+        // functionTable.put(id, (IdAttributes)get(id).clone()); //funktionsparametre kommer ikke med her
         return functionTable;
     }
 
