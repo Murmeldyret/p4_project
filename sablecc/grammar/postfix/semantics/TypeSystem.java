@@ -12,6 +12,7 @@ import postfix.semantics.Exceptions.InvalidExpressionException;
 public class TypeSystem {
 
     private static final Map<String, Map<String, String>> legalOperations;
+    private static final Map<String, String> returnTypes;
 
     static {
         legalOperations = new HashMap<>();
@@ -27,6 +28,18 @@ public class TypeSystem {
         legalOperations.put("!=", Map.of("int", "int", "float", "float", "string", "string", "bool", "bool"));
         legalOperations.put("and", Map.of("bool", "bool"));
         legalOperations.put("or", Map.of("bool", "bool"));
+    }
+
+    static {
+        returnTypes = new HashMap<>();
+        returnTypes.put("<", "bool");
+        returnTypes.put("<=", "bool");
+        returnTypes.put(">", "bool");
+        returnTypes.put(">=", "bool");
+        returnTypes.put("==", "bool");
+        returnTypes.put("!=", "bool");
+        returnTypes.put("and", "bool");
+        returnTypes.put("or", "bool");
     }
 
     private Set<String> operators = Set.of("+", "-", "*", "/", "%", "<", "<=", ">", ">=", "==", "!=", "and", "or");
@@ -63,7 +76,7 @@ public class TypeSystem {
         return "bool";
     }
 
-    //FIXME virker ikke
+    // FIXME virker ikke
     public String lookupResultingTypeNew(String LType, String RType, String operator)
             throws InvalidExpressionException, IllegalArgumentException {
         Map<String, String> typeMapping = legalOperations.get(operator);
@@ -76,6 +89,10 @@ public class TypeSystem {
 
         if (resultType == null || !resultType.equals(RType)) {
             throw new InvalidExpressionException("Cannot produce a valid value with " + LType + operator + RType);
+        }
+
+        if (returnTypes.containsKey(operator)) {
+            return returnTypes.get(operator);
         }
 
         return resultType;
