@@ -213,10 +213,10 @@ Productions
     | {-> New indexing ( )  } ;
 
     array_expr {-> P.array_expr  } =
-     {array_expr_val_prime} l_brack val array_expr_prime r_brack {-> New array_expr.array_expr_val_prime ( val , array_expr_prime  )  } ;
+     {array_expr_val_prime} l_brack expr array_expr_prime r_brack {-> New array_expr.array_expr_val_prime ( expr , array_expr_prime  )  } ;
 
     array_expr_prime {-> P.array_expr_prime  } =
-     {array_expr_prime_extra} sop_comma val array_expr_prime {-> New array_expr_prime.array_expr_prime_extra (sop_comma , val , array_expr_prime  )  }   
+     {array_expr_prime_extra} sop_comma expr array_expr_prime {-> New array_expr_prime.array_expr_prime_extra (sop_comma , expr , array_expr_prime  )  }   
     | {-> New array_expr_prime ( )  } ;
 
     array_op {-> array_op  } =
@@ -226,7 +226,7 @@ Productions
     | {array_operation_insert}      array_insert    {-> array_insert.array_op } ;
 
     array_add {-> array_op  } =
-     {add_to_array} kw_add array_expr kw_to id {-> New array_op.add_to_array (kw_add , array_expr, to, id )  } ;
+     {add_to_array} kw_add array_expr kw_to id {-> New array_op.add_to_array (kw_add , array_expr, kw_to, id )  } ;
 
     array_remove {-> array_op   } =
      {remove_from_array} kw_remove kw_in id {-> New array_op.remove_from_array (kw_remove , kw_in , id  )  } ;
@@ -384,14 +384,14 @@ Abstract Syntax Tree
         | ;
 
     array_expr = 
-        {array_expr_val_prime} val array_expr_prime ;
+        {array_expr_val_prime} expr array_expr_prime ;
 
     array_expr_prime = 
-        {array_expr_prime_extra} sop_comma val array_expr_prime 
+        {array_expr_prime_extra} sop_comma expr array_expr_prime 
         | ;
 
     array_op =
-        {add_to_array}              kw_add array_expr to id
+        {add_to_array}              kw_add array_expr kw_to id
         | {remove_from_array}       kw_remove kw_in id 
         | {remove_at_from_array}    kw_remove_at indexing kw_in id 
         | {insert_to_array}         kw_insert val array_expr kw_in id 
