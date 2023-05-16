@@ -14,6 +14,7 @@ public class IdAttributes implements Cloneable {
 
     private TId id;
     private TType type;
+    //? tror faktisk aldrig dette felt bliver brugt da symboltabellen for code gen ikke er den samme som for semantik
     private String value;
     @Deprecated(forRemoval = true)
     private boolean isFunction;
