@@ -38,7 +38,6 @@ public class TopDclVisitor extends SemanticVisitor {
 
         node.apply(typeVisitor);
 
-        // TODO get expr value
         if (symbolTable.DeclaredLocally(node.getId().getText())) {
             throw new VariableAlreadyDeclaredException(
                     "Variable" + node.getId().toString() + "has already been declared");
