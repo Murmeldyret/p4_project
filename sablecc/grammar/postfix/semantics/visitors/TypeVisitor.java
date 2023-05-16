@@ -1,34 +1,10 @@
 package postfix.semantics.visitors;
 
-import postfix.node.AAndInfixBinInfixOp;
-import postfix.node.ADivisionInfixBinInfixOp;
-import postfix.node.AEqualityInfixBinInfixOp;
-import postfix.node.AExprValPrimeExpr;
-import postfix.node.AFunctionCallFunctionCall;
-import postfix.node.AFunctionCallParamFunctionCallParam;
-import postfix.node.AFunctionCallParamPrimeFunctionCallParamPrime;
-import postfix.node.AGreaterThanEqualInfixBinInfixOp;
-import postfix.node.AGreaterThanInfixBinInfixOp;
-import postfix.node.ALessThanEqualInfixBinInfixOp;
-import postfix.node.ALessThanInfixBinInfixOp;
-import postfix.node.AMinusInfixBinInfixOp;
-import postfix.node.AModuloInfixBinInfixOp;
-import postfix.node.AMultiplicationInfixBinInfixOp;
-import postfix.node.ANotEqualInfixBinInfixOp;
-import postfix.node.AOrInfixBinInfixOp;
-import postfix.node.APlusInfixBinInfixOp;
-import postfix.node.AReturnStmt;
-import postfix.node.AValBoolVal;
-import postfix.node.AValFloatnumVal;
-import postfix.node.AValIdVal;
-import postfix.node.AValIntnumVal;
-import postfix.node.AValStringVal;
+import postfix.node.*;
 import postfix.semantics.QueueList;
 import postfix.semantics.SymbolTable;
 import postfix.semantics.TypeSystem;
-import postfix.semantics.Exceptions.InvalidExpressionException;
-import postfix.semantics.Exceptions.invalidFunctionCallException;
-import postfix.semantics.Exceptions.invalidReturnExpression;
+import postfix.semantics.Exceptions.*;
 
 /**
  * Represents a type checker whose responsibilty is to type check expressions
@@ -49,6 +25,7 @@ public class TypeVisitor extends SemanticVisitor {
      * 
      * @param symbolTable
      */
+    @Deprecated(forRemoval = true)
     public TypeVisitor(SymbolTable symbolTable) {
         super(symbolTable);
         typeQueue = new QueueList<String>();
@@ -105,12 +82,18 @@ public class TypeVisitor extends SemanticVisitor {
     // node.getExpr().apply(this);
     // }
 
+    // normal expressions
     @Override
     public void inAExprValPrimeExpr(AExprValPrimeExpr node) {
 
         if (node.getBopNot() != null) {
             operatorQueue.add(node.getBopNot().getText());
         }
+    }
+    //Array expressions
+    @Override
+    public void inAArrayExprValPrimeArrayExpr(AArrayExprValPrimeArrayExpr node) {
+        //! vent til grammatikomskrivning
     }
 
     @Override

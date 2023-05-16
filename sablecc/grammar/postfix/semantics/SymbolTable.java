@@ -258,7 +258,7 @@ public class SymbolTable implements Map<String, IdAttributes> {
         return res;
     }
 
-    @Deprecated
+    @Deprecated(since = "Always")
     @Override
     public void putAll(Map<? extends String, ? extends IdAttributes> m) {
         // TODO Auto-generated method stub
@@ -268,21 +268,21 @@ public class SymbolTable implements Map<String, IdAttributes> {
             put(keyString, m.get(keyString));
         }
     }
-    @Deprecated
+    @Deprecated(since = "Always")
     @Override
     public void clear() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'clear'");
     }
 
-    @Deprecated
+    @Deprecated(since = "Always")
     @Override
     public Set<String> keySet() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'keySet'");
     }
 
-    @Deprecated
+    @Deprecated(since = "Always")
     @Override
     public Collection<IdAttributes> values() {
         Collection<IdAttributes> attributes = hashMap.values();
@@ -296,7 +296,7 @@ public class SymbolTable implements Map<String, IdAttributes> {
         throw new UnsupportedOperationException("Unimplemented method 'values'");
     }
 
-    @Deprecated
+    @Deprecated(since = "Always")
     @Override
     public Set<Entry<String, IdAttributes>> entrySet() {
         // TODO Auto-generated method stub
@@ -411,6 +411,11 @@ public class SymbolTable implements Map<String, IdAttributes> {
     }
 
 
+    /**
+     * Gets the symbol table beloning to a given function
+     * @param id the name of the function
+     * @return the function symbol table belonging to the given function, input parameters as local symbols
+     */
     public SymbolTable getFunctionSymbolTable(String id) {
         if (get(id).getAttributes() != Attributes.function) {
             throw new IllegalArgumentException(id + " does not refer to a function");

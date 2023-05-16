@@ -6,7 +6,9 @@ import postfix.semantics.IdAttributes;
 import postfix.semantics.QueueList;
 import postfix.semantics.SymbolTable;
 import postfix.semantics.Exceptions.invalidFunctionCallException;
+import postfix.semantics.Exceptions.invalidReturnExpression;
 import postfix.semantics.IdAttributes.Attributes;
+import postfix.semantics.SymbolTable.Scopekind;
 
 /**
  * Responsible for verifying that a program is semantically correct
@@ -86,6 +88,12 @@ public class SemanticVisitor extends DepthFirstAdapter {
     @Override
     public void inAReturnStmt(AReturnStmt node) {
         // TODO skal være i funktionsblock
+        try {
+            symbolTable.getReturnType();
+        } catch (IllegalArgumentException e) {
+            //Sejt hack
+            throw new invalidReturnExpression("Cannot return when not inside a funciton block", node);
+        }
     }
 
     @Override
@@ -94,15 +102,17 @@ public class SemanticVisitor extends DepthFirstAdapter {
         node.apply(dclVisitor);
 
     }
-
     @Override
-    public void inAElseBlockStatementElseStatement(AElseBlockStatementElseStatement node) {
-        // TODO ny undersymboltabel
+    public void inABlockStmtBlock(ABlockStmtBlock node) {
+        symbolTable = new SymbolTable(symbolTable, Scopekind.block);
     }
-
     @Override
-    public void outAElseBlockStatementElseStatement(AElseBlockStatementElseStatement node) {
-        // TODO tilbage til ydre tabel
+    public void outABlockStmtBlock(ABlockStmtBlock node) {
+        symbolTable = symbolTable.getOuterSymbolTable();
+        if (symbolTable == null) {
+            // Burde aldrig ske
+            throw new Error("cannot set symbol table to null");
+        }
     }
 
     @Override
@@ -111,6 +121,11 @@ public class SemanticVisitor extends DepthFirstAdapter {
         node.getExpr().apply(new TypeVisitor(symbolTable, "int"));
     }
 
+    @Override
+    public void inAArrayExprValPrimeArrayExpr(AArrayExprValPrimeArrayExpr node) {
+        // node.apply(new TypeVisitor(symbolTable,null)); //TODO ?
+        //! Vent til omskrivning af grammatik
+    }
     @Override
     public void inAAssignStmt(AAssignStmt node) {
         String variableId = node.getId().getText();
@@ -177,6 +192,7 @@ public class SemanticVisitor extends DepthFirstAdapter {
             node.getId().apply(this);
         }
         // ! uh oh
+        //TODO kan godt være at denne ikke er nødvendig længere
         symbolTable = symbolTable.getFunctionSymbolTable(node.getId().getText());
         if (node.getFunctionParam() != null) {
             node.getFunctionParam().apply(this);
