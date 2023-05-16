@@ -7,7 +7,7 @@ import postfix.analysis.*;
 @SuppressWarnings("nls")
 public final class ARemoveFromArrayArrayOp extends PArrayOp
 {
-    private TKwRemove _kwRemove_;
+    private TKwRemoveLast _kwRemoveLast_;
     private TKwIn _kwIn_;
     private TId _id_;
 
@@ -17,12 +17,12 @@ public final class ARemoveFromArrayArrayOp extends PArrayOp
     }
 
     public ARemoveFromArrayArrayOp(
-        @SuppressWarnings("hiding") TKwRemove _kwRemove_,
+        @SuppressWarnings("hiding") TKwRemoveLast _kwRemoveLast_,
         @SuppressWarnings("hiding") TKwIn _kwIn_,
         @SuppressWarnings("hiding") TId _id_)
     {
         // Constructor
-        setKwRemove(_kwRemove_);
+        setKwRemoveLast(_kwRemoveLast_);
 
         setKwIn(_kwIn_);
 
@@ -34,7 +34,7 @@ public final class ARemoveFromArrayArrayOp extends PArrayOp
     public Object clone()
     {
         return new ARemoveFromArrayArrayOp(
-            cloneNode(this._kwRemove_),
+            cloneNode(this._kwRemoveLast_),
             cloneNode(this._kwIn_),
             cloneNode(this._id_));
     }
@@ -45,16 +45,16 @@ public final class ARemoveFromArrayArrayOp extends PArrayOp
         ((Analysis) sw).caseARemoveFromArrayArrayOp(this);
     }
 
-    public TKwRemove getKwRemove()
+    public TKwRemoveLast getKwRemoveLast()
     {
-        return this._kwRemove_;
+        return this._kwRemoveLast_;
     }
 
-    public void setKwRemove(TKwRemove node)
+    public void setKwRemoveLast(TKwRemoveLast node)
     {
-        if(this._kwRemove_ != null)
+        if(this._kwRemoveLast_ != null)
         {
-            this._kwRemove_.parent(null);
+            this._kwRemoveLast_.parent(null);
         }
 
         if(node != null)
@@ -67,7 +67,7 @@ public final class ARemoveFromArrayArrayOp extends PArrayOp
             node.parent(this);
         }
 
-        this._kwRemove_ = node;
+        this._kwRemoveLast_ = node;
     }
 
     public TKwIn getKwIn()
@@ -124,7 +124,7 @@ public final class ARemoveFromArrayArrayOp extends PArrayOp
     public String toString()
     {
         return ""
-            + toString(this._kwRemove_)
+            + toString(this._kwRemoveLast_)
             + toString(this._kwIn_)
             + toString(this._id_);
     }
@@ -133,9 +133,9 @@ public final class ARemoveFromArrayArrayOp extends PArrayOp
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
-        if(this._kwRemove_ == child)
+        if(this._kwRemoveLast_ == child)
         {
-            this._kwRemove_ = null;
+            this._kwRemoveLast_ = null;
             return;
         }
 
@@ -158,9 +158,9 @@ public final class ARemoveFromArrayArrayOp extends PArrayOp
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
-        if(this._kwRemove_ == oldChild)
+        if(this._kwRemoveLast_ == oldChild)
         {
-            setKwRemove((TKwRemove) newChild);
+            setKwRemoveLast((TKwRemoveLast) newChild);
             return;
         }
 

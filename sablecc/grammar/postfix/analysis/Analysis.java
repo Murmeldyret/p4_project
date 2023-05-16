@@ -32,6 +32,7 @@ public interface Analysis extends Switch
     void caseAVariableDeclarationInitializationDcl(AVariableDeclarationInitializationDcl node);
     void caseAVariableDeclarationArrayDcl(AVariableDeclarationArrayDcl node);
     void caseAVariableDeclarationDcl(AVariableDeclarationDcl node);
+    void caseAVariableDeclarationArrayInitDcl(AVariableDeclarationArrayInitDcl node);
     void caseAConstDeclarationInitializationDcl(AConstDeclarationInitializationDcl node);
     void caseAFunctionDeclarationDcl(AFunctionDeclarationDcl node);
     void caseAFunctionParamFunctionParam(AFunctionParamFunctionParam node);
@@ -68,7 +69,6 @@ public interface Analysis extends Switch
     void caseARemoveFromArrayArrayOp(ARemoveFromArrayArrayOp node);
     void caseARemoveAtFromArrayArrayOp(ARemoveAtFromArrayArrayOp node);
     void caseAInsertToArrayArrayOp(AInsertToArrayArrayOp node);
-    void caseAInsertToVariableArrayOp(AInsertToVariableArrayOp node);
     void caseAValIdVal(AValIdVal node);
     void caseAValFunctionCallVal(AValFunctionCallVal node);
     void caseAValFloatnumVal(AValFloatnumVal node);
@@ -132,6 +132,7 @@ public interface Analysis extends Switch
     void caseTKwFunction(TKwFunction node);
     void caseTKwReturn(TKwReturn node);
     void caseTKwBreak(TKwBreak node);
+    void caseTKwArray(TKwArray node);
     void caseTBlank(TBlank node);
     void caseTOpAssign(TOpAssign node);
     void caseTOpPlus(TOpPlus node);
@@ -157,7 +158,7 @@ public interface Analysis extends Switch
     void caseTSopSort(TSopSort node);
     void caseTSopCount(TSopCount node);
     void caseTKwAdd(TKwAdd node);
-    void caseTKwRemove(TKwRemove node);
+    void caseTKwRemoveLast(TKwRemoveLast node);
     void caseTKwRemoveAt(TKwRemoveAt node);
     void caseTKwInsert(TKwInsert node);
     void caseTKwColumn(TKwColumn node);

@@ -7,7 +7,7 @@ import postfix.analysis.*;
 @SuppressWarnings("nls")
 public final class ARemoveFromCsvCsvOp extends PCsvOp
 {
-    private TKwRemove _kwRemove_;
+    private TKwRemoveLast _kwRemoveLast_;
     private POrientation _orientation_;
     private TKwIn _kwIn_;
     private TId _id_;
@@ -18,13 +18,13 @@ public final class ARemoveFromCsvCsvOp extends PCsvOp
     }
 
     public ARemoveFromCsvCsvOp(
-        @SuppressWarnings("hiding") TKwRemove _kwRemove_,
+        @SuppressWarnings("hiding") TKwRemoveLast _kwRemoveLast_,
         @SuppressWarnings("hiding") POrientation _orientation_,
         @SuppressWarnings("hiding") TKwIn _kwIn_,
         @SuppressWarnings("hiding") TId _id_)
     {
         // Constructor
-        setKwRemove(_kwRemove_);
+        setKwRemoveLast(_kwRemoveLast_);
 
         setOrientation(_orientation_);
 
@@ -38,7 +38,7 @@ public final class ARemoveFromCsvCsvOp extends PCsvOp
     public Object clone()
     {
         return new ARemoveFromCsvCsvOp(
-            cloneNode(this._kwRemove_),
+            cloneNode(this._kwRemoveLast_),
             cloneNode(this._orientation_),
             cloneNode(this._kwIn_),
             cloneNode(this._id_));
@@ -50,16 +50,16 @@ public final class ARemoveFromCsvCsvOp extends PCsvOp
         ((Analysis) sw).caseARemoveFromCsvCsvOp(this);
     }
 
-    public TKwRemove getKwRemove()
+    public TKwRemoveLast getKwRemoveLast()
     {
-        return this._kwRemove_;
+        return this._kwRemoveLast_;
     }
 
-    public void setKwRemove(TKwRemove node)
+    public void setKwRemoveLast(TKwRemoveLast node)
     {
-        if(this._kwRemove_ != null)
+        if(this._kwRemoveLast_ != null)
         {
-            this._kwRemove_.parent(null);
+            this._kwRemoveLast_.parent(null);
         }
 
         if(node != null)
@@ -72,7 +72,7 @@ public final class ARemoveFromCsvCsvOp extends PCsvOp
             node.parent(this);
         }
 
-        this._kwRemove_ = node;
+        this._kwRemoveLast_ = node;
     }
 
     public POrientation getOrientation()
@@ -154,7 +154,7 @@ public final class ARemoveFromCsvCsvOp extends PCsvOp
     public String toString()
     {
         return ""
-            + toString(this._kwRemove_)
+            + toString(this._kwRemoveLast_)
             + toString(this._orientation_)
             + toString(this._kwIn_)
             + toString(this._id_);
@@ -164,9 +164,9 @@ public final class ARemoveFromCsvCsvOp extends PCsvOp
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
-        if(this._kwRemove_ == child)
+        if(this._kwRemoveLast_ == child)
         {
-            this._kwRemove_ = null;
+            this._kwRemoveLast_ = null;
             return;
         }
 
@@ -195,9 +195,9 @@ public final class ARemoveFromCsvCsvOp extends PCsvOp
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
-        if(this._kwRemove_ == oldChild)
+        if(this._kwRemoveLast_ == oldChild)
         {
-            setKwRemove((TKwRemove) newChild);
+            setKwRemoveLast((TKwRemoveLast) newChild);
             return;
         }
 

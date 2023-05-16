@@ -195,6 +195,12 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
+    public void caseAVariableDeclarationArrayInitDcl(AVariableDeclarationArrayInitDcl node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
     public void caseAConstDeclarationInitializationDcl(AConstDeclarationInitializationDcl node)
     {
         defaultCase(node);
@@ -406,12 +412,6 @@ public class AnalysisAdapter implements Analysis
 
     @Override
     public void caseAInsertToArrayArrayOp(AInsertToArrayArrayOp node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseAInsertToVariableArrayOp(AInsertToVariableArrayOp node)
     {
         defaultCase(node);
     }
@@ -789,6 +789,12 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
+    public void caseTKwArray(TKwArray node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
     public void caseTBlank(TBlank node)
     {
         defaultCase(node);
@@ -939,7 +945,7 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
-    public void caseTKwRemove(TKwRemove node)
+    public void caseTKwRemoveLast(TKwRemoveLast node)
     {
         defaultCase(node);
     }

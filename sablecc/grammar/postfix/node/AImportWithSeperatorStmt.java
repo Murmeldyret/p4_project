@@ -8,7 +8,7 @@ import postfix.analysis.*;
 public final class AImportWithSeperatorStmt extends PStmt
 {
     private TKwImport _kwImport_;
-    private TString _string_;
+    private PExpr _expr_;
     private TKwSeparatedBy _kwSeparatedBy_;
     private TChar _char_;
     private TKwAs _kwAs_;
@@ -21,7 +21,7 @@ public final class AImportWithSeperatorStmt extends PStmt
 
     public AImportWithSeperatorStmt(
         @SuppressWarnings("hiding") TKwImport _kwImport_,
-        @SuppressWarnings("hiding") TString _string_,
+        @SuppressWarnings("hiding") PExpr _expr_,
         @SuppressWarnings("hiding") TKwSeparatedBy _kwSeparatedBy_,
         @SuppressWarnings("hiding") TChar _char_,
         @SuppressWarnings("hiding") TKwAs _kwAs_,
@@ -30,7 +30,7 @@ public final class AImportWithSeperatorStmt extends PStmt
         // Constructor
         setKwImport(_kwImport_);
 
-        setString(_string_);
+        setExpr(_expr_);
 
         setKwSeparatedBy(_kwSeparatedBy_);
 
@@ -47,7 +47,7 @@ public final class AImportWithSeperatorStmt extends PStmt
     {
         return new AImportWithSeperatorStmt(
             cloneNode(this._kwImport_),
-            cloneNode(this._string_),
+            cloneNode(this._expr_),
             cloneNode(this._kwSeparatedBy_),
             cloneNode(this._char_),
             cloneNode(this._kwAs_),
@@ -85,16 +85,16 @@ public final class AImportWithSeperatorStmt extends PStmt
         this._kwImport_ = node;
     }
 
-    public TString getString()
+    public PExpr getExpr()
     {
-        return this._string_;
+        return this._expr_;
     }
 
-    public void setString(TString node)
+    public void setExpr(PExpr node)
     {
-        if(this._string_ != null)
+        if(this._expr_ != null)
         {
-            this._string_.parent(null);
+            this._expr_.parent(null);
         }
 
         if(node != null)
@@ -107,7 +107,7 @@ public final class AImportWithSeperatorStmt extends PStmt
             node.parent(this);
         }
 
-        this._string_ = node;
+        this._expr_ = node;
     }
 
     public TKwSeparatedBy getKwSeparatedBy()
@@ -215,7 +215,7 @@ public final class AImportWithSeperatorStmt extends PStmt
     {
         return ""
             + toString(this._kwImport_)
-            + toString(this._string_)
+            + toString(this._expr_)
             + toString(this._kwSeparatedBy_)
             + toString(this._char_)
             + toString(this._kwAs_)
@@ -232,9 +232,9 @@ public final class AImportWithSeperatorStmt extends PStmt
             return;
         }
 
-        if(this._string_ == child)
+        if(this._expr_ == child)
         {
-            this._string_ = null;
+            this._expr_ = null;
             return;
         }
 
@@ -275,9 +275,9 @@ public final class AImportWithSeperatorStmt extends PStmt
             return;
         }
 
-        if(this._string_ == oldChild)
+        if(this._expr_ == oldChild)
         {
-            setString((TString) newChild);
+            setExpr((PExpr) newChild);
             return;
         }
 
