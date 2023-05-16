@@ -32,20 +32,21 @@ public class SemanticVisitor extends DepthFirstAdapter {
 
     @Override
     public void inAImportWithoutSeperatorStmt(AImportWithoutSeperatorStmt node) {
-        String filePath = node.getString().getText();
-        String variableId = node.getId().getText();
+        //TODO typecheck expr
+        // // String filePath = node.getString().getText();
+        // String variableId = node.getId().getText();
 
-        // Remove quotes from filepath string
-        if (filePath.length() > 2) {
-            filePath = filePath.substring(1, filePath.length() - 1);
-        }
+        // // Remove quotes from filepath string
+        // if (filePath.length() > 2) {
+        //     filePath = filePath.substring(1, filePath.length() - 1);
+        // }
 
-        TType type = new TType("string");
-        String value = filePath;
+        // TType type = new TType("string");
+        // String value = filePath;
 
-        IdAttributes idAttributes = new IdAttributes(node.getId(), type, value, IdAttributes.Attributes.variable);
+        // IdAttributes idAttributes = new IdAttributes(node.getId(), type, value, IdAttributes.Attributes.variable);
 
-        symbolTable.put(variableId, idAttributes);
+        // symbolTable.put(variableId, idAttributes);
     }
 
     @Override
