@@ -58,7 +58,7 @@ public class TopDclVisitor extends SemanticVisitor {
                     "Variable " + node.getId().getText() + " has already been declared");
         } else {
             symbolTable.put(node.getId().toString(),
-                    new IdAttributes(node.getId(), node.getType(), null, Attributes.variable));
+                    new IdAttributes(node.getId(), node.getType(), null, Attributes.variable)); //TODO skal måske være i else block
             // seems legit
             if (node.parent() instanceof AFunctionParamFunctionParam
                     || node.parent() instanceof AFunctionParamPrimeFunctionParamPrime) {
@@ -101,7 +101,7 @@ public class TopDclVisitor extends SemanticVisitor {
     public void inAFunctionDeclarationDcl(AFunctionDeclarationDcl node) {
         // TopDclVisitor topDclVisitor = new TopDclVisitor(symbolTable);
         // node.getFunctionParam().apply(topDclVisitor);
-
+        //! Husk at tjekke om funktionsparameter nodes er af type AVariableDeclartionDcl, alt andet er ulovligt
         if (symbolTable.DeclaredLocally(node.getId().getText())) {
             throw new VariableAlreadyDeclaredException("null");
         } else {
