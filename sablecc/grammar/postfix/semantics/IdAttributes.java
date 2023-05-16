@@ -3,6 +3,8 @@ package postfix.semantics;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.plaf.TreeUI;
+
 import postfix.node.TId;
 import postfix.node.TType;
 
@@ -112,6 +114,7 @@ public class IdAttributes implements Cloneable {
         return type;
     }
 
+    @Deprecated(forRemoval = true)
     public String getValue() {
         return value;
     }
