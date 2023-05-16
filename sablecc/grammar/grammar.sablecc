@@ -92,7 +92,7 @@ Tokens
 
     //array Keywords
     kw_add = 'add';
-    kw_remove = 'remove';
+    kw_remove_last = 'remove_last';
     kw_remove_at = 'remove_at';
     kw_insert = 'insert';
 
@@ -120,7 +120,7 @@ Productions
     | {assignment_statement_stmt}   assignment                          {-> assignment.stmt  }   
     | {function_call}               function_call                       {-> New stmt.function_call(function_call) }
     | {array_operations}            array_op                            {-> New stmt.array_operations (array_op  )  }   
-    | {for_loop}                    kw_for id kw_in val block           {-> New stmt.for_loop (kw_for , id , kw_in , val , block  )  }   
+    | {for_loop}                    kw_for val kw_in id block           {-> New stmt.for_loop (kw_for , val , kw_in , id , block  )  }   
     | {while_loop}                  kw_while expr block                 {-> New stmt.while_loop (kw_while , expr , block  )  }   
     | {control_statement}           kw_if expr block in_control_stmt    {-> New stmt.control_statement (kw_if , expr , block , in_control_stmt  )  }   
     | {print_statement}             kw_print expr                       {-> New stmt.print_statement (kw_print , expr  )  }   
@@ -130,8 +130,8 @@ Productions
     | {break_statement}             kw_break                            {-> New stmt.break_statement (kw_break  )  } ;
 
     import {-> stmt  } =
-     {import_without_seperator} kw_import string kw_as id                       {-> New stmt.import_without_seperator (kw_import , string , kw_as , id )  }   
-    | {import_with_seperator}   kw_import string kw_separated_by char kw_as id  {-> New stmt.import_with_seperator (kw_import , string , kw_separated_by , char , kw_as , id  )  } ;
+     {import_without_seperator} kw_import expr kw_as id                       {-> New stmt.import_without_seperator (kw_import , expr , kw_as , id )  }   
+    | {import_with_seperator}   kw_import expr kw_separated_by char kw_as id  {-> New stmt.import_with_seperator (kw_import , expr , kw_separated_by , char , kw_as , id  )  } ;
 
     dcl =
      {variable_declaration_initialization}  type id op_assign expr                                                  {-> New dcl.variable_declaration_initialization (type , id , op_assign , expr  )  }   
@@ -196,7 +196,7 @@ Productions
      {add_to_csv} kw_add orientation array_expr kw_in id {-> New csv_op.add_to_csv (kw_add , orientation , array_expr , kw_in , id  )  } ;
 
     csv_remove {-> csv_op   } =
-     {remove_from_csv} kw_remove orientation kw_in id {-> New csv_op.remove_from_csv (kw_remove , orientation , kw_in , id  )  } ;
+     {remove_from_csv} kw_remove_last orientation kw_in id {-> New csv_op.remove_from_csv (kw_remove_last , orientation , kw_in , id  )  } ;
 
     csv_remove_at {-> csv_op   } =
      {remove_at_from_csv} kw_remove_at orientation val kw_in id {-> New csv_op.remove_at_from_csv (kw_remove_at , orientation , val , kw_in , id  )  } ;
@@ -213,10 +213,10 @@ Productions
     | {-> New indexing ( )  } ;
 
     array_expr {-> P.array_expr  } =
-     {array_expr_val_prime} l_brack val array_expr_prime r_brack {-> New array_expr.array_expr_val_prime ( val , array_expr_prime  )  } ;
+     {array_expr_val_prime} l_brack expr array_expr_prime r_brack {-> New array_expr.array_expr_val_prime ( expr , array_expr_prime  )  } ;
 
     array_expr_prime {-> P.array_expr_prime  } =
-     {array_expr_prime_extra} sop_comma val array_expr_prime {-> New array_expr_prime.array_expr_prime_extra (sop_comma , val , array_expr_prime  )  }   
+     {array_expr_prime_extra} sop_comma expr array_expr_prime {-> New array_expr_prime.array_expr_prime_extra (sop_comma , expr , array_expr_prime  )  }   
     | {-> New array_expr_prime ( )  } ;
 
     array_op {-> array_op  } =
@@ -226,17 +226,16 @@ Productions
     | {array_operation_insert}      array_insert    {-> array_insert.array_op } ;
 
     array_add {-> array_op  } =
-     {add_to_array} kw_add array_expr kw_to id {-> New array_op.add_to_array (kw_add , array_expr, to, id )  } ;
+     {add_to_array} kw_add array_expr kw_to id {-> New array_op.add_to_array (kw_add , array_expr, kw_to, id )  } ;
 
     array_remove {-> array_op   } =
-     {remove_from_array} kw_remove kw_in id {-> New array_op.remove_from_array (kw_remove , kw_in , id  )  } ;
+     {remove_from_array} kw_remove_last kw_in id {-> New array_op.remove_from_array (kw_remove_last , kw_in , id  )  } ;
 
     array_remove_at {-> array_op   } =
      {remove_at_from_array} kw_remove_at indexing kw_in id {-> New array_op.remove_at_from_array (kw_remove_at , indexing , kw_in , id  )  } ;
 
     array_insert {-> array_op } =
-     {insert_to_array} kw_insert val array_expr kw_in id {-> New array_op.insert_to_array (kw_insert , val , array_expr , kw_in , id  )  } 
-    |{insert_to_variable} kw_insert l_par array_expr r_par {-> New array_op.insert_to_variable(kw_insert, array_expr)} ;
+     {insert_to_array} kw_insert val array_expr kw_in id {-> New array_op.insert_to_array (kw_insert , val , array_expr , kw_in , id  )  } ;
 
     val {-> val  } =
      {val_id}               id              {-> New val.val_id (id  )  }  
@@ -305,13 +304,13 @@ Abstract Syntax Tree
         | ;
 
     stmt =
-        {import_without_seperator}  kw_import string kw_as id 
-        | {import_with_seperator}   kw_import string kw_separated_by char kw_as id 
+        {import_without_seperator}  kw_import expr kw_as id 
+        | {import_with_seperator}   kw_import expr kw_separated_by char kw_as id 
         | {declaration}             dcl 
         | {assign}                  id indexing op_assign expr 
         | {function_call}           function_call
         | {array_operations}        array_op 
-        | {for_loop}                kw_for id kw_in val block 
+        | {for_loop}                kw_for val kw_in id block 
         | {while_loop}              kw_while expr block 
         | {control_statement}       kw_if expr block in_control_stmt 
         | {csv_operation}           csv_op 
@@ -370,7 +369,7 @@ Abstract Syntax Tree
     
     csv_op = 
         {add_to_csv}            kw_add orientation array_expr kw_in id 
-        | {remove_from_csv}     kw_remove orientation kw_in id 
+        | {remove_from_csv}     kw_remove_last orientation kw_in id 
         | {remove_at_from_csv}  kw_remove_at orientation val kw_in id 
         | {insert_from_csv}     kw_insert orientation val array_expr kw_in id ;
 
@@ -384,18 +383,17 @@ Abstract Syntax Tree
         | ;
 
     array_expr = 
-        {array_expr_val_prime} val array_expr_prime ;
+        {array_expr_val_prime} expr array_expr_prime ;
 
     array_expr_prime = 
-        {array_expr_prime_extra} sop_comma val array_expr_prime 
+        {array_expr_prime_extra} sop_comma expr array_expr_prime 
         | ;
 
     array_op =
-        {add_to_array}              kw_add array_expr to id
-        | {remove_from_array}       kw_remove kw_in id 
+        {add_to_array}              kw_add array_expr kw_to id
+        | {remove_from_array}       kw_remove_last kw_in id 
         | {remove_at_from_array}    kw_remove_at indexing kw_in id 
-        | {insert_to_array}         kw_insert val array_expr kw_in id 
-        | {insert_to_variable}      kw_insert array_expr;
+        | {insert_to_array}         kw_insert val array_expr kw_in id ;
 
     //måske skal function call ikke være value men expression i stedet, time will tell
     val = 
