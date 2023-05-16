@@ -25,6 +25,7 @@ public class TypeVisitor extends SemanticVisitor {
      * 
      * @param symbolTable
      */
+    @Deprecated(forRemoval = true)
     public TypeVisitor(SymbolTable symbolTable) {
         super(symbolTable);
         typeQueue = new QueueList<String>();
