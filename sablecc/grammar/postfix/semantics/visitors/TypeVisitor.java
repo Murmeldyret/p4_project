@@ -4,9 +4,7 @@ import postfix.node.*;
 import postfix.semantics.QueueList;
 import postfix.semantics.SymbolTable;
 import postfix.semantics.TypeSystem;
-import postfix.semantics.Exceptions.InvalidExpressionException;
-import postfix.semantics.Exceptions.invalidFunctionCallException;
-import postfix.semantics.Exceptions.invalidReturnExpression;
+import postfix.semantics.Exceptions.*;
 
 /**
  * Represents a type checker whose responsibilty is to type check expressions
