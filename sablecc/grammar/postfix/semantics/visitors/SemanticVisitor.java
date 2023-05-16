@@ -5,6 +5,7 @@ import postfix.node.*;
 import postfix.semantics.IdAttributes;
 import postfix.semantics.QueueList;
 import postfix.semantics.SymbolTable;
+import postfix.semantics.Exceptions.InvalidExpressionException;
 import postfix.semantics.Exceptions.invalidFunctionCallException;
 import postfix.semantics.Exceptions.invalidReturnExpression;
 import postfix.semantics.IdAttributes.Attributes;
@@ -32,19 +33,20 @@ public class SemanticVisitor extends DepthFirstAdapter {
 
     @Override
     public void inAImportWithoutSeperatorStmt(AImportWithoutSeperatorStmt node) {
-        //TODO typecheck expr
+        // TODO typecheck expr
         // // String filePath = node.getString().getText();
         // String variableId = node.getId().getText();
 
         // // Remove quotes from filepath string
         // if (filePath.length() > 2) {
-        //     filePath = filePath.substring(1, filePath.length() - 1);
+        // filePath = filePath.substring(1, filePath.length() - 1);
         // }
 
         // TType type = new TType("string");
         // String value = filePath;
 
-        // IdAttributes idAttributes = new IdAttributes(node.getId(), type, value, IdAttributes.Attributes.variable);
+        // IdAttributes idAttributes = new IdAttributes(node.getId(), type, value,
+        // IdAttributes.Attributes.variable);
 
         // symbolTable.put(variableId, idAttributes);
     }
@@ -92,7 +94,7 @@ public class SemanticVisitor extends DepthFirstAdapter {
         try {
             symbolTable.getReturnType();
         } catch (IllegalArgumentException e) {
-            //Sejt hack
+            // Sejt hack
             throw new invalidReturnExpression("Cannot return when not inside a funciton block", node);
         }
     }
@@ -103,10 +105,12 @@ public class SemanticVisitor extends DepthFirstAdapter {
         node.apply(dclVisitor);
 
     }
+
     @Override
     public void inABlockStmtBlock(ABlockStmtBlock node) {
         symbolTable = new SymbolTable(symbolTable, Scopekind.block);
     }
+
     @Override
     public void outABlockStmtBlock(ABlockStmtBlock node) {
         symbolTable = symbolTable.getOuterSymbolTable();
@@ -125,8 +129,51 @@ public class SemanticVisitor extends DepthFirstAdapter {
     @Override
     public void inAArrayExprValPrimeArrayExpr(AArrayExprValPrimeArrayExpr node) {
         // node.apply(new TypeVisitor(symbolTable,null)); //TODO ?
-        //! Vent til omskrivning af grammatik
+        // ! Vent til omskrivning af grammatik
     }
+
+    @Override
+    public void inAAddToArrayArrayOp(AAddToArrayArrayOp node) {
+        IdAttributes arr = symbolTable.get(node.getId().getText());
+        if (arr.getAttributes() != Attributes.array) {
+            throw new InvalidExpressionException("Cannot add to a non array type [Line " + node.getId().getLine()
+                    + ", Pos " + node.getId().getPos() + "]");
+        }
+        // ! hvad skal typen være?
+        node.getArrayExpr().apply(new TypeVisitor(symbolTable, null));
+        // ? mere idk
+    }
+
+    @Override
+    public void inARemoveFromArrayArrayOp(ARemoveFromArrayArrayOp node) {
+        IdAttributes arr = symbolTable.get(node.getId().getText());
+        if (arr.getAttributes() != Attributes.array) {
+            throw new InvalidExpressionException("Cannot add to a non array type [Line " + node.getId().getLine()
+                    + ", Pos " + node.getId().getPos() + "]");
+        }
+        // ? ig det er det der er ikke andet at tjekke
+    }
+
+    @Override
+    public void inARemoveAtFromArrayArrayOp(ARemoveAtFromArrayArrayOp node) {
+        IdAttributes arr = symbolTable.get(node.getId().getText());
+        if (arr.getAttributes() != Attributes.array) {
+            throw new InvalidExpressionException("Cannot add to a non array type [Line " + node.getId().getLine()
+                    + ", Pos " + node.getId().getPos() + "]");
+        }
+        // indexing bliver type checked af inAIndexingIndexing i SemanticVisitor
+    }
+
+    @Override
+    public void inAInsertToArrayArrayOp(AInsertToArrayArrayOp node) {
+        IdAttributes arr = symbolTable.get(node.getId().getText());
+        if (arr.getAttributes() != Attributes.array) {
+            throw new InvalidExpressionException("Cannot add to a non array type [Line " + node.getId().getLine()
+                    + ", Pos " + node.getId().getPos() + "]");
+        }
+        // TODO val til expr så et eller andet 
+    }
+
     @Override
     public void inAAssignStmt(AAssignStmt node) {
         String variableId = node.getId().getText();
@@ -152,7 +199,8 @@ public class SemanticVisitor extends DepthFirstAdapter {
         IdAttributes oldId = symbolTable.get(variableId);
 
         if (!oldId.getAttributes().equals(Attributes.variable)) {
-            throw new invalidFunctionCallException("Cannot assign a new value to " + variableId + " because it is not a variable (it is " + oldId.getAttributes().name() + ")" , node);
+            throw new invalidFunctionCallException("Cannot assign a new value to " + variableId
+                    + " because it is not a variable (it is " + oldId.getAttributes().name() + ")", node);
         }
         symbolTable.put(node.getId().getText(),
                 new IdAttributes(node.getId(), oldId.getType(), expression.toString().strip(), oldId.getAttributes()));
@@ -193,7 +241,7 @@ public class SemanticVisitor extends DepthFirstAdapter {
             node.getId().apply(this);
         }
         // ! uh oh
-        //TODO kan godt være at denne ikke er nødvendig længere
+        // TODO kan godt være at denne ikke er nødvendig længere
         symbolTable = symbolTable.getFunctionSymbolTable(node.getId().getText());
         if (node.getFunctionParam() != null) {
             node.getFunctionParam().apply(this);
