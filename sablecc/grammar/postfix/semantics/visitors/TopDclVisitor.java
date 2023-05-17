@@ -198,11 +198,35 @@ public class TopDclVisitor extends SemanticVisitor {
 
         if (symbolTable.DeclaredLocally(node.getId().getText())) {
             throw new VariableAlreadyDeclaredException(
-                    "Variable" + node.getId().toString() + "has already been declared");
+                    "Variable" + node.getId().getText() + "has already been declared");
         } else {
             symbolTable.put(node.getId().getText(),
                     new IdAttributes(node.getId(), node.getType(), node.getArrayExpr().toString(), Attributes.array));
         }
 
+    }
+
+    @Override
+    public void inAImportWithSeperatorStmt(AImportWithSeperatorStmt node) {
+        node.getExpr().apply(new TypeVisitor(symbolTable, "string"));
+
+        if (symbolTable.DeclaredLocally(node.getId().getText())) {
+            throw new VariableAlreadyDeclaredException(
+                    "Variable" + node.getId().getText() + "has already been declared");
+        }
+        else {
+            symbolTable.put(node.getId().getText(), new IdAttributes(node.getId(), new TType("csv"),null,Attributes.csv));
+        }
+    }
+
+    @Override
+    public void inAImportWithoutSeperatorStmt(AImportWithoutSeperatorStmt node) {
+        if (symbolTable.DeclaredLocally(node.getId().getText())) {
+            throw new VariableAlreadyDeclaredException(
+                    "Variable" + node.getId().getText() + "has already been declared");
+        }
+        else {
+            symbolTable.put(node.getId().getText(), new IdAttributes(node.getId(), new TType("csv"),null,Attributes.csv));
+        }
     }
 }

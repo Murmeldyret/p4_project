@@ -1,14 +1,13 @@
 package postfix.semantics.visitors;
 
+import org.testng.xml.IFileParser;
+
 import postfix.analysis.DepthFirstAdapter;
 import postfix.node.*;
 import postfix.semantics.IdAttributes;
 import postfix.semantics.QueueList;
 import postfix.semantics.SymbolTable;
-import postfix.semantics.Exceptions.InvalidBreakStatement;
-import postfix.semantics.Exceptions.InvalidExpressionException;
-import postfix.semantics.Exceptions.invalidFunctionCallException;
-import postfix.semantics.Exceptions.invalidReturnExpression;
+import postfix.semantics.Exceptions.*;
 import postfix.semantics.IdAttributes.Attributes;
 import postfix.semantics.SymbolTable.Scopekind;
 
@@ -32,31 +31,15 @@ public class SemanticVisitor extends DepthFirstAdapter {
         this.symbolTable = new SymbolTable(null, SymbolTable.Scopekind.block);
     }
 
+    // TODO: Check igennem den her igen, og se om der er noget der skal ændres
     @Override
     public void inAImportWithoutSeperatorStmt(AImportWithoutSeperatorStmt node) {
-        // TODO typecheck expr
-        // // String filePath = node.getString().getText();
-        // String variableId = node.getId().getText();
-
-        // // Remove quotes from filepath string
-        // if (filePath.length() > 2) {
-        // filePath = filePath.substring(1, filePath.length() - 1);
-        // }
-
-        // TType type = new TType("string");
-        // String value = filePath;
-
-        // IdAttributes idAttributes = new IdAttributes(node.getId(), type, value,
-        // IdAttributes.Attributes.variable);
-
-        // symbolTable.put(variableId, idAttributes);
+        node.apply(new TopDclVisitor(symbolTable));
     }
 
     @Override
     public void inAImportWithSeperatorStmt(AImportWithSeperatorStmt node) {
-        // ? Måske skal path string være expr i stedet, med type check for at godkende
-        // at det er en string
-        // add to symbol table
+        node.apply(new TopDclVisitor(symbolTable));
     }
 
     @Override
@@ -304,26 +287,40 @@ public class SemanticVisitor extends DepthFirstAdapter {
     // --special syntax--
     // @Override
     // public void inAExprSpecialExpr(AExprSpecialExpr node) {
-
     // }
+
     @Override
-    public void inAFilterSpecialSyntax(AFilterSpecialSyntax node) {
-        super.inAFilterSpecialSyntax(node);
+    public void inAExprSpecialExpr(AExprSpecialExpr node) {
+        PSpecialExpr specialExpr = node.getSpecialExpr();
+        String id = node.getId().getText();
+        String idType = symbolTable.get(id).getType().getText();
+
+        if (symbolTable.get(node.getId().getText()).getAttributes()!= Attributes.csv) {
+            throw new InvalidExpressionException(idType);
+        }
+
+        specialExpr.apply(new TypeVisitor(symbolTable, idType));
     }
 
     @Override
+    public void inAFilterSpecialSyntax(AFilterSpecialSyntax node) {
+        PExpr expr = node.getExpr();
+        expr.apply(new TypeVisitor(symbolTable, "bool"));
+    }
+    
+    @Override
     public void inASortAscSpecialSyntax(ASortAscSpecialSyntax node) {
-        node.getExpr().apply(new TypeVisitor(symbolTable, "csv"));
+        node.getExpr().apply(new TypeVisitor(symbolTable, "string"));
     }
 
     @Override
     public void inASortDescSpecialSyntax(ASortDescSpecialSyntax node) {
-        node.getExpr().apply(new TypeVisitor(symbolTable, "csv"));
+        node.getExpr().apply(new TypeVisitor(symbolTable, "string"));
     }
 
     @Override
     public void inASortSpecialSyntax(ASortSpecialSyntax node) {
-        node.getExpr().apply(new TypeVisitor(symbolTable, "csv"));
+        node.getExpr().apply(new TypeVisitor(symbolTable, "string"));
     }
 
 }
