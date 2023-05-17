@@ -239,21 +239,6 @@ public class TypeVisitor extends SemanticVisitor {
     // // symbolTable = symbolTable.getOuterSymbolTable();
     // }
 
-    @Override
-    public void inAFilterSpecialSyntax(AFilterSpecialSyntax node) {
-        operatorQueue.add(node.getSopFilter().getText());
-    }
-
-    @Override
-    public void inAMeanSpecialSyntax(AMeanSpecialSyntax node) {
-        operatorQueue.add(node.getSopMean().getText());
-    }
-
-    @Override
-    public void inACountSpecialSyntax(ACountSpecialSyntax node) {
-        operatorQueue.add(node.getSopCount().getText());
-    }
-
     // --PBinInfixOp nodes--
     // Hvis operators var token vil dette være en metode, oh well
     @Override
