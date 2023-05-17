@@ -5,17 +5,20 @@ import java.util.List;
 
 import postfix.node.TId;
 import postfix.node.TType;
+import postfix.semantics.Exceptions.invalidFunctionCallException;
 
 /**
  * Represents all necessary attributes, about an identifier, that a symbol table
  * monitors
  */
-public class IdAttributes {
+public class IdAttributes implements Cloneable {
 
     private TId id;
     private TType type;
     private String value;
+    @Deprecated
     private boolean isFunction;
+    @Deprecated
     private boolean isConst;
     private List<String> parameterTypes;
     private List<String> parameterNames;
@@ -36,6 +39,51 @@ public class IdAttributes {
         /** A special csv type */
         csv,
 
+    }
+
+    @Override
+    protected Object clone() {
+        IdAttributes clone = new IdAttributes((TId) id.clone(), (TType) type.clone(), value, attributes);
+        clone.setReturnType(getReturnType());
+        // parameterNames og parameterTypes skulle meget gerne altid have samme størrelse, ellers er det grælt
+        clone.parameterNames = new ArrayList<>(parameterNames);
+        clone.parameterTypes = new ArrayList<>(parameterTypes);
+        // for (int i = 0; i < parameterNames.size(); i++) {
+        //     clone.addParameter(parameterNames.get(i), parameterTypes.get(i));
+        // }
+        return clone;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        IdAttributes other = (IdAttributes) obj;
+        boolean idEquals = id.getText().equals(other.id.getText());
+        boolean typeEquals = type.getText().equals(other.type.getText());
+        boolean parameterNamesEquals = parameterNames.equals(other.parameterNames);
+        boolean parameterTypesEquals = parameterTypes.equals(other.parameterTypes);
+        boolean returnTypeEquals = returnType.equals(other.returnType);
+        boolean attributesEquals = attributes.equals(other.attributes);
+
+        boolean res = idEquals &&
+                typeEquals &&
+                parameterNamesEquals &&
+                parameterTypesEquals &&
+                returnTypeEquals &&
+                attributesEquals;
+        return res;
+    }
+
+    @Override
+    public int hashCode() {
+        int hashCode = 0;
+        hashCode += id.getText().hashCode() +
+                type.getText().hashCode() +
+                parameterNames.hashCode() +
+                parameterTypes.hashCode() +
+                returnType.hashCode() +
+                attributes.hashCode();
+
+        return hashCode;
     }
 
     @Deprecated
@@ -99,8 +147,10 @@ public class IdAttributes {
     public void setReturnType(String type) {
         returnType = type;
     }
+
     /**
      * Returns the list of parameter types in the order that they are declared
+     * 
      * @return
      */
     public QueueList<String> getParameterTypeListAsQueueList() {

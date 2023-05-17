@@ -11,7 +11,19 @@
             "mainClass": "postfix.Compiler",
             "args": "${command:SpecifyProgramArgs}",
             "preLaunchTask": "antBuild",
-            "cwd": "${workspaceFolder}"
+            "cwd": "${workspaceFolder}",
+            "stepFilters": {
+                "skipClasses": [
+                    "$JDK",
+                    "junit.*",
+                    "java.lang.ClassLoader",
+                    "postfix.analysis.*",
+                    "postfix.node.*"
+                ],
+                "skipSynthetics": false,
+                "skipStaticInitializers": false,
+                "skipConstructors": false
+            }
         },
         {
             "type": "java",

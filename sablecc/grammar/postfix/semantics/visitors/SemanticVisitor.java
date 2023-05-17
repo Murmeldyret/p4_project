@@ -2,6 +2,7 @@ package postfix.semantics.visitors;
 
 import postfix.analysis.DepthFirstAdapter;
 import postfix.node.*;
+import postfix.semantics.IdAttributes;
 import postfix.semantics.QueueList;
 import postfix.semantics.SymbolTable;
 import postfix.semantics.Exceptions.invalidFunctionCallException;
@@ -10,7 +11,6 @@ import postfix.semantics.Exceptions.invalidFunctionCallException;
  * Responsible for verifying that a program is semantically correct
  */
 public class SemanticVisitor extends DepthFirstAdapter {
-
     public SemanticVisitor() {
         symbolTable = new SymbolTable(null, SymbolTable.Scopekind.block);
     }
@@ -28,9 +28,20 @@ public class SemanticVisitor extends DepthFirstAdapter {
 
     @Override
     public void inAImportWithoutSeperatorStmt(AImportWithoutSeperatorStmt node) {
-        // ? Måske skal path string være expr i stedet, med type check for at godkende
-        // at det er en string
-        // add to symbol table
+        String filePath = node.getString().getText();
+        String variableId = node.getId().getText();
+
+        // Remove quotes from filepath string
+        if (filePath.length() > 2) {
+            filePath = filePath.substring(1, filePath.length() - 1);
+        }
+
+        TType type = new TType("string");
+        String value = filePath;
+
+        IdAttributes idAttributes = new IdAttributes(node.getId(), type, value, IdAttributes.Attributes.variable);
+
+        symbolTable.put(variableId, idAttributes);
     }
 
     @Override
@@ -42,9 +53,19 @@ public class SemanticVisitor extends DepthFirstAdapter {
 
     @Override
     public void inAExportStatementStmt(AExportStatementStmt node) {
-        // ? i guess id skal være af typen csv
-        node.getId().apply(new TypeVisitor(symbolTable, "csv"));
-        node.getExpr().apply(new TypeVisitor(symbolTable, "string"));
+        String filePath = node.getExpr().toString().trim();
+        String variableId = node.getId().getText();
+
+        if (!symbolTable.containsKey(variableId)) {
+            throw new RuntimeException("Variable is not declared.");
+        }
+
+        TType type = new TType("string");
+        String value = filePath;
+
+        IdAttributes fileAttributes = new IdAttributes(node.getId(), type, value, IdAttributes.Attributes.variable);
+
+        symbolTable.put(filePath, fileAttributes);
     }
 
     @Override
@@ -99,18 +120,8 @@ public class SemanticVisitor extends DepthFirstAdapter {
 
         String variableType = symbolTable.get(variableId).getType().getText();
 
-        TypeVisitor typeVisitor = new TypeVisitor(symbolTable);
+        TypeVisitor typeVisitor = new TypeVisitor(symbolTable, variableType);
         expression.apply(typeVisitor);
-
-        String expressionType = "";
-        if (!typeVisitor.typeQueue.isEmpty()) {
-            expressionType = typeVisitor.typeQueue.remove();
-        }
-
-        if (!variableType.equals(expressionType)) {
-            throw new RuntimeException("Type mismatch: Cannot assign a value of type " + expressionType
-                    + " to variable " + variableId + " of type " + variableType + ".");
-        }
     }
 
     // @Override
@@ -136,6 +147,28 @@ public class SemanticVisitor extends DepthFirstAdapter {
     }
 
     @Override
+    public void caseAFunctionDeclarationDcl(AFunctionDeclarationDcl node) {
+        inAFunctionDeclarationDcl(node);
+        if (node.getType() != null) {
+            node.getType().apply(this);
+        }
+        if (node.getKwFunction() != null) {
+            node.getKwFunction().apply(this);
+        }
+        if (node.getId() != null) {
+            node.getId().apply(this);
+        }
+        //! uh oh
+        symbolTable = symbolTable.getFunctionSymbolTable(node.getId().getText());
+        if (node.getFunctionParam() != null) {
+            node.getFunctionParam().apply(this);
+        }
+        if (node.getStmts() != null) {
+            node.getStmts().apply(this);
+        }
+        outAFunctionDeclarationDcl(node);
+    }
+    @Override
     public void inAFunctionCallFunctionCall(AFunctionCallFunctionCall node) {
         // funktionsparametre
 
@@ -149,7 +182,7 @@ public class SemanticVisitor extends DepthFirstAdapter {
         // TODO antal af givne parametre skal stemme overens med den erklærede funktion
         if (functionParameterTypeList.isEmpty()) {
             throw new invalidFunctionCallException(
-                    "Cannot pass parameters to a function that does not take any parameters");
+                    "Cannot pass parameters to a function that does not take any parameters",node);
         }
         node.getExpr().apply(new TypeVisitor(symbolTable, functionParameterTypeList.remove()));
 
@@ -167,7 +200,7 @@ public class SemanticVisitor extends DepthFirstAdapter {
             AFunctionCallFunctionCall functionCallNode = (AFunctionCallFunctionCall) parent;
             throw new invalidFunctionCallException("Cannot pass " + i + " parameters to a function that only takes "
                     + symbolTable.get(functionCallNode.getId().getText()).getParameterTypeListAsQueueList().size()
-                    + " parameters");
+                    + " parameters",node);
         }
         node.getExpr().apply(new TypeVisitor(symbolTable, functionParameterTypeList.remove()));
     }

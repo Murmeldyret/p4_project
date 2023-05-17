@@ -9,6 +9,7 @@ import postfix.semantics.SymbolTable.Scopekind;
 /**
  * Class for managing declarations, also responsible for calling TypeVisitor for
  * the right hand side (or statements in case of functions)
+ * 
  * @see {@link postfix.semantics.visitors.TypeVisitor}
  */
 public class TopDclVisitor extends SemanticVisitor {
@@ -56,7 +57,7 @@ public class TopDclVisitor extends SemanticVisitor {
 
         if (symbolTable.DeclaredLocally(node.getId().getText())) {
             throw new VariableAlreadyDeclaredException(
-                    "Variable " + node.getId().toString() + " has already been declared");
+                    "Variable " + node.getId().getText() + " has already been declared");
         } else {
             symbolTable.put(node.getId().toString(),
                     new IdAttributes(node.getId(), node.getType(), null, Attributes.variable));
@@ -66,11 +67,13 @@ public class TopDclVisitor extends SemanticVisitor {
                 Node functionDCL = node.parent();
 
                 while (!(functionDCL instanceof AFunctionDeclarationDcl)) {
-                    //find the parent function declaration
+                    // find the parent function declaration
                     functionDCL = functionDCL.parent();
                 }
                 AFunctionDeclarationDcl funcDCL = (AFunctionDeclarationDcl) functionDCL;
-                symbolTable.get(funcDCL.getId().getText()).addParameter(node.getType().getText(),
+                // symbolTable.get(funcDCL.getId().getText()).addParameter(node.getType().getText(),
+                // node.getId().getText());
+                symbolTable.addFunctionParameter(funcDCL.getId().getText(), node.getType().getText(),
                         node.getId().getText());
 
             }
@@ -107,11 +110,34 @@ public class TopDclVisitor extends SemanticVisitor {
             symbolTable.put(node.getId().getText(),
                     new IdAttributes(node.getId(), node.getType(), null, Attributes.function));
             symbolTable.CreateNewScope(node.getId().getText(), Scopekind.functionBlock, node.getType().getText());
-            symbolTable = symbolTable.getFunctionSymbolTable(node.getId().getText());
+            // symbolTable = symbolTable.getFunctionSymbolTable(node.getId().getText());
             // symbolTable = symbolTable.CreateNewScope(node.getId().getText(),
             // Scopekind.functionBlock);
         }
     }
+
+    // @Override
+    // public void caseAFunctionDeclarationDcl(AFunctionDeclarationDcl node) {
+
+    //     inAFunctionDeclarationDcl(node);
+    //     if (node.getType() != null) {
+    //         node.getType().apply(this);
+    //     }
+    //     if (node.getKwFunction() != null) {
+    //         node.getKwFunction().apply(this);
+    //     }
+    //     if (node.getId() != null) {
+    //         node.getId().apply(this);
+    //     }
+    //     symbolTable = symbolTable.getFunctionSymbolTable(node.getId().getText());
+    //     if (node.getFunctionParam() != null) {
+    //         node.getFunctionParam().apply(this);
+    //     }
+    //     if (node.getStmts() != null) {
+    //         node.getStmts().apply(this);
+    //     }
+    //     outAFunctionDeclarationDcl(node);
+    // }
 
     @Override
     public void outAReturnStmt(AReturnStmt node) {
@@ -145,74 +171,4 @@ public class TopDclVisitor extends SemanticVisitor {
                     new IdAttributes(node.getId(), node.getType(), null, Attributes.array));
         }
     }
-
-    /*
-     * @Override
-     * public void inAFunctionDeclarationDcl(AFunctionDeclarationDcl node) {
-     * TypeVisitor typeVisitor = new TypeVisitor(this.symbolTable);
-     * 
-     * node.getType().apply(typeVisitor);
-     * 
-     * if (symbolTable.DeclaredLocally(node.getId().getText())) {
-     * throw new VariableAlreadyDeclaredException("null");
-     * } else {
-     * symbolTable.put(node.getId().getText(),
-     * new IdAttributes(node.getId(), node.getType(), null, true, false));
-     * }
-     * 
-     * }
-     */
-
-    /**
-     * prcoesses a variable declaration and adds it to the nearest symbol table
-     * 
-     * @param vld
-     * @throws VariableAlreadyDeclaredException
-     */
-    /*
-     * void caseVariableListDeclaration(VariableListDeclaring vld) throws
-     * VariableAlreadyDeclaredException {
-     * TypeVisitor typeVisitor = new TypeVisitor(this.symbolTable);
-     * 
-     * vld.getType().apply(typeVisitor);
-     * 
-     * for (TId id : vld.getIdList()) {
-     * if (symbolTable.DeclaredLocally(id.getText())) { // TODO if
-     * symbolTable.DeclaredLocally(id)
-     * throw new VariableAlreadyDeclaredException("Variable" + id +
-     * "has already been declared");
-     * } else {
-     * // fischer fig 8.13 marker 24
-     * // TODO måske skal der være satelitdata til dette, idk
-     * symbolTable.put(id.getText(), new IdAttributes(id, vld.getType(), false,
-     * false));
-     * 
-     * }
-     * }
-     * }
-     */
-
-    // lidt copy paste kode har aldrig gjort nogen noget
-    /*
-     * void caseConstListDeclaration(VariableListDeclaring cld) throws
-     * VariableAlreadyDeclaredException {
-     * TypeVisitor typeVisitor = new TypeVisitor(this.symbolTable);
-     * 
-     * cld.getType().apply(typeVisitor);
-     * 
-     * for (TId id : cld.getIdList()) {
-     * if (symbolTable.DeclaredLocally(id.getText())) { // TODO if
-     * symbolTable.DeclaredLocally(id)
-     * throw new VariableAlreadyDeclaredException("Variable" + id +
-     * "has already been declared");
-     * } else {
-     * // fischer fig 8.13 marker 24
-     * // TODO måske skal der være satelitdata til dette, idk
-     * symbolTable.put(id.getText(), new IdAttributes(id, cld.getType(), false,
-     * true));
-     * }
-     * }
-     * }
-     */
-
 }

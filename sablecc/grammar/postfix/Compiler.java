@@ -10,34 +10,36 @@ import postfix.node.*;
 import java.io.*;
 
 public class Compiler {
-    public static void main(String[] arguments) {
-        SymbolTable symbolTable;
-        System.out.println("Running parser...");
-        try {
 
+    public static void main(String[] arguments) {
+        Compiler compiler = new Compiler();
+        compiler.compile(arguments);
+    }
+
+    public void compile(String[] arguments) {
+        try {
             // Create a Parser instance.
-            Parser p = new Parser(
-                    new Lexer(
-                            new PushbackReader(
-                                    new FileReader(arguments[0]), 1024)));
+            Parser parser = new Parser(new Lexer(new PushbackReader(new FileReader(arguments[0]), 1024)));
 
             // Parse the input.
-            Start tree = p.parse();
+            Start tree = parser.parse();
 
             //tree.apply(new SemanticVisitor());
             tree.apply(new CodeGen());
             // Apply the translation.
             // tree.apply(new Translation());
-        } catch (ParserException e) {
-            System.out.println(e.getMessage() + " Parser error");
+        } catch (ParserException | LexerException e) {
+            handleException(e, "Parser error");
         } catch (InvalidExpressionException e) {
-            System.out.println(e.getMessage() + " InvalidExpressionException");
+            handleException(e, "InvalidExpressionException");
         } catch (FileNotFoundException e) {
-            System.out.println("Input file not found");
-        } catch (LexerException e) {
-            System.out.println(e.getMessage());
+            handleException(e, "Input file not found");
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+            handleException(e, "IO error");
         }
+    }
+
+    private void handleException(Exception e, String message) {
+        System.out.println(e.getMessage() + " " + message);
     }
 }

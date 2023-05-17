@@ -2,6 +2,8 @@ package postfix.semantics.visitors;
 
 import postfix.semantics.*;
 import postfix.semantics.Exceptions.*;
+
+
 import postfix.node.*;
 
 /**
@@ -27,6 +29,7 @@ public class TypeVisitor extends SemanticVisitor {
         super(symbolTable);
         typeQueue = new QueueList<String>();
         operatorQueue = new QueueList<String>();
+        simplifiedTypeQueue = new QueueList<>();
     }
 
     /**
@@ -44,7 +47,7 @@ public class TypeVisitor extends SemanticVisitor {
 
     protected QueueList<String> typeQueue;
     protected QueueList<String> operatorQueue;
-
+    protected QueueList<String> simplifiedTypeQueue;
     /** The type that an expression or return statement must return */
     protected String expressionType;
 
@@ -57,11 +60,12 @@ public class TypeVisitor extends SemanticVisitor {
     @Override
     public void outAReturnStmt(AReturnStmt node) {
         // TODO skal lige testes
-        String expr = typeCheckExpression();
-        if (!expr.equals(expressionType)) {
-            throw new invalidReturnExpression(
-                    "Cannot return a value of type " + expr + " on a function whose return type is " + expressionType);
-        }
+        // String expr = typeCheckExpression();
+        // if (!expr.equals(expressionType)) {
+        // throw new invalidReturnExpression(
+        // "Cannot return a value of type " + expr + " on a function whose return type
+        // is " + expressionType);
+        // }
     }
     // @Override
     // public void
@@ -80,8 +84,8 @@ public class TypeVisitor extends SemanticVisitor {
 
     @Override
     public void outAExprValPrimeExpr(AExprValPrimeExpr node) {
-        String resultingType = typeCheckExpression();
-
+        String resultingType = typeCheckExpression(node);
+    
         // Validate the resulting type and throw an exception if it's invalid
         if ("INVALID_TYPE".equals(resultingType)) {
             throw new InvalidExpressionException("Invalid expression type detected", node);
@@ -133,28 +137,67 @@ public class TypeVisitor extends SemanticVisitor {
     @Override
     public void inAFunctionCallFunctionCall(AFunctionCallFunctionCall node) {
         typeQueue.add(symbolTable.get(node.getId().getText()).getType().getText());
+        // FIXME funktionenens parametertypeliste er tom?
+        functionParameterTypeList = symbolTable.get(node.getId().getText()).getParameterTypeListAsQueueList();
         // symbolTable =
         // symbolTable.getFunctionSymbolTable(symbolTable.get(node.getId().getText()).getId().getText());
     }
+
     @Override
     public void inAFunctionCallParamFunctionCallParam(AFunctionCallParamFunctionCallParam node) {
         // // TODO Auto-generated method stub
         // super.inAFunctionCallParamFunctionCallParam(node);
-        //! Vigtig, skal være her
-        defaultIn(node);
-    }
-    @Override
-    public void inAFunctionCallParamPrimeFunctionCallParamPrime(AFunctionCallParamPrimeFunctionCallParamPrime node) {
-        // // TODO Auto-generated method stub
-        // super.inAFunctionCallParamPrimeFunctionCallParamPrime(node);
-        //! Vigtig, skal være her
+        // ! Vigtig, skal være her
         defaultIn(node);
     }
 
     @Override
-    public void outAFunctionCallFunctionCall(AFunctionCallFunctionCall node) {
-        // symbolTable = symbolTable.getOuterSymbolTable();
+    public void caseAFunctionCallParamFunctionCallParam(AFunctionCallParamFunctionCallParam node) {
+        inAFunctionCallParamFunctionCallParam(node);
+        // TODO typecheck funktionsparameter
+        if (node.getExpr() != null) {
+            if (functionParameterTypeList.isEmpty()) {
+                // TODO bedre fejlbesked
+                throw new invalidFunctionCallException("Dette er en fejl");
+            }
+            node.getExpr().apply(new TypeVisitor(symbolTable, functionParameterTypeList.remove()));
+        }
+        if (node.getFunctionCallParamPrime() != null) {
+            node.getFunctionCallParamPrime().apply(this);
+        }
+        outAFunctionCallParamFunctionCallParam(node);
     }
+
+    @Override
+    public void inAFunctionCallParamPrimeFunctionCallParamPrime(AFunctionCallParamPrimeFunctionCallParamPrime node) {
+        // // TODO Auto-generated method stub
+        // super.inAFunctionCallParamPrimeFunctionCallParamPrime(node);
+        // ! Vigtig, skal være her
+        defaultIn(node);
+    }
+
+    @Override
+    public void caseAFunctionCallParamPrimeFunctionCallParamPrime(AFunctionCallParamPrimeFunctionCallParamPrime node) {
+        inAFunctionCallParamPrimeFunctionCallParamPrime(node);
+        if (node.getSopComma() != null) {
+            node.getSopComma().apply(this);
+        }
+        if (node.getExpr() != null) {
+            if (functionParameterTypeList.isEmpty()) {
+                throw new invalidFunctionCallException("TODO lav fejlbesked");
+            }
+            node.getExpr().apply(new TypeVisitor(symbolTable, functionParameterTypeList.remove()));
+        }
+        if (node.getFunctionCallParamPrime() != null) {
+            node.getFunctionCallParamPrime().apply(this);
+        }
+        outAFunctionCallParamPrimeFunctionCallParamPrime(node);
+    }
+
+    // @Override
+    // public void outAFunctionCallFunctionCall(AFunctionCallFunctionCall node) {
+    //     // symbolTable = symbolTable.getOuterSymbolTable();
+    // }
 
     // --PBinInfixOp nodes--
     // Hvis operators var token vil dette være en metode, oh well
@@ -236,48 +279,108 @@ public class TypeVisitor extends SemanticVisitor {
     }
 
     /**
+     * simplifies the expression by taking the appropriate operator and operand(s)
+     * from their respective queues (from left to right)
+     * 
+     * @return true if the expression was simplified, false if it could not be
+     *         simplified any further
+     */
+    private boolean SimplifyExpression() {
+        boolean res = false;
+
+        TypeSystem typesystem = new TypeSystem();
+        String operator;
+
+        // if the operator queue is empty, there are no operators present in this
+        // expression, or the expression has been simplified to the point that all
+        // operators have been consumed
+        if (!operatorQueue.isEmpty()) {
+            operator = operatorQueue.remove();
+            if (typesystem.isBinaryInfixOperator(operator)) {
+                String LhsType = simplifiedTypeQueue.isEmpty() ? typeQueue.remove()
+                        : simplifiedTypeQueue.remove();
+                String RhsType = typeQueue.remove();
+
+                simplifiedTypeQueue.add(typesystem.lookupResultingTypeNew(LhsType, RhsType, operator));
+                res = true;
+            }
+        } else {
+            switch (typeQueue.size()) {
+                case 0:
+                    res = false;
+                    break;
+                case 1:
+                    if (!simplifiedTypeQueue.isEmpty()) {
+                        // throw new InvalidExpressionException("Expression cannot produce a valid
+                        // value");
+                    }
+                    simplifiedTypeQueue.add(typeQueue.remove());
+                    res = false;
+                    break;
+                default:
+                    // cannot have more than 1 operand without any operator
+                    // throw new InvalidExpressionException("Expression cannot produce a valid
+                    // value");
+            }
+        }
+        return res;
+    }
+
+    /**
      * Tests if an expression produces a valid value
      * 
-     * @param node The expression node to test
      * @return true if the expression produces a valid value under the current type
      *         system.
      * @throws invalidExpressionException if the given expression does not produce a
      *                                    valid value
      */
-    private String typeCheckExpression() {
-        // boolean res = false;
+    private String typeCheckExpression(AExprValPrimeExpr node) {
         String res = "";
-        TypeSystem typeSystem = new TypeSystem();
+        // TypeSystem typeSystem = new TypeSystem();
 
-        QueueList<String> SimplifiedExpressionTypeQueue = new QueueList<>();
+        // QueueList<String> SimplifiedExpressionTypeQueue = new QueueList<>();
 
         try {
-            while (!operatorQueue.isEmpty()) {
-                String operator = operatorQueue.remove();
-
-                Boolean isBinaryInFixOp = typeSystem.isBinaryInfixOperator(operator);
-
-                if (isBinaryInFixOp) {
-                    String LhsType = SimplifiedExpressionTypeQueue.isEmpty() ? typeQueue.remove()
-                            : SimplifiedExpressionTypeQueue.remove();
-                    String RhsType = typeQueue.remove();
-
-                    // if (typeSystem.isArithmeticOperator(operator)) {
-                    // if (!typeSystem.isArithmeticType(LhsType) ||
-                    // !typeSystem.isArithmeticType(RhsType)) {
-                    // throw new InvalidExpressionException("Arithmetic operation " + operator
-                    // + " cannot be applied to types " + LhsType + " and " + RhsType);
-                    // }
-                    // }
-
-                    String resultingType = typeSystem.lookupResultingTypeNew(LhsType, RhsType, operator);
-                    SimplifiedExpressionTypeQueue.add(resultingType);
-                }
+            boolean canSimplify = true;
+            do {
+                canSimplify = SimplifyExpression();
+                // evt debug statements hvis man er interesseret i sådan noget
+            } while (canSimplify);
+            if (simplifiedTypeQueue.isEmpty()) {
+                // throw new IllegalArgumentException();
+                res = "INVALID_TYPE";
+            } else {
+                res = simplifiedTypeQueue.remove();
             }
-            res = SimplifiedExpressionTypeQueue.remove();
-        } catch (InvalidExpressionException | IllegalArgumentException e) {
-            System.out.println("Error: " + e.getMessage());
-            res = "INVALID_TYPE";
+            // while (!operatorQueue.isEmpty()) {
+            // String operator = operatorQueue.remove();
+
+            // Boolean isBinaryInFixOp = typeSystem.isBinaryInfixOperator(operator);
+
+            // if (isBinaryInFixOp) {
+            // String LhsType = SimplifiedExpressionTypeQueue.isEmpty() ? typeQueue.remove()
+            // : SimplifiedExpressionTypeQueue.remove();
+            // String RhsType = typeQueue.remove();
+
+            // // if (typeSystem.isArithmeticOperator(operator)) {
+            // // if (!typeSystem.isArithmeticType(LhsType) ||
+            // // !typeSystem.isArithmeticType(RhsType)) {
+            // // throw new InvalidExpressionException("Arithmetic operation " + operator
+            // // + " cannot be applied to types " + LhsType + " and " + RhsType);
+            // // }
+            // // }
+
+            // String resultingType = typeSystem.lookupResultingTypeNew(LhsType, RhsType,
+            // operator);
+            // SimplifiedExpressionTypeQueue.add(resultingType);
+            // }
+            // }
+            // res = SimplifiedExpressionTypeQueue.remove();
+        } catch (InvalidExpressionException e) {
+            // System.out.println("Error: " + e.getMessage());
+            // res = "INVALID_TYPE";
+            // e.printStackTrace();
+            throw new InvalidExpressionException("Expression does not produce a valid value", node);
         }
 
         return res;
