@@ -159,9 +159,6 @@ public class TopDclVisitor extends SemanticVisitor {
 
     @Override
     public void inAVariableDeclarationArrayDcl(AVariableDeclarationArrayDcl node) {
-        TypeVisitor typeVisitor = new TypeVisitor(symbolTable, node.getType().getText());
-
-        node.apply(typeVisitor);
 
         if (symbolTable.DeclaredLocally(node.getId().getText())) {
             throw new VariableAlreadyDeclaredException(
@@ -170,5 +167,12 @@ public class TopDclVisitor extends SemanticVisitor {
             symbolTable.put(node.getId().toString(),
                     new IdAttributes(node.getId(), node.getType(), null, Attributes.array));
         }
+    }
+
+    @Override
+    public void outAVariableDeclarationArrayDcl(AVariableDeclarationArrayDcl node) {
+        TypeVisitor typeVisitor = new TypeVisitor(symbolTable, node.getType().getText());
+
+        node.apply(typeVisitor);
     }
 }
