@@ -43,7 +43,8 @@ public class TopDclVisitor extends SemanticVisitor {
                     "Variable" + node.getId().toString() + "has already been declared");
         } else {
             symbolTable.put(node.getId().toString(),
-                    new IdAttributes(node.getId(), node.getType(), node.getExpr().toString().strip(), Attributes.variable));
+                    new IdAttributes(node.getId(), node.getType(), node.getExpr().toString().strip(),
+                            Attributes.variable));
         }
     }
 
@@ -58,7 +59,8 @@ public class TopDclVisitor extends SemanticVisitor {
                     "Variable " + node.getId().getText() + " has already been declared");
         } else {
             symbolTable.put(node.getId().toString(),
-                    new IdAttributes(node.getId(), node.getType(), null, Attributes.variable)); //TODO skal måske være i else block
+                    new IdAttributes(node.getId(), node.getType(), null, Attributes.variable)); // TODO skal måske være
+                                                                                                // i else block
             // seems legit
             if (node.parent() instanceof AFunctionParamFunctionParam
                     || node.parent() instanceof AFunctionParamPrimeFunctionParamPrime) {
@@ -101,7 +103,8 @@ public class TopDclVisitor extends SemanticVisitor {
     public void inAFunctionDeclarationDcl(AFunctionDeclarationDcl node) {
         // TopDclVisitor topDclVisitor = new TopDclVisitor(symbolTable);
         // node.getFunctionParam().apply(topDclVisitor);
-        //! Husk at tjekke om funktionsparameter nodes er af type AVariableDeclartionDcl, alt andet er ulovligt
+        // ! Husk at tjekke om funktionsparameter nodes er af type
+        // AVariableDeclartionDcl, alt andet er ulovligt
         if (symbolTable.DeclaredLocally(node.getId().getText())) {
             throw new VariableAlreadyDeclaredException("null");
         } else {
@@ -117,24 +120,24 @@ public class TopDclVisitor extends SemanticVisitor {
     // @Override
     // public void caseAFunctionDeclarationDcl(AFunctionDeclarationDcl node) {
 
-    //     inAFunctionDeclarationDcl(node);
-    //     if (node.getType() != null) {
-    //         node.getType().apply(this);
-    //     }
-    //     if (node.getKwFunction() != null) {
-    //         node.getKwFunction().apply(this);
-    //     }
-    //     if (node.getId() != null) {
-    //         node.getId().apply(this);
-    //     }
-    //     symbolTable = symbolTable.getFunctionSymbolTable(node.getId().getText());
-    //     if (node.getFunctionParam() != null) {
-    //         node.getFunctionParam().apply(this);
-    //     }
-    //     if (node.getStmts() != null) {
-    //         node.getStmts().apply(this);
-    //     }
-    //     outAFunctionDeclarationDcl(node);
+    // inAFunctionDeclarationDcl(node);
+    // if (node.getType() != null) {
+    // node.getType().apply(this);
+    // }
+    // if (node.getKwFunction() != null) {
+    // node.getKwFunction().apply(this);
+    // }
+    // if (node.getId() != null) {
+    // node.getId().apply(this);
+    // }
+    // symbolTable = symbolTable.getFunctionSymbolTable(node.getId().getText());
+    // if (node.getFunctionParam() != null) {
+    // node.getFunctionParam().apply(this);
+    // }
+    // if (node.getStmts() != null) {
+    // node.getStmts().apply(this);
+    // }
+    // outAFunctionDeclarationDcl(node);
     // }
 
     @Override
@@ -152,7 +155,8 @@ public class TopDclVisitor extends SemanticVisitor {
         if (symbolTable.getOuterSymbolTable() == null) {
             throw new NullPointerException("cannot go to outer scope: already in global scope");
         }
-        symbolTable.put(node.getId().getText(),(IdAttributes)symbolTable.getOuterSymbolTable().get(node.getId().getText()).clone());
+        symbolTable.put(node.getId().getText(),
+                (IdAttributes) symbolTable.getOuterSymbolTable().get(node.getId().getText()).clone());
         symbolTable = symbolTable.getOuterSymbolTable();
     }
 
@@ -166,8 +170,26 @@ public class TopDclVisitor extends SemanticVisitor {
             throw new VariableAlreadyDeclaredException(
                     "Variable" + node.getId().toString() + "has already been declared");
         } else {
+            // TODO symbol tabel vil nu sige at dette ID er af type node.getType() og ikke
+            // array<node.getType()>
             symbolTable.put(node.getId().toString(),
                     new IdAttributes(node.getId(), node.getType(), null, Attributes.array));
         }
+    }
+
+    @Override
+    public void inAVariableDeclarationArrayInitDcl(AVariableDeclarationArrayInitDcl node) {
+        TypeVisitor typeVisitor = new TypeVisitor(symbolTable, node.getType().getText());
+
+        node.apply(typeVisitor);
+
+        if (symbolTable.DeclaredLocally(node.getId().getText())) {
+            throw new VariableAlreadyDeclaredException(
+                    "Variable" + node.getId().toString() + "has already been declared");
+        } else {
+            symbolTable.put(node.getId().getText(),
+                    new IdAttributes(node.getId(), node.getType(), node.getArrayExpr().toString(), Attributes.array));
+        }
+
     }
 }
