@@ -276,7 +276,7 @@ Productions
     | {sort_op}     sort    {-> sort.special_syntax  } ;
 
     sum {-> special_syntax  } =
-     {sum} sop_sum{-> New special_syntax.sum (sop_sum )  } ;
+     {sum} sop_sum l_par expr r_par {-> New special_syntax.sum (sop_sum , expr )  } ;
 
     filter {-> special_syntax } =
      {filter} sop_filter l_par expr r_par {-> New special_syntax.filter (sop_filter , expr )  } ;
@@ -427,7 +427,7 @@ Abstract Syntax Tree
         | ;
     
     special_syntax =
-        {sum}           sop_sum 
+        {sum}           sop_sum expr
         | {filter}      sop_filter expr 
         | {groupby}     sop_groupby string 
         | {mean}        sop_mean 
