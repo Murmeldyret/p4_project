@@ -5,6 +5,7 @@ import postfix.node.*;
 import postfix.semantics.IdAttributes;
 import postfix.semantics.QueueList;
 import postfix.semantics.SymbolTable;
+import postfix.semantics.Exceptions.InvalidBreakStatement;
 import postfix.semantics.Exceptions.InvalidExpressionException;
 import postfix.semantics.Exceptions.invalidFunctionCallException;
 import postfix.semantics.Exceptions.invalidReturnExpression;
@@ -86,6 +87,9 @@ public class SemanticVisitor extends DepthFirstAdapter {
     @Override
     public void inABreakStatementStmt(ABreakStatementStmt node) {
         // TODO skal være i break-able block
+        if (symbolTable.getOuterSymbolTable() == null) {
+            throw new InvalidBreakStatement("Cannot break when not within a loop or if block", node);
+        }
     }
 
     @Override
