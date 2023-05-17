@@ -5,16 +5,16 @@ package postfix.node;
 import postfix.analysis.*;
 
 @SuppressWarnings("nls")
-public final class TKwRemove extends Token
+public final class TKwArray extends Token
 {
-    public TKwRemove()
+    public TKwArray()
     {
-        super.setText("remove");
+        super.setText("array");
     }
 
-    public TKwRemove(int line, int pos)
+    public TKwArray(int line, int pos)
     {
-        super.setText("remove");
+        super.setText("array");
         setLine(line);
         setPos(pos);
     }
@@ -22,18 +22,18 @@ public final class TKwRemove extends Token
     @Override
     public Object clone()
     {
-      return new TKwRemove(getLine(), getPos());
+      return new TKwArray(getLine(), getPos());
     }
 
     @Override
     public void apply(Switch sw)
     {
-        ((Analysis) sw).caseTKwRemove(this);
+        ((Analysis) sw).caseTKwArray(this);
     }
 
     @Override
     public void setText(@SuppressWarnings("unused") String text)
     {
-        throw new RuntimeException("Cannot change TKwRemove text.");
+        throw new RuntimeException("Cannot change TKwArray text.");
     }
 }

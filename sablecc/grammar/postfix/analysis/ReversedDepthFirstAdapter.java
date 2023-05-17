@@ -125,9 +125,9 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
         {
             node.getKwAs().apply(this);
         }
-        if(node.getString() != null)
+        if(node.getExpr() != null)
         {
-            node.getString().apply(this);
+            node.getExpr().apply(this);
         }
         if(node.getKwImport() != null)
         {
@@ -166,9 +166,9 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
         {
             node.getKwSeparatedBy().apply(this);
         }
-        if(node.getString() != null)
+        if(node.getExpr() != null)
         {
-            node.getString().apply(this);
+            node.getExpr().apply(this);
         }
         if(node.getKwImport() != null)
         {
@@ -291,17 +291,17 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
         {
             node.getBlock().apply(this);
         }
-        if(node.getVal() != null)
+        if(node.getId() != null)
         {
-            node.getVal().apply(this);
+            node.getId().apply(this);
         }
         if(node.getKwIn() != null)
         {
             node.getKwIn().apply(this);
         }
-        if(node.getId() != null)
+        if(node.getVal() != null)
         {
-            node.getId().apply(this);
+            node.getVal().apply(this);
         }
         if(node.getKwFor() != null)
         {
@@ -544,17 +544,13 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
     public void caseAVariableDeclarationArrayDcl(AVariableDeclarationArrayDcl node)
     {
         inAVariableDeclarationArrayDcl(node);
-        if(node.getArrayOp() != null)
-        {
-            node.getArrayOp().apply(this);
-        }
-        if(node.getOpAssign() != null)
-        {
-            node.getOpAssign().apply(this);
-        }
         if(node.getId() != null)
         {
             node.getId().apply(this);
+        }
+        if(node.getKwArray() != null)
+        {
+            node.getKwArray().apply(this);
         }
         if(node.getType() != null)
         {
@@ -586,6 +582,43 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
             node.getType().apply(this);
         }
         outAVariableDeclarationDcl(node);
+    }
+
+    public void inAVariableDeclarationArrayInitDcl(AVariableDeclarationArrayInitDcl node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAVariableDeclarationArrayInitDcl(AVariableDeclarationArrayInitDcl node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAVariableDeclarationArrayInitDcl(AVariableDeclarationArrayInitDcl node)
+    {
+        inAVariableDeclarationArrayInitDcl(node);
+        if(node.getArrayExpr() != null)
+        {
+            node.getArrayExpr().apply(this);
+        }
+        if(node.getOpAssign() != null)
+        {
+            node.getOpAssign().apply(this);
+        }
+        if(node.getId() != null)
+        {
+            node.getId().apply(this);
+        }
+        if(node.getKwArray() != null)
+        {
+            node.getKwArray().apply(this);
+        }
+        if(node.getType() != null)
+        {
+            node.getType().apply(this);
+        }
+        outAVariableDeclarationArrayInitDcl(node);
     }
 
     public void inAConstDeclarationInitializationDcl(AConstDeclarationInitializationDcl node)
@@ -1176,9 +1209,9 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
         {
             node.getOrientation().apply(this);
         }
-        if(node.getKwRemove() != null)
+        if(node.getKwRemoveLast() != null)
         {
-            node.getKwRemove().apply(this);
+            node.getKwRemoveLast().apply(this);
         }
         outARemoveFromCsvCsvOp(node);
     }
@@ -1363,9 +1396,9 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
         {
             node.getArrayExprPrime().apply(this);
         }
-        if(node.getVal() != null)
+        if(node.getExpr() != null)
         {
-            node.getVal().apply(this);
+            node.getExpr().apply(this);
         }
         outAArrayExprValPrimeArrayExpr(node);
     }
@@ -1388,9 +1421,9 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
         {
             node.getArrayExprPrime().apply(this);
         }
-        if(node.getVal() != null)
+        if(node.getExpr() != null)
         {
-            node.getVal().apply(this);
+            node.getExpr().apply(this);
         }
         if(node.getSopComma() != null)
         {
@@ -1430,6 +1463,14 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
     public void caseAAddToArrayArrayOp(AAddToArrayArrayOp node)
     {
         inAAddToArrayArrayOp(node);
+        if(node.getId() != null)
+        {
+            node.getId().apply(this);
+        }
+        if(node.getKwTo() != null)
+        {
+            node.getKwTo().apply(this);
+        }
         if(node.getArrayExpr() != null)
         {
             node.getArrayExpr().apply(this);
@@ -1463,9 +1504,9 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
         {
             node.getKwIn().apply(this);
         }
-        if(node.getKwRemove() != null)
+        if(node.getKwRemoveLast() != null)
         {
-            node.getKwRemove().apply(this);
+            node.getKwRemoveLast().apply(this);
         }
         outARemoveFromArrayArrayOp(node);
     }
@@ -1538,31 +1579,6 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
             node.getKwInsert().apply(this);
         }
         outAInsertToArrayArrayOp(node);
-    }
-
-    public void inAInsertToVariableArrayOp(AInsertToVariableArrayOp node)
-    {
-        defaultIn(node);
-    }
-
-    public void outAInsertToVariableArrayOp(AInsertToVariableArrayOp node)
-    {
-        defaultOut(node);
-    }
-
-    @Override
-    public void caseAInsertToVariableArrayOp(AInsertToVariableArrayOp node)
-    {
-        inAInsertToVariableArrayOp(node);
-        if(node.getArrayExpr() != null)
-        {
-            node.getArrayExpr().apply(this);
-        }
-        if(node.getKwInsert() != null)
-        {
-            node.getKwInsert().apply(this);
-        }
-        outAInsertToVariableArrayOp(node);
     }
 
     public void inAValIdVal(AValIdVal node)

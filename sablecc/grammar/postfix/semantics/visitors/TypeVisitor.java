@@ -4,9 +4,7 @@ import postfix.node.*;
 import postfix.semantics.QueueList;
 import postfix.semantics.SymbolTable;
 import postfix.semantics.TypeSystem;
-import postfix.semantics.Exceptions.InvalidExpressionException;
-import postfix.semantics.Exceptions.invalidFunctionCallException;
-import postfix.semantics.Exceptions.invalidReturnExpression;
+import postfix.semantics.Exceptions.*;
 
 /**
  * Represents a type checker whose responsibilty is to type check expressions
@@ -27,6 +25,7 @@ public class TypeVisitor extends SemanticVisitor {
      * 
      * @param symbolTable
      */
+    @Deprecated(forRemoval = true)
     public TypeVisitor(SymbolTable symbolTable) {
         super(symbolTable);
         typeQueue = new QueueList<String>();
@@ -83,6 +82,7 @@ public class TypeVisitor extends SemanticVisitor {
     // node.getExpr().apply(this);
     // }
 
+    // normal expressions
     @Override
     public void inAExprValPrimeExpr(AExprValPrimeExpr node) {
 
@@ -90,6 +90,33 @@ public class TypeVisitor extends SemanticVisitor {
             operatorQueue.add(node.getBopNot().getText());
         }
     }
+
+    // @Override
+    // public void caseAArrayExprValPrimeArrayExpr(AArrayExprValPrimeArrayExpr node) {
+    //     inAArrayExprValPrimeArrayExpr(node);
+    //     if (node.getExpr() != null) {
+    //         node.getExpr().apply(new TypeVisitor(symbolTable, "int")); // ? skal dette være int?
+    //     }
+    //     if (node.getArrayExprPrime() != null) {
+    //         node.getArrayExprPrime().apply(this);
+    //     }
+    //     outAArrayExprValPrimeArrayExpr(node);
+    // }
+
+    // @Override
+    // public void caseAArrayExprPrimeExtraArrayExprPrime(AArrayExprPrimeExtraArrayExprPrime node) {
+    //     inAArrayExprPrimeExtraArrayExprPrime(node);
+    //     if (node.getSopComma() != null) {
+    //         node.getSopComma().apply(this);
+    //     }
+    //     if (node.getExpr() != null) {
+    //         node.getExpr().apply(new TypeVisitor(symbolTable, "int")); // ? samme spørgsmål her
+    //     }
+    //     if (node.getArrayExprPrime() != null) {
+    //         node.getArrayExprPrime().apply(this);
+    //     }
+    //     outAArrayExprPrimeExtraArrayExprPrime(node);
+    // }
 
     @Override
     public void outAExprValPrimeExpr(AExprValPrimeExpr node) {

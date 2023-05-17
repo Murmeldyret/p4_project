@@ -3,9 +3,10 @@ package postfix.semantics;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.plaf.TreeUI;
+
 import postfix.node.TId;
 import postfix.node.TType;
-import postfix.semantics.Exceptions.invalidFunctionCallException;
 
 /**
  * Represents all necessary attributes, about an identifier, that a symbol table
@@ -15,10 +16,11 @@ public class IdAttributes implements Cloneable {
 
     private TId id;
     private TType type;
+    //? tror faktisk aldrig dette felt bliver brugt da symboltabellen for code gen ikke er den samme som for semantik
     private String value;
-    @Deprecated
+    @Deprecated(forRemoval = true)
     private boolean isFunction;
-    @Deprecated
+    @Deprecated(forRemoval = true)
     private boolean isConst;
     private List<String> parameterTypes;
     private List<String> parameterNames;
@@ -87,11 +89,11 @@ public class IdAttributes implements Cloneable {
         return hashCode;
     }
 
-    @Deprecated
+    @Deprecated(forRemoval = true)
     public IdAttributes(TId id, TType type, boolean isFunction, boolean isConst) {
     }
 
-    @Deprecated
+    @Deprecated(forRemoval = true)
     public IdAttributes(TId id, TType type, String value, boolean isFunction, boolean isConst) {
     }
 
@@ -116,6 +118,7 @@ public class IdAttributes implements Cloneable {
         return type;
     }
 
+    @Deprecated(forRemoval = true)
     public String getValue() {
         return value;
     }

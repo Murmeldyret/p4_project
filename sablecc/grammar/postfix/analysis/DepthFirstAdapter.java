@@ -121,9 +121,9 @@ public class DepthFirstAdapter extends AnalysisAdapter
         {
             node.getKwImport().apply(this);
         }
-        if(node.getString() != null)
+        if(node.getExpr() != null)
         {
-            node.getString().apply(this);
+            node.getExpr().apply(this);
         }
         if(node.getKwAs() != null)
         {
@@ -154,9 +154,9 @@ public class DepthFirstAdapter extends AnalysisAdapter
         {
             node.getKwImport().apply(this);
         }
-        if(node.getString() != null)
+        if(node.getExpr() != null)
         {
-            node.getString().apply(this);
+            node.getExpr().apply(this);
         }
         if(node.getKwSeparatedBy() != null)
         {
@@ -291,17 +291,17 @@ public class DepthFirstAdapter extends AnalysisAdapter
         {
             node.getKwFor().apply(this);
         }
-        if(node.getId() != null)
+        if(node.getVal() != null)
         {
-            node.getId().apply(this);
+            node.getVal().apply(this);
         }
         if(node.getKwIn() != null)
         {
             node.getKwIn().apply(this);
         }
-        if(node.getVal() != null)
+        if(node.getId() != null)
         {
-            node.getVal().apply(this);
+            node.getId().apply(this);
         }
         if(node.getBlock() != null)
         {
@@ -548,17 +548,13 @@ public class DepthFirstAdapter extends AnalysisAdapter
         {
             node.getType().apply(this);
         }
+        if(node.getKwArray() != null)
+        {
+            node.getKwArray().apply(this);
+        }
         if(node.getId() != null)
         {
             node.getId().apply(this);
-        }
-        if(node.getOpAssign() != null)
-        {
-            node.getOpAssign().apply(this);
-        }
-        if(node.getArrayOp() != null)
-        {
-            node.getArrayOp().apply(this);
         }
         outAVariableDeclarationArrayDcl(node);
     }
@@ -586,6 +582,43 @@ public class DepthFirstAdapter extends AnalysisAdapter
             node.getId().apply(this);
         }
         outAVariableDeclarationDcl(node);
+    }
+
+    public void inAVariableDeclarationArrayInitDcl(AVariableDeclarationArrayInitDcl node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAVariableDeclarationArrayInitDcl(AVariableDeclarationArrayInitDcl node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAVariableDeclarationArrayInitDcl(AVariableDeclarationArrayInitDcl node)
+    {
+        inAVariableDeclarationArrayInitDcl(node);
+        if(node.getType() != null)
+        {
+            node.getType().apply(this);
+        }
+        if(node.getKwArray() != null)
+        {
+            node.getKwArray().apply(this);
+        }
+        if(node.getId() != null)
+        {
+            node.getId().apply(this);
+        }
+        if(node.getOpAssign() != null)
+        {
+            node.getOpAssign().apply(this);
+        }
+        if(node.getArrayExpr() != null)
+        {
+            node.getArrayExpr().apply(this);
+        }
+        outAVariableDeclarationArrayInitDcl(node);
     }
 
     public void inAConstDeclarationInitializationDcl(AConstDeclarationInitializationDcl node)
@@ -1164,9 +1197,9 @@ public class DepthFirstAdapter extends AnalysisAdapter
     public void caseARemoveFromCsvCsvOp(ARemoveFromCsvCsvOp node)
     {
         inARemoveFromCsvCsvOp(node);
-        if(node.getKwRemove() != null)
+        if(node.getKwRemoveLast() != null)
         {
-            node.getKwRemove().apply(this);
+            node.getKwRemoveLast().apply(this);
         }
         if(node.getOrientation() != null)
         {
@@ -1359,9 +1392,9 @@ public class DepthFirstAdapter extends AnalysisAdapter
     public void caseAArrayExprValPrimeArrayExpr(AArrayExprValPrimeArrayExpr node)
     {
         inAArrayExprValPrimeArrayExpr(node);
-        if(node.getVal() != null)
+        if(node.getExpr() != null)
         {
-            node.getVal().apply(this);
+            node.getExpr().apply(this);
         }
         if(node.getArrayExprPrime() != null)
         {
@@ -1388,9 +1421,9 @@ public class DepthFirstAdapter extends AnalysisAdapter
         {
             node.getSopComma().apply(this);
         }
-        if(node.getVal() != null)
+        if(node.getExpr() != null)
         {
-            node.getVal().apply(this);
+            node.getExpr().apply(this);
         }
         if(node.getArrayExprPrime() != null)
         {
@@ -1438,6 +1471,14 @@ public class DepthFirstAdapter extends AnalysisAdapter
         {
             node.getArrayExpr().apply(this);
         }
+        if(node.getKwTo() != null)
+        {
+            node.getKwTo().apply(this);
+        }
+        if(node.getId() != null)
+        {
+            node.getId().apply(this);
+        }
         outAAddToArrayArrayOp(node);
     }
 
@@ -1455,9 +1496,9 @@ public class DepthFirstAdapter extends AnalysisAdapter
     public void caseARemoveFromArrayArrayOp(ARemoveFromArrayArrayOp node)
     {
         inARemoveFromArrayArrayOp(node);
-        if(node.getKwRemove() != null)
+        if(node.getKwRemoveLast() != null)
         {
-            node.getKwRemove().apply(this);
+            node.getKwRemoveLast().apply(this);
         }
         if(node.getKwIn() != null)
         {
@@ -1538,31 +1579,6 @@ public class DepthFirstAdapter extends AnalysisAdapter
             node.getId().apply(this);
         }
         outAInsertToArrayArrayOp(node);
-    }
-
-    public void inAInsertToVariableArrayOp(AInsertToVariableArrayOp node)
-    {
-        defaultIn(node);
-    }
-
-    public void outAInsertToVariableArrayOp(AInsertToVariableArrayOp node)
-    {
-        defaultOut(node);
-    }
-
-    @Override
-    public void caseAInsertToVariableArrayOp(AInsertToVariableArrayOp node)
-    {
-        inAInsertToVariableArrayOp(node);
-        if(node.getKwInsert() != null)
-        {
-            node.getKwInsert().apply(this);
-        }
-        if(node.getArrayExpr() != null)
-        {
-            node.getArrayExpr().apply(this);
-        }
-        outAInsertToVariableArrayOp(node);
     }
 
     public void inAValIdVal(AValIdVal node)

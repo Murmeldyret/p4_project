@@ -8,7 +8,7 @@ import postfix.analysis.*;
 public final class AArrayExprPrimeExtraArrayExprPrime extends PArrayExprPrime
 {
     private TSopComma _sopComma_;
-    private PVal _val_;
+    private PExpr _expr_;
     private PArrayExprPrime _arrayExprPrime_;
 
     public AArrayExprPrimeExtraArrayExprPrime()
@@ -18,13 +18,13 @@ public final class AArrayExprPrimeExtraArrayExprPrime extends PArrayExprPrime
 
     public AArrayExprPrimeExtraArrayExprPrime(
         @SuppressWarnings("hiding") TSopComma _sopComma_,
-        @SuppressWarnings("hiding") PVal _val_,
+        @SuppressWarnings("hiding") PExpr _expr_,
         @SuppressWarnings("hiding") PArrayExprPrime _arrayExprPrime_)
     {
         // Constructor
         setSopComma(_sopComma_);
 
-        setVal(_val_);
+        setExpr(_expr_);
 
         setArrayExprPrime(_arrayExprPrime_);
 
@@ -35,7 +35,7 @@ public final class AArrayExprPrimeExtraArrayExprPrime extends PArrayExprPrime
     {
         return new AArrayExprPrimeExtraArrayExprPrime(
             cloneNode(this._sopComma_),
-            cloneNode(this._val_),
+            cloneNode(this._expr_),
             cloneNode(this._arrayExprPrime_));
     }
 
@@ -70,16 +70,16 @@ public final class AArrayExprPrimeExtraArrayExprPrime extends PArrayExprPrime
         this._sopComma_ = node;
     }
 
-    public PVal getVal()
+    public PExpr getExpr()
     {
-        return this._val_;
+        return this._expr_;
     }
 
-    public void setVal(PVal node)
+    public void setExpr(PExpr node)
     {
-        if(this._val_ != null)
+        if(this._expr_ != null)
         {
-            this._val_.parent(null);
+            this._expr_.parent(null);
         }
 
         if(node != null)
@@ -92,7 +92,7 @@ public final class AArrayExprPrimeExtraArrayExprPrime extends PArrayExprPrime
             node.parent(this);
         }
 
-        this._val_ = node;
+        this._expr_ = node;
     }
 
     public PArrayExprPrime getArrayExprPrime()
@@ -125,7 +125,7 @@ public final class AArrayExprPrimeExtraArrayExprPrime extends PArrayExprPrime
     {
         return ""
             + toString(this._sopComma_)
-            + toString(this._val_)
+            + toString(this._expr_)
             + toString(this._arrayExprPrime_);
     }
 
@@ -139,9 +139,9 @@ public final class AArrayExprPrimeExtraArrayExprPrime extends PArrayExprPrime
             return;
         }
 
-        if(this._val_ == child)
+        if(this._expr_ == child)
         {
-            this._val_ = null;
+            this._expr_ = null;
             return;
         }
 
@@ -164,9 +164,9 @@ public final class AArrayExprPrimeExtraArrayExprPrime extends PArrayExprPrime
             return;
         }
 
-        if(this._val_ == oldChild)
+        if(this._expr_ == oldChild)
         {
-            setVal((PVal) newChild);
+            setExpr((PExpr) newChild);
             return;
         }
 
