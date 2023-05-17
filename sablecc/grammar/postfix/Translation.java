@@ -295,7 +295,7 @@ class Translation extends DepthFirstAdapter {
 
     public void outARemoveAtFromArrayArrayOp(ARemoveAtFromArrayArrayOp node) {
         System.out.print(node.getKwRemoveAt());
-        System.out.print(node.getIndexing());
+        System.out.print(node.getVal());
         System.out.print(node.getKwIn());
         System.out.print(node.getId());
     }

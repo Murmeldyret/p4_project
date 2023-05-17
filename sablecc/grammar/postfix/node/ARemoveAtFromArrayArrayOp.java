@@ -8,7 +8,7 @@ import postfix.analysis.*;
 public final class ARemoveAtFromArrayArrayOp extends PArrayOp
 {
     private TKwRemoveAt _kwRemoveAt_;
-    private PIndexing _indexing_;
+    private PVal _val_;
     private TKwIn _kwIn_;
     private TId _id_;
 
@@ -19,14 +19,14 @@ public final class ARemoveAtFromArrayArrayOp extends PArrayOp
 
     public ARemoveAtFromArrayArrayOp(
         @SuppressWarnings("hiding") TKwRemoveAt _kwRemoveAt_,
-        @SuppressWarnings("hiding") PIndexing _indexing_,
+        @SuppressWarnings("hiding") PVal _val_,
         @SuppressWarnings("hiding") TKwIn _kwIn_,
         @SuppressWarnings("hiding") TId _id_)
     {
         // Constructor
         setKwRemoveAt(_kwRemoveAt_);
 
-        setIndexing(_indexing_);
+        setVal(_val_);
 
         setKwIn(_kwIn_);
 
@@ -39,7 +39,7 @@ public final class ARemoveAtFromArrayArrayOp extends PArrayOp
     {
         return new ARemoveAtFromArrayArrayOp(
             cloneNode(this._kwRemoveAt_),
-            cloneNode(this._indexing_),
+            cloneNode(this._val_),
             cloneNode(this._kwIn_),
             cloneNode(this._id_));
     }
@@ -75,16 +75,16 @@ public final class ARemoveAtFromArrayArrayOp extends PArrayOp
         this._kwRemoveAt_ = node;
     }
 
-    public PIndexing getIndexing()
+    public PVal getVal()
     {
-        return this._indexing_;
+        return this._val_;
     }
 
-    public void setIndexing(PIndexing node)
+    public void setVal(PVal node)
     {
-        if(this._indexing_ != null)
+        if(this._val_ != null)
         {
-            this._indexing_.parent(null);
+            this._val_.parent(null);
         }
 
         if(node != null)
@@ -97,7 +97,7 @@ public final class ARemoveAtFromArrayArrayOp extends PArrayOp
             node.parent(this);
         }
 
-        this._indexing_ = node;
+        this._val_ = node;
     }
 
     public TKwIn getKwIn()
@@ -155,7 +155,7 @@ public final class ARemoveAtFromArrayArrayOp extends PArrayOp
     {
         return ""
             + toString(this._kwRemoveAt_)
-            + toString(this._indexing_)
+            + toString(this._val_)
             + toString(this._kwIn_)
             + toString(this._id_);
     }
@@ -170,9 +170,9 @@ public final class ARemoveAtFromArrayArrayOp extends PArrayOp
             return;
         }
 
-        if(this._indexing_ == child)
+        if(this._val_ == child)
         {
-            this._indexing_ = null;
+            this._val_ = null;
             return;
         }
 
@@ -201,9 +201,9 @@ public final class ARemoveAtFromArrayArrayOp extends PArrayOp
             return;
         }
 
-        if(this._indexing_ == oldChild)
+        if(this._val_ == oldChild)
         {
-            setIndexing((PIndexing) newChild);
+            setVal((PVal) newChild);
             return;
         }
 

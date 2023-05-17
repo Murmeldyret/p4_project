@@ -5,21 +5,25 @@ package postfix.node;
 import postfix.analysis.*;
 
 @SuppressWarnings("nls")
-public final class AVariableDeclarationArrayDcl extends PDcl
+public final class AVariableDeclarationArrayInitDcl extends PDcl
 {
     private TType _type_;
     private TKwArray _kwArray_;
     private TId _id_;
+    private TOpAssign _opAssign_;
+    private PArrayExpr _arrayExpr_;
 
-    public AVariableDeclarationArrayDcl()
+    public AVariableDeclarationArrayInitDcl()
     {
         // Constructor
     }
 
-    public AVariableDeclarationArrayDcl(
+    public AVariableDeclarationArrayInitDcl(
         @SuppressWarnings("hiding") TType _type_,
         @SuppressWarnings("hiding") TKwArray _kwArray_,
-        @SuppressWarnings("hiding") TId _id_)
+        @SuppressWarnings("hiding") TId _id_,
+        @SuppressWarnings("hiding") TOpAssign _opAssign_,
+        @SuppressWarnings("hiding") PArrayExpr _arrayExpr_)
     {
         // Constructor
         setType(_type_);
@@ -28,21 +32,27 @@ public final class AVariableDeclarationArrayDcl extends PDcl
 
         setId(_id_);
 
+        setOpAssign(_opAssign_);
+
+        setArrayExpr(_arrayExpr_);
+
     }
 
     @Override
     public Object clone()
     {
-        return new AVariableDeclarationArrayDcl(
+        return new AVariableDeclarationArrayInitDcl(
             cloneNode(this._type_),
             cloneNode(this._kwArray_),
-            cloneNode(this._id_));
+            cloneNode(this._id_),
+            cloneNode(this._opAssign_),
+            cloneNode(this._arrayExpr_));
     }
 
     @Override
     public void apply(Switch sw)
     {
-        ((Analysis) sw).caseAVariableDeclarationArrayDcl(this);
+        ((Analysis) sw).caseAVariableDeclarationArrayInitDcl(this);
     }
 
     public TType getType()
@@ -120,13 +130,65 @@ public final class AVariableDeclarationArrayDcl extends PDcl
         this._id_ = node;
     }
 
+    public TOpAssign getOpAssign()
+    {
+        return this._opAssign_;
+    }
+
+    public void setOpAssign(TOpAssign node)
+    {
+        if(this._opAssign_ != null)
+        {
+            this._opAssign_.parent(null);
+        }
+
+        if(node != null)
+        {
+            if(node.parent() != null)
+            {
+                node.parent().removeChild(node);
+            }
+
+            node.parent(this);
+        }
+
+        this._opAssign_ = node;
+    }
+
+    public PArrayExpr getArrayExpr()
+    {
+        return this._arrayExpr_;
+    }
+
+    public void setArrayExpr(PArrayExpr node)
+    {
+        if(this._arrayExpr_ != null)
+        {
+            this._arrayExpr_.parent(null);
+        }
+
+        if(node != null)
+        {
+            if(node.parent() != null)
+            {
+                node.parent().removeChild(node);
+            }
+
+            node.parent(this);
+        }
+
+        this._arrayExpr_ = node;
+    }
+
     @Override
     public String toString()
     {
         return ""
             + toString(this._type_)
             + toString(this._kwArray_)
-            + toString(this._id_);
+            + toString(this._id_)
+            + toString(this._opAssign_)
+            + toString(this._arrayExpr_);
     }
 
     @Override
@@ -148,6 +210,18 @@ public final class AVariableDeclarationArrayDcl extends PDcl
         if(this._id_ == child)
         {
             this._id_ = null;
+            return;
+        }
+
+        if(this._opAssign_ == child)
+        {
+            this._opAssign_ = null;
+            return;
+        }
+
+        if(this._arrayExpr_ == child)
+        {
+            this._arrayExpr_ = null;
             return;
         }
 
@@ -173,6 +247,18 @@ public final class AVariableDeclarationArrayDcl extends PDcl
         if(this._id_ == oldChild)
         {
             setId((TId) newChild);
+            return;
+        }
+
+        if(this._opAssign_ == oldChild)
+        {
+            setOpAssign((TOpAssign) newChild);
+            return;
+        }
+
+        if(this._arrayExpr_ == oldChild)
+        {
+            setArrayExpr((PArrayExpr) newChild);
             return;
         }
 
