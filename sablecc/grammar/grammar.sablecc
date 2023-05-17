@@ -279,7 +279,10 @@ Productions
      {sum} sop_sum l_par expr r_par {-> New special_syntax.sum (sop_sum , expr )  } ;
 
     filter {-> special_syntax } =
-     {filter} sop_filter l_par expr r_par {-> New special_syntax.filter (sop_filter , expr )  } ;
+     {filter} sop_filter l_par expr sop_comma dcl filterexpr r_par {-> New special_syntax.filter (sop_filter ,  expr , sop_comma , dcl, filterexpr)  } ;
+
+    filterexpr =
+     {filterexpr} sop_comma expr {-> New filterexpr.filterexpr (sop_comma, expr )} ;
 
     groupby {-> special_syntax } =
      {groupby} sop_groupby l_par string r_par {-> New special_syntax.groupby (sop_groupby, string)  } ;
@@ -428,10 +431,13 @@ Abstract Syntax Tree
     
     special_syntax =
         {sum}           sop_sum expr
-        | {filter}      sop_filter expr 
+        | {filter}      sop_filter expr sop_comma dcl filterexpr
         | {groupby}     sop_groupby string 
         | {mean}        sop_mean 
         | {count}       sop_count 
         | {sort_asc}    sop_sort expr sop_comma kw_sort_order_asc 
         | {sort_desc}   sop_sort expr sop_comma kw_sort_order_dsc 
         | {sort}        sop_sort expr;
+
+    filterexpr =
+        {filterexpr} sop_comma expr;
