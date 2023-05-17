@@ -2,6 +2,7 @@ package postfix.semantics.visitors;
 
 import postfix.node.*;
 import postfix.semantics.*;
+import postfix.semantics.Exceptions.InvalidDeclarationException;
 import postfix.semantics.Exceptions.VariableAlreadyDeclaredException;
 import postfix.semantics.IdAttributes.Attributes;
 import postfix.semantics.SymbolTable.Scopekind;
@@ -114,6 +115,18 @@ public class TopDclVisitor extends SemanticVisitor {
             // symbolTable = symbolTable.getFunctionSymbolTable(node.getId().getText());
             // symbolTable = symbolTable.CreateNewScope(node.getId().getText(),
             // Scopekind.functionBlock);
+        }
+    }
+    @Override
+    public void inAFunctionParamFunctionParam(AFunctionParamFunctionParam node) {
+        if (!(node.getDcl() instanceof AVariableDeclarationDcl)) {
+            throw new InvalidDeclarationException("Illegal parameter declaration, is of type " + node.getDcl().getClass().toString() + " should be AVariableDeclarationDcl", node.getDcl());
+        }
+    }
+    @Override
+    public void inAFunctionParamPrimeFunctionParamPrime(AFunctionParamPrimeFunctionParamPrime node) {
+        if (!(node.getDcl() instanceof AVariableDeclarationDcl)) {
+            throw new InvalidDeclarationException("Illegal parameter declaration, is of type " + node.getDcl().getClass().toString() + " should be AVariableDeclarationDcl", node.getDcl());
         }
     }
 
