@@ -548,17 +548,13 @@ public class DepthFirstAdapter extends AnalysisAdapter
         {
             node.getType().apply(this);
         }
+        if(node.getKwArray() != null)
+        {
+            node.getKwArray().apply(this);
+        }
         if(node.getId() != null)
         {
             node.getId().apply(this);
-        }
-        if(node.getOpAssign() != null)
-        {
-            node.getOpAssign().apply(this);
-        }
-        if(node.getArrayOp() != null)
-        {
-            node.getArrayOp().apply(this);
         }
         outAVariableDeclarationArrayDcl(node);
     }
@@ -586,6 +582,43 @@ public class DepthFirstAdapter extends AnalysisAdapter
             node.getId().apply(this);
         }
         outAVariableDeclarationDcl(node);
+    }
+
+    public void inAVariableDeclarationArrayInitDcl(AVariableDeclarationArrayInitDcl node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAVariableDeclarationArrayInitDcl(AVariableDeclarationArrayInitDcl node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAVariableDeclarationArrayInitDcl(AVariableDeclarationArrayInitDcl node)
+    {
+        inAVariableDeclarationArrayInitDcl(node);
+        if(node.getType() != null)
+        {
+            node.getType().apply(this);
+        }
+        if(node.getKwArray() != null)
+        {
+            node.getKwArray().apply(this);
+        }
+        if(node.getId() != null)
+        {
+            node.getId().apply(this);
+        }
+        if(node.getOpAssign() != null)
+        {
+            node.getOpAssign().apply(this);
+        }
+        if(node.getArrayExpr() != null)
+        {
+            node.getArrayExpr().apply(this);
+        }
+        outAVariableDeclarationArrayInitDcl(node);
     }
 
     public void inAConstDeclarationInitializationDcl(AConstDeclarationInitializationDcl node)
@@ -655,9 +688,9 @@ public class DepthFirstAdapter extends AnalysisAdapter
         {
             node.getFunctionParam().apply(this);
         }
-        if(node.getStmts() != null)
+        if(node.getBlock() != null)
         {
-            node.getStmts().apply(this);
+            node.getBlock().apply(this);
         }
         outAFunctionDeclarationDcl(node);
     }
@@ -1437,6 +1470,14 @@ public class DepthFirstAdapter extends AnalysisAdapter
         if(node.getArrayExpr() != null)
         {
             node.getArrayExpr().apply(this);
+        }
+        if(node.getKwTo() != null)
+        {
+            node.getKwTo().apply(this);
+        }
+        if(node.getId() != null)
+        {
+            node.getId().apply(this);
         }
         outAAddToArrayArrayOp(node);
     }

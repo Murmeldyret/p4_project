@@ -24,7 +24,7 @@ public class Compiler {
             // Parse the input.
             Start tree = parser.parse();
 
-            tree.apply(new SemanticVisitor());
+            //tree.apply(new SemanticVisitor());
             tree.apply(new CodeGen());
             // Apply the translation.
             // tree.apply(new Translation());

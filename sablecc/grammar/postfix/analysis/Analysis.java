@@ -32,6 +32,7 @@ public interface Analysis extends Switch
     void caseAVariableDeclarationInitializationDcl(AVariableDeclarationInitializationDcl node);
     void caseAVariableDeclarationArrayDcl(AVariableDeclarationArrayDcl node);
     void caseAVariableDeclarationDcl(AVariableDeclarationDcl node);
+    void caseAVariableDeclarationArrayInitDcl(AVariableDeclarationArrayInitDcl node);
     void caseAConstDeclarationInitializationDcl(AConstDeclarationInitializationDcl node);
     void caseAFunctionDeclarationDcl(AFunctionDeclarationDcl node);
     void caseAFunctionParamFunctionParam(AFunctionParamFunctionParam node);
@@ -132,6 +133,7 @@ public interface Analysis extends Switch
     void caseTKwFunction(TKwFunction node);
     void caseTKwReturn(TKwReturn node);
     void caseTKwBreak(TKwBreak node);
+    void caseTKwArray(TKwArray node);
     void caseTBlank(TBlank node);
     void caseTOpAssign(TOpAssign node);
     void caseTOpPlus(TOpPlus node);

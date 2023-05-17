@@ -195,6 +195,12 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
+    public void caseAVariableDeclarationArrayInitDcl(AVariableDeclarationArrayInitDcl node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
     public void caseAConstDeclarationInitializationDcl(AConstDeclarationInitializationDcl node)
     {
         defaultCase(node);
@@ -784,6 +790,12 @@ public class AnalysisAdapter implements Analysis
 
     @Override
     public void caseTKwBreak(TKwBreak node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTKwArray(TKwArray node)
     {
         defaultCase(node);
     }
