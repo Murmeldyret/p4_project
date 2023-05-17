@@ -235,7 +235,7 @@ Productions
      {remove_at_from_array} kw_remove_at indexing kw_in id {-> New array_op.remove_at_from_array (kw_remove_at , indexing , kw_in , id  )  } ;
 
     array_insert {-> array_op } =
-     {insert_to_array} kw_insert val array_expr kw_in id {-> New array_op.insert_to_array (kw_insert , val , array_expr , kw_in , id  )  } ;
+     {insert_to_array} kw_insert expr array_expr kw_in id {-> New array_op.insert_to_array (kw_insert , expr , array_expr , kw_in , id  )  } ;
 
     val {-> val  } =
      {val_id}               id              {-> New val.val_id (id  )  }  
@@ -270,19 +270,18 @@ Productions
     special_syntax {-> special_syntax  } =
      {sum_op}       sum     {-> sum.special_syntax  }   
     | {filter_op}   filter  {-> filter.special_syntax  }   
-    | {groupby_op}  groupby {-> groupby.special_syntax  }   
     | {mean_op}     mean    {-> mean.special_syntax  }   
     | {count_op}    count   {-> count.special_syntax  }   
     | {sort_op}     sort    {-> sort.special_syntax  } ;
 
     sum {-> special_syntax  } =
-     {sum} sop_sum{-> New special_syntax.sum (sop_sum )  } ;
+     {sum} sop_sum l_par expr r_par {-> New special_syntax.sum (sop_sum , expr )  } ;
 
     filter {-> special_syntax } =
-     {filter} sop_filter l_par expr r_par {-> New special_syntax.filter (sop_filter , expr )  } ;
+     {filter} sop_filter l_par expr sop_comma dcl filterexpr r_par {-> New special_syntax.filter (sop_filter ,  expr , sop_comma , dcl, filterexpr)  } ;
 
-    groupby {-> special_syntax } =
-     {groupby} sop_groupby l_par string r_par {-> New special_syntax.groupby (sop_groupby, string)  } ;
+    filterexpr =
+     {filterexpr} sop_comma expr {-> New filterexpr.filterexpr (sop_comma, expr )} ;
 
     mean {-> special_syntax } =
      {mean} sop_mean {-> New special_syntax.mean (sop_mean)  } ;
@@ -393,7 +392,7 @@ Abstract Syntax Tree
         {add_to_array}              kw_add array_expr kw_to id
         | {remove_from_array}       kw_remove_last kw_in id 
         | {remove_at_from_array}    kw_remove_at indexing kw_in id 
-        | {insert_to_array}         kw_insert val array_expr kw_in id ;
+        | {insert_to_array}         kw_insert expr array_expr kw_in id ;
 
     //måske skal function call ikke være value men expression i stedet, time will tell
     val = 
@@ -427,11 +426,13 @@ Abstract Syntax Tree
         | ;
     
     special_syntax =
-        {sum}           sop_sum 
-        | {filter}      sop_filter expr 
-        | {groupby}     sop_groupby string 
+        {sum}           sop_sum expr
+        | {filter}      sop_filter expr sop_comma dcl filterexpr
         | {mean}        sop_mean 
         | {count}       sop_count 
         | {sort_asc}    sop_sort expr sop_comma kw_sort_order_asc 
         | {sort_desc}   sop_sort expr sop_comma kw_sort_order_dsc 
         | {sort}        sop_sort expr;
+
+    filterexpr =
+        {filterexpr} sop_comma expr;
