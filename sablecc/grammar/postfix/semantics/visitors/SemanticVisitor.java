@@ -272,7 +272,7 @@ public class SemanticVisitor extends DepthFirstAdapter {
     @Override
     public void inAAddToArrayArrayOp(AAddToArrayArrayOp node) {
         String arrayId = node.getId().getText();
-        TType arrayType = symbolTable.get(arrayId).getType();
+        String arrayType = symbolTable.get(arrayId).getType().toString().trim();
 
         if (!symbolTable.containsKey(arrayId)) {
             throw new RuntimeException("Array " + arrayId + " is not declared.");
@@ -287,12 +287,12 @@ public class SemanticVisitor extends DepthFirstAdapter {
         if (!typeVisitor.typeQueue.isEmpty()) {
             expressionType = typeVisitor.typeQueue.remove();
         }
-
-        if (!arrayType.toString().equals(expressionType)) {
+        
+        if (!arrayType.equals(expressionType)) {
             throw new RuntimeException("Type mismatch: Cannot add a value of type " + expressionType
                     + " to array " + arrayId + " of type " + arrayType + ".");
-        }
-        node.getArrayExpr().apply(typeVisitor);
+        }   
+
     }
 
     @Override
@@ -313,9 +313,10 @@ public class SemanticVisitor extends DepthFirstAdapter {
             throw new RuntimeException("Array " + arrayId + " is not declared.");
         }
 
-        if (index != null) {
+        if (index instanceof AValIntnumVal) {
             index.apply(new TypeVisitor(symbolTable, "int"));
-        } else {
+        }
+        else {
             throw new RuntimeException("Index must be of type int.");
         }
 
@@ -331,9 +332,10 @@ public class SemanticVisitor extends DepthFirstAdapter {
             throw new RuntimeException("Array " + arrayId + " is not declared.");
         }
 
-        if (index != null) {
+        if (index instanceof AValIntnumVal) {
             index.apply(new TypeVisitor(symbolTable, "int"));
-        } else {
+        }
+        else {
             throw new RuntimeException("Index must be of type int.");
         }
 
@@ -351,7 +353,6 @@ public class SemanticVisitor extends DepthFirstAdapter {
             throw new RuntimeException("Type mismatch: Cannot add a value of type " + expressionType
                     + " to array " + arrayId + " of type " + arrayType + ".");
         }
-        node.getArrayExpr().apply(typeVisitor);
     }
 
 
