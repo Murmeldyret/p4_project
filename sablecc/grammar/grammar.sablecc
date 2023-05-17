@@ -284,7 +284,7 @@ Productions
      {filterexpr} sop_comma expr {-> New filterexpr.filterexpr (sop_comma, expr )} ;
 
     mean {-> special_syntax } =
-     {mean} sop_mean {-> New special_syntax.mean (sop_mean)  } ;
+     {mean} sop_mean l_par expr r_par {-> New special_syntax.mean (sop_mean, expr)  } ;
 
     count {-> special_syntax  } =
      {count} sop_count{-> New special_syntax.count (sop_count)  } ;
@@ -428,7 +428,7 @@ Abstract Syntax Tree
     special_syntax =
         {sum}           sop_sum expr
         | {filter}      sop_filter expr sop_comma dcl filterexpr
-        | {mean}        sop_mean 
+        | {mean}        sop_mean expr
         | {count}       sop_count 
         | {sort_asc}    sop_sort expr sop_comma kw_sort_order_asc 
         | {sort_desc}   sop_sort expr sop_comma kw_sort_order_dsc 
