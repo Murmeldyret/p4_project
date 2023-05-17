@@ -327,17 +327,7 @@ public class SemanticVisitor extends DepthFirstAdapter {
         PExpr expr = node.getExpr();
         expr.apply(new TypeVisitor(symbolTable, "bool"));
     }
-
-    @Override
-    public void inAMeanSpecialSyntax(AMeanSpecialSyntax node) {
-        super.inAMeanSpecialSyntax(node);
-    }
-
-    @Override
-    public void inACountSpecialSyntax(ACountSpecialSyntax node) {
-        super.inACountSpecialSyntax(node);
-    }
-
+    
     @Override
     public void inASortAscSpecialSyntax(ASortAscSpecialSyntax node) {
         node.getExpr().apply(new TypeVisitor(symbolTable, "string"));
