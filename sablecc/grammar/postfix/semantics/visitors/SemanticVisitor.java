@@ -5,10 +5,7 @@ import postfix.node.*;
 import postfix.semantics.IdAttributes;
 import postfix.semantics.QueueList;
 import postfix.semantics.SymbolTable;
-import postfix.semantics.Exceptions.InvalidBreakStatement;
-import postfix.semantics.Exceptions.InvalidExpressionException;
-import postfix.semantics.Exceptions.invalidFunctionCallException;
-import postfix.semantics.Exceptions.invalidReturnExpression;
+import postfix.semantics.Exceptions.*;
 import postfix.semantics.IdAttributes.Attributes;
 import postfix.semantics.SymbolTable.Scopekind;
 
