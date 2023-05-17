@@ -8,7 +8,7 @@ import postfix.analysis.*;
 public final class AInsertToArrayArrayOp extends PArrayOp
 {
     private TKwInsert _kwInsert_;
-    private PVal _val_;
+    private PExpr _expr_;
     private PArrayExpr _arrayExpr_;
     private TKwIn _kwIn_;
     private TId _id_;
@@ -20,7 +20,7 @@ public final class AInsertToArrayArrayOp extends PArrayOp
 
     public AInsertToArrayArrayOp(
         @SuppressWarnings("hiding") TKwInsert _kwInsert_,
-        @SuppressWarnings("hiding") PVal _val_,
+        @SuppressWarnings("hiding") PExpr _expr_,
         @SuppressWarnings("hiding") PArrayExpr _arrayExpr_,
         @SuppressWarnings("hiding") TKwIn _kwIn_,
         @SuppressWarnings("hiding") TId _id_)
@@ -28,7 +28,7 @@ public final class AInsertToArrayArrayOp extends PArrayOp
         // Constructor
         setKwInsert(_kwInsert_);
 
-        setVal(_val_);
+        setExpr(_expr_);
 
         setArrayExpr(_arrayExpr_);
 
@@ -43,7 +43,7 @@ public final class AInsertToArrayArrayOp extends PArrayOp
     {
         return new AInsertToArrayArrayOp(
             cloneNode(this._kwInsert_),
-            cloneNode(this._val_),
+            cloneNode(this._expr_),
             cloneNode(this._arrayExpr_),
             cloneNode(this._kwIn_),
             cloneNode(this._id_));
@@ -80,16 +80,16 @@ public final class AInsertToArrayArrayOp extends PArrayOp
         this._kwInsert_ = node;
     }
 
-    public PVal getVal()
+    public PExpr getExpr()
     {
-        return this._val_;
+        return this._expr_;
     }
 
-    public void setVal(PVal node)
+    public void setExpr(PExpr node)
     {
-        if(this._val_ != null)
+        if(this._expr_ != null)
         {
-            this._val_.parent(null);
+            this._expr_.parent(null);
         }
 
         if(node != null)
@@ -102,7 +102,7 @@ public final class AInsertToArrayArrayOp extends PArrayOp
             node.parent(this);
         }
 
-        this._val_ = node;
+        this._expr_ = node;
     }
 
     public PArrayExpr getArrayExpr()
@@ -185,7 +185,7 @@ public final class AInsertToArrayArrayOp extends PArrayOp
     {
         return ""
             + toString(this._kwInsert_)
-            + toString(this._val_)
+            + toString(this._expr_)
             + toString(this._arrayExpr_)
             + toString(this._kwIn_)
             + toString(this._id_);
@@ -201,9 +201,9 @@ public final class AInsertToArrayArrayOp extends PArrayOp
             return;
         }
 
-        if(this._val_ == child)
+        if(this._expr_ == child)
         {
-            this._val_ = null;
+            this._expr_ = null;
             return;
         }
 
@@ -238,9 +238,9 @@ public final class AInsertToArrayArrayOp extends PArrayOp
             return;
         }
 
-        if(this._val_ == oldChild)
+        if(this._expr_ == oldChild)
         {
-            setVal((PVal) newChild);
+            setExpr((PExpr) newChild);
             return;
         }
 

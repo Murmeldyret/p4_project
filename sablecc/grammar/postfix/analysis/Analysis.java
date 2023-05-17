@@ -93,12 +93,12 @@ public interface Analysis extends Switch
     void caseASpecialExprPrime(ASpecialExprPrime node);
     void caseASumSpecialSyntax(ASumSpecialSyntax node);
     void caseAFilterSpecialSyntax(AFilterSpecialSyntax node);
-    void caseAGroupbySpecialSyntax(AGroupbySpecialSyntax node);
     void caseAMeanSpecialSyntax(AMeanSpecialSyntax node);
     void caseACountSpecialSyntax(ACountSpecialSyntax node);
     void caseASortAscSpecialSyntax(ASortAscSpecialSyntax node);
     void caseASortDescSpecialSyntax(ASortDescSpecialSyntax node);
     void caseASortSpecialSyntax(ASortSpecialSyntax node);
+    void caseAFilterexprFilterexpr(AFilterexprFilterexpr node);
 
     void caseTNewline(TNewline node);
     void caseTSemi(TSemi node);

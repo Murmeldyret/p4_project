@@ -5,22 +5,22 @@ package postfix.node;
 import postfix.analysis.*;
 
 @SuppressWarnings("nls")
-public final class ASumSpecialSyntax extends PSpecialSyntax
+public final class AFilterexprFilterexpr extends PFilterexpr
 {
-    private TSopSum _sopSum_;
+    private TSopComma _sopComma_;
     private PExpr _expr_;
 
-    public ASumSpecialSyntax()
+    public AFilterexprFilterexpr()
     {
         // Constructor
     }
 
-    public ASumSpecialSyntax(
-        @SuppressWarnings("hiding") TSopSum _sopSum_,
+    public AFilterexprFilterexpr(
+        @SuppressWarnings("hiding") TSopComma _sopComma_,
         @SuppressWarnings("hiding") PExpr _expr_)
     {
         // Constructor
-        setSopSum(_sopSum_);
+        setSopComma(_sopComma_);
 
         setExpr(_expr_);
 
@@ -29,27 +29,27 @@ public final class ASumSpecialSyntax extends PSpecialSyntax
     @Override
     public Object clone()
     {
-        return new ASumSpecialSyntax(
-            cloneNode(this._sopSum_),
+        return new AFilterexprFilterexpr(
+            cloneNode(this._sopComma_),
             cloneNode(this._expr_));
     }
 
     @Override
     public void apply(Switch sw)
     {
-        ((Analysis) sw).caseASumSpecialSyntax(this);
+        ((Analysis) sw).caseAFilterexprFilterexpr(this);
     }
 
-    public TSopSum getSopSum()
+    public TSopComma getSopComma()
     {
-        return this._sopSum_;
+        return this._sopComma_;
     }
 
-    public void setSopSum(TSopSum node)
+    public void setSopComma(TSopComma node)
     {
-        if(this._sopSum_ != null)
+        if(this._sopComma_ != null)
         {
-            this._sopSum_.parent(null);
+            this._sopComma_.parent(null);
         }
 
         if(node != null)
@@ -62,7 +62,7 @@ public final class ASumSpecialSyntax extends PSpecialSyntax
             node.parent(this);
         }
 
-        this._sopSum_ = node;
+        this._sopComma_ = node;
     }
 
     public PExpr getExpr()
@@ -94,7 +94,7 @@ public final class ASumSpecialSyntax extends PSpecialSyntax
     public String toString()
     {
         return ""
-            + toString(this._sopSum_)
+            + toString(this._sopComma_)
             + toString(this._expr_);
     }
 
@@ -102,9 +102,9 @@ public final class ASumSpecialSyntax extends PSpecialSyntax
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
-        if(this._sopSum_ == child)
+        if(this._sopComma_ == child)
         {
-            this._sopSum_ = null;
+            this._sopComma_ = null;
             return;
         }
 
@@ -121,9 +121,9 @@ public final class ASumSpecialSyntax extends PSpecialSyntax
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
-        if(this._sopSum_ == oldChild)
+        if(this._sopComma_ == oldChild)
         {
-            setSopSum((TSopSum) newChild);
+            setSopComma((TSopComma) newChild);
             return;
         }
 
