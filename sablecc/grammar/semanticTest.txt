@@ -1,6 +1,6 @@
 # Csv Operations
-import "data.csv" as ok;
-export ok to ok4;
+# import "data.csv" as ok;
+# export ok to ok4;
 
 # Legal expressions
 # int a = 2+2+2;
