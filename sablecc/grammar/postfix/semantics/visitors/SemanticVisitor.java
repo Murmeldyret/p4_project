@@ -1,5 +1,7 @@
 package postfix.semantics.visitors;
 
+import org.testng.xml.IFileParser;
+
 import postfix.analysis.DepthFirstAdapter;
 import postfix.node.*;
 import postfix.semantics.IdAttributes;
@@ -313,18 +315,17 @@ public class SemanticVisitor extends DepthFirstAdapter {
         String id = node.getId().getText();
         String idType = symbolTable.get(id).getType().getText();
 
+        if (symbolTable.get(node.getId().getText()).getAttributes()!= Attributes.csv) {
+            throw new InvalidExpressionException(idType);
+        }
+
         specialExpr.apply(new TypeVisitor(symbolTable, idType));
     }
 
     @Override
     public void inAFilterSpecialSyntax(AFilterSpecialSyntax node) {
-        // super.inAFilterSpecialSyntax(node);
-
         PExpr expr = node.getExpr();
-
-        // Need to do some check.
-
-        expr.apply(new TypeVisitor(symbolTable, "csv"));
+        expr.apply(new TypeVisitor(symbolTable, "bool"));
     }
 
     @Override

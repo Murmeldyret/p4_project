@@ -240,8 +240,8 @@ public class TypeVisitor extends SemanticVisitor {
     // }
 
     @Override
-    public void inAGroupbySpecialSyntax(AGroupbySpecialSyntax node) {
-        operatorQueue.add(node.getSopGroupby().getText());
+    public void inAFilterSpecialSyntax(AFilterSpecialSyntax node) {
+        operatorQueue.add(node.getSopFilter().getText());
     }
 
     @Override
