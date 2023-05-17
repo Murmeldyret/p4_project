@@ -91,32 +91,32 @@ public class TypeVisitor extends SemanticVisitor {
         }
     }
 
-    @Override
-    public void caseAArrayExprValPrimeArrayExpr(AArrayExprValPrimeArrayExpr node) {
-        inAArrayExprValPrimeArrayExpr(node);
-        if (node.getExpr() != null) {
-            node.getExpr().apply(new TypeVisitor(symbolTable, "int")); // ? skal dette være int?
-        }
-        if (node.getArrayExprPrime() != null) {
-            node.getArrayExprPrime().apply(this);
-        }
-        outAArrayExprValPrimeArrayExpr(node);
-    }
+    // @Override
+    // public void caseAArrayExprValPrimeArrayExpr(AArrayExprValPrimeArrayExpr node) {
+    //     inAArrayExprValPrimeArrayExpr(node);
+    //     if (node.getExpr() != null) {
+    //         node.getExpr().apply(new TypeVisitor(symbolTable, "int")); // ? skal dette være int?
+    //     }
+    //     if (node.getArrayExprPrime() != null) {
+    //         node.getArrayExprPrime().apply(this);
+    //     }
+    //     outAArrayExprValPrimeArrayExpr(node);
+    // }
 
-    @Override
-    public void caseAArrayExprPrimeExtraArrayExprPrime(AArrayExprPrimeExtraArrayExprPrime node) {
-        inAArrayExprPrimeExtraArrayExprPrime(node);
-        if (node.getSopComma() != null) {
-            node.getSopComma().apply(this);
-        }
-        if (node.getExpr() != null) {
-            node.getExpr().apply(new TypeVisitor(symbolTable, "int")); // ? samme spørgsmål her
-        }
-        if (node.getArrayExprPrime() != null) {
-            node.getArrayExprPrime().apply(this);
-        }
-        outAArrayExprPrimeExtraArrayExprPrime(node);
-    }
+    // @Override
+    // public void caseAArrayExprPrimeExtraArrayExprPrime(AArrayExprPrimeExtraArrayExprPrime node) {
+    //     inAArrayExprPrimeExtraArrayExprPrime(node);
+    //     if (node.getSopComma() != null) {
+    //         node.getSopComma().apply(this);
+    //     }
+    //     if (node.getExpr() != null) {
+    //         node.getExpr().apply(new TypeVisitor(symbolTable, "int")); // ? samme spørgsmål her
+    //     }
+    //     if (node.getArrayExprPrime() != null) {
+    //         node.getArrayExprPrime().apply(this);
+    //     }
+    //     outAArrayExprPrimeExtraArrayExprPrime(node);
+    // }
 
     @Override
     public void outAExprValPrimeExpr(AExprValPrimeExpr node) {
