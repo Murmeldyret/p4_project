@@ -1,28 +1,6 @@
 package postfix.semantics.visitors;
 
-import postfix.node.AAndInfixBinInfixOp;
-import postfix.node.ADivisionInfixBinInfixOp;
-import postfix.node.AEqualityInfixBinInfixOp;
-import postfix.node.AExprValPrimeExpr;
-import postfix.node.AFunctionCallFunctionCall;
-import postfix.node.AFunctionCallParamFunctionCallParam;
-import postfix.node.AFunctionCallParamPrimeFunctionCallParamPrime;
-import postfix.node.AGreaterThanEqualInfixBinInfixOp;
-import postfix.node.AGreaterThanInfixBinInfixOp;
-import postfix.node.ALessThanEqualInfixBinInfixOp;
-import postfix.node.ALessThanInfixBinInfixOp;
-import postfix.node.AMinusInfixBinInfixOp;
-import postfix.node.AModuloInfixBinInfixOp;
-import postfix.node.AMultiplicationInfixBinInfixOp;
-import postfix.node.ANotEqualInfixBinInfixOp;
-import postfix.node.AOrInfixBinInfixOp;
-import postfix.node.APlusInfixBinInfixOp;
-import postfix.node.AReturnStmt;
-import postfix.node.AValBoolVal;
-import postfix.node.AValFloatnumVal;
-import postfix.node.AValIdVal;
-import postfix.node.AValIntnumVal;
-import postfix.node.AValStringVal;
+import postfix.node.*;
 import postfix.semantics.QueueList;
 import postfix.semantics.SymbolTable;
 import postfix.semantics.TypeSystem;
@@ -122,7 +100,8 @@ public class TypeVisitor extends SemanticVisitor {
             throw new InvalidExpressionException("Invalid expression type detected", node);
         }
         if (!expressionType.equals(actualExpressionType)) {
-            throw new InvalidExpressionException("Expression produces a value of type " + actualExpressionType + ", must be of type " + expressionType, node);
+            throw new InvalidExpressionException("Expression produces a value of type " + actualExpressionType
+                    + ", must be of type " + expressionType, node);
         }
     }
 
@@ -232,6 +211,21 @@ public class TypeVisitor extends SemanticVisitor {
     // public void outAFunctionCallFunctionCall(AFunctionCallFunctionCall node) {
     // // symbolTable = symbolTable.getOuterSymbolTable();
     // }
+
+    @Override
+    public void inAGroupbySpecialSyntax(AGroupbySpecialSyntax node) {
+        operatorQueue.add(node.getSopGroupby().getText());
+    }
+
+    @Override
+    public void inAMeanSpecialSyntax(AMeanSpecialSyntax node) {
+        operatorQueue.add(node.getSopMean().getText());
+    }
+
+    @Override
+    public void inACountSpecialSyntax(ACountSpecialSyntax node) {
+        operatorQueue.add(node.getSopCount().getText());
+    }
 
     // --PBinInfixOp nodes--
     // Hvis operators var token vil dette være en metode, oh well

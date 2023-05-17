@@ -28,9 +28,10 @@ public class SemanticVisitor extends DepthFirstAdapter {
         this.symbolTable = new SymbolTable(null, SymbolTable.Scopekind.block);
     }
 
+    // TODO: Check igennem den her igen, og se om der er noget der skal ændres
     @Override
     public void inAImportWithoutSeperatorStmt(AImportWithoutSeperatorStmt node) {
-        String filePath = node.getString().getText();
+        String filePath = node.getExpr().toString().trim();
         String variableId = node.getId().getText();
 
         // Remove quotes from filepath string
@@ -136,7 +137,8 @@ public class SemanticVisitor extends DepthFirstAdapter {
         IdAttributes oldId = symbolTable.get(variableId);
 
         if (!oldId.getAttributes().equals(Attributes.variable)) {
-            throw new invalidFunctionCallException("Cannot assign a new value to " + variableId + " because it is not a variable (it is " + oldId.getAttributes().name() + ")" , node);
+            throw new invalidFunctionCallException("Cannot assign a new value to " + variableId
+                    + " because it is not a variable (it is " + oldId.getAttributes().name() + ")", node);
         }
         symbolTable.put(node.getId().getText(),
                 new IdAttributes(node.getId(), oldId.getType(), expression.toString().strip(), oldId.getAttributes()));
@@ -236,26 +238,41 @@ public class SemanticVisitor extends DepthFirstAdapter {
     // --special syntax--
     // @Override
     // public void inAExprSpecialExpr(AExprSpecialExpr node) {
-
     // }
+
+    @Override
+    public void inAExprSpecialExpr(AExprSpecialExpr node) {
+        PSpecialExpr specialExpr = node.getSpecialExpr();
+        String id = node.getId().getText();
+        String idType = symbolTable.get(id).getType().getText();
+
+        specialExpr.apply(new TypeVisitor(symbolTable, idType));
+    }
+
     @Override
     public void inAFilterSpecialSyntax(AFilterSpecialSyntax node) {
-        super.inAFilterSpecialSyntax(node);
+        // super.inAFilterSpecialSyntax(node);
+
+        PExpr expr = node.getExpr();
+
+        // Need to do some check.
+
+        expr.apply(new TypeVisitor(symbolTable, "csv"));
     }
 
     @Override
     public void inASortAscSpecialSyntax(ASortAscSpecialSyntax node) {
-        node.getExpr().apply(new TypeVisitor(symbolTable, "csv"));
+        node.getExpr().apply(new TypeVisitor(symbolTable, "string"));
     }
 
     @Override
     public void inASortDescSpecialSyntax(ASortDescSpecialSyntax node) {
-        node.getExpr().apply(new TypeVisitor(symbolTable, "csv"));
+        node.getExpr().apply(new TypeVisitor(symbolTable, "string"));
     }
 
     @Override
     public void inASortSpecialSyntax(ASortSpecialSyntax node) {
-        node.getExpr().apply(new TypeVisitor(symbolTable, "csv"));
+        node.getExpr().apply(new TypeVisitor(symbolTable, "string"));
     }
 
 }
