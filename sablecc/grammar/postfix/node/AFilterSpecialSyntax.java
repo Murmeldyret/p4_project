@@ -9,6 +9,9 @@ public final class AFilterSpecialSyntax extends PSpecialSyntax
 {
     private TSopFilter _sopFilter_;
     private PExpr _expr_;
+    private TSopComma _sopComma_;
+    private PDcl _dcl_;
+    private PFilterexpr _filterexpr_;
 
     public AFilterSpecialSyntax()
     {
@@ -17,12 +20,21 @@ public final class AFilterSpecialSyntax extends PSpecialSyntax
 
     public AFilterSpecialSyntax(
         @SuppressWarnings("hiding") TSopFilter _sopFilter_,
-        @SuppressWarnings("hiding") PExpr _expr_)
+        @SuppressWarnings("hiding") PExpr _expr_,
+        @SuppressWarnings("hiding") TSopComma _sopComma_,
+        @SuppressWarnings("hiding") PDcl _dcl_,
+        @SuppressWarnings("hiding") PFilterexpr _filterexpr_)
     {
         // Constructor
         setSopFilter(_sopFilter_);
 
         setExpr(_expr_);
+
+        setSopComma(_sopComma_);
+
+        setDcl(_dcl_);
+
+        setFilterexpr(_filterexpr_);
 
     }
 
@@ -31,7 +43,10 @@ public final class AFilterSpecialSyntax extends PSpecialSyntax
     {
         return new AFilterSpecialSyntax(
             cloneNode(this._sopFilter_),
-            cloneNode(this._expr_));
+            cloneNode(this._expr_),
+            cloneNode(this._sopComma_),
+            cloneNode(this._dcl_),
+            cloneNode(this._filterexpr_));
     }
 
     @Override
@@ -90,12 +105,90 @@ public final class AFilterSpecialSyntax extends PSpecialSyntax
         this._expr_ = node;
     }
 
+    public TSopComma getSopComma()
+    {
+        return this._sopComma_;
+    }
+
+    public void setSopComma(TSopComma node)
+    {
+        if(this._sopComma_ != null)
+        {
+            this._sopComma_.parent(null);
+        }
+
+        if(node != null)
+        {
+            if(node.parent() != null)
+            {
+                node.parent().removeChild(node);
+            }
+
+            node.parent(this);
+        }
+
+        this._sopComma_ = node;
+    }
+
+    public PDcl getDcl()
+    {
+        return this._dcl_;
+    }
+
+    public void setDcl(PDcl node)
+    {
+        if(this._dcl_ != null)
+        {
+            this._dcl_.parent(null);
+        }
+
+        if(node != null)
+        {
+            if(node.parent() != null)
+            {
+                node.parent().removeChild(node);
+            }
+
+            node.parent(this);
+        }
+
+        this._dcl_ = node;
+    }
+
+    public PFilterexpr getFilterexpr()
+    {
+        return this._filterexpr_;
+    }
+
+    public void setFilterexpr(PFilterexpr node)
+    {
+        if(this._filterexpr_ != null)
+        {
+            this._filterexpr_.parent(null);
+        }
+
+        if(node != null)
+        {
+            if(node.parent() != null)
+            {
+                node.parent().removeChild(node);
+            }
+
+            node.parent(this);
+        }
+
+        this._filterexpr_ = node;
+    }
+
     @Override
     public String toString()
     {
         return ""
             + toString(this._sopFilter_)
-            + toString(this._expr_);
+            + toString(this._expr_)
+            + toString(this._sopComma_)
+            + toString(this._dcl_)
+            + toString(this._filterexpr_);
     }
 
     @Override
@@ -111,6 +204,24 @@ public final class AFilterSpecialSyntax extends PSpecialSyntax
         if(this._expr_ == child)
         {
             this._expr_ = null;
+            return;
+        }
+
+        if(this._sopComma_ == child)
+        {
+            this._sopComma_ = null;
+            return;
+        }
+
+        if(this._dcl_ == child)
+        {
+            this._dcl_ = null;
+            return;
+        }
+
+        if(this._filterexpr_ == child)
+        {
+            this._filterexpr_ = null;
             return;
         }
 
@@ -130,6 +241,24 @@ public final class AFilterSpecialSyntax extends PSpecialSyntax
         if(this._expr_ == oldChild)
         {
             setExpr((PExpr) newChild);
+            return;
+        }
+
+        if(this._sopComma_ == oldChild)
+        {
+            setSopComma((TSopComma) newChild);
+            return;
+        }
+
+        if(this._dcl_ == oldChild)
+        {
+            setDcl((PDcl) newChild);
+            return;
+        }
+
+        if(this._filterexpr_ == oldChild)
+        {
+            setFilterexpr((PFilterexpr) newChild);
             return;
         }
 

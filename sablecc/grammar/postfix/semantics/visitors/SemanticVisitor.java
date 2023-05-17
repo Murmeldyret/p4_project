@@ -174,7 +174,7 @@ public class SemanticVisitor extends DepthFirstAdapter {
             throw new InvalidExpressionException("Cannot add to a non array type [Line " + node.getId().getLine()
                     + ", Pos " + node.getId().getPos() + "]");
         }
-        // TODO val til expr så et eller andet 
+        node.getExpr().apply(new TypeVisitor(symbolTable,arr.getType().getText()));
     }
 
     @Override

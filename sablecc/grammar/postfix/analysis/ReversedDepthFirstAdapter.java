@@ -1570,9 +1570,9 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
         {
             node.getArrayExpr().apply(this);
         }
-        if(node.getVal() != null)
+        if(node.getExpr() != null)
         {
-            node.getVal().apply(this);
+            node.getExpr().apply(this);
         }
         if(node.getKwInsert() != null)
         {
@@ -2061,6 +2061,10 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
     public void caseASumSpecialSyntax(ASumSpecialSyntax node)
     {
         inASumSpecialSyntax(node);
+        if(node.getExpr() != null)
+        {
+            node.getExpr().apply(this);
+        }
         if(node.getSopSum() != null)
         {
             node.getSopSum().apply(this);
@@ -2082,6 +2086,18 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
     public void caseAFilterSpecialSyntax(AFilterSpecialSyntax node)
     {
         inAFilterSpecialSyntax(node);
+        if(node.getFilterexpr() != null)
+        {
+            node.getFilterexpr().apply(this);
+        }
+        if(node.getDcl() != null)
+        {
+            node.getDcl().apply(this);
+        }
+        if(node.getSopComma() != null)
+        {
+            node.getSopComma().apply(this);
+        }
         if(node.getExpr() != null)
         {
             node.getExpr().apply(this);
@@ -2091,31 +2107,6 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
             node.getSopFilter().apply(this);
         }
         outAFilterSpecialSyntax(node);
-    }
-
-    public void inAGroupbySpecialSyntax(AGroupbySpecialSyntax node)
-    {
-        defaultIn(node);
-    }
-
-    public void outAGroupbySpecialSyntax(AGroupbySpecialSyntax node)
-    {
-        defaultOut(node);
-    }
-
-    @Override
-    public void caseAGroupbySpecialSyntax(AGroupbySpecialSyntax node)
-    {
-        inAGroupbySpecialSyntax(node);
-        if(node.getString() != null)
-        {
-            node.getString().apply(this);
-        }
-        if(node.getSopGroupby() != null)
-        {
-            node.getSopGroupby().apply(this);
-        }
-        outAGroupbySpecialSyntax(node);
     }
 
     public void inAMeanSpecialSyntax(AMeanSpecialSyntax node)
@@ -2249,5 +2240,30 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
             node.getSopSort().apply(this);
         }
         outASortSpecialSyntax(node);
+    }
+
+    public void inAFilterexprFilterexpr(AFilterexprFilterexpr node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAFilterexprFilterexpr(AFilterexprFilterexpr node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAFilterexprFilterexpr(AFilterexprFilterexpr node)
+    {
+        inAFilterexprFilterexpr(node);
+        if(node.getExpr() != null)
+        {
+            node.getExpr().apply(this);
+        }
+        if(node.getSopComma() != null)
+        {
+            node.getSopComma().apply(this);
+        }
+        outAFilterexprFilterexpr(node);
     }
 }
