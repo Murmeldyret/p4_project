@@ -280,7 +280,7 @@ public class SemanticVisitor extends DepthFirstAdapter {
 
         PArrayExpr arrayExpression = node.getArrayExpr();
 
-        TypeVisitor typeVisitor = new TypeVisitor(symbolTable);
+        TypeVisitor typeVisitor = new TypeVisitor(symbolTable, arrayType);
         arrayExpression.apply(typeVisitor);
 
         String expressionType = "";
@@ -291,7 +291,7 @@ public class SemanticVisitor extends DepthFirstAdapter {
         if (!arrayType.equals(expressionType)) {
             throw new RuntimeException("Type mismatch: Cannot add a value of type " + expressionType
                     + " to array " + arrayId + " of type " + arrayType + ".");
-        }   
+        }  
 
     }
 
@@ -341,7 +341,7 @@ public class SemanticVisitor extends DepthFirstAdapter {
 
         PArrayExpr arrayExpression = node.getArrayExpr();
 
-        TypeVisitor typeVisitor = new TypeVisitor(symbolTable);
+        TypeVisitor typeVisitor = new TypeVisitor(symbolTable, arrayType);
         arrayExpression.apply(typeVisitor);
 
         String expressionType = "";
