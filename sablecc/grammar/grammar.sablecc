@@ -270,7 +270,6 @@ Productions
     special_syntax {-> special_syntax  } =
      {sum_op}       sum     {-> sum.special_syntax  }   
     | {filter_op}   filter  {-> filter.special_syntax  }   
-    | {groupby_op}  groupby {-> groupby.special_syntax  }   
     | {mean_op}     mean    {-> mean.special_syntax  }   
     | {count_op}    count   {-> count.special_syntax  }   
     | {sort_op}     sort    {-> sort.special_syntax  } ;
@@ -283,9 +282,6 @@ Productions
 
     filterexpr =
      {filterexpr} sop_comma expr {-> New filterexpr.filterexpr (sop_comma, expr )} ;
-
-    groupby {-> special_syntax } =
-     {groupby} sop_groupby l_par string r_par {-> New special_syntax.groupby (sop_groupby, string)  } ;
 
     mean {-> special_syntax } =
      {mean} sop_mean {-> New special_syntax.mean (sop_mean)  } ;
@@ -432,7 +428,6 @@ Abstract Syntax Tree
     special_syntax =
         {sum}           sop_sum expr
         | {filter}      sop_filter expr sop_comma dcl filterexpr
-        | {groupby}     sop_groupby string 
         | {mean}        sop_mean 
         | {count}       sop_count 
         | {sort_asc}    sop_sort expr sop_comma kw_sort_order_asc 
