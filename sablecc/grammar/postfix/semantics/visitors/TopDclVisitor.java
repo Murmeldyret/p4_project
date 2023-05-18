@@ -120,12 +120,14 @@ public class TopDclVisitor extends SemanticVisitor {
     }
     @Override
     public void inAFunctionParamFunctionParam(AFunctionParamFunctionParam node) {
+        //? skal array dcl's tillades også?
         if (!(node.getDcl() instanceof AVariableDeclarationDcl)) {
             throw new InvalidDeclarationException("Illegal parameter declaration, is of type " + node.getDcl().getClass().toString() + " should be AVariableDeclarationDcl", node.getDcl());
         }
     }
     @Override
     public void inAFunctionParamPrimeFunctionParamPrime(AFunctionParamPrimeFunctionParamPrime node) {
+        //? skal array dcl's tillades også?
         if (!(node.getDcl() instanceof AVariableDeclarationDcl)) {
             throw new InvalidDeclarationException("Illegal parameter declaration, is of type " + node.getDcl().getClass().toString() + " should be AVariableDeclarationDcl", node.getDcl());
         }
