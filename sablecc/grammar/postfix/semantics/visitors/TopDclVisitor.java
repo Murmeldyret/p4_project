@@ -12,6 +12,7 @@ import postfix.semantics.SymbolTable.Scopekind;
  * the right hand side (or statements in case of functions)
  * 
  * @see {@link postfix.semantics.visitors.TypeVisitor}
+ * This class draws inspiration from its namesake in Fischer 8.6
  */
 public class TopDclVisitor extends SemanticVisitor {
 
