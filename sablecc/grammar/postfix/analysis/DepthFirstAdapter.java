@@ -2127,6 +2127,10 @@ public class DepthFirstAdapter extends AnalysisAdapter
         {
             node.getSopMean().apply(this);
         }
+        if(node.getExpr() != null)
+        {
+            node.getExpr().apply(this);
+        }
         outAMeanSpecialSyntax(node);
     }
 
