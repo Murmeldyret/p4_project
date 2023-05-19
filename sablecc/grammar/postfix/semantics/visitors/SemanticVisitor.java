@@ -1,6 +1,5 @@
 package postfix.semantics.visitors;
 
-
 import postfix.analysis.DepthFirstAdapter;
 import postfix.node.*;
 import postfix.semantics.IdAttributes;
@@ -171,7 +170,7 @@ public class SemanticVisitor extends DepthFirstAdapter {
         }
 
         String variableType = symbolTable.get(variableId).getType().getText();
-        TypeVisitor typeVisitor = new TypeVisitor(symbolTable, variableType);
+        TypeVisitor typeVisitor = new TypeVisitor(symbolTable);
         expression.apply(typeVisitor);
 
         String expressionType = "";
