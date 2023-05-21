@@ -17,6 +17,7 @@ import postfix.node.AExprValPrimeExpr;
 import postfix.node.AForLoopStmt;
 import postfix.node.AFunctionCallStmt;
 import postfix.node.AFunctionDeclarationDcl;
+import postfix.node.AImportWithoutSeperatorStmt;
 import postfix.node.AIndexing;
 import postfix.node.AInsertToArrayArrayOp;
 import postfix.node.APrintStatementStmt;
@@ -42,6 +43,15 @@ public class CommonCodeGen extends DepthFirstAdapter {
     public CommonCodeGen(SymbolTable symbolTable, String program) {
         this.symbolTable = symbolTable;
         this.program = program;
+    }
+
+    @Override
+    public void inAImportWithoutSeperatorStmt(AImportWithoutSeperatorStmt node) {
+        CsvVisitorCodeGen csvVisitorCodeGen = new CsvVisitorCodeGen();
+        node.apply(csvVisitorCodeGen);
+
+        program += csvVisitorCodeGen.csvOperations;
+        
     }
 
     @Override
