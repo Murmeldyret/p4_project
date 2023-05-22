@@ -57,13 +57,25 @@ public class CodeGen extends DepthFirstAdapter {
 
     private void codeCompiling() {
         System.out.println(program);
+
+        File slib = new File("compilerdeps/lib.jar");
+        File dlib;
+        File sbuildxml = new File("compilerdeps/build.xml");
+        File dbuildxml;
+        
         File root;
         File sourceFile;
 
         try {
             root = Files.createTempDirectory("java").toFile();
+
+            dlib = new File(root, "lib/lib.jar");
+            FileUtils.copyDirectory(slib, dlib);
+
+            dbuildxml = 
+
             // ! Please fix later
-            sourceFile = new File(root, "program/Main.java");
+            sourceFile = new File(root, "src/Main.java");
             sourceFile.getParentFile().mkdirs();
             Files.write(sourceFile.toPath(), program.getBytes(StandardCharsets.UTF_8));
 
