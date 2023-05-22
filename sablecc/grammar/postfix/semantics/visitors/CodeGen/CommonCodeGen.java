@@ -1,8 +1,6 @@
 package postfix.semantics.visitors.CodeGen;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 import postfix.analysis.DepthFirstAdapter;
 import postfix.node.*;
@@ -16,6 +14,7 @@ public class CommonCodeGen extends DepthFirstAdapter {
     SymbolTable symbolTable;
 
     public String program;
+    private static final String bvm = "blockVariableMap";
 
     // Constructor
     public CommonCodeGen() {
@@ -90,8 +89,10 @@ public class CommonCodeGen extends DepthFirstAdapter {
 
     @Override
     public void inAFunctionDeclarationDcl(AFunctionDeclarationDcl node) {
-        symbolTable.put(node.getId().getText(), new IdAttributes(node.getId(), node.getType(), null, Attributes.function));
+        symbolTable.put(node.getId().getText(),
+                new IdAttributes(node.getId(), node.getType(), null, Attributes.function));
     }
+
     @Override
     public void inAVariableDeclarationInitializationDcl(AVariableDeclarationInitializationDcl node) {
         if (!symbolTable.DeclaredLocally(node.getId().getText().toString())) {
@@ -99,9 +100,15 @@ public class CommonCodeGen extends DepthFirstAdapter {
             String type = typeSwitch(node.getType().getText().toString());
 
             program += type + " " + node.getId().getText().toString() + " = ";
+            program += bvm + ".put("+node.getId().getText()+");";
+            symbolTable.put(node.getId().getText(),
+                    new IdAttributes(node.getId(), node.getType(), null, Attributes.variable));
         }
-        symbolTable.put(node.getId().getText(),
-                new IdAttributes(node.getId(), node.getType(), null, Attributes.variable));
+    }
+    @Override
+    public void inAValIdVal(AValIdVal node) {
+        //TODO objectconveter her
+        program += bvm + ".get("+node.getId().getText()+");";
     }
 
     @Override
@@ -116,7 +123,8 @@ public class CommonCodeGen extends DepthFirstAdapter {
 
     @Override
     public void inABlockStmtBlock(ABlockStmtBlock node) {
-        program += "{";
+        //! LGTM :)))))))
+        program += "{ Map<String,Object> " + bvm + " = new HashMap<>();";
         symbolTable = new SymbolTable(symbolTable, Scopekind.block);
     }
 
@@ -152,7 +160,8 @@ public class CommonCodeGen extends DepthFirstAdapter {
     @Override
     public void inAVariableDeclarationDcl(AVariableDeclarationDcl node) {
         program += typeSwitch(node.getType().getText()) + " " + node.getId().getText();
-        symbolTable.put(node.getId().getText(), new IdAttributes(node.getId(), node.getType(), null, Attributes.variable));
+        symbolTable.put(node.getId().getText(),
+                new IdAttributes(node.getId(), node.getType(), null, Attributes.variable));
     }
 
     // Returns the appropriate types for code generation
