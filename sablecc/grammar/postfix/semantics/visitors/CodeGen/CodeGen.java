@@ -13,12 +13,15 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 
 import javax.tools.*;
 
-import org.apache.commons.io.FileUtils;
+
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.ProjectHelper;
+import org.apache.tools.ant.util.FileUtils;
+
 
 public class CodeGen extends DepthFirstAdapter {
 
@@ -79,10 +82,14 @@ public class CodeGen extends DepthFirstAdapter {
             Files.write(sourceFile.toPath(), program.getBytes(StandardCharsets.UTF_8));
 
             dlib = new File(root, "lib/lib.jar");
+            dlib.getParentFile().mkdirs();
             dbuildxml = new File(root, "build.xml");
+            dbuildxml.getParentFile().mkdirs();
 
-            FileUtils.copyFile(slib, dlib);
-            FileUtils.copyFile(sbuildxml, dbuildxml);
+            System.out.println(slib.getAbsolutePath());
+
+            Files.copy(slib.toPath(), dlib.toPath(), StandardCopyOption.COPY_ATTRIBUTES);
+            Files.copy(sbuildxml.toPath(), dbuildxml.toPath(), StandardCopyOption.COPY_ATTRIBUTES);
 
             Project p = new Project();
             p.setUserProperty("ant.file", dbuildxml.getAbsolutePath());
