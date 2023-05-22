@@ -110,15 +110,17 @@ public class CommonCodeGen extends DepthFirstAdapter {
         // Class<String> bv = String.class;
         // Class<Boolean> ab = boolean.class;
         // Class<Char> ab = char.class;
-        String type = typeSwitch(symbolTable.get(id).getType().getText()); //TODO medmindre det er array eller csv
+        String type = typeSwitch(symbolTable.get(id).getType().getText()); // TODO medmindre det er array eller csv
         String typeWithFirstToUpper = type.substring(0, 1).toUpperCase(Locale.ROOT) + type.substring(1);
-        return "ObjectConverter.convert("+bvm+".get("+id+","+ type + ".class)";
+        return "ObjectConverter.convert(" + bvm + ".get(" + id + "," + type + ".class)";
     }
 
     @Override
     public void inAValIdVal(AValIdVal node) {
         // TODO objectconveter her
-        program += convertIdToVal(node.getId().getText());
+        if (node.parent() instanceof PExpr) { // TODO if Id is on rhs convert
+            program += convertIdToVal(node.getId().getText());
+        }
     }
 
     @Override
