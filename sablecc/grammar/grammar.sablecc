@@ -196,7 +196,7 @@ Productions
     | {csv_operation_insert}    csv_insert      {-> csv_insert.csv_op  } ;
 
     csv_add {-> csv_op  } =
-     {add_to_csv} kw_add orientation array_expr kw_in id {-> New csv_op.add_to_csv (kw_add , orientation , array_expr , kw_in , id  )  } ;
+     {add_to_csv} kw_add orientation expr? array_expr kw_in id {-> New csv_op.add_to_csv (kw_add , orientation, expr , array_expr , kw_in , id  )  } ;
 
     csv_remove {-> csv_op   } =
      {remove_from_csv} kw_remove_last orientation kw_in id {-> New csv_op.remove_from_csv (kw_remove_last , orientation , kw_in , id  )  } ;
@@ -205,7 +205,7 @@ Productions
      {remove_at_from_csv} kw_remove_at orientation val kw_in id {-> New csv_op.remove_at_from_csv (kw_remove_at , orientation , val , kw_in , id  )  } ;
 
     csv_insert {-> csv_op   } =
-     {insert_from_csv} kw_insert orientation val array_expr kw_in id {-> New csv_op.insert_from_csv (kw_insert , orientation , val , array_expr , kw_in , id  )  } ;
+     {insert_from_csv} kw_insert orientation expr? val array_expr kw_in id {-> New csv_op.insert_from_csv (kw_insert , orientation, expr , val , array_expr , kw_in , id  )  } ;
 
     orientation {-> P.orientation  } =
      {csv_orientation_row}      kw_row      {-> New orientation.csv_orientation_row (kw_row  )  }   
@@ -373,10 +373,10 @@ Abstract Syntax Tree
         {type_cast} type ;
     
     csv_op = 
-        {add_to_csv}            kw_add orientation array_expr kw_in id 
+        {add_to_csv}            kw_add orientation expr? array_expr kw_in id 
         | {remove_from_csv}     kw_remove_last orientation kw_in id 
         | {remove_at_from_csv}  kw_remove_at orientation val kw_in id 
-        | {insert_from_csv}     kw_insert orientation val array_expr kw_in id ;
+        | {insert_from_csv}     kw_insert orientation expr? val array_expr kw_in id ;
 
     orientation = 
         {csv_orientation_row}       kw_row 
