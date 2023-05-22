@@ -163,8 +163,8 @@ public class SemanticVisitor extends DepthFirstAdapter {
         if (node.getFunctionParam() != null) {
             node.getFunctionParam().apply(this);
         }
-        if (node.getStmts() != null) {
-            node.getStmts().apply(this);
+        if (node.getBlock() != null) {
+            node.getBlock().apply(this);
         }
         outAFunctionDeclarationDcl(node);
     }
