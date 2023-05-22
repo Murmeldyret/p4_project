@@ -121,9 +121,9 @@ public class DepthFirstAdapter extends AnalysisAdapter
         {
             node.getKwImport().apply(this);
         }
-        if(node.getString() != null)
+        if(node.getExpr() != null)
         {
-            node.getString().apply(this);
+            node.getExpr().apply(this);
         }
         if(node.getKwAs() != null)
         {
@@ -154,9 +154,9 @@ public class DepthFirstAdapter extends AnalysisAdapter
         {
             node.getKwImport().apply(this);
         }
-        if(node.getString() != null)
+        if(node.getExpr() != null)
         {
-            node.getString().apply(this);
+            node.getExpr().apply(this);
         }
         if(node.getKwSeparatedBy() != null)
         {
@@ -291,17 +291,17 @@ public class DepthFirstAdapter extends AnalysisAdapter
         {
             node.getKwFor().apply(this);
         }
-        if(node.getId() != null)
+        if(node.getVal() != null)
         {
-            node.getId().apply(this);
+            node.getVal().apply(this);
         }
         if(node.getKwIn() != null)
         {
             node.getKwIn().apply(this);
         }
-        if(node.getVal() != null)
+        if(node.getId() != null)
         {
-            node.getVal().apply(this);
+            node.getId().apply(this);
         }
         if(node.getBlock() != null)
         {
@@ -1197,9 +1197,9 @@ public class DepthFirstAdapter extends AnalysisAdapter
     public void caseARemoveFromCsvCsvOp(ARemoveFromCsvCsvOp node)
     {
         inARemoveFromCsvCsvOp(node);
-        if(node.getKwRemove() != null)
+        if(node.getKwRemoveLast() != null)
         {
-            node.getKwRemove().apply(this);
+            node.getKwRemoveLast().apply(this);
         }
         if(node.getOrientation() != null)
         {
@@ -1392,9 +1392,9 @@ public class DepthFirstAdapter extends AnalysisAdapter
     public void caseAArrayExprValPrimeArrayExpr(AArrayExprValPrimeArrayExpr node)
     {
         inAArrayExprValPrimeArrayExpr(node);
-        if(node.getVal() != null)
+        if(node.getExpr() != null)
         {
-            node.getVal().apply(this);
+            node.getExpr().apply(this);
         }
         if(node.getArrayExprPrime() != null)
         {
@@ -1421,9 +1421,9 @@ public class DepthFirstAdapter extends AnalysisAdapter
         {
             node.getSopComma().apply(this);
         }
-        if(node.getVal() != null)
+        if(node.getExpr() != null)
         {
-            node.getVal().apply(this);
+            node.getExpr().apply(this);
         }
         if(node.getArrayExprPrime() != null)
         {
@@ -1496,9 +1496,9 @@ public class DepthFirstAdapter extends AnalysisAdapter
     public void caseARemoveFromArrayArrayOp(ARemoveFromArrayArrayOp node)
     {
         inARemoveFromArrayArrayOp(node);
-        if(node.getKwRemove() != null)
+        if(node.getKwRemoveLast() != null)
         {
-            node.getKwRemove().apply(this);
+            node.getKwRemoveLast().apply(this);
         }
         if(node.getKwIn() != null)
         {
@@ -1562,9 +1562,9 @@ public class DepthFirstAdapter extends AnalysisAdapter
         {
             node.getKwInsert().apply(this);
         }
-        if(node.getVal() != null)
+        if(node.getExpr() != null)
         {
-            node.getVal().apply(this);
+            node.getExpr().apply(this);
         }
         if(node.getArrayExpr() != null)
         {
@@ -1579,31 +1579,6 @@ public class DepthFirstAdapter extends AnalysisAdapter
             node.getId().apply(this);
         }
         outAInsertToArrayArrayOp(node);
-    }
-
-    public void inAInsertToVariableArrayOp(AInsertToVariableArrayOp node)
-    {
-        defaultIn(node);
-    }
-
-    public void outAInsertToVariableArrayOp(AInsertToVariableArrayOp node)
-    {
-        defaultOut(node);
-    }
-
-    @Override
-    public void caseAInsertToVariableArrayOp(AInsertToVariableArrayOp node)
-    {
-        inAInsertToVariableArrayOp(node);
-        if(node.getKwInsert() != null)
-        {
-            node.getKwInsert().apply(this);
-        }
-        if(node.getArrayExpr() != null)
-        {
-            node.getArrayExpr().apply(this);
-        }
-        outAInsertToVariableArrayOp(node);
     }
 
     public void inAValIdVal(AValIdVal node)
@@ -2090,6 +2065,10 @@ public class DepthFirstAdapter extends AnalysisAdapter
         {
             node.getSopSum().apply(this);
         }
+        if(node.getExpr() != null)
+        {
+            node.getExpr().apply(this);
+        }
         outASumSpecialSyntax(node);
     }
 
@@ -2115,32 +2094,19 @@ public class DepthFirstAdapter extends AnalysisAdapter
         {
             node.getExpr().apply(this);
         }
+        if(node.getSopComma() != null)
+        {
+            node.getSopComma().apply(this);
+        }
+        if(node.getDcl() != null)
+        {
+            node.getDcl().apply(this);
+        }
+        if(node.getFilterexpr() != null)
+        {
+            node.getFilterexpr().apply(this);
+        }
         outAFilterSpecialSyntax(node);
-    }
-
-    public void inAGroupbySpecialSyntax(AGroupbySpecialSyntax node)
-    {
-        defaultIn(node);
-    }
-
-    public void outAGroupbySpecialSyntax(AGroupbySpecialSyntax node)
-    {
-        defaultOut(node);
-    }
-
-    @Override
-    public void caseAGroupbySpecialSyntax(AGroupbySpecialSyntax node)
-    {
-        inAGroupbySpecialSyntax(node);
-        if(node.getSopGroupby() != null)
-        {
-            node.getSopGroupby().apply(this);
-        }
-        if(node.getString() != null)
-        {
-            node.getString().apply(this);
-        }
-        outAGroupbySpecialSyntax(node);
     }
 
     public void inAMeanSpecialSyntax(AMeanSpecialSyntax node)
@@ -2274,5 +2240,30 @@ public class DepthFirstAdapter extends AnalysisAdapter
             node.getExpr().apply(this);
         }
         outASortSpecialSyntax(node);
+    }
+
+    public void inAFilterexprFilterexpr(AFilterexprFilterexpr node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAFilterexprFilterexpr(AFilterexprFilterexpr node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAFilterexprFilterexpr(AFilterexprFilterexpr node)
+    {
+        inAFilterexprFilterexpr(node);
+        if(node.getSopComma() != null)
+        {
+            node.getSopComma().apply(this);
+        }
+        if(node.getExpr() != null)
+        {
+            node.getExpr().apply(this);
+        }
+        outAFilterexprFilterexpr(node);
     }
 }

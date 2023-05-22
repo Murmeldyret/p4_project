@@ -5,51 +5,51 @@ package postfix.node;
 import postfix.analysis.*;
 
 @SuppressWarnings("nls")
-public final class AGroupbySpecialSyntax extends PSpecialSyntax
+public final class AFilterexprFilterexpr extends PFilterexpr
 {
-    private TSopGroupby _sopGroupby_;
-    private TString _string_;
+    private TSopComma _sopComma_;
+    private PExpr _expr_;
 
-    public AGroupbySpecialSyntax()
+    public AFilterexprFilterexpr()
     {
         // Constructor
     }
 
-    public AGroupbySpecialSyntax(
-        @SuppressWarnings("hiding") TSopGroupby _sopGroupby_,
-        @SuppressWarnings("hiding") TString _string_)
+    public AFilterexprFilterexpr(
+        @SuppressWarnings("hiding") TSopComma _sopComma_,
+        @SuppressWarnings("hiding") PExpr _expr_)
     {
         // Constructor
-        setSopGroupby(_sopGroupby_);
+        setSopComma(_sopComma_);
 
-        setString(_string_);
+        setExpr(_expr_);
 
     }
 
     @Override
     public Object clone()
     {
-        return new AGroupbySpecialSyntax(
-            cloneNode(this._sopGroupby_),
-            cloneNode(this._string_));
+        return new AFilterexprFilterexpr(
+            cloneNode(this._sopComma_),
+            cloneNode(this._expr_));
     }
 
     @Override
     public void apply(Switch sw)
     {
-        ((Analysis) sw).caseAGroupbySpecialSyntax(this);
+        ((Analysis) sw).caseAFilterexprFilterexpr(this);
     }
 
-    public TSopGroupby getSopGroupby()
+    public TSopComma getSopComma()
     {
-        return this._sopGroupby_;
+        return this._sopComma_;
     }
 
-    public void setSopGroupby(TSopGroupby node)
+    public void setSopComma(TSopComma node)
     {
-        if(this._sopGroupby_ != null)
+        if(this._sopComma_ != null)
         {
-            this._sopGroupby_.parent(null);
+            this._sopComma_.parent(null);
         }
 
         if(node != null)
@@ -62,19 +62,19 @@ public final class AGroupbySpecialSyntax extends PSpecialSyntax
             node.parent(this);
         }
 
-        this._sopGroupby_ = node;
+        this._sopComma_ = node;
     }
 
-    public TString getString()
+    public PExpr getExpr()
     {
-        return this._string_;
+        return this._expr_;
     }
 
-    public void setString(TString node)
+    public void setExpr(PExpr node)
     {
-        if(this._string_ != null)
+        if(this._expr_ != null)
         {
-            this._string_.parent(null);
+            this._expr_.parent(null);
         }
 
         if(node != null)
@@ -87,30 +87,30 @@ public final class AGroupbySpecialSyntax extends PSpecialSyntax
             node.parent(this);
         }
 
-        this._string_ = node;
+        this._expr_ = node;
     }
 
     @Override
     public String toString()
     {
         return ""
-            + toString(this._sopGroupby_)
-            + toString(this._string_);
+            + toString(this._sopComma_)
+            + toString(this._expr_);
     }
 
     @Override
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
-        if(this._sopGroupby_ == child)
+        if(this._sopComma_ == child)
         {
-            this._sopGroupby_ = null;
+            this._sopComma_ = null;
             return;
         }
 
-        if(this._string_ == child)
+        if(this._expr_ == child)
         {
-            this._string_ = null;
+            this._expr_ = null;
             return;
         }
 
@@ -121,15 +121,15 @@ public final class AGroupbySpecialSyntax extends PSpecialSyntax
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
-        if(this._sopGroupby_ == oldChild)
+        if(this._sopComma_ == oldChild)
         {
-            setSopGroupby((TSopGroupby) newChild);
+            setSopComma((TSopComma) newChild);
             return;
         }
 
-        if(this._string_ == oldChild)
+        if(this._expr_ == oldChild)
         {
-            setString((TString) newChild);
+            setExpr((PExpr) newChild);
             return;
         }
 

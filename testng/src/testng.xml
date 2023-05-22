@@ -1,0 +1,15 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<suite name = "Compiler test Suite">
+   <test name = "Compiler test">
+      <classes>
+<!-- Import new test classes here. They will first show up in testing when actual tests exists in the class-->
+         <class name = "IdAttributesTest" />
+         <class name = "SampleTest" />
+         <class name = "QueueListTest" />
+         <class name = "SemanticVisitorTest" />
+         <class name = "SymbolTableTest" />
+         <class name = "TypeSystemTest" />
+         <class name = "TypeVisitorTest" />      
+      </classes>
+   </test>
+</suite>

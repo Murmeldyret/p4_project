@@ -5,6 +5,10 @@ import postfix.semantics.Exceptions.*;
 
 
 import postfix.node.*;
+import postfix.semantics.QueueList;
+import postfix.semantics.SymbolTable;
+import postfix.semantics.TypeSystem;
+import postfix.semantics.Exceptions.*;
 
 /**
  * Represents a type checker whose responsibilty is to type check expressions
@@ -25,6 +29,7 @@ public class TypeVisitor extends SemanticVisitor {
      * 
      * @param symbolTable
      */
+    @Deprecated(forRemoval = true)
     public TypeVisitor(SymbolTable symbolTable) {
         super(symbolTable);
         typeQueue = new QueueList<String>();
@@ -50,6 +55,8 @@ public class TypeVisitor extends SemanticVisitor {
     protected QueueList<String> simplifiedTypeQueue;
     /** The type that an expression or return statement must return */
     protected String expressionType;
+    /** The type that an expression actually produces */
+    protected String actualExpressionType;
 
     @Override
     public void inAReturnStmt(AReturnStmt node) {
@@ -59,6 +66,11 @@ public class TypeVisitor extends SemanticVisitor {
 
     @Override
     public void outAReturnStmt(AReturnStmt node) {
+        if (!(expressionType.equals(actualExpressionType))) {
+            throw new invalidReturnExpression("Cannot return a value of type " + actualExpressionType
+                    + " on a function that has a return type of " + expressionType + " (Line: "
+                    + node.getKwReturn().getLine() + ")");
+        }
         // TODO skal lige testes
         // String expr = typeCheckExpression();
         // if (!expr.equals(expressionType)) {
@@ -74,6 +86,7 @@ public class TypeVisitor extends SemanticVisitor {
     // node.getExpr().apply(this);
     // }
 
+    // normal expressions
     @Override
     public void inAExprValPrimeExpr(AExprValPrimeExpr node) {
 
@@ -82,13 +95,44 @@ public class TypeVisitor extends SemanticVisitor {
         }
     }
 
+    // @Override
+    // public void caseAArrayExprValPrimeArrayExpr(AArrayExprValPrimeArrayExpr node) {
+    //     inAArrayExprValPrimeArrayExpr(node);
+    //     if (node.getExpr() != null) {
+    //         node.getExpr().apply(new TypeVisitor(symbolTable, "int")); // ? skal dette være int?
+    //     }
+    //     if (node.getArrayExprPrime() != null) {
+    //         node.getArrayExprPrime().apply(this);
+    //     }
+    //     outAArrayExprValPrimeArrayExpr(node);
+    // }
+
+    // @Override
+    // public void caseAArrayExprPrimeExtraArrayExprPrime(AArrayExprPrimeExtraArrayExprPrime node) {
+    //     inAArrayExprPrimeExtraArrayExprPrime(node);
+    //     if (node.getSopComma() != null) {
+    //         node.getSopComma().apply(this);
+    //     }
+    //     if (node.getExpr() != null) {
+    //         node.getExpr().apply(new TypeVisitor(symbolTable, "int")); // ? samme spørgsmål her
+    //     }
+    //     if (node.getArrayExprPrime() != null) {
+    //         node.getArrayExprPrime().apply(this);
+    //     }
+    //     outAArrayExprPrimeExtraArrayExprPrime(node);
+    // }
+
     @Override
     public void outAExprValPrimeExpr(AExprValPrimeExpr node) {
-        String resultingType = typeCheckExpression(node);
-    
+        actualExpressionType = typeCheckExpression(node);
+
         // Validate the resulting type and throw an exception if it's invalid
-        if ("INVALID_TYPE".equals(resultingType)) {
+        if ("INVALID_TYPE".equals(actualExpressionType)) {
             throw new InvalidExpressionException("Invalid expression type detected", node);
+        }
+        if (!expressionType.equals(actualExpressionType)) {
+            throw new InvalidExpressionException("Expression produces a value of type " + actualExpressionType
+                    + ", must be of type " + expressionType, node);
         }
     }
 
@@ -196,7 +240,7 @@ public class TypeVisitor extends SemanticVisitor {
 
     // @Override
     // public void outAFunctionCallFunctionCall(AFunctionCallFunctionCall node) {
-    //     // symbolTable = symbolTable.getOuterSymbolTable();
+    // // symbolTable = symbolTable.getOuterSymbolTable();
     // }
 
     // --PBinInfixOp nodes--

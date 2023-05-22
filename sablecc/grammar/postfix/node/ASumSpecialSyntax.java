@@ -8,6 +8,7 @@ import postfix.analysis.*;
 public final class ASumSpecialSyntax extends PSpecialSyntax
 {
     private TSopSum _sopSum_;
+    private PExpr _expr_;
 
     public ASumSpecialSyntax()
     {
@@ -15,10 +16,13 @@ public final class ASumSpecialSyntax extends PSpecialSyntax
     }
 
     public ASumSpecialSyntax(
-        @SuppressWarnings("hiding") TSopSum _sopSum_)
+        @SuppressWarnings("hiding") TSopSum _sopSum_,
+        @SuppressWarnings("hiding") PExpr _expr_)
     {
         // Constructor
         setSopSum(_sopSum_);
+
+        setExpr(_expr_);
 
     }
 
@@ -26,7 +30,8 @@ public final class ASumSpecialSyntax extends PSpecialSyntax
     public Object clone()
     {
         return new ASumSpecialSyntax(
-            cloneNode(this._sopSum_));
+            cloneNode(this._sopSum_),
+            cloneNode(this._expr_));
     }
 
     @Override
@@ -60,11 +65,37 @@ public final class ASumSpecialSyntax extends PSpecialSyntax
         this._sopSum_ = node;
     }
 
+    public PExpr getExpr()
+    {
+        return this._expr_;
+    }
+
+    public void setExpr(PExpr node)
+    {
+        if(this._expr_ != null)
+        {
+            this._expr_.parent(null);
+        }
+
+        if(node != null)
+        {
+            if(node.parent() != null)
+            {
+                node.parent().removeChild(node);
+            }
+
+            node.parent(this);
+        }
+
+        this._expr_ = node;
+    }
+
     @Override
     public String toString()
     {
         return ""
-            + toString(this._sopSum_);
+            + toString(this._sopSum_)
+            + toString(this._expr_);
     }
 
     @Override
@@ -74,6 +105,12 @@ public final class ASumSpecialSyntax extends PSpecialSyntax
         if(this._sopSum_ == child)
         {
             this._sopSum_ = null;
+            return;
+        }
+
+        if(this._expr_ == child)
+        {
+            this._expr_ = null;
             return;
         }
 
@@ -87,6 +124,12 @@ public final class ASumSpecialSyntax extends PSpecialSyntax
         if(this._sopSum_ == oldChild)
         {
             setSopSum((TSopSum) newChild);
+            return;
+        }
+
+        if(this._expr_ == oldChild)
+        {
+            setExpr((PExpr) newChild);
             return;
         }
 

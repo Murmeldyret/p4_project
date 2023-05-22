@@ -417,12 +417,6 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
-    public void caseAInsertToVariableArrayOp(AInsertToVariableArrayOp node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
     public void caseAValIdVal(AValIdVal node)
     {
         defaultCase(node);
@@ -567,12 +561,6 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
-    public void caseAGroupbySpecialSyntax(AGroupbySpecialSyntax node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
     public void caseAMeanSpecialSyntax(AMeanSpecialSyntax node)
     {
         defaultCase(node);
@@ -598,6 +586,12 @@ public class AnalysisAdapter implements Analysis
 
     @Override
     public void caseASortSpecialSyntax(ASortSpecialSyntax node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAFilterexprFilterexpr(AFilterexprFilterexpr node)
     {
         defaultCase(node);
     }
@@ -951,7 +945,7 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
-    public void caseTKwRemove(TKwRemove node)
+    public void caseTKwRemoveLast(TKwRemoveLast node)
     {
         defaultCase(node);
     }

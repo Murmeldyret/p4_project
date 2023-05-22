@@ -41,5 +41,6 @@ public class Compiler {
 
     private void handleException(Exception e, String message) {
         System.out.println(e.getMessage() + " " + message);
+        e.printStackTrace();
     }
 }

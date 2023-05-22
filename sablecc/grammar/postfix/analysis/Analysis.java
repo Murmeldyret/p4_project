@@ -69,7 +69,6 @@ public interface Analysis extends Switch
     void caseARemoveFromArrayArrayOp(ARemoveFromArrayArrayOp node);
     void caseARemoveAtFromArrayArrayOp(ARemoveAtFromArrayArrayOp node);
     void caseAInsertToArrayArrayOp(AInsertToArrayArrayOp node);
-    void caseAInsertToVariableArrayOp(AInsertToVariableArrayOp node);
     void caseAValIdVal(AValIdVal node);
     void caseAValFunctionCallVal(AValFunctionCallVal node);
     void caseAValFloatnumVal(AValFloatnumVal node);
@@ -94,12 +93,12 @@ public interface Analysis extends Switch
     void caseASpecialExprPrime(ASpecialExprPrime node);
     void caseASumSpecialSyntax(ASumSpecialSyntax node);
     void caseAFilterSpecialSyntax(AFilterSpecialSyntax node);
-    void caseAGroupbySpecialSyntax(AGroupbySpecialSyntax node);
     void caseAMeanSpecialSyntax(AMeanSpecialSyntax node);
     void caseACountSpecialSyntax(ACountSpecialSyntax node);
     void caseASortAscSpecialSyntax(ASortAscSpecialSyntax node);
     void caseASortDescSpecialSyntax(ASortDescSpecialSyntax node);
     void caseASortSpecialSyntax(ASortSpecialSyntax node);
+    void caseAFilterexprFilterexpr(AFilterexprFilterexpr node);
 
     void caseTNewline(TNewline node);
     void caseTSemi(TSemi node);
@@ -159,7 +158,7 @@ public interface Analysis extends Switch
     void caseTSopSort(TSopSort node);
     void caseTSopCount(TSopCount node);
     void caseTKwAdd(TKwAdd node);
-    void caseTKwRemove(TKwRemove node);
+    void caseTKwRemoveLast(TKwRemoveLast node);
     void caseTKwRemoveAt(TKwRemoveAt node);
     void caseTKwInsert(TKwInsert node);
     void caseTKwColumn(TKwColumn node);

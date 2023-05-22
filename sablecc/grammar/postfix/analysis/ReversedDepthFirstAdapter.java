@@ -125,9 +125,9 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
         {
             node.getKwAs().apply(this);
         }
-        if(node.getString() != null)
+        if(node.getExpr() != null)
         {
-            node.getString().apply(this);
+            node.getExpr().apply(this);
         }
         if(node.getKwImport() != null)
         {
@@ -166,9 +166,9 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
         {
             node.getKwSeparatedBy().apply(this);
         }
-        if(node.getString() != null)
+        if(node.getExpr() != null)
         {
-            node.getString().apply(this);
+            node.getExpr().apply(this);
         }
         if(node.getKwImport() != null)
         {
@@ -291,17 +291,17 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
         {
             node.getBlock().apply(this);
         }
-        if(node.getVal() != null)
+        if(node.getId() != null)
         {
-            node.getVal().apply(this);
+            node.getId().apply(this);
         }
         if(node.getKwIn() != null)
         {
             node.getKwIn().apply(this);
         }
-        if(node.getId() != null)
+        if(node.getVal() != null)
         {
-            node.getId().apply(this);
+            node.getVal().apply(this);
         }
         if(node.getKwFor() != null)
         {
@@ -1209,9 +1209,9 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
         {
             node.getOrientation().apply(this);
         }
-        if(node.getKwRemove() != null)
+        if(node.getKwRemoveLast() != null)
         {
-            node.getKwRemove().apply(this);
+            node.getKwRemoveLast().apply(this);
         }
         outARemoveFromCsvCsvOp(node);
     }
@@ -1396,9 +1396,9 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
         {
             node.getArrayExprPrime().apply(this);
         }
-        if(node.getVal() != null)
+        if(node.getExpr() != null)
         {
-            node.getVal().apply(this);
+            node.getExpr().apply(this);
         }
         outAArrayExprValPrimeArrayExpr(node);
     }
@@ -1421,9 +1421,9 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
         {
             node.getArrayExprPrime().apply(this);
         }
-        if(node.getVal() != null)
+        if(node.getExpr() != null)
         {
-            node.getVal().apply(this);
+            node.getExpr().apply(this);
         }
         if(node.getSopComma() != null)
         {
@@ -1504,9 +1504,9 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
         {
             node.getKwIn().apply(this);
         }
-        if(node.getKwRemove() != null)
+        if(node.getKwRemoveLast() != null)
         {
-            node.getKwRemove().apply(this);
+            node.getKwRemoveLast().apply(this);
         }
         outARemoveFromArrayArrayOp(node);
     }
@@ -1570,40 +1570,15 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
         {
             node.getArrayExpr().apply(this);
         }
-        if(node.getVal() != null)
+        if(node.getExpr() != null)
         {
-            node.getVal().apply(this);
+            node.getExpr().apply(this);
         }
         if(node.getKwInsert() != null)
         {
             node.getKwInsert().apply(this);
         }
         outAInsertToArrayArrayOp(node);
-    }
-
-    public void inAInsertToVariableArrayOp(AInsertToVariableArrayOp node)
-    {
-        defaultIn(node);
-    }
-
-    public void outAInsertToVariableArrayOp(AInsertToVariableArrayOp node)
-    {
-        defaultOut(node);
-    }
-
-    @Override
-    public void caseAInsertToVariableArrayOp(AInsertToVariableArrayOp node)
-    {
-        inAInsertToVariableArrayOp(node);
-        if(node.getArrayExpr() != null)
-        {
-            node.getArrayExpr().apply(this);
-        }
-        if(node.getKwInsert() != null)
-        {
-            node.getKwInsert().apply(this);
-        }
-        outAInsertToVariableArrayOp(node);
     }
 
     public void inAValIdVal(AValIdVal node)
@@ -2086,6 +2061,10 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
     public void caseASumSpecialSyntax(ASumSpecialSyntax node)
     {
         inASumSpecialSyntax(node);
+        if(node.getExpr() != null)
+        {
+            node.getExpr().apply(this);
+        }
         if(node.getSopSum() != null)
         {
             node.getSopSum().apply(this);
@@ -2107,6 +2086,18 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
     public void caseAFilterSpecialSyntax(AFilterSpecialSyntax node)
     {
         inAFilterSpecialSyntax(node);
+        if(node.getFilterexpr() != null)
+        {
+            node.getFilterexpr().apply(this);
+        }
+        if(node.getDcl() != null)
+        {
+            node.getDcl().apply(this);
+        }
+        if(node.getSopComma() != null)
+        {
+            node.getSopComma().apply(this);
+        }
         if(node.getExpr() != null)
         {
             node.getExpr().apply(this);
@@ -2116,31 +2107,6 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
             node.getSopFilter().apply(this);
         }
         outAFilterSpecialSyntax(node);
-    }
-
-    public void inAGroupbySpecialSyntax(AGroupbySpecialSyntax node)
-    {
-        defaultIn(node);
-    }
-
-    public void outAGroupbySpecialSyntax(AGroupbySpecialSyntax node)
-    {
-        defaultOut(node);
-    }
-
-    @Override
-    public void caseAGroupbySpecialSyntax(AGroupbySpecialSyntax node)
-    {
-        inAGroupbySpecialSyntax(node);
-        if(node.getString() != null)
-        {
-            node.getString().apply(this);
-        }
-        if(node.getSopGroupby() != null)
-        {
-            node.getSopGroupby().apply(this);
-        }
-        outAGroupbySpecialSyntax(node);
     }
 
     public void inAMeanSpecialSyntax(AMeanSpecialSyntax node)
@@ -2274,5 +2240,30 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
             node.getSopSort().apply(this);
         }
         outASortSpecialSyntax(node);
+    }
+
+    public void inAFilterexprFilterexpr(AFilterexprFilterexpr node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAFilterexprFilterexpr(AFilterexprFilterexpr node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAFilterexprFilterexpr(AFilterexprFilterexpr node)
+    {
+        inAFilterexprFilterexpr(node);
+        if(node.getExpr() != null)
+        {
+            node.getExpr().apply(this);
+        }
+        if(node.getSopComma() != null)
+        {
+            node.getSopComma().apply(this);
+        }
+        outAFilterexprFilterexpr(node);
     }
 }
