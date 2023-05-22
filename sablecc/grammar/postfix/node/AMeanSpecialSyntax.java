@@ -8,6 +8,7 @@ import postfix.analysis.*;
 public final class AMeanSpecialSyntax extends PSpecialSyntax
 {
     private TSopMean _sopMean_;
+    private PExpr _expr_;
 
     public AMeanSpecialSyntax()
     {
@@ -15,10 +16,13 @@ public final class AMeanSpecialSyntax extends PSpecialSyntax
     }
 
     public AMeanSpecialSyntax(
-        @SuppressWarnings("hiding") TSopMean _sopMean_)
+        @SuppressWarnings("hiding") TSopMean _sopMean_,
+        @SuppressWarnings("hiding") PExpr _expr_)
     {
         // Constructor
         setSopMean(_sopMean_);
+
+        setExpr(_expr_);
 
     }
 
@@ -26,7 +30,8 @@ public final class AMeanSpecialSyntax extends PSpecialSyntax
     public Object clone()
     {
         return new AMeanSpecialSyntax(
-            cloneNode(this._sopMean_));
+            cloneNode(this._sopMean_),
+            cloneNode(this._expr_));
     }
 
     @Override
@@ -60,11 +65,37 @@ public final class AMeanSpecialSyntax extends PSpecialSyntax
         this._sopMean_ = node;
     }
 
+    public PExpr getExpr()
+    {
+        return this._expr_;
+    }
+
+    public void setExpr(PExpr node)
+    {
+        if(this._expr_ != null)
+        {
+            this._expr_.parent(null);
+        }
+
+        if(node != null)
+        {
+            if(node.parent() != null)
+            {
+                node.parent().removeChild(node);
+            }
+
+            node.parent(this);
+        }
+
+        this._expr_ = node;
+    }
+
     @Override
     public String toString()
     {
         return ""
-            + toString(this._sopMean_);
+            + toString(this._sopMean_)
+            + toString(this._expr_);
     }
 
     @Override
@@ -74,6 +105,12 @@ public final class AMeanSpecialSyntax extends PSpecialSyntax
         if(this._sopMean_ == child)
         {
             this._sopMean_ = null;
+            return;
+        }
+
+        if(this._expr_ == child)
+        {
+            this._expr_ = null;
             return;
         }
 
@@ -87,6 +124,12 @@ public final class AMeanSpecialSyntax extends PSpecialSyntax
         if(this._sopMean_ == oldChild)
         {
             setSopMean((TSopMean) newChild);
+            return;
+        }
+
+        if(this._expr_ == oldChild)
+        {
+            setExpr((PExpr) newChild);
             return;
         }
 

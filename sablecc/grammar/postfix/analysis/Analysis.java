@@ -54,6 +54,7 @@ public interface Analysis extends Switch
     void caseAExprArrayExpr(AExprArrayExpr node);
     void caseAExprPrimeOperatorValPrimeExprPrime(AExprPrimeOperatorValPrimeExprPrime node);
     void caseAExprPrime(AExprPrime node);
+    void caseATypeCastTypeCast(ATypeCastTypeCast node);
     void caseAAddToCsvCsvOp(AAddToCsvCsvOp node);
     void caseARemoveFromCsvCsvOp(ARemoveFromCsvCsvOp node);
     void caseARemoveAtFromCsvCsvOp(ARemoveAtFromCsvCsvOp node);

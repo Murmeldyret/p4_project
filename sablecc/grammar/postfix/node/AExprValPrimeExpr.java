@@ -8,6 +8,7 @@ import postfix.analysis.*;
 public final class AExprValPrimeExpr extends PExpr
 {
     private TBopNot _bopNot_;
+    private PTypeCast _typeCast_;
     private PVal _val_;
     private PExprPrime _exprPrime_;
 
@@ -18,11 +19,14 @@ public final class AExprValPrimeExpr extends PExpr
 
     public AExprValPrimeExpr(
         @SuppressWarnings("hiding") TBopNot _bopNot_,
+        @SuppressWarnings("hiding") PTypeCast _typeCast_,
         @SuppressWarnings("hiding") PVal _val_,
         @SuppressWarnings("hiding") PExprPrime _exprPrime_)
     {
         // Constructor
         setBopNot(_bopNot_);
+
+        setTypeCast(_typeCast_);
 
         setVal(_val_);
 
@@ -35,6 +39,7 @@ public final class AExprValPrimeExpr extends PExpr
     {
         return new AExprValPrimeExpr(
             cloneNode(this._bopNot_),
+            cloneNode(this._typeCast_),
             cloneNode(this._val_),
             cloneNode(this._exprPrime_));
     }
@@ -68,6 +73,31 @@ public final class AExprValPrimeExpr extends PExpr
         }
 
         this._bopNot_ = node;
+    }
+
+    public PTypeCast getTypeCast()
+    {
+        return this._typeCast_;
+    }
+
+    public void setTypeCast(PTypeCast node)
+    {
+        if(this._typeCast_ != null)
+        {
+            this._typeCast_.parent(null);
+        }
+
+        if(node != null)
+        {
+            if(node.parent() != null)
+            {
+                node.parent().removeChild(node);
+            }
+
+            node.parent(this);
+        }
+
+        this._typeCast_ = node;
     }
 
     public PVal getVal()
@@ -125,6 +155,7 @@ public final class AExprValPrimeExpr extends PExpr
     {
         return ""
             + toString(this._bopNot_)
+            + toString(this._typeCast_)
             + toString(this._val_)
             + toString(this._exprPrime_);
     }
@@ -136,6 +167,12 @@ public final class AExprValPrimeExpr extends PExpr
         if(this._bopNot_ == child)
         {
             this._bopNot_ = null;
+            return;
+        }
+
+        if(this._typeCast_ == child)
+        {
+            this._typeCast_ = null;
             return;
         }
 
@@ -161,6 +198,12 @@ public final class AExprValPrimeExpr extends PExpr
         if(this._bopNot_ == oldChild)
         {
             setBopNot((TBopNot) newChild);
+            return;
+        }
+
+        if(this._typeCast_ == oldChild)
+        {
+            setTypeCast((PTypeCast) newChild);
             return;
         }
 
