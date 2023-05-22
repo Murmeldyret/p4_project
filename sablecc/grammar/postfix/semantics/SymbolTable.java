@@ -69,11 +69,18 @@ public class SymbolTable implements Map<String, IdAttributes> {
     public Scopekind getKind() {
         return kind;
     }
-
+    /**
+     * Gets a map of all functions declared in the current scope
+     * @return A map of all functions that can be called from this scope
+     */
     public HashMap<String, SymbolTable> getFunctionMap() {
         return functionMap;
     }
 
+    /**
+     * Gets the outer symbol table that encapsulates this table
+     * @return
+     */
     public SymbolTable getOuterSymbolTable() {
         return outerSymbolTable;
     }
@@ -85,6 +92,11 @@ public class SymbolTable implements Map<String, IdAttributes> {
         return hashMap.containsKey(idName);
     }
 
+    /**
+     * Tests if a symbol is already declared in this or any outer scope
+     * @param idName The identifier to test
+     * @return {@code true} if the identifier exists, false otherwise
+     */
     public boolean isDeclared(String idName) {
         if (DeclaredLocally(idName)) {
             return true;
@@ -95,7 +107,12 @@ public class SymbolTable implements Map<String, IdAttributes> {
         }
     }
 
-    public String getReturnType() {
+    /**
+     * Gets the return type of the current block. If current block is not a function, it searches outer scope
+     * @return The return type of the current function block
+     * @throws IllegalArgumentException if this and every outer scope is not a function
+     */
+    public String getReturnType() throws IllegalArgumentException {
         String returnType = null;
         if (kind != Scopekind.functionBlock) {
             SymbolTable outerTable = getOuterSymbolTable();
@@ -107,7 +124,7 @@ public class SymbolTable implements Map<String, IdAttributes> {
                 outerTable = getOuterSymbolTable();
             }
             if (returnType == null) {
-                // TODO kast en god exception
+                throw new IllegalArgumentException("Not inside a function block, scope does not return any value");
             }
         } else {
             returnType = this.returnType;
@@ -115,6 +132,7 @@ public class SymbolTable implements Map<String, IdAttributes> {
         return returnType;
     }
 
+    @Deprecated
     /**
      * Retrieves the current declaratation with this name
      * 
@@ -221,7 +239,7 @@ public class SymbolTable implements Map<String, IdAttributes> {
         }
 
         // Check if the key is declared locally (in the current scope)
-        if (this.DeclaredLocally((IdAttributes) key)) {
+        if (DeclaredLocally((String)key)) {
             res = hashMap.remove(key);
         }
 
@@ -241,6 +259,7 @@ public class SymbolTable implements Map<String, IdAttributes> {
         return res;
     }
 
+    @Deprecated(since = "Always")
     @Override
     public void putAll(Map<? extends String, ? extends IdAttributes> m) {
         // TODO Auto-generated method stub
@@ -250,20 +269,21 @@ public class SymbolTable implements Map<String, IdAttributes> {
             put(keyString, m.get(keyString));
         }
     }
-
+    @Deprecated(since = "Always")
     @Override
     public void clear() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'clear'");
     }
 
+    @Deprecated(since = "Always")
     @Override
     public Set<String> keySet() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'keySet'");
     }
 
-    @Deprecated
+    @Deprecated(since = "Always")
     @Override
     public Collection<IdAttributes> values() {
         Collection<IdAttributes> attributes = hashMap.values();
@@ -277,6 +297,7 @@ public class SymbolTable implements Map<String, IdAttributes> {
         throw new UnsupportedOperationException("Unimplemented method 'values'");
     }
 
+    @Deprecated(since = "Always")
     @Override
     public Set<Entry<String, IdAttributes>> entrySet() {
         // TODO Auto-generated method stub
@@ -345,6 +366,7 @@ public class SymbolTable implements Map<String, IdAttributes> {
      * @throws NullPointerException     if the function does not exist
      * @throws IllegalArgumentException if the function already has a return type
      */
+    @Deprecated
     public IdAttributes addFunctionReturnType(String functionName, String returnType) {
         IdAttributes attributes = get(functionName);
         if (attributes == null) {
@@ -364,6 +386,13 @@ public class SymbolTable implements Map<String, IdAttributes> {
         return res;
     }
 
+    /**
+     * Creates and returns a new function scope with the specified name and return type
+     * @param id The name of the scope. is indexed with this parameter
+     * @param kind The kind of scope to create
+     * @param type The return type of this scope
+     * @return 
+     */
     public SymbolTable CreateNewScope(String id, Scopekind kind, String type) {
         if (get(id).getAttributes() != Attributes.function) {
             throw new IllegalArgumentException("Cannot create a scope from a non-function");
@@ -378,9 +407,16 @@ public class SymbolTable implements Map<String, IdAttributes> {
             }
         }
         functionMap.put(id, functionTable);
+        // functionTable.put(id, (IdAttributes)get(id).clone()); //funktionsparametre kommer ikke med her
         return functionTable;
     }
 
+
+    /**
+     * Gets the symbol table beloning to a given function
+     * @param id the name of the function
+     * @return the function symbol table belonging to the given function, input parameters as local symbols
+     */
     public SymbolTable getFunctionSymbolTable(String id) {
         if (get(id).getAttributes() != Attributes.function) {
             throw new IllegalArgumentException(id + " does not refer to a function");

@@ -3,6 +3,8 @@ package postfix.semantics;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.plaf.TreeUI;
+
 import postfix.node.TId;
 import postfix.node.TType;
 import postfix.semantics.Exceptions.invalidFunctionCallException;
@@ -15,10 +17,11 @@ public class IdAttributes implements Cloneable {
 
     private TId id;
     private TType type;
+    //? tror faktisk aldrig dette felt bliver brugt da symboltabellen for code gen ikke er den samme som for semantik
     private String value;
-    @Deprecated
+    @Deprecated(forRemoval = true)
     private boolean isFunction;
-    @Deprecated
+    @Deprecated(forRemoval = true)
     private boolean isConst;
     private List<String> parameterTypes;
     private List<String> parameterNames;
@@ -42,15 +45,12 @@ public class IdAttributes implements Cloneable {
     }
 
     @Override
-    protected Object clone() {
+    public Object clone() {
         IdAttributes clone = new IdAttributes((TId) id.clone(), (TType) type.clone(), value, attributes);
         clone.setReturnType(getReturnType());
         // parameterNames og parameterTypes skulle meget gerne altid have samme størrelse, ellers er det grælt
         clone.parameterNames = new ArrayList<>(parameterNames);
         clone.parameterTypes = new ArrayList<>(parameterTypes);
-        // for (int i = 0; i < parameterNames.size(); i++) {
-        //     clone.addParameter(parameterNames.get(i), parameterTypes.get(i));
-        // }
         return clone;
     }
 
@@ -61,7 +61,11 @@ public class IdAttributes implements Cloneable {
         boolean typeEquals = type.getText().equals(other.type.getText());
         boolean parameterNamesEquals = parameterNames.equals(other.parameterNames);
         boolean parameterTypesEquals = parameterTypes.equals(other.parameterTypes);
-        boolean returnTypeEquals = returnType.equals(other.returnType);
+        boolean returnTypeEquals;
+        if (returnType != null) {
+            returnTypeEquals  = returnType.equals(other.returnType);
+        }
+        else {returnTypeEquals = true;}
         boolean attributesEquals = attributes.equals(other.attributes);
 
         boolean res = idEquals &&
@@ -86,11 +90,11 @@ public class IdAttributes implements Cloneable {
         return hashCode;
     }
 
-    @Deprecated
+    @Deprecated(forRemoval = true)
     public IdAttributes(TId id, TType type, boolean isFunction, boolean isConst) {
     }
 
-    @Deprecated
+    @Deprecated(forRemoval = true)
     public IdAttributes(TId id, TType type, String value, boolean isFunction, boolean isConst) {
     }
 
@@ -115,6 +119,7 @@ public class IdAttributes implements Cloneable {
         return type;
     }
 
+    @Deprecated(forRemoval = true)
     public String getValue() {
         return value;
     }

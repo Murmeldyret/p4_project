@@ -8,9 +8,9 @@ import postfix.analysis.*;
 public final class AForLoopStmt extends PStmt
 {
     private TKwFor _kwFor_;
-    private TId _id_;
-    private TKwIn _kwIn_;
     private PVal _val_;
+    private TKwIn _kwIn_;
+    private TId _id_;
     private PBlock _block_;
 
     public AForLoopStmt()
@@ -20,19 +20,19 @@ public final class AForLoopStmt extends PStmt
 
     public AForLoopStmt(
         @SuppressWarnings("hiding") TKwFor _kwFor_,
-        @SuppressWarnings("hiding") TId _id_,
-        @SuppressWarnings("hiding") TKwIn _kwIn_,
         @SuppressWarnings("hiding") PVal _val_,
+        @SuppressWarnings("hiding") TKwIn _kwIn_,
+        @SuppressWarnings("hiding") TId _id_,
         @SuppressWarnings("hiding") PBlock _block_)
     {
         // Constructor
         setKwFor(_kwFor_);
 
-        setId(_id_);
+        setVal(_val_);
 
         setKwIn(_kwIn_);
 
-        setVal(_val_);
+        setId(_id_);
 
         setBlock(_block_);
 
@@ -43,9 +43,9 @@ public final class AForLoopStmt extends PStmt
     {
         return new AForLoopStmt(
             cloneNode(this._kwFor_),
-            cloneNode(this._id_),
-            cloneNode(this._kwIn_),
             cloneNode(this._val_),
+            cloneNode(this._kwIn_),
+            cloneNode(this._id_),
             cloneNode(this._block_));
     }
 
@@ -80,16 +80,16 @@ public final class AForLoopStmt extends PStmt
         this._kwFor_ = node;
     }
 
-    public TId getId()
+    public PVal getVal()
     {
-        return this._id_;
+        return this._val_;
     }
 
-    public void setId(TId node)
+    public void setVal(PVal node)
     {
-        if(this._id_ != null)
+        if(this._val_ != null)
         {
-            this._id_.parent(null);
+            this._val_.parent(null);
         }
 
         if(node != null)
@@ -102,7 +102,7 @@ public final class AForLoopStmt extends PStmt
             node.parent(this);
         }
 
-        this._id_ = node;
+        this._val_ = node;
     }
 
     public TKwIn getKwIn()
@@ -130,16 +130,16 @@ public final class AForLoopStmt extends PStmt
         this._kwIn_ = node;
     }
 
-    public PVal getVal()
+    public TId getId()
     {
-        return this._val_;
+        return this._id_;
     }
 
-    public void setVal(PVal node)
+    public void setId(TId node)
     {
-        if(this._val_ != null)
+        if(this._id_ != null)
         {
-            this._val_.parent(null);
+            this._id_.parent(null);
         }
 
         if(node != null)
@@ -152,7 +152,7 @@ public final class AForLoopStmt extends PStmt
             node.parent(this);
         }
 
-        this._val_ = node;
+        this._id_ = node;
     }
 
     public PBlock getBlock()
@@ -185,9 +185,9 @@ public final class AForLoopStmt extends PStmt
     {
         return ""
             + toString(this._kwFor_)
-            + toString(this._id_)
-            + toString(this._kwIn_)
             + toString(this._val_)
+            + toString(this._kwIn_)
+            + toString(this._id_)
             + toString(this._block_);
     }
 
@@ -201,9 +201,9 @@ public final class AForLoopStmt extends PStmt
             return;
         }
 
-        if(this._id_ == child)
+        if(this._val_ == child)
         {
-            this._id_ = null;
+            this._val_ = null;
             return;
         }
 
@@ -213,9 +213,9 @@ public final class AForLoopStmt extends PStmt
             return;
         }
 
-        if(this._val_ == child)
+        if(this._id_ == child)
         {
-            this._val_ = null;
+            this._id_ = null;
             return;
         }
 
@@ -238,9 +238,9 @@ public final class AForLoopStmt extends PStmt
             return;
         }
 
-        if(this._id_ == oldChild)
+        if(this._val_ == oldChild)
         {
-            setId((TId) newChild);
+            setVal((PVal) newChild);
             return;
         }
 
@@ -250,9 +250,9 @@ public final class AForLoopStmt extends PStmt
             return;
         }
 
-        if(this._val_ == oldChild)
+        if(this._id_ == oldChild)
         {
-            setVal((PVal) newChild);
+            setId((TId) newChild);
             return;
         }
 

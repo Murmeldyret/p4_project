@@ -2,6 +2,7 @@ package postfix.semantics.visitors;
 
 import postfix.node.*;
 import postfix.semantics.*;
+import postfix.semantics.Exceptions.InvalidDeclarationException;
 import postfix.semantics.Exceptions.VariableAlreadyDeclaredException;
 import postfix.semantics.IdAttributes.Attributes;
 import postfix.semantics.SymbolTable.Scopekind;
@@ -11,6 +12,7 @@ import postfix.semantics.SymbolTable.Scopekind;
  * the right hand side (or statements in case of functions)
  * 
  * @see {@link postfix.semantics.visitors.TypeVisitor}
+ * This class draws inspiration from its namesake in Fischer 8.6
  */
 public class TopDclVisitor extends SemanticVisitor {
 
@@ -38,14 +40,13 @@ public class TopDclVisitor extends SemanticVisitor {
 
         node.apply(typeVisitor);
 
-        // TODO get expr value
-        String value = "";
         if (symbolTable.DeclaredLocally(node.getId().getText())) {
             throw new VariableAlreadyDeclaredException(
                     "Variable" + node.getId().toString() + "has already been declared");
         } else {
             symbolTable.put(node.getId().toString(),
-                    new IdAttributes(node.getId(), node.getType(), value, Attributes.variable));
+                    new IdAttributes(node.getId(), node.getType(), node.getExpr().toString().strip(),
+                            Attributes.variable));
         }
     }
 
@@ -60,7 +61,8 @@ public class TopDclVisitor extends SemanticVisitor {
                     "Variable " + node.getId().getText() + " has already been declared");
         } else {
             symbolTable.put(node.getId().toString(),
-                    new IdAttributes(node.getId(), node.getType(), null, Attributes.variable));
+                    new IdAttributes(node.getId(), node.getType(), null, Attributes.variable)); // TODO skal måske være
+                                                                                                // i else block
             // seems legit
             if (node.parent() instanceof AFunctionParamFunctionParam
                     || node.parent() instanceof AFunctionParamPrimeFunctionParamPrime) {
@@ -103,7 +105,8 @@ public class TopDclVisitor extends SemanticVisitor {
     public void inAFunctionDeclarationDcl(AFunctionDeclarationDcl node) {
         // TopDclVisitor topDclVisitor = new TopDclVisitor(symbolTable);
         // node.getFunctionParam().apply(topDclVisitor);
-
+        // ! Husk at tjekke om funktionsparameter nodes er af type
+        // AVariableDeclartionDcl, alt andet er ulovligt
         if (symbolTable.DeclaredLocally(node.getId().getText())) {
             throw new VariableAlreadyDeclaredException("null");
         } else {
@@ -115,6 +118,43 @@ public class TopDclVisitor extends SemanticVisitor {
             // Scopekind.functionBlock);
         }
     }
+    @Override
+    public void inAFunctionParamFunctionParam(AFunctionParamFunctionParam node) {
+        //? skal array dcl's tillades også?
+        if (!(node.getDcl() instanceof AVariableDeclarationDcl)) {
+            throw new InvalidDeclarationException("Illegal parameter declaration, is of type " + node.getDcl().getClass().toString() + " should be AVariableDeclarationDcl", node.getDcl());
+        }
+    }
+    @Override
+    public void inAFunctionParamPrimeFunctionParamPrime(AFunctionParamPrimeFunctionParamPrime node) {
+        //? skal array dcl's tillades også?
+        if (!(node.getDcl() instanceof AVariableDeclarationDcl)) {
+            throw new InvalidDeclarationException("Illegal parameter declaration, is of type " + node.getDcl().getClass().toString() + " should be AVariableDeclarationDcl", node.getDcl());
+        }
+    }
+
+    // @Override
+    // public void caseAFunctionDeclarationDcl(AFunctionDeclarationDcl node) {
+
+    // inAFunctionDeclarationDcl(node);
+    // if (node.getType() != null) {
+    // node.getType().apply(this);
+    // }
+    // if (node.getKwFunction() != null) {
+    // node.getKwFunction().apply(this);
+    // }
+    // if (node.getId() != null) {
+    // node.getId().apply(this);
+    // }
+    // symbolTable = symbolTable.getFunctionSymbolTable(node.getId().getText());
+    // if (node.getFunctionParam() != null) {
+    // node.getFunctionParam().apply(this);
+    // }
+    // if (node.getStmts() != null) {
+    // node.getStmts().apply(this);
+    // }
+    // outAFunctionDeclarationDcl(node);
+    // }
 
     // @Override
     // public void caseAFunctionDeclarationDcl(AFunctionDeclarationDcl node) {
@@ -154,6 +194,8 @@ public class TopDclVisitor extends SemanticVisitor {
         if (symbolTable.getOuterSymbolTable() == null) {
             throw new NullPointerException("cannot go to outer scope: already in global scope");
         }
+        symbolTable.put(node.getId().getText(),
+                (IdAttributes) symbolTable.getOuterSymbolTable().get(node.getId().getText()).clone());
         symbolTable = symbolTable.getOuterSymbolTable();
     }
 
@@ -167,8 +209,50 @@ public class TopDclVisitor extends SemanticVisitor {
             throw new VariableAlreadyDeclaredException(
                     "Variable" + node.getId().toString() + "has already been declared");
         } else {
+            // TODO symbol tabel vil nu sige at dette ID er af type node.getType() og ikke
+            // array<node.getType()>
             symbolTable.put(node.getId().toString(),
                     new IdAttributes(node.getId(), node.getType(), null, Attributes.array));
+        }
+    }
+
+    @Override
+    public void inAVariableDeclarationArrayInitDcl(AVariableDeclarationArrayInitDcl node) {
+        TypeVisitor typeVisitor = new TypeVisitor(symbolTable, node.getType().getText());
+
+        node.apply(typeVisitor);
+
+        if (symbolTable.DeclaredLocally(node.getId().getText())) {
+            throw new VariableAlreadyDeclaredException(
+                    "Variable" + node.getId().getText() + "has already been declared");
+        } else {
+            symbolTable.put(node.getId().getText(),
+                    new IdAttributes(node.getId(), node.getType(), node.getArrayExpr().toString(), Attributes.array));
+        }
+
+    }
+
+    @Override
+    public void inAImportWithSeperatorStmt(AImportWithSeperatorStmt node) {
+        node.getExpr().apply(new TypeVisitor(symbolTable, "string"));
+
+        if (symbolTable.DeclaredLocally(node.getId().getText())) {
+            throw new VariableAlreadyDeclaredException(
+                    "Variable" + node.getId().getText() + "has already been declared");
+        }
+        else {
+            symbolTable.put(node.getId().getText(), new IdAttributes(node.getId(), new TType("csv"),null,Attributes.csv));
+        }
+    }
+
+    @Override
+    public void inAImportWithoutSeperatorStmt(AImportWithoutSeperatorStmt node) {
+        if (symbolTable.DeclaredLocally(node.getId().getText())) {
+            throw new VariableAlreadyDeclaredException(
+                    "Variable" + node.getId().getText() + "has already been declared");
+        }
+        else {
+            symbolTable.put(node.getId().getText(), new IdAttributes(node.getId(), new TType("csv"),null,Attributes.csv));
         }
     }
 }
