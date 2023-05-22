@@ -16,6 +16,10 @@ import java.nio.file.Files;
 
 import javax.tools.*;
 
+import org.apache.commons.io.FileUtils;
+import org.apache.tools.ant.Project;
+import org.apache.tools.ant.ProjectHelper;
+
 public class CodeGen extends DepthFirstAdapter {
 
     // Variable declarations
@@ -37,7 +41,7 @@ public class CodeGen extends DepthFirstAdapter {
     // a main class and so on.
     @Override
     public void inStart(Start node) {
-        program = "import java.util.*;\n";
+        program = "package src;\nimport java.util.*;\nimport src.compilerdeps.Csvruntime;\nimport src.compilerdeps.ObjectConverter;";
         // Everything is inside the Main class. We don't need classes in our program.
         program += "public class Main {";
     }
@@ -62,27 +66,33 @@ public class CodeGen extends DepthFirstAdapter {
         File dlib;
         File sbuildxml = new File("compilerdeps/build.xml");
         File dbuildxml;
-        
+
         File root;
         File sourceFile;
 
         try {
             root = Files.createTempDirectory("java").toFile();
 
-            dlib = new File(root, "lib/lib.jar");
-            FileUtils.copyDirectory(slib, dlib);
-
-            dbuildxml = 
-
-            // ! Please fix later
+            // Copy the code and it's dependencies.
             sourceFile = new File(root, "src/Main.java");
             sourceFile.getParentFile().mkdirs();
             Files.write(sourceFile.toPath(), program.getBytes(StandardCharsets.UTF_8));
 
-            JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
-            compiler.run(null, null, null, sourceFile.getPath());
+            dlib = new File(root, "lib/lib.jar");
+            dbuildxml = new File(root, "build.xml");
 
-            
+            FileUtils.copyFile(slib, dlib);
+            FileUtils.copyFile(sbuildxml, dbuildxml);
+
+            Project p = new Project();
+            p.setUserProperty("ant.file", dbuildxml.getAbsolutePath());
+            p.init();
+            ProjectHelper helper = ProjectHelper.getProjectHelper();
+            p.addReference(("ant.projectHelper"), helper);
+
+            helper.parse(p, dbuildxml);
+            p.executeTarget(p.getDefaultTarget());
+
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();

@@ -50,6 +50,8 @@ public class CommonCodeGen extends DepthFirstAdapter {
         CsvVisitorCodeGen csvVisitorCodeGen = new CsvVisitorCodeGen();
         node.apply(csvVisitorCodeGen);
 
+        node.setExpr(null);
+
         program += csvVisitorCodeGen.csvOperations;
         
     }
@@ -261,17 +263,17 @@ public class CommonCodeGen extends DepthFirstAdapter {
 
     }
 
-    @Override
-    public void inAInsertToArrayArrayOp(AInsertToArrayArrayOp node) {
-        // Insert val [0] in ArrayList
-        Object o = node.getArrayExpr();
-
-        if (o instanceof String)
-        {
-            program += node.getId().getText() + ".add(" + node.getArrayExpr().toString().strip() + ", \"" + node.getVal().toString().strip() + "\");";
-        } else {
-            program += node.getId().getText() + ".add(" + node.getArrayExpr().toString().strip() + ", " + node.getVal().toString().strip() + ");";
-        }
-    }
+//    @Override
+//    public void inAInsertToArrayArrayOp(AInsertToArrayArrayOp node) {
+//        // Insert val [0] in ArrayList
+//        Object o = node.getArrayExpr();
+//
+//        if (o instanceof String)
+//        {
+//            program += node.getId().getText() + ".add(" + node.getArrayExpr().toString().strip() + ", \"" + node.getVal().toString().strip() + "\");";
+//        } else {
+//            program += node.getId().getText() + ".add(" + node.getArrayExpr().toString().strip() + ", " + node.getVal().toString().strip() + ");";
+//        }
+//    }
 
 }

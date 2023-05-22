@@ -1,4 +1,6 @@
-<project>
+<project default="jar">
+
+    <property name="ant.project.name" value="Main" />
 
     <property name="lib.dir" value="lib" />
     <property name="src.dir" value="src" />
@@ -23,6 +25,9 @@
         <mkdir dir="${jar.dir}" />
         <jar destfile="${jar.dir}/${ant.project.name}.jar" basedir="${classes.dir}">
             <fileset dir="${lib.dir}" />
+            <manifest>
+                <attribute name="Main-Class" value="${main-class}" />
+            </manifest>
         </jar>
     </target>
 </project>
