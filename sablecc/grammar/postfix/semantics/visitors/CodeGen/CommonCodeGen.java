@@ -100,15 +100,25 @@ public class CommonCodeGen extends DepthFirstAdapter {
             String type = typeSwitch(node.getType().getText().toString());
 
             program += type + " " + node.getId().getText().toString() + " = ";
-            program += bvm + ".put("+node.getId().getText()+");";
+            program += bvm + ".put(" + node.getId().getText() + ");";
             symbolTable.put(node.getId().getText(),
                     new IdAttributes(node.getId(), node.getType(), null, Attributes.variable));
         }
     }
+
+    private String convertIdToVal(String id) {
+        // Class<String> bv = String.class;
+        // Class<Boolean> ab = boolean.class;
+        // Class<Char> ab = char.class;
+        String type = typeSwitch(symbolTable.get(id).getType().getText()); //TODO medmindre det er array eller csv
+        String typeWithFirstToUpper = type.substring(0, 1).toUpperCase() + type.substring(1);
+        return "ObjectConverter.convert("+bvm+".get("+id+","+ type + ".class)";
+    }
+
     @Override
     public void inAValIdVal(AValIdVal node) {
-        //TODO objectconveter her
-        program += bvm + ".get("+node.getId().getText()+");";
+        // TODO objectconveter her
+        program += convertIdToVal(node.getId().getText());
     }
 
     @Override
@@ -123,7 +133,7 @@ public class CommonCodeGen extends DepthFirstAdapter {
 
     @Override
     public void inABlockStmtBlock(ABlockStmtBlock node) {
-        //! LGTM :)))))))
+        // ! LGTM :)))))))
         program += "{ Map<String,Object> " + bvm + " = new HashMap<>();";
         symbolTable = new SymbolTable(symbolTable, Scopekind.block);
     }
