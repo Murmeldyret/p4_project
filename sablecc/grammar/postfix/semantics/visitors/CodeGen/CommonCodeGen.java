@@ -111,7 +111,7 @@ public class CommonCodeGen extends DepthFirstAdapter {
         // Class<Boolean> ab = boolean.class;
         // Class<Char> ab = char.class;
         String type = typeSwitch(symbolTable.get(id).getType().getText()); //TODO medmindre det er array eller csv
-        String typeWithFirstToUpper = type.substring(0, 1).toUpperCase() + type.substring(1);
+        String typeWithFirstToUpper = type.substring(0, 1).toUpperCase(Locale.ROOT) + type.substring(1);
         return "ObjectConverter.convert("+bvm+".get("+id+","+ type + ".class)";
     }
 
