@@ -68,20 +68,34 @@ public class CommonCodeGen extends DepthFirstAdapter {
 
     @Override
     public void inAWhileLoopStmt(AWhileLoopStmt node) {
+        int hashcode = node.getKwWhile().getLine() + node.getKwWhile().getPos();
 
+        program += "Map<String,Object> old" +bvm+hashcode + " = new HashMap("+bvm+");\n";
         program += "while (";
         node.getExpr().apply(this);
         node.setExpr(null);
         program += ")";
         // TODO ændr scope, NVM InABlockStmtBlock gør det
     }
+    @Override
+    public void outAWhileLoopStmt(AWhileLoopStmt node) {
+        int hashcode = node.getKwWhile().getLine() + node.getKwWhile().getPos();
+        program += bvm + "= old" +bvm+hashcode+";\n";
+    }
 
     @Override
     public void inAControlStatementStmt(AControlStatementStmt node) {
+        int hashcode = node.getKwIf().getLine() + node.getKwIf().getPos();
+        program += "Map<String,Object> old" +bvm+hashcode + " = new HashMap("+bvm+");\n";
         program += "if (";
         node.getExpr().apply(this);
         node.setExpr(null);
-        program += ") ";
+        program += ")\n";
+    }
+    @Override
+    public void outAControlStatementStmt(AControlStatementStmt node) {
+        int hashcode = node.getKwIf().getLine() + node.getKwIf().getPos();
+        program += bvm + "= old" +bvm+hashcode+";\n";
     }
 
     @Override
@@ -153,15 +167,16 @@ public class CommonCodeGen extends DepthFirstAdapter {
     @Override
     public void inABlockStmtBlock(ABlockStmtBlock node) {
         // ! LGTM :)))))))
-        program += "{ Map<String,Object> old" + bvm +i++ + " =" + bvm +";\n";
-        program += bvm + "= new HashMap<>("+bvm+");\n";
-
+        // program += "{ Map<String,Object> old" + bvm +i++ + " =" + bvm +";\n";
+        // program += bvm + "= new HashMap<>("+bvm+");\n";
+        program += "{\n";
         symbolTable = new SymbolTable(symbolTable, Scopekind.block);
     }
 
     @Override
     public void outABlockStmtBlock(ABlockStmtBlock node) {
-        program += bvm + " = old" +bvm+(--i)+";\n}";
+        // program += bvm + " = old" +bvm+(--i)+";\n}";
+        program +="}\n";
         symbolTable = symbolTable.getOuterSymbolTable();
     }
 
