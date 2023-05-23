@@ -55,6 +55,8 @@ public class CommonCodeGen extends DepthFirstAdapter {
         node.apply(csvVisitorCodeGen);
         node.setExpr(null);
 
+        node.setExpr(null);
+
         program += csvVisitorCodeGen.csvOperations;
     }
 

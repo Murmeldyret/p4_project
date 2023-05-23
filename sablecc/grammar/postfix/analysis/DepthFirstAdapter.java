@@ -1043,6 +1043,10 @@ public class DepthFirstAdapter extends AnalysisAdapter
         {
             node.getBopNot().apply(this);
         }
+        if(node.getTypeCast() != null)
+        {
+            node.getTypeCast().apply(this);
+        }
         if(node.getVal() != null)
         {
             node.getVal().apply(this);
@@ -1144,6 +1148,27 @@ public class DepthFirstAdapter extends AnalysisAdapter
     {
         inAExprPrime(node);
         outAExprPrime(node);
+    }
+
+    public void inATypeCastTypeCast(ATypeCastTypeCast node)
+    {
+        defaultIn(node);
+    }
+
+    public void outATypeCastTypeCast(ATypeCastTypeCast node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseATypeCastTypeCast(ATypeCastTypeCast node)
+    {
+        inATypeCastTypeCast(node);
+        if(node.getType() != null)
+        {
+            node.getType().apply(this);
+        }
+        outATypeCastTypeCast(node);
     }
 
     public void inAAddToCsvCsvOp(AAddToCsvCsvOp node)
@@ -2126,6 +2151,10 @@ public class DepthFirstAdapter extends AnalysisAdapter
         if(node.getSopMean() != null)
         {
             node.getSopMean().apply(this);
+        }
+        if(node.getExpr() != null)
+        {
+            node.getExpr().apply(this);
         }
         outAMeanSpecialSyntax(node);
     }

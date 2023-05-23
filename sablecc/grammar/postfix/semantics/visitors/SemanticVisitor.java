@@ -1,6 +1,5 @@
 package postfix.semantics.visitors;
 
-
 import postfix.analysis.DepthFirstAdapter;
 import postfix.node.*;
 import postfix.semantics.IdAttributes;
