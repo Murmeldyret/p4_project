@@ -72,6 +72,8 @@ public class CodeGen extends DepthFirstAdapter {
 
         File root;
         File sourceFile;
+        File compiledSource;
+        File compiledDestination = new File("build/program.jar");
 
         try {
             root = Files.createTempDirectory("java").toFile();
@@ -81,16 +83,18 @@ public class CodeGen extends DepthFirstAdapter {
             sourceFile.getParentFile().mkdirs();
             Files.write(sourceFile.toPath(), program.getBytes(StandardCharsets.UTF_8));
 
+            // Create a destination for the code.
+
             dlib = new File(root, "lib/lib.jar");
             dlib.getParentFile().mkdirs();
             dbuildxml = new File(root, "build.xml");
             dbuildxml.getParentFile().mkdirs();
 
-            System.out.println(slib.getAbsolutePath());
-
+            // Copy the files used for the java compiler to work.
             Files.copy(slib.toPath(), dlib.toPath(), StandardCopyOption.COPY_ATTRIBUTES);
             Files.copy(sbuildxml.toPath(), dbuildxml.toPath(), StandardCopyOption.COPY_ATTRIBUTES);
 
+            // Setup the ANT project.
             Project p = new Project();
             p.setUserProperty("ant.file", dbuildxml.getAbsolutePath());
             p.init();
@@ -99,6 +103,14 @@ public class CodeGen extends DepthFirstAdapter {
 
             helper.parse(p, dbuildxml);
             p.executeTarget(p.getDefaultTarget());
+
+            // Copy the compiled program back to a build folder, for the user to use.
+
+            compiledSource = new File(root, "build/jar/Main.jar");
+
+            compiledDestination.getParentFile().mkdirs();
+
+            Files.copy(compiledSource.toPath(), compiledDestination.toPath(), StandardCopyOption.REPLACE_EXISTING);
 
         } catch (IOException e) {
             // TODO Auto-generated catch block
