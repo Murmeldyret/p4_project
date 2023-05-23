@@ -53,7 +53,7 @@ public class CommonCodeGen extends DepthFirstAdapter {
     public void inAImportWithoutSeperatorStmt(AImportWithoutSeperatorStmt node) {
         CsvVisitorCodeGen csvVisitorCodeGen = new CsvVisitorCodeGen();
         node.apply(csvVisitorCodeGen);
-        node.replaceBy(null);
+        node.setExpr(null);
 
         program += csvVisitorCodeGen.csvOperations;
     }
@@ -62,7 +62,7 @@ public class CommonCodeGen extends DepthFirstAdapter {
     public void inAAddToCsvCsvOp(AAddToCsvCsvOp node) {
         CsvVisitorCodeGen csvVisitorCodeGen = new CsvVisitorCodeGen();
         node.apply(csvVisitorCodeGen);
-        node.replaceBy(null);
+        node.setExpr(null);
 
         program += csvVisitorCodeGen.csvOperations;
     }
@@ -71,7 +71,6 @@ public class CommonCodeGen extends DepthFirstAdapter {
     public void inARemoveFromCsvCsvOp(ARemoveFromCsvCsvOp node) {
         CsvVisitorCodeGen csvVisitorCodeGen = new CsvVisitorCodeGen();
         node.apply(csvVisitorCodeGen);
-        node.replaceBy(null);
         
         program += csvVisitorCodeGen.csvOperations;
     }
@@ -80,7 +79,7 @@ public class CommonCodeGen extends DepthFirstAdapter {
     public void inARemoveAtFromCsvCsvOp(ARemoveAtFromCsvCsvOp node) {
         CsvVisitorCodeGen csvVisitorCodeGen = new CsvVisitorCodeGen();
         node.apply(csvVisitorCodeGen);
-        node.replaceBy(null);
+
         program += csvVisitorCodeGen.csvOperations;
     }
 

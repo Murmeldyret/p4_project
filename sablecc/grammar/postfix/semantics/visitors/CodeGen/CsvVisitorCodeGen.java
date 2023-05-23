@@ -17,7 +17,7 @@ import postfix.node.ASumSpecialSyntax;
 import postfix.semantics.SymbolTable;
 
 public class CsvVisitorCodeGen extends DepthFirstAdapter{
-    String csvOperations;
+    String csvOperations = "";
     SymbolTable symbolTable;
 
     public CsvVisitorCodeGen(SymbolTable symbolTable, String program) {
@@ -51,10 +51,10 @@ public class CsvVisitorCodeGen extends DepthFirstAdapter{
         
         System.out.println(arrayExpr);
         if (ori.equals("row")) {
-            csvOperations += node.getId().getText() + ".addRow(" + arrayExpr + ")";
+            csvOperations += node.getId().getText() + ".addRow(" + arrayExpr + ");";
 
         } else if (ori.equals("column")) {
-            csvOperations += node.getId().getText() + ".addColumn(" + node.getExpr().toString() + ", " + arrayExpr + ")";
+            csvOperations += node.getId().getText() + ".addColumn(" + node.getExpr().toString() + ", " + arrayExpr + ");";
         }
     }
 
@@ -63,10 +63,10 @@ public class CsvVisitorCodeGen extends DepthFirstAdapter{
         String ori = node.getOrientation().toString().strip();
 
         if (ori.equals("row")) {
-            csvOperations += node.getId().getText() + ".removeRow()";
+            csvOperations += node.getId().getText() + ".removeRow();";
 
         } else if (ori.equals("column")) {
-            csvOperations += node.getId().getText() + ".removeColumn()";
+            csvOperations += node.getId().getText() + ".removeColumn();";
         }
     }
 
@@ -75,10 +75,10 @@ public class CsvVisitorCodeGen extends DepthFirstAdapter{
         String ori = node.getOrientation().toString().strip();
 
         if (ori.equals("row")) {
-            csvOperations += node.getId().getText() + ".removeRow(" + node.getVal().toString() + ")";
+            csvOperations += node.getId().getText() + ".removeRow(" + node.getVal().toString() + ");";
 
         } else if (ori.equals("column")) {
-            csvOperations += node.getId().getText() + ".removeColumn(" + node.getVal().toString() + ")";
+            csvOperations += node.getId().getText() + ".removeColumn(" + node.getVal().toString() + ");";
         }
     }
 
@@ -99,45 +99,45 @@ public class CsvVisitorCodeGen extends DepthFirstAdapter{
         
         System.out.println(arrayExpr);
         if (ori.equals("row")) {
-            csvOperations += node.getId().getText() + ".insertRow(" + node.getVal().toString() + ", new String[] {" + arrayExpr + "})";
+            csvOperations += node.getId().getText() + ".insertRow(" + node.getVal().toString() + ", new String[] {" + arrayExpr + "});";
 
         } else if (ori.equals("column")) {
-            csvOperations += node.getId().getText() + ".insertColumn(" + node.getVal().toString() + ", " + node.getExpr().toString() + ", " + arrayExpr + ")";
+            csvOperations += node.getId().getText() + ".insertColumn(" + node.getVal().toString() + ", " + node.getExpr().toString() + ", " + arrayExpr + ");";
         }
     }
 
     @Override
     public void inASumSpecialSyntax(ASumSpecialSyntax node) {
-        csvOperations += ".sum(" + node.getExpr().toString() + ")";
+        csvOperations += ".sum(" + node.getExpr().toString() + ");";
     }
 
     @Override
     public void inAFilterSpecialSyntax(AFilterSpecialSyntax node) {
-        csvOperations += ".filter(" + node.getExpr().toString() + "," + node.getFilterexpr().toString() + ")";
+        csvOperations += ".filter(" + node.getExpr().toString() + "," + node.getFilterexpr().toString() + ");";
     }
 
     @Override
     public void inACountSpecialSyntax(ACountSpecialSyntax node) {
-        csvOperations += ".count()";
+        csvOperations += ".count();";
     }
 
     @Override
     public void inAMeanSpecialSyntax(AMeanSpecialSyntax node) {
-        csvOperations += ".mean(" + node.getExpr().toString() + ")";
+        csvOperations += ".mean(" + node.getExpr().toString() + ");";
     }
 
     @Override
     public void inASortSpecialSyntax(ASortSpecialSyntax node) {
-        csvOperations += ".sort(" + node.getExpr().toString() + ", false)";
+        csvOperations += ".sort(" + node.getExpr().toString() + ", false);";
     }
 
     @Override
     public void inASortDescSpecialSyntax(ASortDescSpecialSyntax node) {
-        csvOperations += ".sort(" + node.getExpr().toString() + ", true)";
+        csvOperations += ".sort(" + node.getExpr().toString() + ", true);";
     }
 
     @Override
     public void inASortAscSpecialSyntax(ASortAscSpecialSyntax node) {
-        csvOperations += ".sort(" + node.getExpr().toString() + ", false)";
+        csvOperations += ".sort(" + node.getExpr().toString() + ", false);";
     }
 }
