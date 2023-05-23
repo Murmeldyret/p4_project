@@ -9,6 +9,7 @@ public final class AAddToCsvCsvOp extends PCsvOp
 {
     private TKwAdd _kwAdd_;
     private POrientation _orientation_;
+    private PExpr _expr_;
     private PArrayExpr _arrayExpr_;
     private TKwIn _kwIn_;
     private TId _id_;
@@ -21,6 +22,7 @@ public final class AAddToCsvCsvOp extends PCsvOp
     public AAddToCsvCsvOp(
         @SuppressWarnings("hiding") TKwAdd _kwAdd_,
         @SuppressWarnings("hiding") POrientation _orientation_,
+        @SuppressWarnings("hiding") PExpr _expr_,
         @SuppressWarnings("hiding") PArrayExpr _arrayExpr_,
         @SuppressWarnings("hiding") TKwIn _kwIn_,
         @SuppressWarnings("hiding") TId _id_)
@@ -29,6 +31,8 @@ public final class AAddToCsvCsvOp extends PCsvOp
         setKwAdd(_kwAdd_);
 
         setOrientation(_orientation_);
+
+        setExpr(_expr_);
 
         setArrayExpr(_arrayExpr_);
 
@@ -44,6 +48,7 @@ public final class AAddToCsvCsvOp extends PCsvOp
         return new AAddToCsvCsvOp(
             cloneNode(this._kwAdd_),
             cloneNode(this._orientation_),
+            cloneNode(this._expr_),
             cloneNode(this._arrayExpr_),
             cloneNode(this._kwIn_),
             cloneNode(this._id_));
@@ -103,6 +108,31 @@ public final class AAddToCsvCsvOp extends PCsvOp
         }
 
         this._orientation_ = node;
+    }
+
+    public PExpr getExpr()
+    {
+        return this._expr_;
+    }
+
+    public void setExpr(PExpr node)
+    {
+        if(this._expr_ != null)
+        {
+            this._expr_.parent(null);
+        }
+
+        if(node != null)
+        {
+            if(node.parent() != null)
+            {
+                node.parent().removeChild(node);
+            }
+
+            node.parent(this);
+        }
+
+        this._expr_ = node;
     }
 
     public PArrayExpr getArrayExpr()
@@ -186,6 +216,7 @@ public final class AAddToCsvCsvOp extends PCsvOp
         return ""
             + toString(this._kwAdd_)
             + toString(this._orientation_)
+            + toString(this._expr_)
             + toString(this._arrayExpr_)
             + toString(this._kwIn_)
             + toString(this._id_);
@@ -204,6 +235,12 @@ public final class AAddToCsvCsvOp extends PCsvOp
         if(this._orientation_ == child)
         {
             this._orientation_ = null;
+            return;
+        }
+
+        if(this._expr_ == child)
+        {
+            this._expr_ = null;
             return;
         }
 
@@ -241,6 +278,12 @@ public final class AAddToCsvCsvOp extends PCsvOp
         if(this._orientation_ == oldChild)
         {
             setOrientation((POrientation) newChild);
+            return;
+        }
+
+        if(this._expr_ == oldChild)
+        {
+            setExpr((PExpr) newChild);
             return;
         }
 

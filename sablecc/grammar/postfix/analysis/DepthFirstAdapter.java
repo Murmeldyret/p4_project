@@ -1193,6 +1193,10 @@ public class DepthFirstAdapter extends AnalysisAdapter
         {
             node.getOrientation().apply(this);
         }
+        if(node.getExpr() != null)
+        {
+            node.getExpr().apply(this);
+        }
         if(node.getArrayExpr() != null)
         {
             node.getArrayExpr().apply(this);
@@ -1299,6 +1303,10 @@ public class DepthFirstAdapter extends AnalysisAdapter
         if(node.getOrientation() != null)
         {
             node.getOrientation().apply(this);
+        }
+        if(node.getExpr() != null)
+        {
+            node.getExpr().apply(this);
         }
         if(node.getVal() != null)
         {
