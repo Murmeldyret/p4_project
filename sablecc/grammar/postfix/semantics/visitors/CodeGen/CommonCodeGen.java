@@ -15,7 +15,7 @@ public class CommonCodeGen extends DepthFirstAdapter {
 
     public String program;
     protected static final String bvm = "blockVariableMap";
-
+    private int i = 0;
     // Constructor
     public CommonCodeGen() {
     };
@@ -153,13 +153,15 @@ public class CommonCodeGen extends DepthFirstAdapter {
     @Override
     public void inABlockStmtBlock(ABlockStmtBlock node) {
         // ! LGTM :)))))))
-        program += "{ Map<String,Object> " + bvm + " = new HashMap<>();";
+        program += "{ Map<String,Object> old" + bvm +i++ + " =" + bvm +";\n";
+        program += bvm + "= new HashMap<>("+bvm+");\n";
+
         symbolTable = new SymbolTable(symbolTable, Scopekind.block);
     }
 
     @Override
     public void outABlockStmtBlock(ABlockStmtBlock node) {
-        program += "}";
+        program += bvm + " = old" +bvm+(--i)+";\n}";
         symbolTable = symbolTable.getOuterSymbolTable();
     }
 
