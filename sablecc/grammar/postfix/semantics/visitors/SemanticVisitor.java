@@ -1,7 +1,5 @@
 package postfix.semantics.visitors;
 
-import org.testng.xml.IFileParser;
-
 import postfix.analysis.DepthFirstAdapter;
 import postfix.node.*;
 import postfix.semantics.IdAttributes;
@@ -157,7 +155,9 @@ public class SemanticVisitor extends DepthFirstAdapter {
             throw new InvalidExpressionException("Cannot add to a non array type [Line " + node.getId().getLine()
                     + ", Pos " + node.getId().getPos() + "]");
         }
-        node.getExpr().apply(new TypeVisitor(symbolTable,arr.getType().getText()));
+        node.getExpr().apply(new TypeVisitor(symbolTable, "int"));
+
+        node.getArrayExpr().apply(new TypeVisitor(symbolTable,arr.getType().getText()));
     }
 
     @Override

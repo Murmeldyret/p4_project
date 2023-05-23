@@ -2123,6 +2123,10 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
     public void caseAMeanSpecialSyntax(AMeanSpecialSyntax node)
     {
         inAMeanSpecialSyntax(node);
+        if(node.getExpr() != null)
+        {
+            node.getExpr().apply(this);
+        }
         if(node.getSopMean() != null)
         {
             node.getSopMean().apply(this);
