@@ -1047,6 +1047,10 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
         {
             node.getVal().apply(this);
         }
+        if(node.getTypeCast() != null)
+        {
+            node.getTypeCast().apply(this);
+        }
         if(node.getBopNot() != null)
         {
             node.getBopNot().apply(this);
@@ -1144,6 +1148,27 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
     {
         inAExprPrime(node);
         outAExprPrime(node);
+    }
+
+    public void inATypeCastTypeCast(ATypeCastTypeCast node)
+    {
+        defaultIn(node);
+    }
+
+    public void outATypeCastTypeCast(ATypeCastTypeCast node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseATypeCastTypeCast(ATypeCastTypeCast node)
+    {
+        inATypeCastTypeCast(node);
+        if(node.getType() != null)
+        {
+            node.getType().apply(this);
+        }
+        outATypeCastTypeCast(node);
     }
 
     public void inAAddToCsvCsvOp(AAddToCsvCsvOp node)
@@ -2123,6 +2148,10 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
     public void caseAMeanSpecialSyntax(AMeanSpecialSyntax node)
     {
         inAMeanSpecialSyntax(node);
+        if(node.getExpr() != null)
+        {
+            node.getExpr().apply(this);
+        }
         if(node.getSopMean() != null)
         {
             node.getSopMean().apply(this);

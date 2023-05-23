@@ -13,8 +13,15 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 
 import javax.tools.*;
+
+
+import org.apache.tools.ant.Project;
+import org.apache.tools.ant.ProjectHelper;
+import org.apache.tools.ant.util.FileUtils;
+
 
 public class CodeGen extends DepthFirstAdapter {
 
@@ -37,7 +44,7 @@ public class CodeGen extends DepthFirstAdapter {
     // a main class and so on.
     @Override
     public void inStart(Start node) {
-        program = "import java.util.*;\n";
+        program = "package src;\nimport java.util.*;\nimport src.compilerdeps.Csvruntime;\nimport src.compilerdeps.ObjectConverter;";
         // Everything is inside the Main class. We don't need classes in our program.
         program += "public class Main {";
     }
@@ -57,20 +64,42 @@ public class CodeGen extends DepthFirstAdapter {
 
     private void codeCompiling() {
         System.out.println(program);
+
+        File slib = new File("compilerdeps/lib.jar");
+        File dlib;
+        File sbuildxml = new File("compilerdeps/build.xml");
+        File dbuildxml;
+
         File root;
         File sourceFile;
 
         try {
             root = Files.createTempDirectory("java").toFile();
-            // ! Please fix later
-            sourceFile = new File(root, "program/Main.java");
+
+            // Copy the code and it's dependencies.
+            sourceFile = new File(root, "src/Main.java");
             sourceFile.getParentFile().mkdirs();
             Files.write(sourceFile.toPath(), program.getBytes(StandardCharsets.UTF_8));
 
-            JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
-            compiler.run(null, null, null, sourceFile.getPath());
+            dlib = new File(root, "lib/lib.jar");
+            dlib.getParentFile().mkdirs();
+            dbuildxml = new File(root, "build.xml");
+            dbuildxml.getParentFile().mkdirs();
 
-            
+            System.out.println(slib.getAbsolutePath());
+
+            Files.copy(slib.toPath(), dlib.toPath(), StandardCopyOption.COPY_ATTRIBUTES);
+            Files.copy(sbuildxml.toPath(), dbuildxml.toPath(), StandardCopyOption.COPY_ATTRIBUTES);
+
+            Project p = new Project();
+            p.setUserProperty("ant.file", dbuildxml.getAbsolutePath());
+            p.init();
+            ProjectHelper helper = ProjectHelper.getProjectHelper();
+            p.addReference(("ant.projectHelper"), helper);
+
+            helper.parse(p, dbuildxml);
+            p.executeTarget(p.getDefaultTarget());
+
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();

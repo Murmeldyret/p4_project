@@ -9,6 +9,6 @@ public class CsvVisitorCodeGen extends DepthFirstAdapter{
 
     @Override
     public void inAImportWithoutSeperatorStmt(AImportWithoutSeperatorStmt node) {
-        csvOperations = "Csvruntime " + node.getId().toString() + "= new Csvruntime(" + node.getString().getText().toString() + ");";
+        csvOperations = "Csvruntime " + node.getId().toString() + "= new Csvruntime(" + node.getExpr().toString() + ");";
     }
 }

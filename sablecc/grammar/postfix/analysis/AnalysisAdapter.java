@@ -327,6 +327,12 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
+    public void caseATypeCastTypeCast(ATypeCastTypeCast node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
     public void caseAAddToCsvCsvOp(AAddToCsvCsvOp node)
     {
         defaultCase(node);
