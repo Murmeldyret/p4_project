@@ -1,0 +1,96 @@
+# import csvFile as cars;
+# 
+# # Task 1
+# 
+# string array carBrands;
+# add ["ACURA", "ALFA ROMEO", "ASTON MARTIN", "AUDI", "BENTLEY", "BMW", "BUGATTI", "BUICK", "CADILLAC", "CHERVOLET", "CHRYSLER", "DAEWOO", "DODGE", "FERRARI", "FIAT", "FORD", "GENESIS", "GMC", "HONDA", "HUMMER", "HYUNDAI", "INFINITI", "ISUZU", "JAGUAR", "JEEP", "KIA", "LAMBORGHINI", "LAND ROVER", "LEXUS", "LINCOLN", "MASERATI", "MAZDA", "MERCEDES-BENZ", "MINI", "NISSAN", "OLDSMOBILE", "PLYMOUTH", "PONTIAC", "PORSCHE", "RAM", "ROLLS-ROYCE", "SAAB", "SATURN", "SCION", "SMART", "SRT", "SUBARU", "SUZUKI", "TOYOTA", "VOLKSWAGEN", "VOLVO"] to carBrands;
+# 
+# for brand in carBrands {
+#     int totalBrandConsumption = 0;
+#     int averageBrandConsumption = 0;
+#     int i = 0;
+#     csvBrand = filter("MAKE", string x, x == brand) cars;
+#     for car in csvBrand {
+#         # totalBrandConsumption = totalBrandConsumption + csvBrand[11][car];
+#         i = i + 1;
+#     };
+#     averageBrandConsumption = totalBrandConsumption / i;
+#     print (brand + " " + averageBrandConsumption);
+# };
+# 
+# # Task 2
+# 
+# 
+# # Task 3
+# 
+# sortedCars = sort ("COMB (L/100 km)", asc) cars;
+# 
+# # Task 4
+# string array fuelTypes;
+# add ["D", "E", "N" "X", "Z"] to fuelTypes;
+# 
+# for fuelType in fuelTypes {
+#     int i = 0;
+#     csvFuel = filter("FUEL", string x, x == fuelType) cars;
+#     sortedCsvFuel = sort ("COMB (L/100 km)", asc) csvFuel;
+#     while i < 5 {
+#         print (sortedCsvFuel[i][1] + " " + sortedCsvFuel[i][2] + " " + sortedCsvFuel[i][3] + " " + sortedCsvFuel[i][11]);
+#         i = i + 1;
+#     }
+# }
+# 
+# 
+# Random Tests
+
+int b = 3;
+
+const int c = 4;
+
+int a = b + 2;
+
+print a;
+
+# a = a + c;
+
+print a;
+
+string array testArray;
+add ["a", "b", "c"] to testArray;
+print testArray;
+remove_last in testArray;
+insert 2 + 2 ["d"] in testArray;
+
+
+for x in test {
+    print x;
+};
+
+int i = 1;
+i = i + 1;
+while i < 5 {
+    print i;
+    # i = i + 1;
+};
+
+# function declaration
+int function add2 (int x) 
+{
+    return x + 2;
+};
+# function call
+int res = add2(8 - 3);
+print res;
+
+
+import csvFile as cars;
+
+add column ["MAKE", "MCLAREN", "MASERATI", "PORSCHE"] in cars;
+
+remove_last row in cars;
+
+remove_at row 1 in cars;
+
+insert column 2 ["PRICE", "55000", "92332", "38289"] in cars;
+
+remove_last column in cars;
+
