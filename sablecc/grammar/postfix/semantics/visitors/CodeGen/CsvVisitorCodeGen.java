@@ -14,87 +14,130 @@ import postfix.node.ASortAscSpecialSyntax;
 import postfix.node.ASortDescSpecialSyntax;
 import postfix.node.ASortSpecialSyntax;
 import postfix.node.ASumSpecialSyntax;
+import postfix.semantics.SymbolTable;
 
 public class CsvVisitorCodeGen extends DepthFirstAdapter{
     String csvOperations;
+    SymbolTable symbolTable;
+
+    public CsvVisitorCodeGen(SymbolTable symbolTable, String program) {
+        this.symbolTable = symbolTable;
+        this.csvOperations = program;
+    }
+
+    public CsvVisitorCodeGen() {
+
+    }
 
     @Override
     public void inAImportWithoutSeperatorStmt(AImportWithoutSeperatorStmt node) {
-        csvOperations = "Csvruntime " + node.getId().toString() + "= new Csvruntime(" + node.getExpr().toString() + ");";
+        csvOperations += "Csvruntime " + node.getId().toString() + "= new Csvruntime(" + node.getExpr().toString().strip() + ");";
     }
 
     @Override
     public void inAAddToCsvCsvOp(AAddToCsvCsvOp node) {
-        if (node.getOrientation().toString() == "row") {
-            csvOperations = node.getId().getText() + "." + "addRow(" + node.getArrayExpr().toString() + ")";
+        String[] sArr = node.getArrayExpr().toString().split(",");
+        String ori = node.getOrientation().toString().strip();
+        String arrayExpr = "";
+        int i = 0;
 
-        } else if (node.getOrientation().toString() == "column") {
-            csvOperations = node.getId().getText() + "." + "addColumn(" + node.getExpr().toString() + ", " + node.getArrayExpr().toString() + ")";
+        for (String s : sArr) {
+            if (i++ == sArr.length -1) {
+                arrayExpr += "\"" + s.strip() + "\"";
+            } else {
+                arrayExpr +=  "\"" + s.strip() + "\"" + ", ";
+            }
+        }
+        
+        System.out.println(arrayExpr);
+        if (ori.equals("row")) {
+            csvOperations += node.getId().getText() + ".addRow(" + arrayExpr + ")";
+
+        } else if (ori.equals("column")) {
+            csvOperations += node.getId().getText() + ".addColumn(" + node.getExpr().toString() + ", " + arrayExpr + ")";
         }
     }
 
     @Override
     public void inARemoveFromCsvCsvOp(ARemoveFromCsvCsvOp node) {
-        if (node.getOrientation().toString() == "row") {
-            csvOperations = node.getId().getText() + "." + "removeRow()";
+        String ori = node.getOrientation().toString().strip();
 
-        } else if (node.getOrientation().toString() == "column") {
-            csvOperations = node.getId().getText() + "." + "removeColumn()";
+        if (ori.equals("row")) {
+            csvOperations += node.getId().getText() + ".removeRow()";
+
+        } else if (ori.equals("column")) {
+            csvOperations += node.getId().getText() + ".removeColumn()";
         }
     }
 
     @Override
     public void inARemoveAtFromCsvCsvOp(ARemoveAtFromCsvCsvOp node) {
-        if (node.getOrientation().toString() == "row") {
-            csvOperations = node.getId().getText() + "." + "removeRow(" + node.getVal().toString() + ")";
+        String ori = node.getOrientation().toString().strip();
 
-        } else if (node.getOrientation().toString() == "column") {
-            csvOperations = node.getId().getText() + "." + "removeColumn(" + node.getVal().toString() + ")";
+        if (ori.equals("row")) {
+            csvOperations += node.getId().getText() + ".removeRow(" + node.getVal().toString() + ")";
+
+        } else if (ori.equals("column")) {
+            csvOperations += node.getId().getText() + ".removeColumn(" + node.getVal().toString() + ")";
         }
     }
 
     @Override
     public void inAInsertFromCsvCsvOp(AInsertFromCsvCsvOp node) {
-        if (node.getOrientation().toString() == "row") {
-            csvOperations = node.getId().getText() + "." + "insertRow(" + node.getVal().toString() + ", " + node.getArrayExpr().toString() + ")";
+        String[] sArr = node.getArrayExpr().toString().split(",");
+        String ori = node.getOrientation().toString().strip();
+        String arrayExpr = "";
+        int i = 0;
 
-        } else if (node.getOrientation().toString() == "column") {
-            csvOperations = node.getId().getText() + "." + "insertColumn(" + node.getVal().toString() + ", " + node.getExpr().toString() + ", " + node.getArrayExpr().toString() + ")";
+        for (String s : sArr) {
+            if (i++ == sArr.length -1) {
+                arrayExpr += "\"" + s.strip() + "\"";
+            } else {
+                arrayExpr +=  "\"" + s.strip() + "\"" + ", ";
+            }
+        }
+        
+        System.out.println(arrayExpr);
+        if (ori.equals("row")) {
+            csvOperations += node.getId().getText() + ".insertRow(" + node.getVal().toString() + ", new String[] {" + arrayExpr + "})";
+
+        } else if (ori.equals("column")) {
+            csvOperations += node.getId().getText() + ".insertColumn(" + node.getVal().toString() + ", " + node.getExpr().toString() + ", " + arrayExpr + ")";
         }
     }
 
     @Override
     public void inASumSpecialSyntax(ASumSpecialSyntax node) {
-        csvOperations = ".sum(" + node.getExpr().toString() + ")";
+        csvOperations += ".sum(" + node.getExpr().toString() + ")";
     }
 
     @Override
     public void inAFilterSpecialSyntax(AFilterSpecialSyntax node) {
-        csvOperations = ".filter(" + node.getExpr().toString() + "," + node.getFilterexpr().toString() + ")";
+        csvOperations += ".filter(" + node.getExpr().toString() + "," + node.getFilterexpr().toString() + ")";
     }
 
     @Override
     public void inACountSpecialSyntax(ACountSpecialSyntax node) {
-        csvOperations = ".count()";
+        csvOperations += ".count()";
     }
 
     @Override
     public void inAMeanSpecialSyntax(AMeanSpecialSyntax node) {
-        csvOperations = ".mean(" + node.getExpr().toString() + ")";
+        csvOperations += ".mean(" + node.getExpr().toString() + ")";
     }
 
     @Override
     public void inASortSpecialSyntax(ASortSpecialSyntax node) {
-        csvOperations = ".sort(" + node.getExpr().toString() + ", false)";
+        csvOperations += ".sort(" + node.getExpr().toString() + ", false)";
     }
 
     @Override
     public void inASortDescSpecialSyntax(ASortDescSpecialSyntax node) {
-        csvOperations = ".sort(" + node.getExpr().toString() + ", true)";
+        csvOperations += ".sort(" + node.getExpr().toString() + ", true)";
     }
 
     @Override
     public void inASortAscSpecialSyntax(ASortAscSpecialSyntax node) {
-        csvOperations = ".sort(" + node.getExpr().toString() + ", false)";
+        csvOperations += ".sort(" + node.getExpr().toString() + ", false)";
     }
 }

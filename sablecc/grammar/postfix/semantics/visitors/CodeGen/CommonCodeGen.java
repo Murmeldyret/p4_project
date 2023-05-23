@@ -6,6 +6,7 @@ import java.util.List;
 
 import postfix.analysis.DepthFirstAdapter;
 import postfix.node.AAddToArrayArrayOp;
+import postfix.node.AAddToCsvCsvOp;
 import postfix.node.AAssignStmt;
 import postfix.node.ABlockStmtBlock;
 import postfix.node.AConstDeclarationInitializationDcl;
@@ -19,10 +20,13 @@ import postfix.node.AFunctionCallStmt;
 import postfix.node.AFunctionDeclarationDcl;
 import postfix.node.AImportWithoutSeperatorStmt;
 import postfix.node.AIndexing;
+import postfix.node.AInsertFromCsvCsvOp;
 import postfix.node.AInsertToArrayArrayOp;
 import postfix.node.APrintStatementStmt;
 import postfix.node.ARemoveAtFromArrayArrayOp;
+import postfix.node.ARemoveAtFromCsvCsvOp;
 import postfix.node.ARemoveFromArrayArrayOp;
+import postfix.node.ARemoveFromCsvCsvOp;
 import postfix.node.AVariableDeclarationArrayDcl;
 import postfix.node.AVariableDeclarationDcl;
 import postfix.node.AExprPrimeOperatorValPrimeExprPrime;
@@ -49,9 +53,44 @@ public class CommonCodeGen extends DepthFirstAdapter {
     public void inAImportWithoutSeperatorStmt(AImportWithoutSeperatorStmt node) {
         CsvVisitorCodeGen csvVisitorCodeGen = new CsvVisitorCodeGen();
         node.apply(csvVisitorCodeGen);
+        node.replaceBy(null);
 
         program += csvVisitorCodeGen.csvOperations;
+    }
+
+    @Override
+    public void inAAddToCsvCsvOp(AAddToCsvCsvOp node) {
+        CsvVisitorCodeGen csvVisitorCodeGen = new CsvVisitorCodeGen();
+        node.apply(csvVisitorCodeGen);
+        node.replaceBy(null);
+
+        program += csvVisitorCodeGen.csvOperations;
+    }
+
+    @Override
+    public void inARemoveFromCsvCsvOp(ARemoveFromCsvCsvOp node) {
+        CsvVisitorCodeGen csvVisitorCodeGen = new CsvVisitorCodeGen();
+        node.apply(csvVisitorCodeGen);
+        node.replaceBy(null);
         
+        program += csvVisitorCodeGen.csvOperations;
+    }
+
+    @Override
+    public void inARemoveAtFromCsvCsvOp(ARemoveAtFromCsvCsvOp node) {
+        CsvVisitorCodeGen csvVisitorCodeGen = new CsvVisitorCodeGen();
+        node.apply(csvVisitorCodeGen);
+        node.replaceBy(null);
+        program += csvVisitorCodeGen.csvOperations;
+    }
+
+    @Override
+    public void inAInsertFromCsvCsvOp(AInsertFromCsvCsvOp node) {
+        CsvVisitorCodeGen csvVisitorCodeGen = new CsvVisitorCodeGen();
+        node.apply(csvVisitorCodeGen);
+        node = null;
+
+        program += csvVisitorCodeGen.csvOperations;
     }
 
     @Override
@@ -265,12 +304,13 @@ public class CommonCodeGen extends DepthFirstAdapter {
     public void inAInsertToArrayArrayOp(AInsertToArrayArrayOp node) {
         // Insert val [0] in ArrayList
         Object o = node.getArrayExpr();
+        
 
         if (o instanceof String)
         {
-            program += node.getId().getText() + ".add(" + node.getArrayExpr().toString().strip() + ", \"" + node.getVal().toString().strip() + "\");";
+            program += node.getId().getText() + ".add(" + node.getArrayExpr().toString().strip() + ", \"" + node.getExpr().toString().strip() + "\");";
         } else {
-            program += node.getId().getText() + ".add(" + node.getArrayExpr().toString().strip() + ", " + node.getVal().toString().strip() + ");";
+            program += node.getId().getText() + ".add(" + node.getArrayExpr().toString().strip() + ", " + node.getExpr().toString().strip() + ");";
         }
     }
 
