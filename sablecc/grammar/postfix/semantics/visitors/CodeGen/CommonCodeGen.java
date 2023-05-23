@@ -14,7 +14,7 @@ public class CommonCodeGen extends DepthFirstAdapter {
     SymbolTable symbolTable;
 
     public String program;
-    private static final String bvm = "blockVariableMap";
+    protected static final String bvm = "blockVariableMap";
 
     // Constructor
     public CommonCodeGen() {
@@ -23,6 +23,13 @@ public class CommonCodeGen extends DepthFirstAdapter {
     public CommonCodeGen(SymbolTable symbolTable, String program) {
         this.symbolTable = symbolTable;
         this.program = program;
+    }
+
+    @Override
+    public void caseTSemi(TSemi node) {
+        // TODO Auto-generated method stub
+        super.caseTSemi(node);
+        program += "\n";
     }
 
     @Override
@@ -41,16 +48,16 @@ public class CommonCodeGen extends DepthFirstAdapter {
 
     @Override
     public void inAAssignStmt(AAssignStmt node) {
-        program += node.getId().getText().toString();
+        program += bvm +".put(\""+ node.getId().getText().toString()+"\",";
 
         node.getIndexing().apply(this);
         node.setIndexing(null);
-        program += " = ";
+        // program += " = ";
     }
 
     @Override
     public void outAAssignStmt(AAssignStmt node) {
-        program += ";";
+        program += ");";
     }
 
     @Override
@@ -99,11 +106,18 @@ public class CommonCodeGen extends DepthFirstAdapter {
 
             String type = typeSwitch(node.getType().getText().toString());
 
-            program += type + " " + node.getId().getText().toString() + " = ";
-            program += bvm + ".put(" + node.getId().getText() + ");";
+            // program += type + " " + node.getId().getText().toString() + " = ";
+            // program += bvm + ".put(\"" + node.getId().getText()
+            // +"\","+node.getExpr().toString().strip()+ ");";
+            program += bvm + ".put(\"" + node.getId().getText() + "\",";
             symbolTable.put(node.getId().getText(),
                     new IdAttributes(node.getId(), node.getType(), null, Attributes.variable));
         }
+    }
+
+    @Override
+    public void outAVariableDeclarationInitializationDcl(AVariableDeclarationInitializationDcl node) {
+        program += ")";
     }
 
     private String convertIdToVal(String id) {
@@ -118,8 +132,11 @@ public class CommonCodeGen extends DepthFirstAdapter {
     @Override
     public void inAValIdVal(AValIdVal node) {
         // TODO objectconveter her
-        if (node.parent() instanceof PExpr) { // TODO if Id is on rhs convert
-            program += convertIdToVal(node.getId().getText());
+        if (node.parent() instanceof PExpr || node.parent() instanceof PExprPrime) { // TODO if Id is on rhs, convert
+            // program += convertIdToVal(node.getId().getText());
+            String type = typeSwitch(symbolTable.get(node.getId().getText()).getType().getText()); // TODO medmindre det
+                                                                                                   // er array eller csv
+            program += "(" + type + ")" + bvm + ".get(\"" + node.getId().getText() + "\")";
         }
     }
 
@@ -163,10 +180,13 @@ public class CommonCodeGen extends DepthFirstAdapter {
 
     @Override
     public void inAExprValPrimeExpr(AExprValPrimeExpr node) {
-        if (node.getBopNot() != null)
+        if (node.getBopNot() != null) {
             program += "!";
-
-        program += node.getVal().toString().strip();
+        }
+        if (!(node.getVal() instanceof AValIdVal)) {
+            program += node.getVal().toString().strip();
+        }
+        // TODO måske skal det ikke udkommenteres
     }
 
     @Override
@@ -198,8 +218,9 @@ public class CommonCodeGen extends DepthFirstAdapter {
         String expr = "";
 
         expr += node.getBinInfixOp().toString();
-        expr += node.getVal().toString();
-
+        if (!(node.getVal() instanceof AValIdVal)) {
+            expr += node.getVal().toString().strip();
+        }
         program += expr;
     }
 

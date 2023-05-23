@@ -13,7 +13,7 @@ import postfix.semantics.SymbolTable;
 
 public class MainMethodDclCodeGen extends CommonCodeGen {
     // Variables
-    private static String mainMethod = "public static void main(String[] args) {";
+    private static String mainMethod = "public static void main(String[] args) {Map<String,Object> "+bvm + " = new HashMap<>();\n";
 
     String program;
 
