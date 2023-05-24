@@ -70,7 +70,7 @@ public class CommonCodeGen extends DepthFirstAdapter {
     public void inAWhileLoopStmt(AWhileLoopStmt node) {
         int hashcode = node.getKwWhile().getLine() + node.getKwWhile().getPos();
 
-        program += "Map<String,Object> old" +bvm+hashcode + " = new HashMap("+bvm+");\n";
+        program += "Map<String,Object> old" +bvm+hashcode + " = new HashMap<>("+bvm+");\n";
         program += "while (";
         node.getExpr().apply(this);
         node.setExpr(null);
