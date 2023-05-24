@@ -227,7 +227,7 @@ public class TopDclVisitor extends SemanticVisitor {
                     "Variable" + node.getId().getText() + "has already been declared");
         } else {
             symbolTable.put(node.getId().getText(),
-                    new IdAttributes(node.getId(), node.getType(), node.getArrayExpr().toString(), Attributes.array));
+                    new IdAttributes(node.getId(), node.getType(), node.getExpr().toString(), Attributes.array));
         }
 
     }
