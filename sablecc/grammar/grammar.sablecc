@@ -120,7 +120,7 @@ Productions
     | {assignment_statement_stmt}   assignment                          {-> assignment.stmt  }   
     | {function_call}               function_call                       {-> New stmt.function_call(function_call) }
     | {array_operations}            array_op                            {-> New stmt.array_operations (array_op  )  }   
-    | {for_loop}                    kw_for val kw_in id block           {-> New stmt.for_loop (kw_for , val , kw_in , id , block  )  }   
+    | {for_loop}                    kw_for dcl kw_in id block           {-> New stmt.for_loop (kw_for , dcl , kw_in , id , block  )  }   
     | {while_loop}                  kw_while expr block                 {-> New stmt.while_loop (kw_while , expr , block  )  }   
     | {control_statement}           kw_if expr block in_control_stmt    {-> New stmt.control_statement (kw_if , expr , block , in_control_stmt  )  }   
     | {print_statement}             kw_print expr                       {-> New stmt.print_statement (kw_print , expr  )  }   
@@ -179,7 +179,7 @@ Productions
 
     expr {-> P.expr  } =
       {aexprvalprimeexpr}  bop_not? type_cast? val expr_prime  {-> New expr.expr_val_prime (bop_not , type_cast, val , expr_prime  )  }   
-    | {expr_special}        special_expr id         {-> New expr.expr_special (special_expr , id  )  }   
+    | {expr_special}        type_cast? special_expr id         {-> New expr.expr_special (type_cast, special_expr , id  )  }   
     | {expr_array}          array_expr              {-> New expr.expr_array (array_expr  )  } ;
 
     expr_prime {-> P.expr_prime  } =
@@ -312,7 +312,7 @@ Abstract Syntax Tree
         | {assign}                  id indexing op_assign expr 
         | {function_call}           function_call
         | {array_operations}        array_op 
-        | {for_loop}                kw_for val kw_in id block 
+        | {for_loop}                kw_for dcl kw_in id block 
         | {while_loop}              kw_while expr block 
         | {control_statement}       kw_if expr block in_control_stmt 
         | {csv_operation}           csv_op 
@@ -362,7 +362,7 @@ Abstract Syntax Tree
 
     expr = 
          {expr_val_prime}  bop_not? type_cast? val expr_prime 
-       | {expr_special}     special_expr id 
+       | {expr_special}     type_cast? special_expr id 
        | {expr_array}       array_expr;
     
     expr_prime = 
