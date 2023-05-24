@@ -123,7 +123,7 @@ Productions
     | {for_loop}                    kw_for dcl kw_in id block           {-> New stmt.for_loop (kw_for , dcl , kw_in , id , block  )  }   
     | {while_loop}                  kw_while expr block                 {-> New stmt.while_loop (kw_while , expr , block  )  }   
     | {control_statement}           kw_if expr block in_control_stmt    {-> New stmt.control_statement (kw_if , expr , block , in_control_stmt  )  }   
-    | {print_statement}             kw_print expr                       {-> New stmt.print_statement (kw_print , expr  )  }   
+    | {print_statement}             kw_print id? expr                   {-> New stmt.print_statement (kw_print, id , expr  )  }   
     | {csv_operation}               csv_op                              {-> New stmt.csv_operation (csv_op  )  }   
     | {export_statement}            kw_export id kw_to expr             {-> New stmt.export_statement (kw_export , id , kw_to , expr  )  }   
     | {return_stmt}                 return                              {-> return.stmt}   
@@ -137,9 +137,13 @@ Productions
      {variable_declaration_initialization}  type id op_assign expr                                                  {-> New dcl.variable_declaration_initialization (type , id , op_assign , expr  )  }   
     | {variable_declaration_array}          type kw_array id                                                        {-> New dcl.variable_declaration_array (type , kw_array, id )  }   
     | {variable_declaration}                type id                                                                 {-> New dcl.variable_declaration (type , id  )  }
-    | {variable_declaration_array_init}     type kw_array id op_assign array_expr                                   {-> New dcl.variable_declaration_array_init (type, kw_array, id, op_assign, array_expr)}
+    | {csv_to_array_dcl}                    type kw_array id op_assign csv_and_array_help expr                         {-> New dcl.csv_to_array_dcl (type, kw_array, id, op_assign, csv_and_array_help, expr)}
+    | {variable_declaration_array_init}     type kw_array id op_assign expr                                   {-> New dcl.variable_declaration_array_init (type, kw_array, id, op_assign, expr)}
     | {const_declaration_initialization}    kw_const type id op_assign expr                                         {-> New dcl.const_declaration_initialization (kw_const , type , id , op_assign , expr  )  }   
     | {function_declaration}                type kw_function id l_par function_param r_par block                    {-> New dcl.function_declaration (type , kw_function , id , function_param , block )  } ;
+
+    csv_and_array_help =
+     {csv_array_id} id {-> New csv_and_array_help.csv_array_id (id)};
 
     function_param {-> P.function_param  } =
      {function_param} dcl function_param_prime {-> New function_param.function_param (dcl , function_param_prime  )  }   
@@ -316,7 +320,7 @@ Abstract Syntax Tree
         | {while_loop}              kw_while expr block 
         | {control_statement}       kw_if expr block in_control_stmt 
         | {csv_operation}           csv_op 
-        | {print_statement}         kw_print expr 
+        | {print_statement}         kw_print id? expr 
         | {export_statement}        kw_export id kw_to expr 
         | {return}                  kw_return expr 
         | {break_statement}         kw_break ;
@@ -325,9 +329,13 @@ Abstract Syntax Tree
         {variable_declaration_initialization}   type id op_assign expr 
         | {variable_declaration_array}          type kw_array id  
         | {variable_declaration}                type id 
-        | {variable_declaration_array_init}     type kw_array id op_assign array_expr
+        | {csv_to_array_dcl}                    type kw_array id op_assign csv_and_array_help expr
+        | {variable_declaration_array_init}     type kw_array id op_assign expr
         | {const_declaration_initialization}    kw_const type id op_assign expr 
         | {function_declaration}                type kw_function id function_param block ;
+
+    csv_and_array_help =
+     {csv_array_id} id ;
 
     function_param = 
         {function_param} dcl function_param_prime 
@@ -402,7 +410,7 @@ Abstract Syntax Tree
 
     //måske skal function call ikke være value men expression i stedet, time will tell
     val = 
-        {val_id}            id  
+        {val_id}            id
         | {val_function_call}   function_call
         | {val_floatnum}    floatnum 
         | {val_intnum}      intnum 
