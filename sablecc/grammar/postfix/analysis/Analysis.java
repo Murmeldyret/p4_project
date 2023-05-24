@@ -32,9 +32,11 @@ public interface Analysis extends Switch
     void caseAVariableDeclarationInitializationDcl(AVariableDeclarationInitializationDcl node);
     void caseAVariableDeclarationArrayDcl(AVariableDeclarationArrayDcl node);
     void caseAVariableDeclarationDcl(AVariableDeclarationDcl node);
+    void caseACsvToArrayDclDcl(ACsvToArrayDclDcl node);
     void caseAVariableDeclarationArrayInitDcl(AVariableDeclarationArrayInitDcl node);
     void caseAConstDeclarationInitializationDcl(AConstDeclarationInitializationDcl node);
     void caseAFunctionDeclarationDcl(AFunctionDeclarationDcl node);
+    void caseACsvArrayIdCsvAndArrayHelp(ACsvArrayIdCsvAndArrayHelp node);
     void caseAFunctionParamFunctionParam(AFunctionParamFunctionParam node);
     void caseAFunctionParam(AFunctionParam node);
     void caseAFunctionParamPrimeFunctionParamPrime(AFunctionParamPrimeFunctionParamPrime node);

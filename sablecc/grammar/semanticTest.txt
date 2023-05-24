@@ -10,14 +10,6 @@
 # int e = 5 * 5;
 # float f = 5.5 * 2.5;
 
-e = 2;
-
-int i = 0;
-
-while i < 10 {
-    print i;
-    i = i + 1;
-};
 
 # if 2 > 5 {
 #     print "hello";
@@ -27,18 +19,7 @@ while i < 10 {
 #     print "hello 3";
 # };
 
-i = 0;
 
-while i < 3 {
-    if i < 1 {
-        print "if";
-    } else if i < 2 {
-        print "else if";
-    } else {
-        print "else";
-    };
-    i = i + 1;
-};
 
 # for bull in shit {};
 
@@ -47,8 +28,22 @@ while i < 3 {
 # bool x = 2 < 3;
 
 # int function rec(int val) {return rec(val - 1);};
-int function foo(int a, int d) {return a+d ; };
-bool function bar(int c, bool b) { if b {return foo(c,2) < 10;} else {return -1 != c;}; };
+# int function foo(int a, int d) {return a+d ; };
+# bool function bar(int c, bool b) { if b {return foo(c,2) < 10;} else {return -1 != c;}; };
 
-#bar(a,true);
+# bar(a,true);
+
+import "csvTest.csv" as dig;
+int i = sum("cumshot") dig;
+print "total cumshots " + i;
+
+float f = mean("cumshot") dig;
+print "Average cumshot " + f;
+
+
+string array a2 = dig 2;
+
+for string s in a2 {print s;};
+
+
 

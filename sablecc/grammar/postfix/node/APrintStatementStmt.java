@@ -8,6 +8,7 @@ import postfix.analysis.*;
 public final class APrintStatementStmt extends PStmt
 {
     private TKwPrint _kwPrint_;
+    private TId _id_;
     private PExpr _expr_;
 
     public APrintStatementStmt()
@@ -17,10 +18,13 @@ public final class APrintStatementStmt extends PStmt
 
     public APrintStatementStmt(
         @SuppressWarnings("hiding") TKwPrint _kwPrint_,
+        @SuppressWarnings("hiding") TId _id_,
         @SuppressWarnings("hiding") PExpr _expr_)
     {
         // Constructor
         setKwPrint(_kwPrint_);
+
+        setId(_id_);
 
         setExpr(_expr_);
 
@@ -31,6 +35,7 @@ public final class APrintStatementStmt extends PStmt
     {
         return new APrintStatementStmt(
             cloneNode(this._kwPrint_),
+            cloneNode(this._id_),
             cloneNode(this._expr_));
     }
 
@@ -65,6 +70,31 @@ public final class APrintStatementStmt extends PStmt
         this._kwPrint_ = node;
     }
 
+    public TId getId()
+    {
+        return this._id_;
+    }
+
+    public void setId(TId node)
+    {
+        if(this._id_ != null)
+        {
+            this._id_.parent(null);
+        }
+
+        if(node != null)
+        {
+            if(node.parent() != null)
+            {
+                node.parent().removeChild(node);
+            }
+
+            node.parent(this);
+        }
+
+        this._id_ = node;
+    }
+
     public PExpr getExpr()
     {
         return this._expr_;
@@ -95,6 +125,7 @@ public final class APrintStatementStmt extends PStmt
     {
         return ""
             + toString(this._kwPrint_)
+            + toString(this._id_)
             + toString(this._expr_);
     }
 
@@ -105,6 +136,12 @@ public final class APrintStatementStmt extends PStmt
         if(this._kwPrint_ == child)
         {
             this._kwPrint_ = null;
+            return;
+        }
+
+        if(this._id_ == child)
+        {
+            this._id_ = null;
             return;
         }
 
@@ -124,6 +161,12 @@ public final class APrintStatementStmt extends PStmt
         if(this._kwPrint_ == oldChild)
         {
             setKwPrint((TKwPrint) newChild);
+            return;
+        }
+
+        if(this._id_ == oldChild)
+        {
+            setId((TId) newChild);
             return;
         }
 
