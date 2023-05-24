@@ -58,7 +58,7 @@ public class CommonCodeGen extends DepthFirstAdapter {
     public void inARemoveFromCsvCsvOp(ARemoveFromCsvCsvOp node) {
         CsvVisitorCodeGen csvVisitorCodeGen = new CsvVisitorCodeGen();
         node.apply(csvVisitorCodeGen);
-        
+
         program += csvVisitorCodeGen.csvOperations;
     }
 
@@ -83,13 +83,13 @@ public class CommonCodeGen extends DepthFirstAdapter {
     public void inACsvToArrayDclDcl(ACsvToArrayDclDcl node) {
         CsvVisitorCodeGen csvVisitorCodeGen = new CsvVisitorCodeGen();
 
-        if (typeSwitch(node.getType().getText()) == "int")
-        {
+        if (typeSwitch(node.getType().getText()) == "int") {
             program += "ArrayList<Integer> " + node.getId().getText() + " = new ArrayList<Integer>(); ";
         } else if (typeSwitch(node.getType().getText()) == "double") {
             program += "ArrayList<Double> " + node.getId().getText() + " = new ArrayList<Double>(); ";
         } else {
-            program += "ArrayList<" + typeSwitch(node.getType().getText()) + "> " + node.getId().getText() + " = new ArrayList<" + typeSwitch(node.getType().getText()) + ">(); ";
+            program += "ArrayList<" + typeSwitch(node.getType().getText()) + "> " + node.getId().getText()
+                    + " = new ArrayList<" + typeSwitch(node.getType().getText()) + ">(); ";
         }
         program += node.getId().getText() + ".";
         node.apply(csvVisitorCodeGen);
@@ -116,7 +116,7 @@ public class CommonCodeGen extends DepthFirstAdapter {
 
     @Override
     public void outAAssignStmt(AAssignStmt node) {
-        program += ");";
+        program += ");"; // ?
     }
 
     @Override
@@ -262,14 +262,43 @@ public class CommonCodeGen extends DepthFirstAdapter {
             // program += bvm + ".put(\"" + node.getId().getText()
             // +"\","+node.getExpr().toString().strip()+ ");";
             program += bvm + ".put(\"" + node.getId().getText() + "\",";
+            node.getExpr().apply(this);
+            node.setExpr(null);
+            program += ")";
             symbolTable.put(node.getId().getText(),
                     new IdAttributes(node.getId(), node.getType(), null, Attributes.variable));
         }
     }
 
+    // @Override
+    // public void caseAVariableDeclarationInitializationDcl(AVariableDeclarationInitializationDcl node) {
+    //     inAVariableDeclarationInitializationDcl(node);
+    //     if (node.getType() != null) {
+    //         node.getType().apply(this);
+    //     }
+    //     if (node.getId() != null) {
+    //         node.getId().apply(this);
+    //     }
+    //     if (node.getOpAssign() != null) {
+    //         node.getOpAssign().apply(this);
+    //     }
+
+    //     if (node.getExpr() != null) {
+    //         node.getExpr().apply(this);
+    //     }
+    //     outAVariableDeclarationInitializationDcl(node);
+    // }
+
     @Override
     public void outAVariableDeclarationInitializationDcl(AVariableDeclarationInitializationDcl node) {
-        program += ")";
+        // if (symbolTable.DeclaredLocally(node.getId().getText().toString())) {
+        //     if (!(node.getExpr() instanceof AExprSpecialExpr)) {
+        //         program += ")";
+        //     }
+
+        // } else {
+        //     program += ")";
+        // }
     }
 
     private String convertIdToVal(String id) {
@@ -288,7 +317,7 @@ public class CommonCodeGen extends DepthFirstAdapter {
             // program += convertIdToVal(node.getId().getText());
             String type = typeSwitch(symbolTable.get(node.getId().getText()).getType().getText()); // TODO medmindre det
                                                                                                    // er array eller csv
-            if (symbolTable.getKind() == Scopekind.functionBlock) {
+            if (symbolTable.getKind() == Scopekind.functionBlock || symbolTable.getKind() == Scopekind.loopBlock) {
                 if (symbolTable.DeclaredLocally(node.getId().getText())) {
                     program += node.getId().getText();
                 } else {
@@ -318,7 +347,7 @@ public class CommonCodeGen extends DepthFirstAdapter {
         // program += bvm + "= new HashMap<>("+bvm+");\n";
         program += "{\n";
         // Scopekind kind = null;
-        if (!(node.parent() instanceof AFunctionDeclarationDcl)) {
+        if (!(node.parent() instanceof AFunctionDeclarationDcl || node.parent() instanceof AForLoopStmt)) {
             symbolTable = new SymbolTable(symbolTable, Scopekind.block);
         }
     }
@@ -327,7 +356,7 @@ public class CommonCodeGen extends DepthFirstAdapter {
     public void outABlockStmtBlock(ABlockStmtBlock node) {
         // program += bvm + " = old" +bvm+(--i)+";\n}";
         program += "}\n";
-        if (!(node.parent() instanceof AFunctionDeclarationDcl)) {
+        if (!(node.parent() instanceof AFunctionDeclarationDcl || node.parent() instanceof AForLoopStmt)) {
             symbolTable = symbolTable.getOuterSymbolTable();
         }
     }
@@ -407,12 +436,14 @@ public class CommonCodeGen extends DepthFirstAdapter {
     @Override
     public void inAExprPrimeOperatorValPrimeExprPrime(AExprPrimeOperatorValPrimeExprPrime node) {
         String expr = "";
-      
+
         expr += operatorSwitch(node.getBinInfixOp().toString());
         if (!(node.getVal() instanceof AValIdVal)) {
             expr += node.getVal().toString().strip();
         }
         program += expr;
+
+    }
 
     @Override
     public void inAExprSpecialExpr(AExprSpecialExpr node) {
@@ -421,19 +452,24 @@ public class CommonCodeGen extends DepthFirstAdapter {
         node.setSpecialExpr(null);
         program += csvVisitorCodeGen.csvOperations;
     }
-    
+
     @Override
     public void inAForLoopStmt(AForLoopStmt node) {
 
         program += "for ( ";
 
+        symbolTable = new SymbolTable(symbolTable, Scopekind.loopBlock);
         node.getDcl().apply(this);
         node.setDcl(null);
-        
-        program += " : "  + node.getId().getText() + ")";
+
+        program += " : " + node.getId().getText() + ")";
 
     }
-    
+
+    @Override
+    public void outAForLoopStmt(AForLoopStmt node) {
+        symbolTable = symbolTable.getOuterSymbolTable();
+    }
 
     @Override
     public void inAVariableDeclarationArrayDcl(AVariableDeclarationArrayDcl node) {
@@ -451,13 +487,16 @@ public class CommonCodeGen extends DepthFirstAdapter {
     @Override
     public void inAVariableDeclarationArrayInitDcl(AVariableDeclarationArrayInitDcl node) {
 
-        if (typeSwitch(node.getType().getText()) == "int")
-        {
-            program += "ArrayList<Integer> " + node.getId().getText() + " = new ArrayList<Integer>(Arrays.asList(" + node.getExpr().toString().strip() + "))";
+        if (typeSwitch(node.getType().getText()) == "int") {
+            program += "ArrayList<Integer> " + node.getId().getText() + " = new ArrayList<Integer>(Arrays.asList("
+                    + node.getExpr().toString().strip() + "))";
         } else if (typeSwitch(node.getType().getText()) == "double") {
-            program += "ArrayList<Double> " + node.getId().getText() + " = new ArrayList<Double>(Arrays.asList("+ node.getExpr().toString().strip() +"))";
+            program += "ArrayList<Double> " + node.getId().getText() + " = new ArrayList<Double>(Arrays.asList("
+                    + node.getExpr().toString().strip() + "))";
         } else {
-            program += "ArrayList<" + typeSwitch(node.getType().getText()) + "> " + node.getId().getText() + " = new ArrayList<" + typeSwitch(node.getType().getText()) + ">(Arrays.asList("+ node.getExpr().toString().strip() +"))";
+            program += "ArrayList<" + typeSwitch(node.getType().getText()) + "> " + node.getId().getText()
+                    + " = new ArrayList<" + typeSwitch(node.getType().getText()) + ">(Arrays.asList("
+                    + node.getExpr().toString().strip() + "))";
         }
         node.setExpr(null);
     }
@@ -515,21 +554,12 @@ public class CommonCodeGen extends DepthFirstAdapter {
         // Insert val [0] in ArrayList
         Object o = node.getArrayExpr();
 
-        if (o instanceof String)
-        {
-            program += node.getId().getText() + ".add(" + node.getArrayExpr().toString().strip() + ", \"" + node.getExpr().toString().strip() + "\");";
-        } else {
-            program += node.getId().getText() + ".add(" + node.getArrayExpr().toString().strip() + ", " + node.getExpr().toString().strip() + ");";
-        }
-    }
-
-
         if (o instanceof String) {
             program += node.getId().getText() + ".add(" + node.getArrayExpr().toString().strip() + ", \""
-                    + node.getVal().toString().strip() + "\");";
+                    + node.getExpr().toString().strip() + "\");";
         } else {
             program += node.getId().getText() + ".add(" + node.getArrayExpr().toString().strip() + ", "
-                    + node.getVal().toString().strip() + ");";
+                    + node.getExpr().toString().strip() + ");";
         }
     }
 }

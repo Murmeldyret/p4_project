@@ -269,6 +269,14 @@ public class SemanticVisitor extends DepthFirstAdapter {
     // }
 
     @Override
+    public void caseAExprSpecialExpr(AExprSpecialExpr node) {
+        inAExprSpecialExpr(node);
+        if (node.getId() != null) {
+            node.getId().apply(this);
+        }
+        outAExprSpecialExpr(node);
+    }
+    @Override
     public void inAExprSpecialExpr(AExprSpecialExpr node) {
         PSpecialExpr specialExpr = node.getSpecialExpr();
         String id = node.getId().getText();
@@ -278,7 +286,7 @@ public class SemanticVisitor extends DepthFirstAdapter {
             throw new InvalidExpressionException(idType);
         }
 
-        specialExpr.apply(new TypeVisitor(symbolTable, idType));
+        // specialExpr.apply(new TypeVisitor(symbolTable, idType));
     }
 
     @Override

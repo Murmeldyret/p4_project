@@ -11,7 +11,7 @@
 # float f = 5.5 * 2.5;
 
 int function foo(int a, bool b) {return a+a*2;};
-e = 2;
+# e = 2;
 foo(2,false);
 
 int i = 0;
@@ -56,7 +56,7 @@ while i < 3 {
 # bar(a,true);
 
 import "csvTest.csv" as dig;
-int i = sum("cumshot") dig;
+i = sum("cumshot") dig;
 print "total cumshots " + i;
 
 float f = mean("cumshot") dig;
