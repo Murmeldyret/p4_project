@@ -2,6 +2,7 @@ package postfix.semantics.visitors.CodeGen;
 
 import java.lang.reflect.Method;
 import java.util.List;
+import java.util.Map;
 
 import postfix.analysis.DepthFirstAdapter;
 import postfix.node.AFunctionDeclarationDcl;
@@ -12,11 +13,12 @@ import postfix.semantics.SymbolTable;
 
 public class MainMethodDclCodeGen extends CommonCodeGen {
     // Variables
-    private static String mainMethod = "public static void main(String[] args) {";
+    private static String mainMethod = "public static void main(String[] args) {Map<String,Object> "+bvm + " = new HashMap<>();\n";
 
     String program;
 
     private List<String> methodArray;
+    
 
     public MainMethodDclCodeGen(SymbolTable symbolTable, String program) {
         super(symbolTable, mainMethod);
@@ -27,7 +29,6 @@ public class MainMethodDclCodeGen extends CommonCodeGen {
     public void outAProgramProgram(AProgramProgram node) {
         mainMethod = super.program;
         mainMethod += "}";
-
         functionConcatanation();
     }
 
