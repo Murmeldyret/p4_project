@@ -4,10 +4,12 @@
 </h1>
 
 ## Introduction
-The project has been developed as part of P4 at Aalborg University. The main focus of the project was to develop a new programming language. The programming language has been developed with the programming language Java and with the use of SableCC. 
+The project has been developed as part of P4 at Aalborg University. The main focus of the project was to develop a new programming language. The programming language has been developed with the programming language Java and with the use of SableCC.
 
 ## Build
 Building the project requires the ANT build system created by Apache. The build system will take care of everything, since dependencies has already been included.
+
+The library included with the compiler has been compiled with OpenJDK 20, and therefore you should also have that installed.
 
 ### Windows
 If you are trying to run the project from a Windows platform (In which case, shame on you) you can download the build system [here](https://ant.apache.org/bindownload.cgi).
