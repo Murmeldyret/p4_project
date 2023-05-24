@@ -6,7 +6,7 @@ Helpers
     nonnumber = ['_'+[['a'..'z']+['A'..'Z']]] ;
     all = [00 .. 127];
 
-    //reserved_keywords = ('filter' | 'sum' | 'groupby' | 'mean' | 'sort' | 'count' | 'as' | 'import' | 'export' | 'print' | 'separated_by' | 'for' | 'while' | 'in' | 'if' | 'else' | 'asc' | 'desc' | 'to' | 'const' | 'function' | 'return' | 'break' | 'add' | 'remove' | 'remov_at' | 'insert' | 'column' | 'row') ;
+    //reserved_keywords = ('filter' | 'sum' | 'mean' | 'sort' | 'count' | 'as' | 'import' | 'export' | 'print' | 'separated_by' | 'for' | 'while' | 'in' | 'if' | 'else' | 'asc' | 'desc' | 'to' | 'const' | 'function' | 'return' | 'break' | 'add' | 'remove' | 'remov_at' | 'insert' | 'column' | 'row') ;
     
     // different ways of producing end of line on different OS'
     cr = 13;
