@@ -11,6 +11,7 @@ import postfix.node.AAssignStmt;
 import postfix.node.ABlockStmtBlock;
 import postfix.node.AConstDeclarationInitializationDcl;
 import postfix.node.AControlStatementStmt;
+import postfix.node.ACsvToArrayDclDcl;
 import postfix.node.ADeclarationStmt;
 import postfix.node.AElifStatementInControlStmt;
 import postfix.node.AElseBlockStatementElseStatement;
@@ -27,9 +28,12 @@ import postfix.node.ARemoveAtFromArrayArrayOp;
 import postfix.node.ARemoveAtFromCsvCsvOp;
 import postfix.node.ARemoveFromArrayArrayOp;
 import postfix.node.ARemoveFromCsvCsvOp;
+import postfix.node.ASumSpecialSyntax;
 import postfix.node.AVariableDeclarationArrayDcl;
+import postfix.node.AVariableDeclarationArrayInitDcl;
 import postfix.node.AVariableDeclarationDcl;
 import postfix.node.AExprPrimeOperatorValPrimeExprPrime;
+import postfix.node.AExprSpecialExpr;
 import postfix.node.AVariableDeclarationInitializationDcl;
 import postfix.node.AWhileLoopStmt;
 import postfix.semantics.SymbolTable;
@@ -53,8 +57,6 @@ public class CommonCodeGen extends DepthFirstAdapter {
     public void inAImportWithoutSeperatorStmt(AImportWithoutSeperatorStmt node) {
         CsvVisitorCodeGen csvVisitorCodeGen = new CsvVisitorCodeGen();
         node.apply(csvVisitorCodeGen);
-        node.setExpr(null);
-
         node.setExpr(null);
 
         program += csvVisitorCodeGen.csvOperations;
@@ -95,13 +97,33 @@ public class CommonCodeGen extends DepthFirstAdapter {
     }
 
     @Override
+    public void inACsvToArrayDclDcl(ACsvToArrayDclDcl node) {
+        CsvVisitorCodeGen csvVisitorCodeGen = new CsvVisitorCodeGen();
+
+        if (typeSwitch(node.getType().getText()) == "int")
+        {
+            program += "ArrayList<Integer> " + node.getId().getText() + " = new ArrayList<Integer>(); ";
+        } else if (typeSwitch(node.getType().getText()) == "double") {
+            program += "ArrayList<Double> " + node.getId().getText() + " = new ArrayList<Double>(); ";
+        } else {
+            program += "ArrayList<" + typeSwitch(node.getType().getText()) + "> " + node.getId().getText() + " = new ArrayList<" + typeSwitch(node.getType().getText()) + ">(); ";
+        }
+        program += node.getId().getText() + ".";
+        node.apply(csvVisitorCodeGen);
+        node.setExpr(null);
+
+        program += csvVisitorCodeGen.csvOperations;
+        
+    }
+
+    @Override
     public void outADeclarationStmt(ADeclarationStmt node) {
         program += ";";
     }
 
     @Override
     public void inAAssignStmt(AAssignStmt node) {
-        program += node.getId().getText().toString();
+        program += node.getId().getText().toString().strip();
 
         node.getIndexing().apply(this);
         node.setIndexing(null);
@@ -148,18 +170,14 @@ public class CommonCodeGen extends DepthFirstAdapter {
 
     @Override
     public void inAVariableDeclarationInitializationDcl(AVariableDeclarationInitializationDcl node) {
-        if (!symbolTable.DeclaredLocally(node.getId().getText().toString())) {
-            
-            String type = typeSwitch(node.getType().getText().toString());
-
-            program += type + " " + node.getId().getText().toString() + " = ";
-        }
+        program += typeSwitch(node.getType().getText()) + " " + node.getId().getText() + " = ";
+        
     }
 
     @Override
     public void inAConstDeclarationInitializationDcl(AConstDeclarationInitializationDcl node) {
         String type = typeSwitch(node.getType().getText().toString());
-        program += "final " + type + " " + node.getId().getText().strip() + " = " + node.getExpr().toString().strip() + ";";
+        program += "final " + type + " " + node.getId().getText() + " = " + node.getExpr().toString().strip() + ";";
         node.setExpr(null);
     }
 
@@ -221,21 +239,29 @@ public class CommonCodeGen extends DepthFirstAdapter {
     public void inAExprPrimeOperatorValPrimeExprPrime(AExprPrimeOperatorValPrimeExprPrime node) {
         String expr = "";
 
-        expr += node.getBinInfixOp().toString();
-        expr += node.getVal().toString();
+        expr += node.getBinInfixOp().toString().strip();
+        expr += node.getVal().toString().strip();
 
         program += expr;
+    }
+
+    @Override
+    public void inAExprSpecialExpr(AExprSpecialExpr node) {
+        CsvVisitorCodeGen csvVisitorCodeGen = new CsvVisitorCodeGen();
+        node.apply(csvVisitorCodeGen);
+        node.setSpecialExpr(null);
+        program += csvVisitorCodeGen.csvOperations;
     }
     
     @Override
     public void inAForLoopStmt(AForLoopStmt node) {
-        program += "for ( " + symbolTable.get(node.getId().getText()).getType().getText() + " " + node.getId().getText() + " : ";
 
-        node.getVal().apply(this);
-        node.setVal(null);
+        program += "for ( ";
 
-        program += ") ";
-
+        node.getDcl().apply(this);
+        node.setDcl(null);
+        
+        program += " : "  + node.getId().getText() + ")";
     }
 
     @Override
@@ -249,6 +275,20 @@ public class CommonCodeGen extends DepthFirstAdapter {
             program += "ArrayList<" + typeSwitch(node.getType().getText()) + "> " + node.getId().getText() + " = new ArrayList<" + typeSwitch(node.getType().getText()) + ">()";
         }
         
+    }
+
+    @Override
+    public void inAVariableDeclarationArrayInitDcl(AVariableDeclarationArrayInitDcl node) {
+
+        if (typeSwitch(node.getType().getText()) == "int")
+        {
+            program += "ArrayList<Integer> " + node.getId().getText() + " = new ArrayList<Integer>(Arrays.asList(" + node.getExpr().toString().strip() + "))";
+        } else if (typeSwitch(node.getType().getText()) == "double") {
+            program += "ArrayList<Double> " + node.getId().getText() + " = new ArrayList<Double>(Arrays.asList("+ node.getExpr().toString().strip() +"))";
+        } else {
+            program += "ArrayList<" + typeSwitch(node.getType().getText()) + "> " + node.getId().getText() + " = new ArrayList<" + typeSwitch(node.getType().getText()) + ">(Arrays.asList("+ node.getExpr().toString().strip() +"))";
+        }
+        node.setExpr(null);
     }
 
     private boolean isInteger(String s) {
