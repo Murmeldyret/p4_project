@@ -1,0 +1,75 @@
+while 2 < 4 {while 3 < 5 {int x = 4; 
+int y = 2; 
+        }; 
+}; 
+int x; 
+int i; 
+x[5 + 1][6] = 3; 
+for text in i {
+    print text + 1; 
+};
+
+if x < 8 {
+    x = 2;
+}
+
+else if x > 8 {
+    x = 10;
+}
+
+else {
+    x = 3;
+};
+
+export data to "";
+
+return data;
+
+break;
+
+const float x = 2.0;
+
+void function areal(int a, int b ,int c) {
+    void function bareal() {
+        return a * b;
+    };
+};
+
+# This also does not work. You can't just call a function without returning the value to something.
+areal(5, 5);
+
+int x = areal(5, 5) ;
+
+x = x + 2 + 23;
+
+csv table;
+
+add column [7, 2, 8, 7, 52] in table;
+remove row in table;
+
+remove_at column 0 in table;
+
+insert column 3 [5,6,7,8,9,201] in table;
+
+array a;
+
+
+# There is probably an error in the SableCC syntax because it does not have an in id as the others do.
+# add [8, 5] in a;
+
+remove in a;
+
+remove_at [3][5] in a;
+
+insert 5 [4, 5] in a;
+
+# There's been placed an id at the end of each special_syntax, which is incorrect since it is operations that can be chained together.
+# Now you have to write sum a a; since sum requires 2 ids.
+# It also gets an EOF error.
+# This applies for all special_expr therefore, there are no further examples.
+# sum a a;
+
+# Theres also missing syntax for many of the syntax's. For filter there should be some kind of expression inbetween filter and the id.
+#filter a.
+# A COMMENT CAN'T BE THE LAST THING IN THE PROGRAM!!
+int a;

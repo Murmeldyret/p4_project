@@ -7,7 +7,7 @@ import postfix.analysis.*;
 @SuppressWarnings("nls")
 public final class AArrayExprValPrimeArrayExpr extends PArrayExpr
 {
-    private PVal _val_;
+    private PExpr _expr_;
     private PArrayExprPrime _arrayExprPrime_;
 
     public AArrayExprValPrimeArrayExpr()
@@ -16,11 +16,11 @@ public final class AArrayExprValPrimeArrayExpr extends PArrayExpr
     }
 
     public AArrayExprValPrimeArrayExpr(
-        @SuppressWarnings("hiding") PVal _val_,
+        @SuppressWarnings("hiding") PExpr _expr_,
         @SuppressWarnings("hiding") PArrayExprPrime _arrayExprPrime_)
     {
         // Constructor
-        setVal(_val_);
+        setExpr(_expr_);
 
         setArrayExprPrime(_arrayExprPrime_);
 
@@ -30,7 +30,7 @@ public final class AArrayExprValPrimeArrayExpr extends PArrayExpr
     public Object clone()
     {
         return new AArrayExprValPrimeArrayExpr(
-            cloneNode(this._val_),
+            cloneNode(this._expr_),
             cloneNode(this._arrayExprPrime_));
     }
 
@@ -40,16 +40,16 @@ public final class AArrayExprValPrimeArrayExpr extends PArrayExpr
         ((Analysis) sw).caseAArrayExprValPrimeArrayExpr(this);
     }
 
-    public PVal getVal()
+    public PExpr getExpr()
     {
-        return this._val_;
+        return this._expr_;
     }
 
-    public void setVal(PVal node)
+    public void setExpr(PExpr node)
     {
-        if(this._val_ != null)
+        if(this._expr_ != null)
         {
-            this._val_.parent(null);
+            this._expr_.parent(null);
         }
 
         if(node != null)
@@ -62,7 +62,7 @@ public final class AArrayExprValPrimeArrayExpr extends PArrayExpr
             node.parent(this);
         }
 
-        this._val_ = node;
+        this._expr_ = node;
     }
 
     public PArrayExprPrime getArrayExprPrime()
@@ -94,7 +94,7 @@ public final class AArrayExprValPrimeArrayExpr extends PArrayExpr
     public String toString()
     {
         return ""
-            + toString(this._val_)
+            + toString(this._expr_)
             + toString(this._arrayExprPrime_);
     }
 
@@ -102,9 +102,9 @@ public final class AArrayExprValPrimeArrayExpr extends PArrayExpr
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
-        if(this._val_ == child)
+        if(this._expr_ == child)
         {
-            this._val_ = null;
+            this._expr_ = null;
             return;
         }
 
@@ -121,9 +121,9 @@ public final class AArrayExprValPrimeArrayExpr extends PArrayExpr
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
-        if(this._val_ == oldChild)
+        if(this._expr_ == oldChild)
         {
-            setVal((PVal) newChild);
+            setExpr((PExpr) newChild);
             return;
         }
 

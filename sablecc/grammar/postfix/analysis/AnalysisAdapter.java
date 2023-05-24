@@ -327,6 +327,12 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
+    public void caseATypeCastTypeCast(ATypeCastTypeCast node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
     public void caseAAddToCsvCsvOp(AAddToCsvCsvOp node)
     {
         defaultCase(node);
@@ -412,12 +418,6 @@ public class AnalysisAdapter implements Analysis
 
     @Override
     public void caseAInsertToArrayArrayOp(AInsertToArrayArrayOp node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseAInsertToVariableArrayOp(AInsertToVariableArrayOp node)
     {
         defaultCase(node);
     }
@@ -567,12 +567,6 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
-    public void caseAGroupbySpecialSyntax(AGroupbySpecialSyntax node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
     public void caseAMeanSpecialSyntax(AMeanSpecialSyntax node)
     {
         defaultCase(node);
@@ -598,6 +592,12 @@ public class AnalysisAdapter implements Analysis
 
     @Override
     public void caseASortSpecialSyntax(ASortSpecialSyntax node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAFilterexprFilterexpr(AFilterexprFilterexpr node)
     {
         defaultCase(node);
     }
@@ -951,7 +951,7 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
-    public void caseTKwRemove(TKwRemove node)
+    public void caseTKwRemoveLast(TKwRemoveLast node)
     {
         defaultCase(node);
     }

@@ -340,7 +340,7 @@ class TokenIndex extends AnalysisAdapter
     }
 
     @Override
-    public void caseTKwRemove(@SuppressWarnings("unused") TKwRemove node)
+    public void caseTKwRemoveLast(@SuppressWarnings("unused") TKwRemoveLast node)
     {
         this.index = 55;
     }

@@ -11,39 +11,8 @@ import postfix.semantics.Exceptions.InvalidExpressionException;
  */
 public class TypeSystem {
 
-    private Set<String> operators = Set.of("+", "-", "*", "/", "%", "<", "<=", ">", ">=", "==", "!=", "and", "or");
-
-    public boolean isBinaryInfixOperator(String Operator) {
-        return operators.contains(Operator);
-    }
-
-    public boolean isUnaryOperator(String operator) {
-        return "!".equals(operator);
-    }
-
-    // public boolean isArithmeticType(String type) {
-    //     return type.equals("int") || type.equals("float");
-    // }
-
-    // public boolean isArithmeticOperator(String operator) {
-    //     return operator.equals("+") || operator.equals("-") || operator.equals("*") || operator.equals("/")
-    //             || operator.equals("%");
-    // }
-
-    public String lookupUnaryType(String operandType, String operator)
-            throws InvalidExpressionException, IllegalArgumentException {
-        if (!isUnaryOperator(operator)) {
-            throw new IllegalArgumentException("Operator " + operator + " not recognized");
-        }
-
-        if (!"bool".equals(operandType)) {
-            throw new InvalidExpressionException("Cannot perform " + operator + " on " + operandType);
-        }
-
-        return "bool";
-    }
-
     private static final Map<String, Map<String, String>> legalOperations;
+    private static final Map<String, String> returnTypes;
 
     static {
         legalOperations = new HashMap<>();
@@ -61,6 +30,53 @@ public class TypeSystem {
         legalOperations.put("or", Map.of("bool", "bool"));
     }
 
+    static {
+        returnTypes = new HashMap<>();
+        returnTypes.put("<", "bool");
+        returnTypes.put("<=", "bool");
+        returnTypes.put(">", "bool");
+        returnTypes.put(">=", "bool");
+        returnTypes.put("==", "bool");
+        returnTypes.put("!=", "bool");
+        returnTypes.put("and", "bool");
+        returnTypes.put("or", "bool");
+    }
+
+    private Set<String> operators = Set.of("+", "-", "*", "/", "%", "<", "<=", ">", ">=", "==", "!=", "and", "or");
+
+    // public boolean isArithmeticType(String type) {
+    // return type.equals("int") || type.equals("float");
+    // }
+
+    // public boolean isArithmeticOperator(String operator) {
+    // return operator.equals("+") || operator.equals("-") || operator.equals("*")
+    // || operator.equals("/")
+    // || operator.equals("%");
+    // }
+
+    public boolean isBinaryInfixOperator(String Operator) {
+        return operators.contains(Operator);
+    }
+
+    public boolean isUnaryOperator(String operator) {
+        return "not".equals(operator);
+    }
+
+    public String lookupUnaryType(String operandType, String operator)
+            throws InvalidExpressionException, IllegalArgumentException {
+        // skal måske bruges til typecasting (hvis vi når det)
+        if (!isUnaryOperator(operator)) {
+            throw new IllegalArgumentException("Operator " + operator + " not recognized");
+        }
+
+        if (!"bool".equals(operandType)) {
+            throw new InvalidExpressionException("Cannot perform " + operator + " on " + operandType);
+        }
+
+        return "bool";
+    }
+
+    // FIXME virker ikke
     public String lookupResultingTypeNew(String LType, String RType, String operator)
             throws InvalidExpressionException, IllegalArgumentException {
         Map<String, String> typeMapping = legalOperations.get(operator);
@@ -73,6 +89,10 @@ public class TypeSystem {
 
         if (resultType == null || !resultType.equals(RType)) {
             throw new InvalidExpressionException("Cannot produce a valid value with " + LType + operator + RType);
+        }
+
+        if (returnTypes.containsKey(operator)) {
+            return returnTypes.get(operator);
         }
 
         return resultType;

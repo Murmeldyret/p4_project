@@ -41,6 +41,8 @@ public class CommonCodeGen extends DepthFirstAdapter {
         CsvVisitorCodeGen csvVisitorCodeGen = new CsvVisitorCodeGen();
         node.apply(csvVisitorCodeGen);
 
+        node.setExpr(null);
+
         program += csvVisitorCodeGen.csvOperations;
 
     }
@@ -444,5 +446,4 @@ public class CommonCodeGen extends DepthFirstAdapter {
                     + node.getVal().toString().strip() + ");";
         }
     }
-
 }

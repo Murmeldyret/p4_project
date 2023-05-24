@@ -92,7 +92,7 @@ Tokens
 
     //array Keywords
     kw_add = 'add';
-    kw_remove = 'remove';
+    kw_remove_last = 'remove_last';
     kw_remove_at = 'remove_at';
     kw_insert = 'insert';
 
@@ -120,7 +120,7 @@ Productions
     | {assignment_statement_stmt}   assignment                          {-> assignment.stmt  }   
     | {function_call}               function_call                       {-> New stmt.function_call(function_call) }
     | {array_operations}            array_op                            {-> New stmt.array_operations (array_op  )  }   
-    | {for_loop}                    kw_for id kw_in val block           {-> New stmt.for_loop (kw_for , id , kw_in , val , block  )  }   
+    | {for_loop}                    kw_for val kw_in id block           {-> New stmt.for_loop (kw_for , val , kw_in , id , block  )  }   
     | {while_loop}                  kw_while expr block                 {-> New stmt.while_loop (kw_while , expr , block  )  }   
     | {control_statement}           kw_if expr block in_control_stmt    {-> New stmt.control_statement (kw_if , expr , block , in_control_stmt  )  }   
     | {print_statement}             kw_print expr                       {-> New stmt.print_statement (kw_print , expr  )  }   
@@ -130,8 +130,8 @@ Productions
     | {break_statement}             kw_break                            {-> New stmt.break_statement (kw_break  )  } ;
 
     import {-> stmt  } =
-     {import_without_seperator} kw_import string kw_as id                       {-> New stmt.import_without_seperator (kw_import , string , kw_as , id )  }   
-    | {import_with_seperator}   kw_import string kw_separated_by char kw_as id  {-> New stmt.import_with_seperator (kw_import , string , kw_separated_by , char , kw_as , id  )  } ;
+     {import_without_seperator} kw_import expr kw_as id                       {-> New stmt.import_without_seperator (kw_import , expr , kw_as , id )  }   
+    | {import_with_seperator}   kw_import expr kw_separated_by char kw_as id  {-> New stmt.import_with_seperator (kw_import , expr , kw_separated_by , char , kw_as , id  )  } ;
 
     dcl =
      {variable_declaration_initialization}  type id op_assign expr                                                  {-> New dcl.variable_declaration_initialization (type , id , op_assign , expr  )  }   
@@ -178,13 +178,16 @@ Productions
      {assign} id indexing op_assign expr {-> New stmt.assign (id , indexing , op_assign , expr  )  } ;
 
     expr {-> P.expr  } =
-      {aexprvalprimeexpr}  bop_not? val expr_prime  {-> New expr.expr_val_prime (bop_not , val , expr_prime  )  }   
+      {aexprvalprimeexpr}  bop_not? type_cast? val expr_prime  {-> New expr.expr_val_prime (bop_not , type_cast, val , expr_prime  )  }   
     | {expr_special}        special_expr id         {-> New expr.expr_special (special_expr , id  )  }   
     | {expr_array}          array_expr              {-> New expr.expr_array (array_expr  )  } ;
 
     expr_prime {-> P.expr_prime  } =
      {expr_prime_operator_val_prime}    bin_infix_op val expr_prime {-> New expr_prime.expr_prime_operator_val_prime (bin_infix_op , val , expr_prime  )  }   
     | {-> New expr_prime ( )  } ;
+
+    type_cast =
+    {type_cast} l_par type r_par {-> New type_cast.type_cast (type)};
 
     csv_op {-> csv_op  } =
      {csv_operation_add}        csv_add         {-> csv_add.csv_op }   
@@ -196,7 +199,7 @@ Productions
      {add_to_csv} kw_add orientation array_expr kw_in id {-> New csv_op.add_to_csv (kw_add , orientation , array_expr , kw_in , id  )  } ;
 
     csv_remove {-> csv_op   } =
-     {remove_from_csv} kw_remove orientation kw_in id {-> New csv_op.remove_from_csv (kw_remove , orientation , kw_in , id  )  } ;
+     {remove_from_csv} kw_remove_last orientation kw_in id {-> New csv_op.remove_from_csv (kw_remove_last , orientation , kw_in , id  )  } ;
 
     csv_remove_at {-> csv_op   } =
      {remove_at_from_csv} kw_remove_at orientation val kw_in id {-> New csv_op.remove_at_from_csv (kw_remove_at , orientation , val , kw_in , id  )  } ;
@@ -213,10 +216,10 @@ Productions
     | {-> New indexing ( )  } ;
 
     array_expr {-> P.array_expr  } =
-     {array_expr_val_prime} l_brack val array_expr_prime r_brack {-> New array_expr.array_expr_val_prime ( val , array_expr_prime  )  } ;
+     {array_expr_val_prime} l_brack expr array_expr_prime r_brack {-> New array_expr.array_expr_val_prime ( expr , array_expr_prime  )  } ;
 
     array_expr_prime {-> P.array_expr_prime  } =
-     {array_expr_prime_extra} sop_comma val array_expr_prime {-> New array_expr_prime.array_expr_prime_extra (sop_comma , val , array_expr_prime  )  }   
+     {array_expr_prime_extra} sop_comma expr array_expr_prime {-> New array_expr_prime.array_expr_prime_extra (sop_comma , expr , array_expr_prime  )  }   
     | {-> New array_expr_prime ( )  } ;
 
     array_op {-> array_op  } =
@@ -229,14 +232,13 @@ Productions
      {add_to_array} kw_add array_expr kw_to id {-> New array_op.add_to_array (kw_add , array_expr, kw_to, id )  } ;
 
     array_remove {-> array_op   } =
-     {remove_from_array} kw_remove kw_in id {-> New array_op.remove_from_array (kw_remove , kw_in , id  )  } ;
+     {remove_from_array} kw_remove_last kw_in id {-> New array_op.remove_from_array (kw_remove_last , kw_in , id  )  } ;
 
     array_remove_at {-> array_op   } =
      {remove_at_from_array} kw_remove_at indexing kw_in id {-> New array_op.remove_at_from_array (kw_remove_at , indexing , kw_in , id  )  } ;
 
     array_insert {-> array_op } =
-     {insert_to_array} kw_insert val array_expr kw_in id {-> New array_op.insert_to_array (kw_insert , val , array_expr , kw_in , id  )  } 
-    |{insert_to_variable} kw_insert l_par array_expr r_par {-> New array_op.insert_to_variable(kw_insert, array_expr)} ;
+     {insert_to_array} kw_insert expr array_expr kw_in id {-> New array_op.insert_to_array (kw_insert , expr , array_expr , kw_in , id  )  } ;
 
     val {-> val  } =
      {val_id}               id              {-> New val.val_id (id  )  }  
@@ -271,22 +273,21 @@ Productions
     special_syntax {-> special_syntax  } =
      {sum_op}       sum     {-> sum.special_syntax  }   
     | {filter_op}   filter  {-> filter.special_syntax  }   
-    | {groupby_op}  groupby {-> groupby.special_syntax  }   
     | {mean_op}     mean    {-> mean.special_syntax  }   
     | {count_op}    count   {-> count.special_syntax  }   
     | {sort_op}     sort    {-> sort.special_syntax  } ;
 
     sum {-> special_syntax  } =
-     {sum} sop_sum{-> New special_syntax.sum (sop_sum )  } ;
+     {sum} sop_sum l_par expr r_par {-> New special_syntax.sum (sop_sum , expr )  } ;
 
     filter {-> special_syntax } =
-     {filter} sop_filter l_par expr r_par {-> New special_syntax.filter (sop_filter , expr )  } ;
+     {filter} sop_filter l_par expr sop_comma dcl filterexpr r_par {-> New special_syntax.filter (sop_filter ,  expr , sop_comma , dcl, filterexpr)  } ;
 
-    groupby {-> special_syntax } =
-     {groupby} sop_groupby l_par string r_par {-> New special_syntax.groupby (sop_groupby, string)  } ;
+    filterexpr =
+     {filterexpr} sop_comma expr {-> New filterexpr.filterexpr (sop_comma, expr )} ;
 
     mean {-> special_syntax } =
-     {mean} sop_mean {-> New special_syntax.mean (sop_mean)  } ;
+     {mean} sop_mean l_par expr r_par {-> New special_syntax.mean (sop_mean, expr)  } ;
 
     count {-> special_syntax  } =
      {count} sop_count{-> New special_syntax.count (sop_count)  } ;
@@ -305,13 +306,13 @@ Abstract Syntax Tree
         | ;
 
     stmt =
-        {import_without_seperator}  kw_import string kw_as id 
-        | {import_with_seperator}   kw_import string kw_separated_by char kw_as id 
+        {import_without_seperator}  kw_import expr kw_as id 
+        | {import_with_seperator}   kw_import expr kw_separated_by char kw_as id 
         | {declaration}             dcl 
         | {assign}                  id indexing op_assign expr 
         | {function_call}           function_call
         | {array_operations}        array_op 
-        | {for_loop}                kw_for id kw_in val block 
+        | {for_loop}                kw_for val kw_in id block 
         | {while_loop}              kw_while expr block 
         | {control_statement}       kw_if expr block in_control_stmt 
         | {csv_operation}           csv_op 
@@ -360,17 +361,20 @@ Abstract Syntax Tree
        | ;
 
     expr = 
-         {expr_val_prime}  bop_not? val expr_prime 
+         {expr_val_prime}  bop_not? type_cast? val expr_prime 
        | {expr_special}     special_expr id 
        | {expr_array}       array_expr;
     
     expr_prime = 
-       {expr_prime_operator_val_prime}      bin_infix_op val expr_prime 
-       | ;
+        {expr_prime_operator_val_prime}      bin_infix_op val expr_prime 
+        | ;
+
+    type_cast =
+        {type_cast} type ;
     
     csv_op = 
         {add_to_csv}            kw_add orientation array_expr kw_in id 
-        | {remove_from_csv}     kw_remove orientation kw_in id 
+        | {remove_from_csv}     kw_remove_last orientation kw_in id 
         | {remove_at_from_csv}  kw_remove_at orientation val kw_in id 
         | {insert_from_csv}     kw_insert orientation val array_expr kw_in id ;
 
@@ -384,18 +388,17 @@ Abstract Syntax Tree
         | ;
 
     array_expr = 
-        {array_expr_val_prime} val array_expr_prime ;
+        {array_expr_val_prime} expr array_expr_prime ;
 
     array_expr_prime = 
-        {array_expr_prime_extra} sop_comma val array_expr_prime 
+        {array_expr_prime_extra} sop_comma expr array_expr_prime 
         | ;
 
     array_op =
         {add_to_array}              kw_add array_expr kw_to id
-        | {remove_from_array}       kw_remove kw_in id 
+        | {remove_from_array}       kw_remove_last kw_in id 
         | {remove_at_from_array}    kw_remove_at indexing kw_in id 
-        | {insert_to_array}         kw_insert val array_expr kw_in id 
-        | {insert_to_variable}      kw_insert array_expr;
+        | {insert_to_array}         kw_insert expr array_expr kw_in id ;
 
     //måske skal function call ikke være value men expression i stedet, time will tell
     val = 
@@ -429,11 +432,13 @@ Abstract Syntax Tree
         | ;
     
     special_syntax =
-        {sum}           sop_sum 
-        | {filter}      sop_filter expr 
-        | {groupby}     sop_groupby string 
-        | {mean}        sop_mean 
+        {sum}           sop_sum expr
+        | {filter}      sop_filter expr sop_comma dcl filterexpr
+        | {mean}        sop_mean expr
         | {count}       sop_count 
         | {sort_asc}    sop_sort expr sop_comma kw_sort_order_asc 
         | {sort_desc}   sop_sort expr sop_comma kw_sort_order_dsc 
         | {sort}        sop_sort expr;
+
+    filterexpr =
+        {filterexpr} sop_comma expr;
