@@ -10,6 +10,16 @@
 # int e = 5 * 5;
 # float f = 5.5 * 2.5;
 
+int function foo(int a, bool b) {return a+a*2;};
+e = 2;
+foo(2,false);
+
+int i = 0;
+
+while i < 10 {
+    print i;
+    i = i + 1;
+};
 
 # if 2 > 5 {
 #     print "hello";
@@ -19,6 +29,18 @@
 #     print "hello 3";
 # };
 
+
+
+while i < 3 {
+    if i < 1 {
+        print "if";
+    } else if i < 2 {
+        print "else if";
+    } else {
+        print "else";
+    };
+    i = 1 + i;
+};
 
 
 # for bull in shit {};

@@ -1,48 +1,24 @@
 package postfix.semantics.visitors.CodeGen;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 import postfix.analysis.DepthFirstAdapter;
-import postfix.node.AAddToArrayArrayOp;
-import postfix.node.AAddToCsvCsvOp;
-import postfix.node.AAssignStmt;
-import postfix.node.ABlockStmtBlock;
-import postfix.node.AConstDeclarationInitializationDcl;
-import postfix.node.AControlStatementStmt;
-import postfix.node.ACsvToArrayDclDcl;
-import postfix.node.ADeclarationStmt;
-import postfix.node.AElifStatementInControlStmt;
-import postfix.node.AElseBlockStatementElseStatement;
-import postfix.node.AExprValPrimeExpr;
-import postfix.node.AForLoopStmt;
-import postfix.node.AFunctionCallStmt;
-import postfix.node.AFunctionDeclarationDcl;
-import postfix.node.AImportWithoutSeperatorStmt;
-import postfix.node.AIndexing;
-import postfix.node.AInsertFromCsvCsvOp;
-import postfix.node.AInsertToArrayArrayOp;
-import postfix.node.APrintStatementStmt;
-import postfix.node.ARemoveAtFromArrayArrayOp;
-import postfix.node.ARemoveAtFromCsvCsvOp;
-import postfix.node.ARemoveFromArrayArrayOp;
-import postfix.node.ARemoveFromCsvCsvOp;
-import postfix.node.ASumSpecialSyntax;
-import postfix.node.AVariableDeclarationArrayDcl;
-import postfix.node.AVariableDeclarationArrayInitDcl;
-import postfix.node.AVariableDeclarationDcl;
-import postfix.node.AExprPrimeOperatorValPrimeExprPrime;
-import postfix.node.AExprSpecialExpr;
-import postfix.node.AVariableDeclarationInitializationDcl;
-import postfix.node.AWhileLoopStmt;
+import postfix.node.*;
+import postfix.semantics.IdAttributes;
+import postfix.semantics.QueueList;
 import postfix.semantics.SymbolTable;
+import postfix.semantics.IdAttributes.Attributes;
+import postfix.semantics.SymbolTable.Scopekind;
 
 public class CommonCodeGen extends DepthFirstAdapter {
     // Variables
     SymbolTable symbolTable;
+    private QueueList<String> functionParameterList;
+    private String functionName = null;
 
     public String program;
+    protected static final String bvm = "blockVariableMap";
+    private int i = 0;
 
     // Constructor
     public CommonCodeGen() {
@@ -51,6 +27,13 @@ public class CommonCodeGen extends DepthFirstAdapter {
     public CommonCodeGen(SymbolTable symbolTable, String program) {
         this.symbolTable = symbolTable;
         this.program = program;
+    }
+
+    @Override
+    public void caseTSemi(TSemi node) {
+        // TODO Auto-generated method stub
+        super.caseTSemi(node);
+        program += "\n";
     }
 
     @Override
@@ -113,7 +96,7 @@ public class CommonCodeGen extends DepthFirstAdapter {
         node.setExpr(null);
 
         program += csvVisitorCodeGen.csvOperations;
-        
+
     }
 
     @Override
@@ -123,39 +106,57 @@ public class CommonCodeGen extends DepthFirstAdapter {
 
     @Override
     public void inAAssignStmt(AAssignStmt node) {
-        program += node.getId().getText().toString().strip();
+
+        program += bvm + ".put(\"" + node.getId().getText().toString() + "\",";
 
         node.getIndexing().apply(this);
         node.setIndexing(null);
-        program += " = ";
+        // program += " = ";
     }
 
     @Override
     public void outAAssignStmt(AAssignStmt node) {
-        program += ";";
+        program += ");";
     }
 
     @Override
     public void outAFunctionCallStmt(AFunctionCallStmt node) {
         program += ";";
+        // TODO ændr scope, NVM
     }
 
     @Override
     public void inAWhileLoopStmt(AWhileLoopStmt node) {
+        int hashcode = node.getKwWhile().getLine() + node.getKwWhile().getPos();
 
+        program += "Map<String,Object> old" + bvm + hashcode + " = new HashMap<>(" + bvm + ");\n";
         program += "while (";
         node.getExpr().apply(this);
         node.setExpr(null);
         program += ")";
+        // TODO ændr scope, NVM InABlockStmtBlock gør det
+    }
 
+    @Override
+    public void outAWhileLoopStmt(AWhileLoopStmt node) {
+        int hashcode = node.getKwWhile().getLine() + node.getKwWhile().getPos();
+        program += bvm + "= old" + bvm + hashcode + ";\n";
     }
 
     @Override
     public void inAControlStatementStmt(AControlStatementStmt node) {
+        int hashcode = node.getKwIf().getLine() + node.getKwIf().getPos();
+        program += "Map<String,Object> old" + bvm + hashcode + " = new HashMap<>(" + bvm + ");\n";
         program += "if (";
         node.getExpr().apply(this);
         node.setExpr(null);
-        program += ") ";
+        program += ")\n";
+    }
+
+    @Override
+    public void outAControlStatementStmt(AControlStatementStmt node) {
+        int hashcode = node.getKwIf().getLine() + node.getKwIf().getPos();
+        program += bvm + "= old" + bvm + hashcode + ";\n";
     }
 
     @Override
@@ -169,26 +170,166 @@ public class CommonCodeGen extends DepthFirstAdapter {
     }
 
     @Override
+    public void inAFunctionDeclarationDcl(AFunctionDeclarationDcl node) {
+        symbolTable.put(node.getId().getText(),
+                new IdAttributes(node.getId(), node.getType(), null, Attributes.function));
+        symbolTable = symbolTable.CreateNewScope(node.getId().getText(), Scopekind.functionBlock,
+                node.getType().getText());
+        program += "class " + node.getId().getText() + " {\n\tpublic static " + node.getType().getText()
+                + " Function(Map<String,Object> " + bvm + ",";
+        functionName = node.getId().getText();
+        node.getFunctionParam().apply(this);
+        node.setFunctionParam(null);
+        program += ") {\n\t";
+    }
+
+    @Override
+    public void caseAFunctionDeclarationDcl(AFunctionDeclarationDcl node) {
+        inAFunctionDeclarationDcl(node);
+        if (node.getType() != null) {
+            node.getType().apply(this);
+        }
+        if (node.getKwFunction() != null) {
+            node.getKwFunction().apply(this);
+        }
+        if (node.getId() != null) {
+            node.getId().apply(this);
+        }
+        symbolTable = symbolTable.getFunctionSymbolTable(node.getId().getText());
+        if (node.getFunctionParam() != null) {
+            node.getFunctionParam().apply(this);
+        }
+        if (node.getBlock() != null) {
+            node.getBlock().apply(this);
+        }
+
+        outAFunctionDeclarationDcl(node);
+    }
+
+    @Override
+    public void outAFunctionDeclarationDcl(AFunctionDeclarationDcl node) {
+        program += "\t}\n}\n";
+        functionName = null;
+        symbolTable = symbolTable.getOuterSymbolTable();
+    }
+
+    @Override
+    public void inAFunctionCallFunctionCall(AFunctionCallFunctionCall node) {
+        program += node.getId().getText() + ".Function(" + bvm + ",";
+        // functionParameterList = new
+        // QueueList<>(symbolTable.get(node.getId().getText()).getParameterNames());
+        // functionName = node.getId().getText();
+    }
+
+    @Override
+    public void outAFunctionCallFunctionCall(AFunctionCallFunctionCall node) {
+        program += ")";
+    }
+
+    @Override
+    public void inAFunctionCallParamFunctionCallParam(AFunctionCallParamFunctionCallParam node) {
+        // TODO Auto-generated method stub
+        super.inAFunctionCallParamFunctionCallParam(node);
+        // String parameter = functionParameterList.remove();
+        // IdAttributes old = symbolTable.get(parameter);
+        // symbolTable.put(parameter, new IdAttributes(old.getId(),old.getType(),
+        // parameter, null));
+    }
+
+    @Override
+    public void inAFunctionCallParamPrimeFunctionCallParamPrime(AFunctionCallParamPrimeFunctionCallParamPrime node) {
+        program += ",";
+    }
+
+    @Override
+    public void inAReturnStmt(AReturnStmt node) {
+        program += "return ";
+    }
+
+    @Override
+    public void outAReturnStmt(AReturnStmt node) {
+        program += ";\n";
+    }
+
+    @Override
     public void inAVariableDeclarationInitializationDcl(AVariableDeclarationInitializationDcl node) {
-        program += typeSwitch(node.getType().getText()) + " " + node.getId().getText() + " = ";
-        
+
+        if (!symbolTable.DeclaredLocally(node.getId().getText().toString())) {
+
+            String type = typeSwitch(node.getType().getText().toString());
+
+            // program += type + " " + node.getId().getText().toString() + " = ";
+            // program += bvm + ".put(\"" + node.getId().getText()
+            // +"\","+node.getExpr().toString().strip()+ ");";
+            program += bvm + ".put(\"" + node.getId().getText() + "\",";
+            symbolTable.put(node.getId().getText(),
+                    new IdAttributes(node.getId(), node.getType(), null, Attributes.variable));
+        }
+    }
+
+    @Override
+    public void outAVariableDeclarationInitializationDcl(AVariableDeclarationInitializationDcl node) {
+        program += ")";
+    }
+
+    private String convertIdToVal(String id) {
+        // Class<String> bv = String.class;
+        // Class<Boolean> ab = boolean.class;
+        // Class<Char> ab = char.class;
+        String type = typeSwitch(symbolTable.get(id).getType().getText()); // TODO medmindre det er array eller csv
+        String typeWithFirstToUpper = type.substring(0, 1).toUpperCase(Locale.ROOT) + type.substring(1);
+        return "ObjectConverter.convert(" + bvm + ".get(" + id + "," + type + ".class)";
+    }
+
+    @Override
+    public void inAValIdVal(AValIdVal node) {
+        // TODO objectconveter her
+        if (node.parent() instanceof PExpr || node.parent() instanceof PExprPrime) { // TODO if Id is on rhs, convert
+            // program += convertIdToVal(node.getId().getText());
+            String type = typeSwitch(symbolTable.get(node.getId().getText()).getType().getText()); // TODO medmindre det
+                                                                                                   // er array eller csv
+            if (symbolTable.getKind() == Scopekind.functionBlock) {
+                if (symbolTable.DeclaredLocally(node.getId().getText())) {
+                    program += node.getId().getText();
+                } else {
+                    program += "(" + type + ")" + bvm + ".get(\"" + node.getId().getText() + "\")";
+                }
+            } else {
+                program += "(" + type + ")" + bvm + ".get(\"" + node.getId().getText() + "\")";
+            }
+        }
     }
 
     @Override
     public void inAConstDeclarationInitializationDcl(AConstDeclarationInitializationDcl node) {
         String type = typeSwitch(node.getType().getText().toString());
-        program += "final " + type + " " + node.getId().getText() + " = " + node.getExpr().toString().strip() + ";";
+        program += "final " + type + " " + node.getId().getText().strip() + " = " + node.getExpr().toString().strip()
+                + ";";
+
         node.setExpr(null);
+        symbolTable.put(node.getId().getText(),
+                new IdAttributes(node.getId(), node.getType(), null, Attributes.constant));
     }
 
     @Override
     public void inABlockStmtBlock(ABlockStmtBlock node) {
-        program += "{";
+        // ! LGTM :)))))))
+        // program += "{ Map<String,Object> old" + bvm +i++ + " =" + bvm +";\n";
+        // program += bvm + "= new HashMap<>("+bvm+");\n";
+        program += "{\n";
+        // Scopekind kind = null;
+        if (!(node.parent() instanceof AFunctionDeclarationDcl)) {
+            symbolTable = new SymbolTable(symbolTable, Scopekind.block);
+        }
     }
-    
+
     @Override
     public void outABlockStmtBlock(ABlockStmtBlock node) {
-        program += "}";
+        // program += bvm + " = old" +bvm+(--i)+";\n}";
+        program += "}\n";
+        if (!(node.parent() instanceof AFunctionDeclarationDcl)) {
+            symbolTable = symbolTable.getOuterSymbolTable();
+        }
     }
 
     @Override
@@ -197,26 +338,40 @@ public class CommonCodeGen extends DepthFirstAdapter {
         node.getExpr().apply(this);
         node.setExpr(null);
         program += ") ";
+        // TODO ændr scope, NVM InABlockStmtBlock gør det
     }
 
     @Override
     public void inAElseBlockStatementElseStatement(AElseBlockStatementElseStatement node) {
         program += "else ";
+        // TODO ændr scope, NVM InABlockStmtBlock gør det
     }
 
     @Override
     public void inAExprValPrimeExpr(AExprValPrimeExpr node) {
-        if (node.getBopNot() != null)
+        if (node.getBopNot() != null) {
             program += "!";
-
-        program += node.getVal().toString().strip();
+        }
+        if (!(node.getVal() instanceof AValIdVal)) {
+            program += node.getVal().toString().strip();
+        }
+        // TODO måske skal det ikke udkommenteres
     }
 
     @Override
     public void inAVariableDeclarationDcl(AVariableDeclarationDcl node) {
-        program += typeSwitch(node.getType().getText()) + " " + node.getId().getText();
+        if (node.parent() instanceof AFunctionParamFunctionParam) {
+            program += typeSwitch(node.getType().getText()) + " " + node.getId().getText();
+            symbolTable.addFunctionParameter(functionName, node.getType().getText(), node.getId().getText());
+        } else if (node.parent() instanceof AFunctionParamPrimeFunctionParamPrime) {
+            program += ", " + typeSwitch(node.getType().getText()) + " " + node.getId().getText();
+            symbolTable.addFunctionParameter(functionName, node.getType().getText(), node.getId().getText());
+        } else {
+            program += typeSwitch(node.getType().getText()) + " " + node.getId().getText();
+        }
+        symbolTable.put(node.getId().getText(),
+                new IdAttributes(node.getId(), node.getType(), null, Attributes.variable));
     }
-
 
     // Returns the appropriate types for code generation
     private String typeSwitch(String type) {
@@ -235,15 +390,29 @@ public class CommonCodeGen extends DepthFirstAdapter {
         return "";
     }
 
+    private String operatorSwitch(String operator) {
+        // kun dem som ikke er 1:1 med java
+        String res;
+        switch (operator) {
+            case "and":
+                res = "&&";
+            case "or":
+                res = "||";
+            default:
+                res = operator;
+        }
+        return res;
+    }
+
     @Override
     public void inAExprPrimeOperatorValPrimeExprPrime(AExprPrimeOperatorValPrimeExprPrime node) {
         String expr = "";
-
-        expr += node.getBinInfixOp().toString().strip();
-        expr += node.getVal().toString().strip();
-
+      
+        expr += operatorSwitch(node.getBinInfixOp().toString());
+        if (!(node.getVal() instanceof AValIdVal)) {
+            expr += node.getVal().toString().strip();
+        }
         program += expr;
-    }
 
     @Override
     public void inAExprSpecialExpr(AExprSpecialExpr node) {
@@ -262,19 +431,21 @@ public class CommonCodeGen extends DepthFirstAdapter {
         node.setDcl(null);
         
         program += " : "  + node.getId().getText() + ")";
+
     }
+    
 
     @Override
     public void inAVariableDeclarationArrayDcl(AVariableDeclarationArrayDcl node) {
-        if (typeSwitch(node.getType().getText()) == "int")
-        {
+        if (typeSwitch(node.getType().getText()) == "int") {
             program += "ArrayList<Integer> " + node.getId().getText() + " = new ArrayList<Integer>()";
         } else if (typeSwitch(node.getType().getText()) == "double") {
             program += "ArrayList<Double> " + node.getId().getText() + " = new ArrayList<Double>()";
         } else {
-            program += "ArrayList<" + typeSwitch(node.getType().getText()) + "> " + node.getId().getText() + " = new ArrayList<" + typeSwitch(node.getType().getText()) + ">()";
+            program += "ArrayList<" + typeSwitch(node.getType().getText()) + "> " + node.getId().getText()
+                    + " = new ArrayList<" + typeSwitch(node.getType().getText()) + ">()";
         }
-        
+        symbolTable.put(node.getId().getText(), new IdAttributes(node.getId(), node.getType(), null, Attributes.array));
     }
 
     @Override
@@ -299,7 +470,7 @@ public class CommonCodeGen extends DepthFirstAdapter {
             return false;
         }
     }
-    
+
     private boolean isDouble(String s) {
         try {
             Double.parseDouble(s);
@@ -311,11 +482,10 @@ public class CommonCodeGen extends DepthFirstAdapter {
 
     @Override
     public void inAAddToArrayArrayOp(AAddToArrayArrayOp node) {
-        String[] sArr = node.getArrayExpr().toString().split(","); 
+        String[] sArr = node.getArrayExpr().toString().split(",");
 
         for (String s : sArr) {
-            if (isInteger(s.strip()))
-            {
+            if (isInteger(s.strip())) {
                 program += node.getId().getText() + ".add(" + s.strip() + ");";
             } else if (isDouble(s.strip())) {
                 program += node.getId().getText() + ".add(" + s.strip() + ");";
@@ -323,8 +493,7 @@ public class CommonCodeGen extends DepthFirstAdapter {
                 program += node.getId().getText() + ".add(\"" + s.strip() + "\");";
             }
         }
-            
-        
+
     }
 
     @Override
@@ -334,7 +503,7 @@ public class CommonCodeGen extends DepthFirstAdapter {
 
     @Override
     public void inARemoveAtFromArrayArrayOp(ARemoveAtFromArrayArrayOp node) {
-        //System.out.println(node.getIndexing());
+        // System.out.println(node.getIndexing());
         program += node.getId().getText().strip() + ".remove(" + node.getIndexing().toString().strip() + ");";
 
         node.setIndexing(null);
@@ -345,7 +514,6 @@ public class CommonCodeGen extends DepthFirstAdapter {
     public void inAInsertToArrayArrayOp(AInsertToArrayArrayOp node) {
         // Insert val [0] in ArrayList
         Object o = node.getArrayExpr();
-        
 
         if (o instanceof String)
         {
@@ -355,4 +523,13 @@ public class CommonCodeGen extends DepthFirstAdapter {
         }
     }
 
+
+        if (o instanceof String) {
+            program += node.getId().getText() + ".add(" + node.getArrayExpr().toString().strip() + ", \""
+                    + node.getVal().toString().strip() + "\");";
+        } else {
+            program += node.getId().getText() + ".add(" + node.getArrayExpr().toString().strip() + ", "
+                    + node.getVal().toString().strip() + ");";
+        }
+    }
 }
