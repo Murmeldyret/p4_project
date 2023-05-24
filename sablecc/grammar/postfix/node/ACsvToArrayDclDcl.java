@@ -5,24 +5,26 @@ package postfix.node;
 import postfix.analysis.*;
 
 @SuppressWarnings("nls")
-public final class AVariableDeclarationArrayInitDcl extends PDcl
+public final class ACsvToArrayDclDcl extends PDcl
 {
     private TType _type_;
     private TKwArray _kwArray_;
     private TId _id_;
     private TOpAssign _opAssign_;
+    private PCsvAndArrayHelp _csvAndArrayHelp_;
     private PExpr _expr_;
 
-    public AVariableDeclarationArrayInitDcl()
+    public ACsvToArrayDclDcl()
     {
         // Constructor
     }
 
-    public AVariableDeclarationArrayInitDcl(
+    public ACsvToArrayDclDcl(
         @SuppressWarnings("hiding") TType _type_,
         @SuppressWarnings("hiding") TKwArray _kwArray_,
         @SuppressWarnings("hiding") TId _id_,
         @SuppressWarnings("hiding") TOpAssign _opAssign_,
+        @SuppressWarnings("hiding") PCsvAndArrayHelp _csvAndArrayHelp_,
         @SuppressWarnings("hiding") PExpr _expr_)
     {
         // Constructor
@@ -34,6 +36,8 @@ public final class AVariableDeclarationArrayInitDcl extends PDcl
 
         setOpAssign(_opAssign_);
 
+        setCsvAndArrayHelp(_csvAndArrayHelp_);
+
         setExpr(_expr_);
 
     }
@@ -41,18 +45,19 @@ public final class AVariableDeclarationArrayInitDcl extends PDcl
     @Override
     public Object clone()
     {
-        return new AVariableDeclarationArrayInitDcl(
+        return new ACsvToArrayDclDcl(
             cloneNode(this._type_),
             cloneNode(this._kwArray_),
             cloneNode(this._id_),
             cloneNode(this._opAssign_),
+            cloneNode(this._csvAndArrayHelp_),
             cloneNode(this._expr_));
     }
 
     @Override
     public void apply(Switch sw)
     {
-        ((Analysis) sw).caseAVariableDeclarationArrayInitDcl(this);
+        ((Analysis) sw).caseACsvToArrayDclDcl(this);
     }
 
     public TType getType()
@@ -155,6 +160,31 @@ public final class AVariableDeclarationArrayInitDcl extends PDcl
         this._opAssign_ = node;
     }
 
+    public PCsvAndArrayHelp getCsvAndArrayHelp()
+    {
+        return this._csvAndArrayHelp_;
+    }
+
+    public void setCsvAndArrayHelp(PCsvAndArrayHelp node)
+    {
+        if(this._csvAndArrayHelp_ != null)
+        {
+            this._csvAndArrayHelp_.parent(null);
+        }
+
+        if(node != null)
+        {
+            if(node.parent() != null)
+            {
+                node.parent().removeChild(node);
+            }
+
+            node.parent(this);
+        }
+
+        this._csvAndArrayHelp_ = node;
+    }
+
     public PExpr getExpr()
     {
         return this._expr_;
@@ -188,6 +218,7 @@ public final class AVariableDeclarationArrayInitDcl extends PDcl
             + toString(this._kwArray_)
             + toString(this._id_)
             + toString(this._opAssign_)
+            + toString(this._csvAndArrayHelp_)
             + toString(this._expr_);
     }
 
@@ -216,6 +247,12 @@ public final class AVariableDeclarationArrayInitDcl extends PDcl
         if(this._opAssign_ == child)
         {
             this._opAssign_ = null;
+            return;
+        }
+
+        if(this._csvAndArrayHelp_ == child)
+        {
+            this._csvAndArrayHelp_ = null;
             return;
         }
 
@@ -253,6 +290,12 @@ public final class AVariableDeclarationArrayInitDcl extends PDcl
         if(this._opAssign_ == oldChild)
         {
             setOpAssign((TOpAssign) newChild);
+            return;
+        }
+
+        if(this._csvAndArrayHelp_ == oldChild)
+        {
+            setCsvAndArrayHelp((PCsvAndArrayHelp) newChild);
             return;
         }
 

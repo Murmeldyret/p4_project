@@ -40,7 +40,59 @@ public class CommonCodeGen extends DepthFirstAdapter {
     public void inAImportWithoutSeperatorStmt(AImportWithoutSeperatorStmt node) {
         CsvVisitorCodeGen csvVisitorCodeGen = new CsvVisitorCodeGen();
         node.apply(csvVisitorCodeGen);
+        node.setExpr(null);
 
+        program += csvVisitorCodeGen.csvOperations;
+    }
+
+    @Override
+    public void inAAddToCsvCsvOp(AAddToCsvCsvOp node) {
+        CsvVisitorCodeGen csvVisitorCodeGen = new CsvVisitorCodeGen();
+        node.apply(csvVisitorCodeGen);
+        node.setExpr(null);
+
+        program += csvVisitorCodeGen.csvOperations;
+    }
+
+    @Override
+    public void inARemoveFromCsvCsvOp(ARemoveFromCsvCsvOp node) {
+        CsvVisitorCodeGen csvVisitorCodeGen = new CsvVisitorCodeGen();
+        node.apply(csvVisitorCodeGen);
+        
+        program += csvVisitorCodeGen.csvOperations;
+    }
+
+    @Override
+    public void inARemoveAtFromCsvCsvOp(ARemoveAtFromCsvCsvOp node) {
+        CsvVisitorCodeGen csvVisitorCodeGen = new CsvVisitorCodeGen();
+        node.apply(csvVisitorCodeGen);
+
+        program += csvVisitorCodeGen.csvOperations;
+    }
+
+    @Override
+    public void inAInsertFromCsvCsvOp(AInsertFromCsvCsvOp node) {
+        CsvVisitorCodeGen csvVisitorCodeGen = new CsvVisitorCodeGen();
+        node.apply(csvVisitorCodeGen);
+        node = null;
+
+        program += csvVisitorCodeGen.csvOperations;
+    }
+
+    @Override
+    public void inACsvToArrayDclDcl(ACsvToArrayDclDcl node) {
+        CsvVisitorCodeGen csvVisitorCodeGen = new CsvVisitorCodeGen();
+
+        if (typeSwitch(node.getType().getText()) == "int")
+        {
+            program += "ArrayList<Integer> " + node.getId().getText() + " = new ArrayList<Integer>(); ";
+        } else if (typeSwitch(node.getType().getText()) == "double") {
+            program += "ArrayList<Double> " + node.getId().getText() + " = new ArrayList<Double>(); ";
+        } else {
+            program += "ArrayList<" + typeSwitch(node.getType().getText()) + "> " + node.getId().getText() + " = new ArrayList<" + typeSwitch(node.getType().getText()) + ">(); ";
+        }
+        program += node.getId().getText() + ".";
+        node.apply(csvVisitorCodeGen);
         node.setExpr(null);
 
         program += csvVisitorCodeGen.csvOperations;
@@ -54,6 +106,7 @@ public class CommonCodeGen extends DepthFirstAdapter {
 
     @Override
     public void inAAssignStmt(AAssignStmt node) {
+
         program += bvm + ".put(\"" + node.getId().getText().toString() + "\",";
 
         node.getIndexing().apply(this);
@@ -200,6 +253,7 @@ public class CommonCodeGen extends DepthFirstAdapter {
 
     @Override
     public void inAVariableDeclarationInitializationDcl(AVariableDeclarationInitializationDcl node) {
+
         if (!symbolTable.DeclaredLocally(node.getId().getText().toString())) {
 
             String type = typeSwitch(node.getType().getText().toString());
@@ -251,6 +305,7 @@ public class CommonCodeGen extends DepthFirstAdapter {
         String type = typeSwitch(node.getType().getText().toString());
         program += "final " + type + " " + node.getId().getText().strip() + " = " + node.getExpr().toString().strip()
                 + ";";
+
         node.setExpr(null);
         symbolTable.put(node.getId().getText(),
                 new IdAttributes(node.getId(), node.getType(), null, Attributes.constant));
@@ -352,25 +407,33 @@ public class CommonCodeGen extends DepthFirstAdapter {
     @Override
     public void inAExprPrimeOperatorValPrimeExprPrime(AExprPrimeOperatorValPrimeExprPrime node) {
         String expr = "";
-
+      
         expr += operatorSwitch(node.getBinInfixOp().toString());
         if (!(node.getVal() instanceof AValIdVal)) {
             expr += node.getVal().toString().strip();
         }
         program += expr;
-    }
 
     @Override
-    public void inAForLoopStmt(AForLoopStmt node) {
-        program += "for ( " + symbolTable.get(node.getId().getText()).getType().getText() + " " + node.getId().getText()
-                + " : ";
-
-        node.getVal().apply(this);
-        node.setVal(null);
-
-        program += ") ";
-        // TODO ændr scope, NVM InABlockStmtBlock gør det
+    public void inAExprSpecialExpr(AExprSpecialExpr node) {
+        CsvVisitorCodeGen csvVisitorCodeGen = new CsvVisitorCodeGen();
+        node.apply(csvVisitorCodeGen);
+        node.setSpecialExpr(null);
+        program += csvVisitorCodeGen.csvOperations;
     }
+    
+    @Override
+    public void inAForLoopStmt(AForLoopStmt node) {
+
+        program += "for ( ";
+
+        node.getDcl().apply(this);
+        node.setDcl(null);
+        
+        program += " : "  + node.getId().getText() + ")";
+
+    }
+    
 
     @Override
     public void inAVariableDeclarationArrayDcl(AVariableDeclarationArrayDcl node) {
@@ -383,6 +446,20 @@ public class CommonCodeGen extends DepthFirstAdapter {
                     + " = new ArrayList<" + typeSwitch(node.getType().getText()) + ">()";
         }
         symbolTable.put(node.getId().getText(), new IdAttributes(node.getId(), node.getType(), null, Attributes.array));
+    }
+
+    @Override
+    public void inAVariableDeclarationArrayInitDcl(AVariableDeclarationArrayInitDcl node) {
+
+        if (typeSwitch(node.getType().getText()) == "int")
+        {
+            program += "ArrayList<Integer> " + node.getId().getText() + " = new ArrayList<Integer>(Arrays.asList(" + node.getExpr().toString().strip() + "))";
+        } else if (typeSwitch(node.getType().getText()) == "double") {
+            program += "ArrayList<Double> " + node.getId().getText() + " = new ArrayList<Double>(Arrays.asList("+ node.getExpr().toString().strip() +"))";
+        } else {
+            program += "ArrayList<" + typeSwitch(node.getType().getText()) + "> " + node.getId().getText() + " = new ArrayList<" + typeSwitch(node.getType().getText()) + ">(Arrays.asList("+ node.getExpr().toString().strip() +"))";
+        }
+        node.setExpr(null);
     }
 
     private boolean isInteger(String s) {
@@ -437,6 +514,15 @@ public class CommonCodeGen extends DepthFirstAdapter {
     public void inAInsertToArrayArrayOp(AInsertToArrayArrayOp node) {
         // Insert val [0] in ArrayList
         Object o = node.getArrayExpr();
+
+        if (o instanceof String)
+        {
+            program += node.getId().getText() + ".add(" + node.getArrayExpr().toString().strip() + ", \"" + node.getExpr().toString().strip() + "\");";
+        } else {
+            program += node.getId().getText() + ".add(" + node.getArrayExpr().toString().strip() + ", " + node.getExpr().toString().strip() + ");";
+        }
+    }
+
 
         if (o instanceof String) {
             program += node.getId().getText() + ".add(" + node.getArrayExpr().toString().strip() + ", \""
