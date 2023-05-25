@@ -80,7 +80,7 @@ public class SemanticVisitor extends DepthFirstAdapter {
             symbolTable.getReturnType();
         } catch (IllegalArgumentException e) {
             // Sejt hack
-            throw new invalidReturnExpression("Cannot return when not inside a funciton block", node);
+            throw new invalidReturnExpression("Cannot return when not inside a function block", node);
         }
     }
 
