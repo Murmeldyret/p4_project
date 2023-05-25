@@ -26,7 +26,7 @@ for brand in carBrands {
 
 # Task 3
 
-csv sortedCars = sort ("COMB (L/100 km)", asc) cars;
+csv sortedCars = sort("COMB (L/100 km)") cars;
  
 # Task 4
 string array fuelTypes;
