@@ -31,11 +31,13 @@ public class CsvVisitorCodeGen extends DepthFirstAdapter {
     String csvOperations = "";
     String csvId;
     SymbolTable symbolTable;
+
     @Deprecated(forRemoval = true)
     public CsvVisitorCodeGen(SymbolTable symbolTable, String program) {
         this.symbolTable = symbolTable;
         this.csvOperations = program;
     }
+
     public CsvVisitorCodeGen(SymbolTable symbolTable) {
         this.symbolTable = symbolTable;
     }
@@ -181,6 +183,9 @@ public class CsvVisitorCodeGen extends DepthFirstAdapter {
             filterString += id + ".equals(";
             if (m.find()) {
                 filterString += m.group(0);
+            }
+            else {
+                filterString += filtExpr.split(" ")[2];
             }
             filterString += ");";
         } else {
