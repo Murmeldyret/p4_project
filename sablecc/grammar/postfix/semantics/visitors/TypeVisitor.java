@@ -2,8 +2,7 @@ package postfix.semantics.visitors;
 
 import postfix.semantics.*;
 import postfix.semantics.Exceptions.*;
-
-
+import postfix.semantics.IdAttributes.Attributes;
 import postfix.node.*;
 import postfix.semantics.QueueList;
 import postfix.semantics.SymbolTable;
@@ -125,7 +124,10 @@ public class TypeVisitor extends SemanticVisitor {
     @Override
     public void outAExprValPrimeExpr(AExprValPrimeExpr node) {
         actualExpressionType = typeCheckExpression(node);
-
+        if (node.getTypeCast() != null) {
+        actualExpressionType = ((ATypeCastTypeCast)node.getTypeCast()).getType().getText();
+        }
+        // node.getTypeCast().toString().strip();
         // Validate the resulting type and throw an exception if it's invalid
         if ("INVALID_TYPE".equals(actualExpressionType)) {
             throw new InvalidExpressionException("Invalid expression type detected", node);
@@ -159,7 +161,15 @@ public class TypeVisitor extends SemanticVisitor {
     @Override
     public void inAValIdVal(AValIdVal node) {
         // Seems legit
-        typeQueue.add(symbolTable.get(node.getId().getText()).getType().getText());
+        if (symbolTable.get(node.getId().getText()).getAttributes()==Attributes.array) {
+            typeQueue.add("array");
+        }
+        else if (symbolTable.get(node.getId().getText()).getAttributes()==Attributes.csv) {
+            typeQueue.add("csv");
+        }
+        else {
+            typeQueue.add(symbolTable.get(node.getId().getText()).getType().getText());
+        }
     }
 
     @Override

@@ -26,6 +26,7 @@ public class TypeSystem {
         legalOperations.put(">", Map.of("int", "int", "float", "float"));
         legalOperations.put(">=", Map.of("int", "int", "float", "float"));
         legalOperations.put("!=", Map.of("int", "int", "float", "float", "string", "string", "bool", "bool"));
+        legalOperations.put("==", Map.of("int", "int", "float", "float", "string", "string", "bool", "bool"));
         legalOperations.put("and", Map.of("bool", "bool"));
         legalOperations.put("or", Map.of("bool", "bool"));
     }

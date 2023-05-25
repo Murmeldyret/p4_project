@@ -36,7 +36,7 @@ Tokens
     floatnum = sign? (number)+ '.' (number)+;
     bool = 'true' | 'false';
     type = ('int' | 'bool' | 'float' | 'string' | 'csv' | 'char' | 'void');
-    char = 39 '.' 39;
+    char = 39 [not_eol-39] 39;
 
     //Keywords
     kw_as = 'as';

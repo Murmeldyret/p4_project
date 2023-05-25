@@ -31,10 +31,13 @@ public class CsvVisitorCodeGen extends DepthFirstAdapter {
     String csvOperations = "";
     String csvId;
     SymbolTable symbolTable;
-
+    @Deprecated(forRemoval = true)
     public CsvVisitorCodeGen(SymbolTable symbolTable, String program) {
         this.symbolTable = symbolTable;
         this.csvOperations = program;
+    }
+    public CsvVisitorCodeGen(SymbolTable symbolTable) {
+        this.symbolTable = symbolTable;
     }
 
     public CsvVisitorCodeGen() {
@@ -86,11 +89,11 @@ public class CsvVisitorCodeGen extends DepthFirstAdapter {
 
         System.out.println(arrayExpr);
         if (ori.equals("row")) {
-            csvOperations += node.getId().getText() + ".addRow(" + arrayExpr + ")";
+            csvOperations += node.getId().getText() + ".addRow(";
 
         } else if (ori.equals("column")) {
             csvOperations += node.getId().getText() + ".addColumn(" + node.getExpr().toString() + ", " + arrayExpr
-                    + ")";
+                    + ");";
         }
     }
 
@@ -146,7 +149,7 @@ public class CsvVisitorCodeGen extends DepthFirstAdapter {
     @Override
     public void inACsvToArrayDclDcl(ACsvToArrayDclDcl node) {
 
-        if (isInteger(node.getExpr().toString().strip())) {
+        if (symbolTable.get(node.getExpr().toString().strip()).getType().getText().equals("int")) {
             csvOperations += "addAll(" + node.getCsvAndArrayHelp().toString().strip() + ".getRow("
                     + node.getExpr().toString().strip() + "))";
         } else {

@@ -119,7 +119,10 @@ public class SemanticVisitor extends DepthFirstAdapter {
     @Override
     public void inAAddToArrayArrayOp(AAddToArrayArrayOp node) {
         IdAttributes arr = symbolTable.get(node.getId().getText());
-        if (arr.getAttributes() != Attributes.array) {
+        if (arr.getAttributes() == Attributes.array || arr.getAttributes() == Attributes.csv) {
+            
+        }
+        else{
             throw new InvalidExpressionException("Cannot add to a non array type [Line " + node.getId().getLine()
                     + ", Pos " + node.getId().getPos() + "]");
         }
@@ -181,6 +184,7 @@ public class SemanticVisitor extends DepthFirstAdapter {
     @Override
     public void inAForLoopStmt(AForLoopStmt node) {
         // !Grammatikken for skal omskrives, så vent med at implementere denne.
+        node.getDcl().apply(new TopDclVisitor(symbolTable));
     }
 
     @Override

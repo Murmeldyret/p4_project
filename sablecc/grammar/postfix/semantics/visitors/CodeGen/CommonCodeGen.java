@@ -61,6 +61,10 @@ public class CommonCodeGen extends DepthFirstAdapter {
 
         program += csvVisitorCodeGen.csvOperations;
     }
+    @Override
+    public void outAAddToCsvCsvOp(AAddToCsvCsvOp node) {
+        program += ");";
+    }
 
     @Override
     public void inARemoveFromCsvCsvOp(ARemoveFromCsvCsvOp node) {
@@ -89,7 +93,8 @@ public class CommonCodeGen extends DepthFirstAdapter {
 
     @Override
     public void inACsvToArrayDclDcl(ACsvToArrayDclDcl node) {
-        CsvVisitorCodeGen csvVisitorCodeGen = new CsvVisitorCodeGen();
+        symbolTable.put(node.getId().getText(), new IdAttributes(node.getId(), node.getType(), null, Attributes.array));
+        CsvVisitorCodeGen csvVisitorCodeGen = new CsvVisitorCodeGen(symbolTable);
 
         if (typeSwitch(node.getType().getText()) == "int") {
             program += "ArrayList<Integer> " + node.getId().getText() + " = new ArrayList<Integer>(); ";
@@ -104,7 +109,6 @@ public class CommonCodeGen extends DepthFirstAdapter {
         node.setExpr(null);
 
         program += csvVisitorCodeGen.csvOperations;
-
     }
 
     @Override
@@ -258,6 +262,7 @@ public class CommonCodeGen extends DepthFirstAdapter {
     public void outAReturnStmt(AReturnStmt node) {
         program += ";\n";
     }
+    
 
     @Override
     public void inAVariableDeclarationInitializationDcl(AVariableDeclarationInitializationDcl node) {
@@ -267,14 +272,20 @@ public class CommonCodeGen extends DepthFirstAdapter {
                 program += "Csvruntime" + " " + node.getId().getText().toString() + " = ";
             } else {
                 String type = typeSwitch(node.getType().getText().toString());
+                if (symbolTable.getKind() == Scopekind.loopBlock) {
+                    program += type + " " + node.getId().getText().toString() + " = ";
+                    node.getExpr().apply(this);
+                    node.setExpr(null);
+                } else {
 
-                // program += type + " " + node.getId().getText().toString() + " = ";
-                // program += bvm + ".put(\"" + node.getId().getText()
-                // +"\","+node.getExpr().toString().strip()+ ");";
-                program += bvm + ".put(\"" + node.getId().getText() + "\",";
-                node.getExpr().apply(this);
-                node.setExpr(null);
-                program += ")";
+                    // program += type + " " + node.getId().getText().toString() + " = ";
+                    // program += bvm + ".put(\"" + node.getId().getText()
+                    // +"\","+node.getExpr().toString().strip()+ ");";
+                    program += bvm + ".put(\"" + node.getId().getText() + "\",";
+                    node.getExpr().apply(this);
+                    node.setExpr(null);
+                    program += ")";
+                }
             }
         }
         symbolTable.put(node.getId().getText(),
@@ -328,8 +339,11 @@ public class CommonCodeGen extends DepthFirstAdapter {
         // TODO objectconveter her
         if (node.parent() instanceof PExpr || node.parent() instanceof PExprPrime) { // TODO if Id is on rhs, convert
             // program += convertIdToVal(node.getId().getText());
+            IdAttributes id = symbolTable.get(node.getId().getText());
             String type = typeSwitch(symbolTable.get(node.getId().getText()).getType().getText()); // TODO medmindre det
-                                                                                                   // er array eller csv
+            if (id.getAttributes()== Attributes.array) {
+                type = "ArrayList<" + type+">";
+            }                                                                                  // er array eller csv
             if (symbolTable.getKind() == Scopekind.functionBlock || symbolTable.getKind() == Scopekind.loopBlock) {
                 if (symbolTable.DeclaredLocally(node.getId().getText())) {
                     program += node.getId().getText();
@@ -400,10 +414,30 @@ public class CommonCodeGen extends DepthFirstAdapter {
         if (node.getBopNot() != null) {
             program += "!";
         }
+        if (node.getTypeCast() != null) {
+            if (!((ATypeCastTypeCast) node.getTypeCast()).getType().getText().equals("string")) {
+                program += "(" + typeSwitch(((ATypeCastTypeCast) node.getTypeCast()).getType().getText()) + ")(";
+            } else {
+                program += "String.valueOf(";
+            }
+        }
+
         if (!(node.getVal() instanceof AValIdVal)) {
             program += node.getVal().toString().strip();
         }
         // TODO måske skal det ikke udkommenteres
+    }
+
+    @Override
+    public void outAExprValPrimeExpr(AExprValPrimeExpr node) {
+        if (node.getTypeCast() != null) {
+            if (!((ATypeCastTypeCast) node.getTypeCast()).getType().getText().equals("string")) {
+                program += ")";
+            } else {
+                program += ")";
+            }
+
+        }
     }
 
     @Override
@@ -548,7 +582,7 @@ public class CommonCodeGen extends DepthFirstAdapter {
             } else if (isDouble(s.strip())) {
                 program += node.getId().getText() + ".add(" + s.strip() + ");";
             } else {
-                program += node.getId().getText() + ".add(\"" + s.strip() + "\");";
+                program += node.getId().getText() + ".add(" + s.strip() + ");";
             }
         }
 
