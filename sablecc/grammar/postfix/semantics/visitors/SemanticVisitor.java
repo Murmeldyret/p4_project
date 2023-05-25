@@ -170,13 +170,7 @@ public class SemanticVisitor extends DepthFirstAdapter {
         }
 
         String variableType = symbolTable.get(variableId).getType().getText();
-        TypeVisitor typeVisitor = new TypeVisitor(symbolTable);
-        expression.apply(typeVisitor);
-
         String expressionType = "";
-        if (!typeVisitor.typeQueue.isEmpty()) {
-            expressionType = typeVisitor.typeQueue.remove();
-        }
 
         if (!variableType.equals(expressionType)) {
             throw new RuntimeException("Type mismatch: Cannot assign a value of type " + expressionType
