@@ -1,46 +1,49 @@
-# import csvFile as cars;
-# 
-# # Task 1
-# 
-# string array carBrands;
-# add ["ACURA", "ALFA ROMEO", "ASTON MARTIN", "AUDI", "BENTLEY", "BMW", "BUGATTI", "BUICK", "CADILLAC", "CHERVOLET", "CHRYSLER", "DAEWOO", "DODGE", "FERRARI", "FIAT", "FORD", "GENESIS", "GMC", "HONDA", "HUMMER", "HYUNDAI", "INFINITI", "ISUZU", "JAGUAR", "JEEP", "KIA", "LAMBORGHINI", "LAND ROVER", "LEXUS", "LINCOLN", "MASERATI", "MAZDA", "MERCEDES-BENZ", "MINI", "NISSAN", "OLDSMOBILE", "PLYMOUTH", "PONTIAC", "PORSCHE", "RAM", "ROLLS-ROYCE", "SAAB", "SATURN", "SCION", "SMART", "SRT", "SUBARU", "SUZUKI", "TOYOTA", "VOLKSWAGEN", "VOLVO"] to carBrands;
-# 
-# for brand in carBrands {
-#     int totalBrandConsumption = 0;
-#     int averageBrandConsumption = 0;
-#     int i = 0;
-#     csvBrand = filter("MAKE", string x, x == brand) cars;
-#     for car in csvBrand {
-#         # totalBrandConsumption = totalBrandConsumption + csvBrand[11][car];
-#         i = i + 1;
-#     };
-#     averageBrandConsumption = totalBrandConsumption / i;
-#     print (brand + " " + averageBrandConsumption);
-# };
-# 
-# # Task 2
-# 
-# 
-# # Task 3
-# 
-# sortedCars = sort ("COMB (L/100 km)", asc) cars;
-# 
-# # Task 4
-# string array fuelTypes;
-# add ["D", "E", "N" "X", "Z"] to fuelTypes;
-# 
-# for fuelType in fuelTypes {
-#     int i = 0;
-#     csvFuel = filter("FUEL", string x, x == fuelType) cars;
-#     sortedCsvFuel = sort ("COMB (L/100 km)", asc) csvFuel;
-#     while i < 5 {
-#         print (sortedCsvFuel[i][1] + " " + sortedCsvFuel[i][2] + " " + sortedCsvFuel[i][3] + " " + sortedCsvFuel[i][11]);
-#         i = i + 1;
-#     }
-# }
-# 
-# 
-# Random Tests
+import csvFile as cars;
+
+# Task 1
+
+string array carBrands;
+add ["ACURA", "ALFA ROMEO", "ASTON MARTIN", "AUDI", "BENTLEY", "BMW", "BUGATTI", "BUICK", "CADILLAC", "CHERVOLET", "CHRYSLER", "DAEWOO", "DODGE", "FERRARI", "FIAT", "FORD", "GENESIS", "GMC", "HONDA", "HUMMER", "HYUNDAI", "INFINITI", "ISUZU", "JAGUAR", "JEEP", "KIA", "LAMBORGHINI", "LAND ROVER", "LEXUS", "LINCOLN", "MASERATI", "MAZDA", "MERCEDES-BENZ", "MINI", "NISSAN", "OLDSMOBILE", "PLYMOUTH", "PONTIAC", "PORSCHE", "RAM", "ROLLS-ROYCE", "SAAB", "SATURN", "SCION", "SMART", "SRT", "SUBARU", "SUZUKI", "TOYOTA", "VOLKSWAGEN", "VOLVO"] to carBrands;
+int i = 0;
+int totalBrandConsumption = 0;
+int averageBrandConsumption = 0;
+
+for brand in carBrands {
+    totalBrandConsumption = 0;
+    averageBrandConsumption = 0;
+    i = 0;
+    csv csvBrand = filter("MAKE", string x, i == 0) cars;
+    for car in csvBrand {
+        totalBrandConsumption = totalBrandConsumption + csvBrand[11][car];
+        i = i + 1;
+    };
+    averageBrandConsumption = totalBrandConsumption / i;
+    print brand + " " + averageBrandConsumption;
+};
+
+# Task 2
+
+
+# Task 3
+
+csv sortedCars = sort ("COMB (L/100 km)", asc) cars;
+ 
+# Task 4
+string array fuelTypes;
+add ["D", "E", "N", "X", "Z"] to fuelTypes;
+int i = 0;
+for fuelType in fuelTypes {
+    i = 0;
+    csv csvFuel = filter("FUEL", string x, x == fuelType) cars;
+    csv sortedCsvFuel = sort ("COMB (L/100 km)", asc) csvFuel;
+    while i < 5 {
+        print sortedCsvFuel[i][1] + " " + sortedCsvFuel[i][2] + " " + sortedCsvFuel[i][3] + " " + sortedCsvFuel[i][11];
+        i = i + 1;
+    }
+}
+
+
+Random Tests
 
 int b = 3;
 
@@ -59,17 +62,24 @@ add ["a", "b", "c"] to testArray;
 print testArray;
 remove_last in testArray;
 insert 2 + 2 ["d"] in testArray;
-
+# count testArray;
 
 for x in test {
     print x;
 };
 
-int i = 1;
-i = i + 1;
+float f = 1.1;
+f = f + 1.2;
+
+int i;
 while i < 5 {
     print i;
-    # i = i + 1;
+    i = i + 1;
+    int z;
+    while i < 3 {
+        print z;
+        z = z + 1;
+    };
 };
 
 # function declaration

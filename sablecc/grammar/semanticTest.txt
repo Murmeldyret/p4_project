@@ -10,6 +10,21 @@
 # int e = 5 * 5;
 # float f = 5.5 * 2.5;
 
+
+string array stringArray;
+add ["AUDI", "BMW", "MERCEDES"] to stringArray;
+stringArray[1]; #Nope 
+
+csvType[2][3]; #Can not be done
+
+int i = 1;
+i = i + 1; #Cannot assign a value of type  to variable i of type int.
+
+while i < 5 {
+    print i;
+    i = i + 1; #Variable i is not declared
+};
+
 # Illegal expressions (Can still be done...)
 # bool g = 5 + 6;
 # bool x = 2 < 3;
@@ -19,3 +34,4 @@ int function foo(int a, int d) {return a+d ; };
 bool function bar(int c, bool b) { if b {return foo(c,2) < 10;} else {return -1 != c;}; };
 
 #bar(a,true);
+
