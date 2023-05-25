@@ -15,7 +15,7 @@ public class invalidFunctionCallException extends RuntimeException {
     }
 
     public invalidFunctionCallException(String message, Node node) {
-        this(message);
+        this(message + "\n" + node);
         this.node = node;
     }
 

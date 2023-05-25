@@ -105,7 +105,3 @@ export testCsv to "output2.csv";
 # 
 # remove_last column in cars;
 
-
-
-
-
