@@ -11,7 +11,7 @@ public class InvalidBreakStatement extends TypeException{
         //TODO Auto-generated constructor stub
     }
     public InvalidBreakStatement(String message, ABreakStatementStmt node) {
-        super(message);
+        super(message + "\n" + node);
     }
 
     
