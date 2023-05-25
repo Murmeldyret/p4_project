@@ -28,12 +28,13 @@ export sortedCars to "output1.csv";
 string array fuelTypes;
 add ["D", "E", "N", "X", "Z"] to fuelTypes;
 csv testCsv = filter("MAKE", string x, x == "ajksf") cars;
+
+    int j = 0;
 for string fuelType in fuelTypes {
     csv csvFuel = filter("FUEL", string x, x == "D") cars;
-    csv sortedCsvFuel = sort ("COMB (L/100 km)", asc) csvFuel;
+    csv sortedCsvFuel = sort ("COMB (L/100 km)", desc) csvFuel;
 
     int csvCount = 5;
-    int j = 0;
     while csvCount > j {
         string array csvArray = sortedCsvFuel j;
         add row [csvArray] in testCsv;

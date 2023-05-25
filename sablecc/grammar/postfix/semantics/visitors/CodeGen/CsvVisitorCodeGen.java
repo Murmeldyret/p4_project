@@ -150,8 +150,7 @@ public class CsvVisitorCodeGen extends DepthFirstAdapter {
     public void inACsvToArrayDclDcl(ACsvToArrayDclDcl node) {
 
         if (symbolTable.get(node.getExpr().toString().strip()).getType().getText().equals("int")) {
-            csvOperations += "addAll(" + node.getCsvAndArrayHelp().toString().strip() + ".getRow("
-                    + node.getExpr().toString().strip() + "))";
+            csvOperations += "addAll(" + node.getCsvAndArrayHelp().toString().strip() + ".getRow(";
         } else {
             csvOperations += "addAll(" + node.getCsvAndArrayHelp().toString().strip() + ".getColumn("
                     + node.getExpr().toString().strip() + "))";

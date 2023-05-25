@@ -38,7 +38,7 @@ public class CommonCodeGen extends DepthFirstAdapter {
 
     @Override
     public void inAImportWithoutSeperatorStmt(AImportWithoutSeperatorStmt node) {
-        CsvVisitorCodeGen csvVisitorCodeGen = new CsvVisitorCodeGen();
+        CsvVisitorCodeGen csvVisitorCodeGen = new CsvVisitorCodeGen(symbolTable);
         node.apply(csvVisitorCodeGen);
         node.setExpr(null);
 
@@ -47,7 +47,7 @@ public class CommonCodeGen extends DepthFirstAdapter {
 
     @Override
     public void inAExportStatementStmt(AExportStatementStmt node) {
-        CsvVisitorCodeGen csvVisitorCodeGen = new CsvVisitorCodeGen();
+        CsvVisitorCodeGen csvVisitorCodeGen = new CsvVisitorCodeGen(symbolTable);
         node.apply(csvVisitorCodeGen);
         node.setExpr(null);
         program += csvVisitorCodeGen.csvOperations;
@@ -55,12 +55,13 @@ public class CommonCodeGen extends DepthFirstAdapter {
 
     @Override
     public void inAAddToCsvCsvOp(AAddToCsvCsvOp node) {
-        CsvVisitorCodeGen csvVisitorCodeGen = new CsvVisitorCodeGen();
+        CsvVisitorCodeGen csvVisitorCodeGen = new CsvVisitorCodeGen(symbolTable);
         node.apply(csvVisitorCodeGen);
         node.setExpr(null);
 
         program += csvVisitorCodeGen.csvOperations;
     }
+
     @Override
     public void outAAddToCsvCsvOp(AAddToCsvCsvOp node) {
         program += ");";
@@ -106,9 +107,13 @@ public class CommonCodeGen extends DepthFirstAdapter {
         }
         program += node.getId().getText() + ".";
         node.apply(csvVisitorCodeGen);
-        node.setExpr(null);
+        //node.setExpr(null);
 
         program += csvVisitorCodeGen.csvOperations;
+    }
+    @Override
+    public void outACsvToArrayDclDcl(ACsvToArrayDclDcl node) {
+        program+="))";
     }
 
     @Override
@@ -262,7 +267,6 @@ public class CommonCodeGen extends DepthFirstAdapter {
     public void outAReturnStmt(AReturnStmt node) {
         program += ";\n";
     }
-    
 
     @Override
     public void inAVariableDeclarationInitializationDcl(AVariableDeclarationInitializationDcl node) {
@@ -341,23 +345,24 @@ public class CommonCodeGen extends DepthFirstAdapter {
             // program += convertIdToVal(node.getId().getText());
             IdAttributes id = symbolTable.get(node.getId().getText());
             String type = typeSwitch(symbolTable.get(node.getId().getText()).getType().getText()); // TODO medmindre det
-            if (id.getAttributes()== Attributes.array) {
-                type = "ArrayList<" + type+">";
-            }                                                                                  // er array eller csv
-            if (symbolTable.getKind() == Scopekind.functionBlock || symbolTable.getKind() == Scopekind.loopBlock) {
-                if (symbolTable.DeclaredLocally(node.getId().getText())) {
-                    program += node.getId().getText();
-                } else {
-                    program += "(" + type + ")" + bvm + ".get(\"" + node.getId().getText() + "\")";
-                }
+            if (id.getAttributes() == Attributes.array) {
+                program +=node.getId().getText();
             } else {
-                if (symbolTable.get(node.getId().getText()).getType().getText().equals("array")
-                        || symbolTable.get(node.getId().getText()).getType().getText().equals("csv")) {
-                    program += node.getId().getText();
-                    // TODO skulle tage sig af array og csv typer
+                if (symbolTable.getKind() == Scopekind.functionBlock || symbolTable.getKind() == Scopekind.loopBlock) {
+                    if (symbolTable.DeclaredLocally(node.getId().getText())) {
+                        program += node.getId().getText();
+                    } else {
+                        program += "(" + type + ")" + bvm + ".get(\"" + node.getId().getText() + "\")";
+                    }
                 } else {
-                    program += "(" + type + ")" + bvm + ".get(\"" + node.getId().getText() + "\")";
-                }
+                    if (symbolTable.get(node.getId().getText()).getType().getText().equals("array")
+                            || symbolTable.get(node.getId().getText()).getType().getText().equals("csv")) {
+                        program += node.getId().getText();
+                        // TODO skulle tage sig af array og csv typer
+                    } else {
+                        program += "(" + type + ")" + bvm + ".get(\"" + node.getId().getText() + "\")";
+                    }
+                } // er array eller csv
             }
         }
     }
