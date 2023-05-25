@@ -279,33 +279,35 @@ public class CommonCodeGen extends DepthFirstAdapter {
     }
 
     // @Override
-    // public void caseAVariableDeclarationInitializationDcl(AVariableDeclarationInitializationDcl node) {
-    //     inAVariableDeclarationInitializationDcl(node);
-    //     if (node.getType() != null) {
-    //         node.getType().apply(this);
-    //     }
-    //     if (node.getId() != null) {
-    //         node.getId().apply(this);
-    //     }
-    //     if (node.getOpAssign() != null) {
-    //         node.getOpAssign().apply(this);
-    //     }
+    // public void
+    // caseAVariableDeclarationInitializationDcl(AVariableDeclarationInitializationDcl
+    // node) {
+    // inAVariableDeclarationInitializationDcl(node);
+    // if (node.getType() != null) {
+    // node.getType().apply(this);
+    // }
+    // if (node.getId() != null) {
+    // node.getId().apply(this);
+    // }
+    // if (node.getOpAssign() != null) {
+    // node.getOpAssign().apply(this);
+    // }
 
-    //     if (node.getExpr() != null) {
-    //         node.getExpr().apply(this);
-    //     }
-    //     outAVariableDeclarationInitializationDcl(node);
+    // if (node.getExpr() != null) {
+    // node.getExpr().apply(this);
+    // }
+    // outAVariableDeclarationInitializationDcl(node);
     // }
 
     @Override
     public void outAVariableDeclarationInitializationDcl(AVariableDeclarationInitializationDcl node) {
         // if (symbolTable.DeclaredLocally(node.getId().getText().toString())) {
-        //     if (!(node.getExpr() instanceof AExprSpecialExpr)) {
-        //         program += ")";
-        //     }
+        // if (!(node.getExpr() instanceof AExprSpecialExpr)) {
+        // program += ")";
+        // }
 
         // } else {
-        //     program += ")";
+        // program += ")";
         // }
     }
 
@@ -332,7 +334,13 @@ public class CommonCodeGen extends DepthFirstAdapter {
                     program += "(" + type + ")" + bvm + ".get(\"" + node.getId().getText() + "\")";
                 }
             } else {
-                program += "(" + type + ")" + bvm + ".get(\"" + node.getId().getText() + "\")";
+                if (symbolTable.get(node.getId().getText()).getType().getText().equals("array")
+                        || symbolTable.get(node.getId().getText()).getType().getText().equals("csv")) {
+                    program += node.getId().getText();
+                    //TODO skulle tage sig af array og csv typer
+                } else {
+                    program += "(" + type + ")" + bvm + ".get(\"" + node.getId().getText() + "\")";
+                }
             }
         }
     }
