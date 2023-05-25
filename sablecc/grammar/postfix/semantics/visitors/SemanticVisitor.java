@@ -1,7 +1,5 @@
 package postfix.semantics.visitors;
 
-import org.testng.xml.IFileParser;
-
 import postfix.analysis.DepthFirstAdapter;
 import postfix.node.*;
 import postfix.semantics.IdAttributes;
@@ -157,7 +155,9 @@ public class SemanticVisitor extends DepthFirstAdapter {
             throw new InvalidExpressionException("Cannot add to a non array type [Line " + node.getId().getLine()
                     + ", Pos " + node.getId().getPos() + "]");
         }
-        node.getExpr().apply(new TypeVisitor(symbolTable,arr.getType().getText()));
+        node.getExpr().apply(new TypeVisitor(symbolTable, "int"));
+
+        node.getArrayExpr().apply(new TypeVisitor(symbolTable, arr.getType().getText()));
     }
 
     @Override
@@ -169,21 +169,11 @@ public class SemanticVisitor extends DepthFirstAdapter {
             throw new RuntimeException("Variable " + variableId + " is not declared.");
         }
 
-        String variableType = symbolTable.get(variableId).getType().getText();
-        TypeVisitor typeVisitor = new TypeVisitor(symbolTable);
-        expression.apply(typeVisitor);
-
-        String expressionType = "";
-        if (!typeVisitor.typeQueue.isEmpty()) {
-            expressionType = typeVisitor.typeQueue.remove();
-        }
-
-        if (!variableType.equals(expressionType)) {
-            throw new RuntimeException("Type mismatch: Cannot assign a value of type " + expressionType
-                    + " to variable " + variableId + " of type " + variableType + ".");
-        }
         IdAttributes oldId = symbolTable.get(variableId);
 
+        String variableType = symbolTable.get(variableId).getType().getText();
+        TypeVisitor typeVisitor = new TypeVisitor(symbolTable, variableType);
+        expression.apply(typeVisitor);
         if (!oldId.getAttributes().equals(Attributes.variable)) {
             throw new invalidFunctionCallException("Cannot assign a new value to " + variableId
                     + " because it is not a variable (it is " + oldId.getAttributes().name() + ")", node);
@@ -285,9 +275,15 @@ public class SemanticVisitor extends DepthFirstAdapter {
     }
 
     // --special syntax--
-    // @Override
-    // public void inAExprSpecialExpr(AExprSpecialExpr node) {
-    // }
+
+    @Override
+    public void caseAExprSpecialExpr(AExprSpecialExpr node) {
+        inAExprSpecialExpr(node);
+        if (node.getId() != null) {
+            node.getId().apply(this);
+        }
+        outAExprSpecialExpr(node);
+    }
 
     @Override
     public void inAExprSpecialExpr(AExprSpecialExpr node) {
@@ -299,13 +295,11 @@ public class SemanticVisitor extends DepthFirstAdapter {
             throw new InvalidExpressionException(idType);
         }
 
-        specialExpr.apply(new TypeVisitor(symbolTable, idType));
     }
 
     @Override
     public void inAFilterSpecialSyntax(AFilterSpecialSyntax node) {
-        PExpr expr = node.getExpr();
-        expr.apply(new TypeVisitor(symbolTable, "bool"));
+        //node.getExpr().apply(new TypeVisitor(symbolTable, "csv"));
     }
     
     @Override
