@@ -164,7 +164,15 @@ public class SymbolTable implements Map<String, IdAttributes> {
         }
 
         // Check if the key exists in the current scope (hashMap)
-        return hashMap.containsKey(key);
+        boolean res = hashMap.containsKey(key);
+
+        // If there is an outer scope and the key is not in the current scope,
+        // check if the key exists in the outer scope
+        if (outerSymbolTable != null && !res) {
+            res = outerSymbolTable.containsKey(key);
+        }
+
+        return res;
     }
 
     @Override
