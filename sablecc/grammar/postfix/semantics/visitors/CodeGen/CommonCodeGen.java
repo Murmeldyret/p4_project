@@ -326,8 +326,8 @@ public class CommonCodeGen extends DepthFirstAdapter {
                     program += "(" + type + ")" + bvm + ".get(\"" + node.getId().getText() + "\")";
                 }
             } else {
-                if (symbolTable.get(node.getId().getText()).getAttributes() == Attributes.array
-                        || symbolTable.get(node.getId().getText()).getAttributes() == Attributes.csv) {
+                if (symbolTable.get(node.getId().getText()).getType().getText().equals("array")
+                        || symbolTable.get(node.getId().getText()).getType().getText().equals("csv")) {
                     program += node.getId().getText();
                     //TODO skulle tage sig af array og csv typer
                 } else {
