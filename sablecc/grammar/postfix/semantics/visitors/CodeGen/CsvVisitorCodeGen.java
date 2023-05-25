@@ -5,11 +5,13 @@ import java.util.regex.Pattern;
 
 import postfix.analysis.DepthFirstAdapter;
 import postfix.node.AAddToCsvCsvOp;
+import postfix.node.AArrayExprValPrimeArrayExpr;
 import postfix.node.ACountSpecialSyntax;
 import postfix.node.ACsvOperationStmt;
 import postfix.node.ACsvToArrayDclDcl;
 import postfix.node.AExportStatementStmt;
 import postfix.node.AExprSpecialExpr;
+import postfix.node.AExprValPrimeExpr;
 import postfix.node.AFilterSpecialSyntax;
 import postfix.node.AFilterexprFilterexpr;
 import postfix.node.AImportWithoutSeperatorStmt;
@@ -21,6 +23,7 @@ import postfix.node.ASortAscSpecialSyntax;
 import postfix.node.ASortDescSpecialSyntax;
 import postfix.node.ASortSpecialSyntax;
 import postfix.node.ASumSpecialSyntax;
+import postfix.node.AValIdVal;
 import postfix.node.AVariableDeclarationDcl;
 import postfix.semantics.SymbolTable;
 
@@ -54,7 +57,7 @@ public class CsvVisitorCodeGen extends DepthFirstAdapter {
 
     @Override
     public void inAExportStatementStmt(AExportStatementStmt node) {
-        csvOperations += node.getId().getText() + ".export(" + node.getExpr().toString().strip() +");";
+        csvOperations += node.getId().getText() + ".export(" + node.getExpr().toString().strip() + ");";
     }
 
     @Override
@@ -64,11 +67,20 @@ public class CsvVisitorCodeGen extends DepthFirstAdapter {
         String arrayExpr = "";
         int i = 0;
 
-        for (String s : sArr) {
-            if (i++ == sArr.length - 1) {
-                arrayExpr += "\"" + s.strip() + "\"";
-            } else {
-                arrayExpr += "\"" + s.strip() + "\"" + ", ";
+        try {
+            arrayExpr += ((AValIdVal) ((AExprValPrimeExpr) ((AArrayExprValPrimeArrayExpr) node.getArrayExpr())
+                    .getExpr()).getVal()).getId().getText();
+        } catch (Exception e) {
+
+        }
+
+        if (arrayExpr.length() == 0) {
+            for (String s : sArr) {
+                if (i++ == sArr.length - 1) {
+                    arrayExpr += "\"" + s.strip() + "\"";
+                } else {
+                    arrayExpr += "\"" + s.strip() + "\"" + ", ";
+                }
             }
         }
 
