@@ -282,7 +282,7 @@ public class SemanticVisitor extends DepthFirstAdapter {
         String id = node.getId().getText();
         String idType = symbolTable.get(id).getType().getText();
 
-        if (symbolTable.get(node.getId().getText()).getAttributes()!= Attributes.csv) {
+        if (!symbolTable.get(node.getId().getText()).getType().getText().equals("csv")) {
             throw new InvalidExpressionException(idType);
         }
 

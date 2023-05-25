@@ -46,6 +46,14 @@ public class CommonCodeGen extends DepthFirstAdapter {
     }
 
     @Override
+    public void inAExportStatementStmt(AExportStatementStmt node) {
+        CsvVisitorCodeGen csvVisitorCodeGen = new CsvVisitorCodeGen();
+        node.apply(csvVisitorCodeGen);
+        node.setExpr(null);
+        program += csvVisitorCodeGen.csvOperations;
+    }
+
+    @Override
     public void inAAddToCsvCsvOp(AAddToCsvCsvOp node) {
         CsvVisitorCodeGen csvVisitorCodeGen = new CsvVisitorCodeGen();
         node.apply(csvVisitorCodeGen);
@@ -403,7 +411,7 @@ public class CommonCodeGen extends DepthFirstAdapter {
     }
 
     // Returns the appropriate types for code generation
-    private String typeSwitch(String type) {
+    static String typeSwitch(String type) {
         switch (type) {
             case "int":
                 return "int";
@@ -532,6 +540,8 @@ public class CommonCodeGen extends DepthFirstAdapter {
                 program += node.getId().getText() + ".add(\"" + s.strip() + "\");";
             }
         }
+
+        node.setArrayExpr(null);
 
     }
 
