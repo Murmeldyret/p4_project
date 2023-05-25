@@ -1,6 +1,7 @@
 package postfix.semantics;
 
 import java.util.Collection;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -119,6 +120,9 @@ public class SymbolTable implements Map<String, IdAttributes> {
                 if (outerTable.kind == Scopekind.functionBlock) {
                     returnType = outerTable.returnType;
                 }
+                if (returnType != null) {
+                    break;
+                }
 
                 outerTable = getOuterSymbolTable();
             }
@@ -164,7 +168,15 @@ public class SymbolTable implements Map<String, IdAttributes> {
         }
 
         // Check if the key exists in the current scope (hashMap)
-        return hashMap.containsKey(key);
+        boolean res = hashMap.containsKey(key);
+
+        // If there is an outer scope and the key is not in the current scope,
+        // check if the key exists in the outer scope
+        if (outerSymbolTable != null && !res) {
+            res = outerSymbolTable.containsKey(key);
+        }
+
+        return res;
     }
 
     @Override

@@ -195,6 +195,12 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
+    public void caseACsvToArrayDclDcl(ACsvToArrayDclDcl node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
     public void caseAVariableDeclarationArrayInitDcl(AVariableDeclarationArrayInitDcl node)
     {
         defaultCase(node);
@@ -208,6 +214,12 @@ public class AnalysisAdapter implements Analysis
 
     @Override
     public void caseAFunctionDeclarationDcl(AFunctionDeclarationDcl node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseACsvArrayIdCsvAndArrayHelp(ACsvArrayIdCsvAndArrayHelp node)
     {
         defaultCase(node);
     }
@@ -322,6 +334,12 @@ public class AnalysisAdapter implements Analysis
 
     @Override
     public void caseAExprPrime(AExprPrime node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseATypeCastTypeCast(ATypeCastTypeCast node)
     {
         defaultCase(node);
     }

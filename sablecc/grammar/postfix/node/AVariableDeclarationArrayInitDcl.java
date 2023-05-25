@@ -11,7 +11,7 @@ public final class AVariableDeclarationArrayInitDcl extends PDcl
     private TKwArray _kwArray_;
     private TId _id_;
     private TOpAssign _opAssign_;
-    private PArrayExpr _arrayExpr_;
+    private PExpr _expr_;
 
     public AVariableDeclarationArrayInitDcl()
     {
@@ -23,7 +23,7 @@ public final class AVariableDeclarationArrayInitDcl extends PDcl
         @SuppressWarnings("hiding") TKwArray _kwArray_,
         @SuppressWarnings("hiding") TId _id_,
         @SuppressWarnings("hiding") TOpAssign _opAssign_,
-        @SuppressWarnings("hiding") PArrayExpr _arrayExpr_)
+        @SuppressWarnings("hiding") PExpr _expr_)
     {
         // Constructor
         setType(_type_);
@@ -34,7 +34,7 @@ public final class AVariableDeclarationArrayInitDcl extends PDcl
 
         setOpAssign(_opAssign_);
 
-        setArrayExpr(_arrayExpr_);
+        setExpr(_expr_);
 
     }
 
@@ -46,7 +46,7 @@ public final class AVariableDeclarationArrayInitDcl extends PDcl
             cloneNode(this._kwArray_),
             cloneNode(this._id_),
             cloneNode(this._opAssign_),
-            cloneNode(this._arrayExpr_));
+            cloneNode(this._expr_));
     }
 
     @Override
@@ -155,16 +155,16 @@ public final class AVariableDeclarationArrayInitDcl extends PDcl
         this._opAssign_ = node;
     }
 
-    public PArrayExpr getArrayExpr()
+    public PExpr getExpr()
     {
-        return this._arrayExpr_;
+        return this._expr_;
     }
 
-    public void setArrayExpr(PArrayExpr node)
+    public void setExpr(PExpr node)
     {
-        if(this._arrayExpr_ != null)
+        if(this._expr_ != null)
         {
-            this._arrayExpr_.parent(null);
+            this._expr_.parent(null);
         }
 
         if(node != null)
@@ -177,7 +177,7 @@ public final class AVariableDeclarationArrayInitDcl extends PDcl
             node.parent(this);
         }
 
-        this._arrayExpr_ = node;
+        this._expr_ = node;
     }
 
     @Override
@@ -188,7 +188,7 @@ public final class AVariableDeclarationArrayInitDcl extends PDcl
             + toString(this._kwArray_)
             + toString(this._id_)
             + toString(this._opAssign_)
-            + toString(this._arrayExpr_);
+            + toString(this._expr_);
     }
 
     @Override
@@ -219,9 +219,9 @@ public final class AVariableDeclarationArrayInitDcl extends PDcl
             return;
         }
 
-        if(this._arrayExpr_ == child)
+        if(this._expr_ == child)
         {
-            this._arrayExpr_ = null;
+            this._expr_ = null;
             return;
         }
 
@@ -256,9 +256,9 @@ public final class AVariableDeclarationArrayInitDcl extends PDcl
             return;
         }
 
-        if(this._arrayExpr_ == oldChild)
+        if(this._expr_ == oldChild)
         {
-            setArrayExpr((PArrayExpr) newChild);
+            setExpr((PExpr) newChild);
             return;
         }
 

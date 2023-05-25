@@ -14,7 +14,7 @@ import postfix.semantics.SymbolTable.Scopekind;
  */
 public class SemanticVisitor extends DepthFirstAdapter {
     public SemanticVisitor() {
-
+        symbolTable = new SymbolTable(null, SymbolTable.Scopekind.block);
     }
 
     public SemanticVisitor(SymbolTable symbolTable) {
@@ -26,7 +26,6 @@ public class SemanticVisitor extends DepthFirstAdapter {
 
     @Override
     public void inStart(Start node) {
-        this.symbolTable = new SymbolTable(null, SymbolTable.Scopekind.block);
     }
 
     // TODO: Check igennem den her igen, og se om der er noget der skal ændres
@@ -120,7 +119,10 @@ public class SemanticVisitor extends DepthFirstAdapter {
     @Override
     public void inAAddToArrayArrayOp(AAddToArrayArrayOp node) {
         IdAttributes arr = symbolTable.get(node.getId().getText());
-        if (arr.getAttributes() != Attributes.array) {
+        if (arr.getAttributes() == Attributes.array || arr.getAttributes() == Attributes.csv) {
+            
+        }
+        else{
             throw new InvalidExpressionException("Cannot add to a non array type [Line " + node.getId().getLine()
                     + ", Pos " + node.getId().getPos() + "]");
         }
@@ -170,26 +172,9 @@ public class SemanticVisitor extends DepthFirstAdapter {
         }
 
         String variableType = symbolTable.get(variableId).getType().getText();
-        TypeVisitor typeVisitor = new TypeVisitor(symbolTable);
+
+        TypeVisitor typeVisitor = new TypeVisitor(symbolTable, variableType);
         expression.apply(typeVisitor);
-
-        String expressionType = "";
-        if (!typeVisitor.typeQueue.isEmpty()) {
-            expressionType = typeVisitor.typeQueue.remove();
-        }
-
-        if (!variableType.equals(expressionType)) {
-            throw new RuntimeException("Type mismatch: Cannot assign a value of type " + expressionType
-                    + " to variable " + variableId + " of type " + variableType + ".");
-        }
-        IdAttributes oldId = symbolTable.get(variableId);
-
-        if (!oldId.getAttributes().equals(Attributes.variable)) {
-            throw new invalidFunctionCallException("Cannot assign a new value to " + variableId
-                    + " because it is not a variable (it is " + oldId.getAttributes().name() + ")", node);
-        }
-        symbolTable.put(node.getId().getText(),
-                new IdAttributes(node.getId(), oldId.getType(), expression.toString().strip(), oldId.getAttributes()));
     }
 
     // @Override
@@ -201,6 +186,7 @@ public class SemanticVisitor extends DepthFirstAdapter {
     @Override
     public void inAForLoopStmt(AForLoopStmt node) {
         // !Grammatikken for skal omskrives, så vent med at implementere denne.
+        node.getDcl().apply(new TopDclVisitor(symbolTable));
     }
 
     @Override
@@ -232,12 +218,11 @@ public class SemanticVisitor extends DepthFirstAdapter {
         if (node.getFunctionParam() != null) {
             node.getFunctionParam().apply(this);
         }
-        if (node.getStmts() != null) {
-            node.getStmts().apply(this);
+        if (node.getBlock() != null) {
+            node.getBlock().apply(this);
         }
         outAFunctionDeclarationDcl(node);
     }
-
     @Override
     public void inAFunctionCallFunctionCall(AFunctionCallFunctionCall node) {
         // funktionsparametre
@@ -290,16 +275,24 @@ public class SemanticVisitor extends DepthFirstAdapter {
     // }
 
     @Override
+    public void caseAExprSpecialExpr(AExprSpecialExpr node) {
+        inAExprSpecialExpr(node);
+        if (node.getId() != null) {
+            node.getId().apply(this);
+        }
+        outAExprSpecialExpr(node);
+    }
+    @Override
     public void inAExprSpecialExpr(AExprSpecialExpr node) {
         PSpecialExpr specialExpr = node.getSpecialExpr();
         String id = node.getId().getText();
         String idType = symbolTable.get(id).getType().getText();
 
-        if (symbolTable.get(node.getId().getText()).getAttributes()!= Attributes.csv) {
+        if (!symbolTable.get(node.getId().getText()).getType().getText().equals("csv")) {
             throw new InvalidExpressionException(idType);
         }
 
-        specialExpr.apply(new TypeVisitor(symbolTable, idType));
+        // specialExpr.apply(new TypeVisitor(symbolTable, idType));
     }
 
     @Override

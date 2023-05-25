@@ -12,7 +12,7 @@ import postfix.semantics.SymbolTable.Scopekind;
  * the right hand side (or statements in case of functions)
  * 
  * @see {@link postfix.semantics.visitors.TypeVisitor}
- * This class draws inspiration from its namesake in Fischer 8.6
+ *      This class draws inspiration from its namesake in Fischer 8.6
  */
 public class TopDclVisitor extends SemanticVisitor {
 
@@ -44,9 +44,15 @@ public class TopDclVisitor extends SemanticVisitor {
             throw new VariableAlreadyDeclaredException(
                     "Variable" + node.getId().toString() + "has already been declared");
         } else {
-            symbolTable.put(node.getId().toString(),
-                    new IdAttributes(node.getId(), node.getType(), node.getExpr().toString().strip(),
-                            Attributes.variable));
+            if (node.getType().getText().equals("csv")) {
+                symbolTable.put(node.getId().toString(),
+                        new IdAttributes(node.getId(), node.getType(), node.getExpr().toString().strip(),
+                                Attributes.csv));
+            } else {
+                symbolTable.put(node.getId().toString(),
+                        new IdAttributes(node.getId(), node.getType(), node.getExpr().toString().strip(),
+                                Attributes.variable));
+            }
         }
     }
 
@@ -60,24 +66,30 @@ public class TopDclVisitor extends SemanticVisitor {
             throw new VariableAlreadyDeclaredException(
                     "Variable " + node.getId().getText() + " has already been declared");
         } else {
-            symbolTable.put(node.getId().toString(),
-                    new IdAttributes(node.getId(), node.getType(), null, Attributes.variable)); // TODO skal måske være
-                                                                                                // i else block
-            // seems legit
-            if (node.parent() instanceof AFunctionParamFunctionParam
-                    || node.parent() instanceof AFunctionParamPrimeFunctionParamPrime) {
-                Node functionDCL = node.parent();
+            if (node.getType().getText().equals("csv")) {
+                symbolTable.put(node.getId().toString(),
+                        new IdAttributes(node.getId(), node.getType(), null,
+                                Attributes.csv));
+            } else {
+                symbolTable.put(node.getId().toString(),
+                        new IdAttributes(node.getId(), node.getType(), null,
+                                Attributes.variable)); // i else block
+                // seems legit
+                if (node.parent() instanceof AFunctionParamFunctionParam
+                        || node.parent() instanceof AFunctionParamPrimeFunctionParamPrime) {
+                    Node functionDCL = node.parent();
 
-                while (!(functionDCL instanceof AFunctionDeclarationDcl)) {
-                    // find the parent function declaration
-                    functionDCL = functionDCL.parent();
+                    while (!(functionDCL instanceof AFunctionDeclarationDcl)) {
+                        // find the parent function declaration
+                        functionDCL = functionDCL.parent();
+                    }
+                    AFunctionDeclarationDcl funcDCL = (AFunctionDeclarationDcl) functionDCL;
+                    // symbolTable.get(funcDCL.getId().getText()).addParameter(node.getType().getText(),
+                    // node.getId().getText());
+                    symbolTable.addFunctionParameter(funcDCL.getId().getText(), node.getType().getText(),
+                            node.getId().getText());
+
                 }
-                AFunctionDeclarationDcl funcDCL = (AFunctionDeclarationDcl) functionDCL;
-                // symbolTable.get(funcDCL.getId().getText()).addParameter(node.getType().getText(),
-                // node.getId().getText());
-                symbolTable.addFunctionParameter(funcDCL.getId().getText(), node.getType().getText(),
-                        node.getId().getText());
-
             }
         }
     }
@@ -118,20 +130,47 @@ public class TopDclVisitor extends SemanticVisitor {
             // Scopekind.functionBlock);
         }
     }
+
     @Override
     public void inAFunctionParamFunctionParam(AFunctionParamFunctionParam node) {
-        //? skal array dcl's tillades også?
+        // ? skal array dcl's tillades også?
         if (!(node.getDcl() instanceof AVariableDeclarationDcl)) {
-            throw new InvalidDeclarationException("Illegal parameter declaration, is of type " + node.getDcl().getClass().toString() + " should be AVariableDeclarationDcl", node.getDcl());
+            throw new InvalidDeclarationException("Illegal parameter declaration, is of type "
+                    + node.getDcl().getClass().toString() + " should be AVariableDeclarationDcl", node.getDcl());
         }
     }
+
     @Override
     public void inAFunctionParamPrimeFunctionParamPrime(AFunctionParamPrimeFunctionParamPrime node) {
-        //? skal array dcl's tillades også?
+        // ? skal array dcl's tillades også?
         if (!(node.getDcl() instanceof AVariableDeclarationDcl)) {
-            throw new InvalidDeclarationException("Illegal parameter declaration, is of type " + node.getDcl().getClass().toString() + " should be AVariableDeclarationDcl", node.getDcl());
+            throw new InvalidDeclarationException("Illegal parameter declaration, is of type "
+                    + node.getDcl().getClass().toString() + " should be AVariableDeclarationDcl", node.getDcl());
         }
     }
+
+    // @Override
+    // public void caseAFunctionDeclarationDcl(AFunctionDeclarationDcl node) {
+
+    // inAFunctionDeclarationDcl(node);
+    // if (node.getType() != null) {
+    // node.getType().apply(this);
+    // }
+    // if (node.getKwFunction() != null) {
+    // node.getKwFunction().apply(this);
+    // }
+    // if (node.getId() != null) {
+    // node.getId().apply(this);
+    // }
+    // symbolTable = symbolTable.getFunctionSymbolTable(node.getId().getText());
+    // if (node.getFunctionParam() != null) {
+    // node.getFunctionParam().apply(this);
+    // }
+    // if (node.getStmts() != null) {
+    // node.getStmts().apply(this);
+    // }
+    // outAFunctionDeclarationDcl(node);
+    // }
 
     // @Override
     // public void caseAFunctionDeclarationDcl(AFunctionDeclarationDcl node) {
@@ -204,7 +243,7 @@ public class TopDclVisitor extends SemanticVisitor {
                     "Variable" + node.getId().getText() + "has already been declared");
         } else {
             symbolTable.put(node.getId().getText(),
-                    new IdAttributes(node.getId(), node.getType(), node.getArrayExpr().toString(), Attributes.array));
+                    new IdAttributes(node.getId(), node.getType(), node.getExpr().toString(), Attributes.array));
         }
 
     }
@@ -216,9 +255,9 @@ public class TopDclVisitor extends SemanticVisitor {
         if (symbolTable.DeclaredLocally(node.getId().getText())) {
             throw new VariableAlreadyDeclaredException(
                     "Variable" + node.getId().getText() + "has already been declared");
-        }
-        else {
-            symbolTable.put(node.getId().getText(), new IdAttributes(node.getId(), new TType("csv"),null,Attributes.csv));
+        } else {
+            symbolTable.put(node.getId().getText(),
+                    new IdAttributes(node.getId(), new TType("csv"), null, Attributes.csv));
         }
     }
 
@@ -227,9 +266,21 @@ public class TopDclVisitor extends SemanticVisitor {
         if (symbolTable.DeclaredLocally(node.getId().getText())) {
             throw new VariableAlreadyDeclaredException(
                     "Variable" + node.getId().getText() + "has already been declared");
-        }
-        else {
-            symbolTable.put(node.getId().getText(), new IdAttributes(node.getId(), new TType("csv"),null,Attributes.csv));
+        } else {
+            symbolTable.put(node.getId().getText(),
+                    new IdAttributes(node.getId(), new TType("csv"), null, Attributes.csv));
         }
     }
+
+    @Override
+    public void inACsvToArrayDclDcl(ACsvToArrayDclDcl node) {
+        if (symbolTable.DeclaredLocally(node.getId().getText())) {
+            throw new VariableAlreadyDeclaredException(
+                    "Variable" + node.getId().getText() + "has already been declared");
+        } else {
+            symbolTable.put(node.getId().getText(),
+                    new IdAttributes(node.getId(), node.getType(), null, Attributes.array));
+        }
+    }
+
 }

@@ -299,9 +299,9 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
         {
             node.getKwIn().apply(this);
         }
-        if(node.getVal() != null)
+        if(node.getDcl() != null)
         {
-            node.getVal().apply(this);
+            node.getDcl().apply(this);
         }
         if(node.getKwFor() != null)
         {
@@ -410,6 +410,10 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
         if(node.getExpr() != null)
         {
             node.getExpr().apply(this);
+        }
+        if(node.getId() != null)
+        {
+            node.getId().apply(this);
         }
         if(node.getKwPrint() != null)
         {
@@ -584,6 +588,47 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
         outAVariableDeclarationDcl(node);
     }
 
+    public void inACsvToArrayDclDcl(ACsvToArrayDclDcl node)
+    {
+        defaultIn(node);
+    }
+
+    public void outACsvToArrayDclDcl(ACsvToArrayDclDcl node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseACsvToArrayDclDcl(ACsvToArrayDclDcl node)
+    {
+        inACsvToArrayDclDcl(node);
+        if(node.getExpr() != null)
+        {
+            node.getExpr().apply(this);
+        }
+        if(node.getCsvAndArrayHelp() != null)
+        {
+            node.getCsvAndArrayHelp().apply(this);
+        }
+        if(node.getOpAssign() != null)
+        {
+            node.getOpAssign().apply(this);
+        }
+        if(node.getId() != null)
+        {
+            node.getId().apply(this);
+        }
+        if(node.getKwArray() != null)
+        {
+            node.getKwArray().apply(this);
+        }
+        if(node.getType() != null)
+        {
+            node.getType().apply(this);
+        }
+        outACsvToArrayDclDcl(node);
+    }
+
     public void inAVariableDeclarationArrayInitDcl(AVariableDeclarationArrayInitDcl node)
     {
         defaultIn(node);
@@ -598,9 +643,9 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
     public void caseAVariableDeclarationArrayInitDcl(AVariableDeclarationArrayInitDcl node)
     {
         inAVariableDeclarationArrayInitDcl(node);
-        if(node.getArrayExpr() != null)
+        if(node.getExpr() != null)
         {
-            node.getArrayExpr().apply(this);
+            node.getExpr().apply(this);
         }
         if(node.getOpAssign() != null)
         {
@@ -672,9 +717,9 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
     public void caseAFunctionDeclarationDcl(AFunctionDeclarationDcl node)
     {
         inAFunctionDeclarationDcl(node);
-        if(node.getStmts() != null)
+        if(node.getBlock() != null)
         {
-            node.getStmts().apply(this);
+            node.getBlock().apply(this);
         }
         if(node.getFunctionParam() != null)
         {
@@ -693,6 +738,27 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
             node.getType().apply(this);
         }
         outAFunctionDeclarationDcl(node);
+    }
+
+    public void inACsvArrayIdCsvAndArrayHelp(ACsvArrayIdCsvAndArrayHelp node)
+    {
+        defaultIn(node);
+    }
+
+    public void outACsvArrayIdCsvAndArrayHelp(ACsvArrayIdCsvAndArrayHelp node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseACsvArrayIdCsvAndArrayHelp(ACsvArrayIdCsvAndArrayHelp node)
+    {
+        inACsvArrayIdCsvAndArrayHelp(node);
+        if(node.getId() != null)
+        {
+            node.getId().apply(this);
+        }
+        outACsvArrayIdCsvAndArrayHelp(node);
     }
 
     public void inAFunctionParamFunctionParam(AFunctionParamFunctionParam node)
@@ -1047,6 +1113,10 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
         {
             node.getVal().apply(this);
         }
+        if(node.getTypeCast() != null)
+        {
+            node.getTypeCast().apply(this);
+        }
         if(node.getBopNot() != null)
         {
             node.getBopNot().apply(this);
@@ -1075,6 +1145,10 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
         if(node.getSpecialExpr() != null)
         {
             node.getSpecialExpr().apply(this);
+        }
+        if(node.getTypeCast() != null)
+        {
+            node.getTypeCast().apply(this);
         }
         outAExprSpecialExpr(node);
     }
@@ -1146,6 +1220,27 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
         outAExprPrime(node);
     }
 
+    public void inATypeCastTypeCast(ATypeCastTypeCast node)
+    {
+        defaultIn(node);
+    }
+
+    public void outATypeCastTypeCast(ATypeCastTypeCast node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseATypeCastTypeCast(ATypeCastTypeCast node)
+    {
+        inATypeCastTypeCast(node);
+        if(node.getType() != null)
+        {
+            node.getType().apply(this);
+        }
+        outATypeCastTypeCast(node);
+    }
+
     public void inAAddToCsvCsvOp(AAddToCsvCsvOp node)
     {
         defaultIn(node);
@@ -1171,6 +1266,10 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
         if(node.getArrayExpr() != null)
         {
             node.getArrayExpr().apply(this);
+        }
+        if(node.getExpr() != null)
+        {
+            node.getExpr().apply(this);
         }
         if(node.getOrientation() != null)
         {
@@ -1282,6 +1381,10 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
         if(node.getVal() != null)
         {
             node.getVal().apply(this);
+        }
+        if(node.getExpr() != null)
+        {
+            node.getExpr().apply(this);
         }
         if(node.getOrientation() != null)
         {

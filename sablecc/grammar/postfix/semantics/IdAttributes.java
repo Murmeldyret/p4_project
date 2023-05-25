@@ -7,6 +7,7 @@ import javax.swing.plaf.TreeUI;
 
 import postfix.node.TId;
 import postfix.node.TType;
+import postfix.semantics.Exceptions.invalidFunctionCallException;
 
 /**
  * Represents all necessary attributes, about an identifier, that a symbol table

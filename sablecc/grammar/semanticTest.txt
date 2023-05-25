@@ -1,33 +1,107 @@
-# Csv Operations
-# import "data.csv" as ok;
-# export ok to ok4;
+import "Fuel_Consumption_2000-2022.csv" as cars;
 
-# Legal expressions
-# int a = 2+2+2;
-# float b = 5.5 + 1.5;
-# bool c = 5 < 6;
-# bool d = 5.5 < 6.5;
-# int e = 5 * 5;
-# float f = 5.5 * 2.5;
+# Task 1
 
-# Array operations
-int array int_array;
+string array carBrands;
+add ["ACURA", "ALFA ROMEO", "ASTON MARTIN", "AUDI", "BENTLEY", "BMW", "BUGATTI", "BUICK", "CADILLAC", "CHERVOLET", "CHRYSLER", "DAEWOO", "DODGE", "FERRARI", "FIAT", "FORD", "GENESIS", "GMC", "HONDA", "HUMMER", "HYUNDAI", "INFINITI", "ISUZU", "JAGUAR", "JEEP", "KIA", "LAMBORGHINI", "LAND ROVER", "LEXUS", "LINCOLN", "MASERATI", "MAZDA", "MERCEDES-BENZ", "MINI", "NISSAN", "OLDSMOBILE", "PLYMOUTH", "PONTIAC", "PORSCHE", "RAM", "ROLLS-ROYCE", "SAAB", "SATURN", "SCION", "SMART", "SRT", "SUBARU", "SUZUKI", "TOYOTA", "VOLKSWAGEN", "VOLVO"] to carBrands;
+float totalBrandConsumption = 0.0;
+float averageBrandConsumption = 0.0;
 
-add [1,2,3,4,5,6] to int_array;
+for string brand in carBrands {
+    totalBrandConsumption = 0.0;
+    averageBrandConsumption = 0.0;
+    csv csvBrand = filter("MAKE", string x, x == "BMW") cars;
+    averageBrandConsumption = mean("COMB (L/100 km)") csvBrand;
+    string avgBrand = (string)averageBrandConsumption;
+    print brand + " " + avgBrand;
+};
 
-remove_last in int_array;
+# Task 2
 
-remove_at [1][2] in int_array;
 
-insert 2 + 2 [8,4] in int_array;
+# Task 3
 
-# Illegal expressions (Can still be done...)
-# bool g = 5 + 6;
-# bool x = 2 < 3;
+csv sortedCars = sort("COMB (L/100 km)") cars;
+export sortedCars to "output1.csv";
 
-# int function rec(int val) {return rec(val - 1);};
-int function foo(int a, int d) {return a+d ; };
-bool function bar(int c, bool b) { if b {return foo(c,2) < 10;} else {return -1 != c;}; };
+# Task 4
+string array fuelTypes;
+add ["D", "E", "N", "X", "Z"] to fuelTypes;
+csv testCsv = filter("MAKE", string x, x == "ajksf") cars;
 
-# bar(a,true);
+    int j = 0;
+for string fuelType in fuelTypes {
+    csv csvFuel = filter("FUEL", string x, x == "D") cars;
+    csv sortedCsvFuel = sort ("COMB (L/100 km)", desc) csvFuel;
+
+    int csvCount = 5;
+    while csvCount > j {
+        string array csvArray = sortedCsvFuel j;
+        add row [csvArray] in testCsv;
+        j = j + 1;
+    };
+};
+
+export testCsv to "output2.csv";
+
+# #Random Tests
+# 
+# int b = 3;
+# 
+# const int c = 4;
+# 
+# int a = b + 2;
+# 
+# print a;
+# 
+# # a = a + c;
+# 
+# print a;
+# 
+# string array testArray;
+# add ["a", "b", "c"] to testArray;
+# print testArray;
+# remove_last in testArray;
+# insert 2 + 2 ["d"] in testArray;
+# # count testArray;
+# 
+# for x in test {
+#     print x;
+# };
+# 
+# float f = 1.1;
+# f = f + 1.2;
+# 
+# int i;
+# while i < 5 {
+#     print i;
+#     i = i + 1;
+#     int z;
+#     while i < 3 {
+#         print z;
+#         z = z + 1;
+#     };
+# };
+# 
+# # function declaration
+# int function add2 (int x) 
+# {
+#     return x + 2;
+# };
+# # function call
+# int res = add2(8 - 3);
+# print res;
+# 
+# 
+# import csvFile as cars;
+# 
+# add column ["MAKE", "MCLAREN", "MASERATI", "PORSCHE"] in cars;
+# 
+# remove_last row in cars;
+# 
+# remove_at row 1 in cars;
+# 
+# insert column 2 ["PRICE", "55000", "92332", "38289"] in cars;
+# 
+# remove_last column in cars;
 

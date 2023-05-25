@@ -1,11 +1,58 @@
-<project  >
+<project>
+
+    <property name="ant.project.name" value="Excelibur" />
+
+    <property name="lib.dir" value="../../lib" />
+    <property name="src.dir" value="postfix" />
+
+    <property name="build.dir" value="build" />
+
+    <property name="classes.dir" value="${build.dir}/classes" />
+    <property name="jar.dir" value="${build.dir}/jar" />
+
+    <property name="main-class" value="postfix.Compiler" />
+
+    <path id="classpath">
+        <fileset dir="${lib.dir}" includes="**/*.jar" />
+    </path>
+
+    <target name="clean">
+        <delete dir="${build.dir}" />
+    </target>
+
+    <target name="init">
+        <mkdir dir="${classes.dir}" />
+        <mkdir dir="${jar.dir}" />
+    </target>
+
+    <target name="compile" depends="init">
+        <javac srcdir="${src.dir}" destdir="${classes.dir}" classpathref="classpath" />
+    </target>
+
+    <target name="jar" depends="compile">
+        <copy todir="${jar.dir}">
+            <fileset dir="../..">
+                <include name="compilerdeps/*" />
+            </fileset>
+        </copy>
+        <jar destfile="${jar.dir}/Excelibur.jar" basedir="${classes.dir}">
+            <zipgroupfileset dir="${lib.dir}" includes="*.jar" />
+            <zipgroupfileset dir="${lib.dir}" includes="*.jar" excludes="" />
+            <fileset dir="." includes="**/*.dat" />
+            <manifest>
+                <attribute name="Main-Class" value="${main-class}" />
+            </manifest>
+        </jar>
+    </target>
+
+
     <target name="build">
-        <javac  
-            srcdir="postfix" 
+        <javac
+            srcdir="postfix"
             destdir="dest"
             classpath="dest/postfix/Compiler.class"
-            debug="on" 
-            includeDestClasses="false" 
+            debug="on"
+            includeDestClasses="false"
         />
     </target>
 </project>

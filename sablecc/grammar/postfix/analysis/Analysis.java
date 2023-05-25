@@ -32,9 +32,11 @@ public interface Analysis extends Switch
     void caseAVariableDeclarationInitializationDcl(AVariableDeclarationInitializationDcl node);
     void caseAVariableDeclarationArrayDcl(AVariableDeclarationArrayDcl node);
     void caseAVariableDeclarationDcl(AVariableDeclarationDcl node);
+    void caseACsvToArrayDclDcl(ACsvToArrayDclDcl node);
     void caseAVariableDeclarationArrayInitDcl(AVariableDeclarationArrayInitDcl node);
     void caseAConstDeclarationInitializationDcl(AConstDeclarationInitializationDcl node);
     void caseAFunctionDeclarationDcl(AFunctionDeclarationDcl node);
+    void caseACsvArrayIdCsvAndArrayHelp(ACsvArrayIdCsvAndArrayHelp node);
     void caseAFunctionParamFunctionParam(AFunctionParamFunctionParam node);
     void caseAFunctionParam(AFunctionParam node);
     void caseAFunctionParamPrimeFunctionParamPrime(AFunctionParamPrimeFunctionParamPrime node);
@@ -54,6 +56,7 @@ public interface Analysis extends Switch
     void caseAExprArrayExpr(AExprArrayExpr node);
     void caseAExprPrimeOperatorValPrimeExprPrime(AExprPrimeOperatorValPrimeExprPrime node);
     void caseAExprPrime(AExprPrime node);
+    void caseATypeCastTypeCast(ATypeCastTypeCast node);
     void caseAAddToCsvCsvOp(AAddToCsvCsvOp node);
     void caseARemoveFromCsvCsvOp(ARemoveFromCsvCsvOp node);
     void caseARemoveAtFromCsvCsvOp(ARemoveAtFromCsvCsvOp node);

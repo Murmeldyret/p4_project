@@ -7,6 +7,7 @@ import postfix.analysis.*;
 @SuppressWarnings("nls")
 public final class AExprSpecialExpr extends PExpr
 {
+    private PTypeCast _typeCast_;
     private PSpecialExpr _specialExpr_;
     private TId _id_;
 
@@ -16,10 +17,13 @@ public final class AExprSpecialExpr extends PExpr
     }
 
     public AExprSpecialExpr(
+        @SuppressWarnings("hiding") PTypeCast _typeCast_,
         @SuppressWarnings("hiding") PSpecialExpr _specialExpr_,
         @SuppressWarnings("hiding") TId _id_)
     {
         // Constructor
+        setTypeCast(_typeCast_);
+
         setSpecialExpr(_specialExpr_);
 
         setId(_id_);
@@ -30,6 +34,7 @@ public final class AExprSpecialExpr extends PExpr
     public Object clone()
     {
         return new AExprSpecialExpr(
+            cloneNode(this._typeCast_),
             cloneNode(this._specialExpr_),
             cloneNode(this._id_));
     }
@@ -38,6 +43,31 @@ public final class AExprSpecialExpr extends PExpr
     public void apply(Switch sw)
     {
         ((Analysis) sw).caseAExprSpecialExpr(this);
+    }
+
+    public PTypeCast getTypeCast()
+    {
+        return this._typeCast_;
+    }
+
+    public void setTypeCast(PTypeCast node)
+    {
+        if(this._typeCast_ != null)
+        {
+            this._typeCast_.parent(null);
+        }
+
+        if(node != null)
+        {
+            if(node.parent() != null)
+            {
+                node.parent().removeChild(node);
+            }
+
+            node.parent(this);
+        }
+
+        this._typeCast_ = node;
     }
 
     public PSpecialExpr getSpecialExpr()
@@ -94,6 +124,7 @@ public final class AExprSpecialExpr extends PExpr
     public String toString()
     {
         return ""
+            + toString(this._typeCast_)
             + toString(this._specialExpr_)
             + toString(this._id_);
     }
@@ -102,6 +133,12 @@ public final class AExprSpecialExpr extends PExpr
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
+        if(this._typeCast_ == child)
+        {
+            this._typeCast_ = null;
+            return;
+        }
+
         if(this._specialExpr_ == child)
         {
             this._specialExpr_ = null;
@@ -121,6 +158,12 @@ public final class AExprSpecialExpr extends PExpr
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
+        if(this._typeCast_ == oldChild)
+        {
+            setTypeCast((PTypeCast) newChild);
+            return;
+        }
+
         if(this._specialExpr_ == oldChild)
         {
             setSpecialExpr((PSpecialExpr) newChild);

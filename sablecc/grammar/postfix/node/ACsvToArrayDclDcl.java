@@ -5,54 +5,59 @@ package postfix.node;
 import postfix.analysis.*;
 
 @SuppressWarnings("nls")
-public final class AFunctionDeclarationDcl extends PDcl
+public final class ACsvToArrayDclDcl extends PDcl
 {
     private TType _type_;
-    private TKwFunction _kwFunction_;
+    private TKwArray _kwArray_;
     private TId _id_;
-    private PFunctionParam _functionParam_;
-    private PBlock _block_;
+    private TOpAssign _opAssign_;
+    private PCsvAndArrayHelp _csvAndArrayHelp_;
+    private PExpr _expr_;
 
-    public AFunctionDeclarationDcl()
+    public ACsvToArrayDclDcl()
     {
         // Constructor
     }
 
-    public AFunctionDeclarationDcl(
+    public ACsvToArrayDclDcl(
         @SuppressWarnings("hiding") TType _type_,
-        @SuppressWarnings("hiding") TKwFunction _kwFunction_,
+        @SuppressWarnings("hiding") TKwArray _kwArray_,
         @SuppressWarnings("hiding") TId _id_,
-        @SuppressWarnings("hiding") PFunctionParam _functionParam_,
-        @SuppressWarnings("hiding") PBlock _block_)
+        @SuppressWarnings("hiding") TOpAssign _opAssign_,
+        @SuppressWarnings("hiding") PCsvAndArrayHelp _csvAndArrayHelp_,
+        @SuppressWarnings("hiding") PExpr _expr_)
     {
         // Constructor
         setType(_type_);
 
-        setKwFunction(_kwFunction_);
+        setKwArray(_kwArray_);
 
         setId(_id_);
 
-        setFunctionParam(_functionParam_);
+        setOpAssign(_opAssign_);
 
-        setBlock(_block_);
+        setCsvAndArrayHelp(_csvAndArrayHelp_);
+
+        setExpr(_expr_);
 
     }
 
     @Override
     public Object clone()
     {
-        return new AFunctionDeclarationDcl(
+        return new ACsvToArrayDclDcl(
             cloneNode(this._type_),
-            cloneNode(this._kwFunction_),
+            cloneNode(this._kwArray_),
             cloneNode(this._id_),
-            cloneNode(this._functionParam_),
-            cloneNode(this._block_));
+            cloneNode(this._opAssign_),
+            cloneNode(this._csvAndArrayHelp_),
+            cloneNode(this._expr_));
     }
 
     @Override
     public void apply(Switch sw)
     {
-        ((Analysis) sw).caseAFunctionDeclarationDcl(this);
+        ((Analysis) sw).caseACsvToArrayDclDcl(this);
     }
 
     public TType getType()
@@ -80,16 +85,16 @@ public final class AFunctionDeclarationDcl extends PDcl
         this._type_ = node;
     }
 
-    public TKwFunction getKwFunction()
+    public TKwArray getKwArray()
     {
-        return this._kwFunction_;
+        return this._kwArray_;
     }
 
-    public void setKwFunction(TKwFunction node)
+    public void setKwArray(TKwArray node)
     {
-        if(this._kwFunction_ != null)
+        if(this._kwArray_ != null)
         {
-            this._kwFunction_.parent(null);
+            this._kwArray_.parent(null);
         }
 
         if(node != null)
@@ -102,7 +107,7 @@ public final class AFunctionDeclarationDcl extends PDcl
             node.parent(this);
         }
 
-        this._kwFunction_ = node;
+        this._kwArray_ = node;
     }
 
     public TId getId()
@@ -130,16 +135,16 @@ public final class AFunctionDeclarationDcl extends PDcl
         this._id_ = node;
     }
 
-    public PFunctionParam getFunctionParam()
+    public TOpAssign getOpAssign()
     {
-        return this._functionParam_;
+        return this._opAssign_;
     }
 
-    public void setFunctionParam(PFunctionParam node)
+    public void setOpAssign(TOpAssign node)
     {
-        if(this._functionParam_ != null)
+        if(this._opAssign_ != null)
         {
-            this._functionParam_.parent(null);
+            this._opAssign_.parent(null);
         }
 
         if(node != null)
@@ -152,19 +157,19 @@ public final class AFunctionDeclarationDcl extends PDcl
             node.parent(this);
         }
 
-        this._functionParam_ = node;
+        this._opAssign_ = node;
     }
 
-    public PBlock getBlock()
+    public PCsvAndArrayHelp getCsvAndArrayHelp()
     {
-        return this._block_;
+        return this._csvAndArrayHelp_;
     }
 
-    public void setBlock(PBlock node)
+    public void setCsvAndArrayHelp(PCsvAndArrayHelp node)
     {
-        if(this._block_ != null)
+        if(this._csvAndArrayHelp_ != null)
         {
-            this._block_.parent(null);
+            this._csvAndArrayHelp_.parent(null);
         }
 
         if(node != null)
@@ -177,7 +182,32 @@ public final class AFunctionDeclarationDcl extends PDcl
             node.parent(this);
         }
 
-        this._block_ = node;
+        this._csvAndArrayHelp_ = node;
+    }
+
+    public PExpr getExpr()
+    {
+        return this._expr_;
+    }
+
+    public void setExpr(PExpr node)
+    {
+        if(this._expr_ != null)
+        {
+            this._expr_.parent(null);
+        }
+
+        if(node != null)
+        {
+            if(node.parent() != null)
+            {
+                node.parent().removeChild(node);
+            }
+
+            node.parent(this);
+        }
+
+        this._expr_ = node;
     }
 
     @Override
@@ -185,10 +215,11 @@ public final class AFunctionDeclarationDcl extends PDcl
     {
         return ""
             + toString(this._type_)
-            + toString(this._kwFunction_)
+            + toString(this._kwArray_)
             + toString(this._id_)
-            + toString(this._functionParam_)
-            + toString(this._block_);
+            + toString(this._opAssign_)
+            + toString(this._csvAndArrayHelp_)
+            + toString(this._expr_);
     }
 
     @Override
@@ -201,9 +232,9 @@ public final class AFunctionDeclarationDcl extends PDcl
             return;
         }
 
-        if(this._kwFunction_ == child)
+        if(this._kwArray_ == child)
         {
-            this._kwFunction_ = null;
+            this._kwArray_ = null;
             return;
         }
 
@@ -213,15 +244,21 @@ public final class AFunctionDeclarationDcl extends PDcl
             return;
         }
 
-        if(this._functionParam_ == child)
+        if(this._opAssign_ == child)
         {
-            this._functionParam_ = null;
+            this._opAssign_ = null;
             return;
         }
 
-        if(this._block_ == child)
+        if(this._csvAndArrayHelp_ == child)
         {
-            this._block_ = null;
+            this._csvAndArrayHelp_ = null;
+            return;
+        }
+
+        if(this._expr_ == child)
+        {
+            this._expr_ = null;
             return;
         }
 
@@ -238,9 +275,9 @@ public final class AFunctionDeclarationDcl extends PDcl
             return;
         }
 
-        if(this._kwFunction_ == oldChild)
+        if(this._kwArray_ == oldChild)
         {
-            setKwFunction((TKwFunction) newChild);
+            setKwArray((TKwArray) newChild);
             return;
         }
 
@@ -250,15 +287,21 @@ public final class AFunctionDeclarationDcl extends PDcl
             return;
         }
 
-        if(this._functionParam_ == oldChild)
+        if(this._opAssign_ == oldChild)
         {
-            setFunctionParam((PFunctionParam) newChild);
+            setOpAssign((TOpAssign) newChild);
             return;
         }
 
-        if(this._block_ == oldChild)
+        if(this._csvAndArrayHelp_ == oldChild)
         {
-            setBlock((PBlock) newChild);
+            setCsvAndArrayHelp((PCsvAndArrayHelp) newChild);
+            return;
+        }
+
+        if(this._expr_ == oldChild)
+        {
+            setExpr((PExpr) newChild);
             return;
         }
 

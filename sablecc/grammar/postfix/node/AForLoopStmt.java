@@ -8,7 +8,7 @@ import postfix.analysis.*;
 public final class AForLoopStmt extends PStmt
 {
     private TKwFor _kwFor_;
-    private PVal _val_;
+    private PDcl _dcl_;
     private TKwIn _kwIn_;
     private TId _id_;
     private PBlock _block_;
@@ -20,7 +20,7 @@ public final class AForLoopStmt extends PStmt
 
     public AForLoopStmt(
         @SuppressWarnings("hiding") TKwFor _kwFor_,
-        @SuppressWarnings("hiding") PVal _val_,
+        @SuppressWarnings("hiding") PDcl _dcl_,
         @SuppressWarnings("hiding") TKwIn _kwIn_,
         @SuppressWarnings("hiding") TId _id_,
         @SuppressWarnings("hiding") PBlock _block_)
@@ -28,7 +28,7 @@ public final class AForLoopStmt extends PStmt
         // Constructor
         setKwFor(_kwFor_);
 
-        setVal(_val_);
+        setDcl(_dcl_);
 
         setKwIn(_kwIn_);
 
@@ -43,7 +43,7 @@ public final class AForLoopStmt extends PStmt
     {
         return new AForLoopStmt(
             cloneNode(this._kwFor_),
-            cloneNode(this._val_),
+            cloneNode(this._dcl_),
             cloneNode(this._kwIn_),
             cloneNode(this._id_),
             cloneNode(this._block_));
@@ -80,16 +80,16 @@ public final class AForLoopStmt extends PStmt
         this._kwFor_ = node;
     }
 
-    public PVal getVal()
+    public PDcl getDcl()
     {
-        return this._val_;
+        return this._dcl_;
     }
 
-    public void setVal(PVal node)
+    public void setDcl(PDcl node)
     {
-        if(this._val_ != null)
+        if(this._dcl_ != null)
         {
-            this._val_.parent(null);
+            this._dcl_.parent(null);
         }
 
         if(node != null)
@@ -102,7 +102,7 @@ public final class AForLoopStmt extends PStmt
             node.parent(this);
         }
 
-        this._val_ = node;
+        this._dcl_ = node;
     }
 
     public TKwIn getKwIn()
@@ -185,7 +185,7 @@ public final class AForLoopStmt extends PStmt
     {
         return ""
             + toString(this._kwFor_)
-            + toString(this._val_)
+            + toString(this._dcl_)
             + toString(this._kwIn_)
             + toString(this._id_)
             + toString(this._block_);
@@ -201,9 +201,9 @@ public final class AForLoopStmt extends PStmt
             return;
         }
 
-        if(this._val_ == child)
+        if(this._dcl_ == child)
         {
-            this._val_ = null;
+            this._dcl_ = null;
             return;
         }
 
@@ -238,9 +238,9 @@ public final class AForLoopStmt extends PStmt
             return;
         }
 
-        if(this._val_ == oldChild)
+        if(this._dcl_ == oldChild)
         {
-            setVal((PVal) newChild);
+            setDcl((PDcl) newChild);
             return;
         }
 
