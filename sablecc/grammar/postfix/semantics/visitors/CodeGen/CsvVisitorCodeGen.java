@@ -54,7 +54,7 @@ public class CsvVisitorCodeGen extends DepthFirstAdapter {
 
     @Override
     public void inAExportStatementStmt(AExportStatementStmt node) {
-        csvOperations += node.getId().getText() + ".export(" + node.getExpr().toString().strip() +")";
+        csvOperations += node.getId().getText() + ".export(" + node.getExpr().toString().strip() +");";
     }
 
     @Override

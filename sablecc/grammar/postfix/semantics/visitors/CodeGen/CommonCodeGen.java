@@ -263,19 +263,22 @@ public class CommonCodeGen extends DepthFirstAdapter {
     public void inAVariableDeclarationInitializationDcl(AVariableDeclarationInitializationDcl node) {
 
         if (!symbolTable.DeclaredLocally(node.getId().getText().toString())) {
+            if (node.getType().getText().equals("csv")) {
+                program += "Csvruntime" + " " + node.getId().getText().toString() + " = ";
+            } else {
+                String type = typeSwitch(node.getType().getText().toString());
 
-            String type = typeSwitch(node.getType().getText().toString());
-
-            // program += type + " " + node.getId().getText().toString() + " = ";
-            // program += bvm + ".put(\"" + node.getId().getText()
-            // +"\","+node.getExpr().toString().strip()+ ");";
-            program += bvm + ".put(\"" + node.getId().getText() + "\",";
-            node.getExpr().apply(this);
-            node.setExpr(null);
-            program += ")";
-            symbolTable.put(node.getId().getText(),
-                    new IdAttributes(node.getId(), node.getType(), null, Attributes.variable));
+                // program += type + " " + node.getId().getText().toString() + " = ";
+                // program += bvm + ".put(\"" + node.getId().getText()
+                // +"\","+node.getExpr().toString().strip()+ ");";
+                program += bvm + ".put(\"" + node.getId().getText() + "\",";
+                node.getExpr().apply(this);
+                node.setExpr(null);
+                program += ")";
+            }
         }
+        symbolTable.put(node.getId().getText(),
+                new IdAttributes(node.getId(), node.getType(), null, Attributes.variable));
     }
 
     // @Override
@@ -337,7 +340,7 @@ public class CommonCodeGen extends DepthFirstAdapter {
                 if (symbolTable.get(node.getId().getText()).getType().getText().equals("array")
                         || symbolTable.get(node.getId().getText()).getType().getText().equals("csv")) {
                     program += node.getId().getText();
-                    //TODO skulle tage sig af array og csv typer
+                    // TODO skulle tage sig af array og csv typer
                 } else {
                     program += "(" + type + ")" + bvm + ".get(\"" + node.getId().getText() + "\")";
                 }
