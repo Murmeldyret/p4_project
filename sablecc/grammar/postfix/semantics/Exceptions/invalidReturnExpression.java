@@ -9,7 +9,7 @@ public class invalidReturnExpression extends InvalidExpressionException {
         super(message);
     }
     public invalidReturnExpression(String message, AReturnStmt node) {
-        this(message);
+        this(message + "\n" + node);
         returnStmt = node;
     }
 

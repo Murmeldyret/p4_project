@@ -9,7 +9,7 @@ public class InvalidDeclarationException extends TypeException {
         super(message);
     }
     public InvalidDeclarationException(String message, PDcl node) {
-        super(message);
+        super(message + "\n" + node);
         this.node = node;
     }
 }

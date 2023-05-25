@@ -14,7 +14,7 @@ public class InvalidExpressionException extends TypeException {
     }
 
     public InvalidExpressionException(String message, AExprValPrimeExpr node) {
-        super(message);
+        super(message + "\n" + node);
         this.node = node;
     }
 
