@@ -82,7 +82,7 @@ public class CodeGen extends DepthFirstAdapter {
             sourceFile = new File(root, "src/Main.java");
             sourceFile.getParentFile().mkdirs();
             Files.write(sourceFile.toPath(), program.getBytes(StandardCharsets.UTF_8));
-
+            System.out.println("Path to Java code " +sourceFile.getAbsolutePath()); 
             // Create a destination for the code.
 
             dlib = new File(root, "lib/lib.jar");
