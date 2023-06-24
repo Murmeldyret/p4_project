@@ -10,7 +10,7 @@ float averageBrandConsumption = 0.0;
 for string brand in carBrands {
     totalBrandConsumption = 0.0;
     averageBrandConsumption = 0.0;
-    csv csvBrand = filter("MAKE", string x, x == "BMW") cars;
+    csv csvBrand = filter("MAKE", string x, x == brand) cars;
     averageBrandConsumption = mean("COMB (L/100 km)") csvBrand;
     string avgBrand = (string)averageBrandConsumption;
     print brand + " " + avgBrand;
@@ -31,7 +31,7 @@ csv testCsv = filter("MAKE", string x, x == "ajksf") cars;
 
     int j = 0;
 for string fuelType in fuelTypes {
-    csv csvFuel = filter("FUEL", string x, x == "D") cars;
+    csv csvFuel = filter("FUEL", string x, x == fuelType) cars;
     csv sortedCsvFuel = sort ("COMB (L/100 km)", desc) csvFuel;
 
     int csvCount = 5;
